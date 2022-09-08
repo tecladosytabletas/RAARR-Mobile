@@ -7,7 +7,7 @@ import com.example.appatemporal.R
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.create_new_task)
 
     }
 }
