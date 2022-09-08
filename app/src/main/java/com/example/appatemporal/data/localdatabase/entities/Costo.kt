@@ -2,9 +2,10 @@ package com.example.appatemporal.data.localdatabase.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "costo_table")
+@Entity(tableName = "costo_table", foreignKeys = [ForeignKey(entity = Proyecto::class, parentColumns = ["id_proyecto"], childColumns = ["id_proyecto"])])
 data class Costo(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_costo") val id_costo : Int,
