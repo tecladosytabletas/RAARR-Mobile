@@ -1,9 +1,6 @@
 package com.example.appatemporal.data.localdatabase.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.appatemporal.data.localdatabase.entities.Costo
 
 @Dao
@@ -13,11 +10,11 @@ interface CostoDao {
     suspend fun getAll(): List<Costo>
 
     // Insert all costos
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(costos: List<Costo>)
 
     // Insert one costo
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(costo: Costo)
 
     // Get costo by id

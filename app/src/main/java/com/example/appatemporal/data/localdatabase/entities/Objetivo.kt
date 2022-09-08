@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 data class Objetivo(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_objetivo") val id_estatus: Int,
+    @ColumnInfo(name = "id_proyecto") val id_proyecto: Int,
     @ColumnInfo(name = "ganancia") val ganancia: Double,
     @ColumnInfo(name = "presupuesto") val presupuesto: Double,
     @ColumnInfo(name = "created_at") val created_at: String,

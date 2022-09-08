@@ -1,9 +1,6 @@
 package com.example.appatemporal.data.localdatabase.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.appatemporal.data.localdatabase.entities.Area
 
 @Dao
@@ -13,11 +10,11 @@ interface AreaDao {
     suspend fun getAll(): List<Area>
 
     // Insert all areas
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(areas: List<Area>)
 
     // Insert one area
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(area: Area)
 
     // Get area by id

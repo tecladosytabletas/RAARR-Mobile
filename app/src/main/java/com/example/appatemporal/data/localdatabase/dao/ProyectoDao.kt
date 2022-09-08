@@ -1,9 +1,6 @@
 package com.example.appatemporal.data.localdatabase.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 
 @Dao
@@ -13,11 +10,11 @@ interface ProyectoDao {
     suspend fun getAll(): List<Proyecto>
 
     // Insert all Proyecto
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(proyectos: List<Proyecto>)
 
     // Insert one Proyecto
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(proyecto: Proyecto)
 
     // Get Proyecto by id
