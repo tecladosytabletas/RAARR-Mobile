@@ -44,8 +44,3 @@ class Main : AppCompatActivity() {
     }
 
     // Insert activity into database
-
-
-
-
-}
