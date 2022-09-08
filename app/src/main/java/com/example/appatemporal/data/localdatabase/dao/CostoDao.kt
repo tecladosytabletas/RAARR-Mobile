@@ -12,23 +12,24 @@ interface CostoDao {
     @Query("SELECT * FROM costo_table")
     suspend fun getAll(): List<Costo>
 
-    // Insert all areas
+    // Insert all costos
     @Insert
-    suspend fun insertAll(areas: List<Costo>)
+    suspend fun insertAll(costos: List<Costo>)
 
-    // Insert one area
+    // Insert one costo
     @Insert
-    suspend fun insert(area: Costo)
+    suspend fun insert(costo: Costo)
 
-    // Get area by id
+    // Get costo by id
     @Query("SELECT * FROM costo_table WHERE id_costo = :id")
     suspend fun getById(id: Int): Costo
 
-    // Delete all areas
+    // Delete all costos
     @Query("DELETE FROM costo_table")
     suspend fun deleteAll()
 
-    // Delete an area
+    // Delete a costo
     @Delete
-    suspend fun delete(area: Costo)
+    suspend fun delete(cosoto: Costo)
+
 }
