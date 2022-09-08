@@ -3,28 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/drawable/rounded_corner.xml" value="0.1" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/array.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/colors.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/dropdown_item.xml" value="0.2076923076923077" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/dropdown_menu.xml" value="0.253125" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/string.xml" value="0.253125" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/strings.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/vista1.xml" value="0.264" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/vista2.xml" value="0.264" />
-        <entry key="..\:/Users/cris_/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/vista_2.xml" value="0.2" />
-      </map>
-    </option>
-  </component>
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="app/src/main/res/drawable/baseline_edit_24.xml" value="0.1315" />
-        <entry key="app/src/main/res/drawable/gradent_horizontal.xml" value="0.263" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/proyectos_organizador.xml" value="0.28839111328125" />
-        <entry key="app/src/main/res/layout/proyectos_organizador_item.xml" value="0.42114105224609377" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/drawable/gradent_horizontal.xml" value="0.22" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/drawable/rounded_corner.xml" value="0.22" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/activity_actividades_organizador.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/activity_proyecto_organizador.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/dropdown_menu.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/item_list_activity.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/item_list_activity2.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/proyectos_organizador.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/proyectos_organizador_item.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Ariann/AndroidStudioProjects/AppAtemporal/app/src/main/res/layout/vista_modificarproyecto.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
