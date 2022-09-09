@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="eventTypeList">
+        <item>@string/eventType1</item>
+        <item>@string/eventType2</item>
+        <item>@string/eventType3</item>
+        <item>@string/eventType4</item>
+    </string-array>
+</resources>
