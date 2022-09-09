@@ -190,7 +190,8 @@
                         </LinearLayout>
                 </LinearLayout>
 
-
+                <include
+                    layout="@layout/navbar" />
         </LinearLayout>
 
 
