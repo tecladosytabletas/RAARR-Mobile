@@ -20,4 +20,8 @@
     <color name="purple">#3F0FFF</color>
     <color name="yellow2">#FE810E</color>
     <color name="grayBtn">#D2DDE5</color>
+    <color name="dark">#302E3B</color>
+    <color name="accentBlue">#0F2DFF</color>
+    <color name="topBar">#1D1C23</color>
+    <color name="lightGrey">#E4EBF1</color>
 </resources>
