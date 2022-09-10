@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/navbar_background"
+    tools:layout_editor_absoluteX="-5dp"
+    tools:layout_editor_absoluteY="777dp"
+    android:id="@+id/navbar"
+    android:layout_gravity="bottom"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:id="@+id/buttons">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/home_icon"
+            app:layout_constraintStart_toStartOf="@id/buttons"
+            app:layout_constraintTop_toTopOf="@id/buttons"
+            app:layout_constraintBottom_toBottomOf="@id/buttons"
+            android:id="@+id/home_icon"
+            android:layout_marginStart="10dp"
+
+            />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/budget_icon"
+            app:layout_constraintStart_toEndOf="@+id/home_icon"
+            android:layout_marginStart="30dp"
+            android:id = "@+id/budget_icon"
+            />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/events_icon"
+            app:layout_constraintStart_toEndOf="@+id/budget_icon"
+            android:layout_marginStart="30dp"
+            android:id = "@+id/events_icon"
+            />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/tickets_icon"
+            app:layout_constraintStart_toEndOf="@+id/events_icon"
+            android:layout_marginStart="30dp"
+            android:id = "@+id/tickets_icon"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/metrics_icon"
+            app:layout_constraintStart_toEndOf="@+id/tickets_icon"
+            android:layout_marginStart="30dp"
+            android:id = "@+id/metrics_icon"
+            />
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Home"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttons"
+        app:layout_constraintStart_toStartOf="@+id/buttons"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="39dp"
+        android:id="@+id/home_text"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Budget"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttons"
+        app:layout_constraintStart_toEndOf="@+id/home_text"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="37dp"
+        android:id="@+id/budget_text"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Events"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttons"
+        app:layout_constraintStart_toEndOf="@+id/budget_text"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="37dp"
+        android:id="@+id/events_text"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Tickets"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttons"
+        app:layout_constraintStart_toEndOf="@+id/events_text"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="30dp"
+        android:id="@+id/tickets_text"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Metrics"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttons"
+        app:layout_constraintStart_toEndOf="@+id/tickets_text"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="30dp"
+        android:id="@+id/metrics_text"
+
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
