@@ -5,15 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.viewModel.AddNewProjectViewModel
 import kotlinx.coroutines.launch
 
 class AddNewProjectForm : AppCompatActivity() {
-
+    private val viewModel: AddNewProjectViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +38,7 @@ class AddNewProjectForm : AppCompatActivity() {
             val project: Proyecto = Proyecto(0, 1, name, date)
 
             lifecycleScope.launch{
-                repository.insertProyecto(project)
-                repository.getAllProyectos().forEach {
-                    Log.d("Proyecto", it.toString())
-                }
-                repository.deleteAllProyectos()
-
-
+                viewModel.addNewProject(project, repository)
             }
 
 
