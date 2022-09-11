@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
 
-class Repository(private val context: Context) {
+class Repository(context: Context) {
 
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
