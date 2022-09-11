@@ -1,12 +1,8 @@
 package com.example.appatemporal.data
 
-import android.content.Intent
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.domain.Repository
-import com.example.appatemporal.framework.view.ProyectoOrganizador
-import kotlinx.coroutines.launch
 
 class AddNewProjectRequirement {
 
