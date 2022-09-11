@@ -1,4 +1,4 @@
-package com.example.appatemporal.data.domain
+package com.example.appatemporal.domain
 
 import android.content.Context
 import com.example.appatemporal.data.localdatabase.LocalDatabase
