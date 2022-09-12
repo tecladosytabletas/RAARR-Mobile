@@ -17,4 +17,13 @@
     <string name="timeCreateNewProject">Hora </string>
     <string name="artistCreateNewProject">Artista(s) </string>
 
+    <string name="titleModifyProject">Modificar Evento</string>
+    <string name="nameModifyProject">Nombre</string>
+    <string name="dateModifyProject">Fecha</string>
+    <string name="directionModifyProject">Direccion</string>
+    <string name="locationModifyProject">Ubicación</string>
+    <string name="timeModifyProject">Hora</string>
+    <string name="artistModifyProject">Artista(s)</string>
+    <string name="typeModifyProject">Tipo</string>
+
 </resources>
