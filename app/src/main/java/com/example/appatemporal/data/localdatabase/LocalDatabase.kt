@@ -33,10 +33,10 @@ abstract class LocalDatabase: RoomDatabase() {
 
 
 
-  /*  abstract fun actividadDao(): ActividadDao
-    abstract fun areaDao(): AreaDao
-    abstract fun costoDao(): CostoDao
-    abstract fun estatusDao(): EstatusDao
-    abstract fun objetivoDao(): ObjetivoDao
-    abstract fun proyectoDao(): ProyectoDao*/
+    /*  abstract fun actividadDao(): ActividadDao
+      abstract fun areaDao(): AreaDao
+      abstract fun costoDao(): CostoDao
+      abstract fun estatusDao(): EstatusDao
+      abstract fun objetivoDao(): ObjetivoDao
+      abstract fun proyectoDao(): ProyectoDao*/
 }

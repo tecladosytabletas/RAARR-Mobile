@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Proyecto(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_proyecto") val id_proyecto: Int,
-    @ColumnInfo(name = "nombre_proyecto") val nombre_proyecto: Double,
-    @ColumnInfo(name = "created_at") val created_at: String,
-    @ColumnInfo(name = "modified_at") val modified_at: String
+    @ColumnInfo(name = "id_usuario") val id_usuario: Int,
+    @ColumnInfo(name = "nombre_proyecto") var nombre_proyecto: String,
+    @ColumnInfo(name = "fecha_inicio") var fecha_inicio: String
 )
