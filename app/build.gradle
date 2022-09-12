@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt' // include this
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -41,6 +42,17 @@ android {
 }
 
 dependencies {
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+
+    //Firebase Google Analitics
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    //Firebase Auth
+    implementation 'com.google.firebase:firebase-auth'
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
