@@ -21,8 +21,4 @@ class ProyectoOrganizadorRequirement {
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return repository.getAllProyectos()
     }
-
-    suspend fun getProjectById(id: Int, repository: Repository): Proyecto{
-        return repository.getProyectoById(id)
-    }
 }
