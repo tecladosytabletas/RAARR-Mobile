@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:background="#302E3B">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar1_Escan_2"
@@ -36,19 +35,7 @@
             app:srcCompat="@drawable/captura1"
             tools:layout_editor_absoluteX="76dp"
             tools:layout_editor_absoluteY="16dp" />
-
     </androidx.appcompat.widget.Toolbar>
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2_Escan_2"
-        android:layout_width="421dp"
-        android:layout_height="60dp"
-        android:background="#1D1C23"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-10dp"
-        tools:layout_editor_absoluteY="675dp"/>
-
 
     <TextView
         android:id="@+id/text_TickEst_2"
@@ -60,8 +47,6 @@
         tools:layout_editor_absoluteX="61dp"
         tools:layout_editor_absoluteY="586dp" />
 
-
-
     <ImageView
         android:id="@+id/imageView_EventosEsc_2"
         android:layout_width="378dp"
@@ -69,6 +54,7 @@
         app:srcCompat="@drawable/conciertos_1_1"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="-163dp" />
+
     <TextView
         android:id="@+id/text_EvName_2"
         android:layout_width="wrap_content"
@@ -96,7 +82,19 @@
         app:srcCompat="@drawable/galaxy_s21_ultra_precio"
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="328dp" />
-    <android.widget.Button
-        android:layout_width=""
-        android:layout_height=""></android.widget.Button>
+
+    <include
+        layout="@layout/navbar"
+        app:layout_constraintVertical_bias="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/navbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

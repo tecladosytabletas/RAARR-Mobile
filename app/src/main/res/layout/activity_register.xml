@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:background="#302E3B"
     >
 
@@ -36,10 +35,10 @@
         android:id="@+id/textView_reg_2"
         android:layout_width="248dp"
         android:layout_height="54dp"
-        android:fontFamily="@font/alata"
+        android:fontFamily="@font/inter"
         android:text="Crear Cuenta"
         android:textColor="#E4EBF1"
-        android:textSize="40dp"
+        android:textSize="36dp"
         tools:layout_editor_absoluteX="26dp"
         tools:layout_editor_absoluteY="198dp" />
 
