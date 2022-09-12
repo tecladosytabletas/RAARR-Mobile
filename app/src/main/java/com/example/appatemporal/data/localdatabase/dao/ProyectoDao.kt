@@ -28,4 +28,8 @@ interface ProyectoDao {
     // Delete a Proyecto
     @Delete
     suspend fun delete(proyecto: Proyecto)
+
+    // Update a Proyecto
+    @Update
+    suspend fun update(proyecto: Proyecto)
 }
