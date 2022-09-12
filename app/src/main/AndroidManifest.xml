@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AppAtemporal"
         tools:targetApi="31">
         <activity
-            android:name=".framework.view.selectedEventView"
+            android:name=".framework.view.SelectedEventView"
             android:exported="false" />
         <activity
             android:name=".framework.view.Main"

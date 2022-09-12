@@ -39,7 +39,6 @@
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/whatsapp_image_2022_09_05_at_10_29_37_am"
         tools:srcCompat="@drawable/captura" />
 
     <CheckBox
