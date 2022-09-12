@@ -1,238 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView02"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="25dp"
-    android:background="#302E3B"
-    android:baselineAligned="false"
-    android:fillViewport="true">
+    android:gravity="center"
+    android:scrollbars="vertical">
 
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="0.75"
+        android:layout_height="match_parent"
+        android:background="#302E3B">
 
-        >
-        <TextView
+        <include
+            layout="@layout/navbar"
+            android:id="@+id/navbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Modificar proyecto"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:textSize="22dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="20dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/titleModifyProject"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="60dp"
+            android:text="@string/titleModifyProject"
+            android:textColor="#E4EBF1"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="137dp"
             android:gravity="center"
-            android:weightSum="2"
-            android:background="#302E3B">
+            android:text="@string/nameModifyProject"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleModifyProject" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Nombre"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                />
+        <EditText
+            android:id="@+id/nameModifed"
+            android:layout_width="328dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="42dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint=""
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:textSize="12dp"
+            app:backgroundTint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint=""
-                app:backgroundTint="#ffffff"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="137dp"
+            android:gravity="center"
+            android:text="@string/dateModifyProject"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameModifed" />
+
+        <EditText
+            android:id="@+id/dateModified"
+            android:layout_width="328dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="42dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint=""
+            android:textSize="12dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:backgroundTint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDate"
+            />
+        <TextView
+            android:id="@+id/textViewDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="137dp"
+            android:gravity="center"
+            android:text="@string/directionModifyProject"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateModified" />
+
+        <EditText
+            android:id="@+id/directionModified"
+            android:layout_width="328dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="42dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint=""
+            android:textSize="12dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:backgroundTint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDirection"
+            />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="137dp"
+            android:gravity="center"
+            android:text="@string/locationModifyProject"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/directionModified" />
+
+        <EditText
+            android:id="@+id/locationModified"
+            android:layout_width="328dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="42dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint=""
+            android:textSize="12dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:backgroundTint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
+            />
+
+        <TextView
+            android:id="@+id/textViewTime"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="137dp"
+            android:gravity="center"
+            android:text="@string/timeModifyProject"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationModified" />
+
+        <EditText
+            android:id="@+id/timeModified"
+            android:layout_width="328dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="42dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint=""
+            android:textSize="12dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:backgroundTint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTime"
+            />
+
+        <TextView
+            android:id="@+id/textViewArtist"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="137dp"
+            android:gravity="center"
+            android:text="@string/artistModifyProject"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeModified" />
+
+        <EditText
+            android:id="@+id/artistModified"
+            android:layout_width="328dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="42dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint=""
+            android:textSize="12dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:backgroundTint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewArtist"
+            />
+
+        <TextView
+            android:id="@+id/textViewType"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="137dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="137dp"
+            android:gravity="center"
+            android:text="@string/typeModifyProject"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/artistModified" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_width="328dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="42dp"
             android:gravity="center"
-            android:weightSum="2"
-            android:background="#302E3B">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Fecha"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                />
-
-            <EditText
-                android:id="@+id/picker"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint=""
-                app:backgroundTint="#ffffff"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:focusable="false"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="2"
-            android:background="#302E3B">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Dirección"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint=""
-                app:backgroundTint="#ffffff"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="2"
-            android:background="#302E3B">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Ubicación"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint=""
-                app:backgroundTint="#ffffff"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="2"
-            android:background="#302E3B">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Hora"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint=""
-                app:backgroundTint="#ffffff"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="2"
-            android:background="#302E3B">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Artista(s)"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint=""
-                app:backgroundTint="#ffffff"
-                android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="2"
-            android:background="#302E3B">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Tipo"
-                android:textColor="#ffffff"
-                android:textSize="20dp"
-                android:layout_weight="1"
-                />
+            android:weightSum="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewType">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="0dp"
                 android:layout_weight="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:endIconTint="#ffffff"
                 android:textColor="#ffffff"
-                android:textSize="20dp">
+                android:textSize="20dp"
+                app:endIconTint="#ffffff">
 
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="none"
+                    android:text="@string/eventType1"
                     android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:text="Concierto"
-                    />
-
+                    android:textSize="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-    </LinearLayout>
 
-</RelativeLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
