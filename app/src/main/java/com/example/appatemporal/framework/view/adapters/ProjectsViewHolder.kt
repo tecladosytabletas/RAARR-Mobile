@@ -5,12 +5,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
+import com.example.appatemporal.databinding.ProyectosOrganizadorItemBinding
 
 class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val project: TextView = view.findViewById<TextView>(R.id.tvProjectName)
+    val binding = ProyectosOrganizadorItemBinding.bind(view)
+
     fun render(projectModel: Proyecto){
-        project.text = projectModel.nombre_proyecto
+        binding.tvProjectName.text = projectModel.nombre_proyecto
 
     }
 

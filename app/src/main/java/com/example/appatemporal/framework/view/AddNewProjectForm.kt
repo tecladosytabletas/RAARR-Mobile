@@ -9,30 +9,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
+import com.example.appatemporal.databinding.CreateNewProjectBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.AddNewProjectViewModel
 import kotlinx.coroutines.launch
 
 class AddNewProjectForm : AppCompatActivity() {
     private val viewModel: AddNewProjectViewModel by viewModels()
-
+    private lateinit var binding : CreateNewProjectBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.create_new_project)
+        binding = CreateNewProjectBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val repository = Repository(this)
 
-        // Bind all elements of view
-        val projectName = findViewById<TextView>(R.id.nameCreateNewProject)
-        val date = findViewById<TextView>(R.id.dateCreateNewProject)
-        val submitButton = findViewById<Button>(R.id.button)
-
-
         // Set click listener
-        submitButton.setOnClickListener {
+        binding.button.setOnClickListener {
             // Get values from view
-            val name = projectName.text.toString()
-            val date = date.text.toString()
+            val name = binding.nameCreateNewProject.text.toString()
+            val date = binding.dateCreateNewProject.text.toString()
 
             val project: Proyecto = Proyecto(0, 1, name, date)
 

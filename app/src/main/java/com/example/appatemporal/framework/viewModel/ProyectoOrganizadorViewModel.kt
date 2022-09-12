@@ -18,4 +18,8 @@ class ProyectoOrganizadorViewModel: ViewModel() {
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return requirement.getProjects(repository)
     }
+
+    suspend fun getProject(id: Int, repository: Repository): Proyecto{
+        return requirement.getProjectById(id, repository)
+    }
 }
