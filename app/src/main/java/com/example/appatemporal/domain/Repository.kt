@@ -46,6 +46,7 @@ class Repository(context: Context) {
     suspend fun getProyectoById(id: Int) = proyectoDao.getById(id)
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
+    suspend fun updateProyecto(proyecto: Proyecto) = proyectoDao.update(proyecto)
 
 
 
