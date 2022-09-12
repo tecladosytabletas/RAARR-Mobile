@@ -9,6 +9,7 @@ import com.example.appatemporal.domain.Repository
 class AddNewProjectViewModel: ViewModel() {
     private val requirement = AddNewProjectRequirement()
     suspend fun addNewProject(proyecto: Proyecto, repository: Repository){
+
         requirement.createProject(proyecto, repository)
 
 
