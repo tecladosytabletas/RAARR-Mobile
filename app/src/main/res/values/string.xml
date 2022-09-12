@@ -1,0 +1,29 @@
+<resources>
+    <string name="titleCreateNewProject">Crear un nuevo Proyecto</string>
+    <string name="nameCreateNewProject">Nombre del Evento</string>
+    <string name="dateCreateNewProject">Fecha (dd/mm/aaaa)</string>
+
+    <string name="eventType">Tipo de Evento</string>
+    <string name="eventType1">OwO</string>
+    <string name="eventType2">UwU</string>
+    <string name="eventType3">UnU</string>
+    <string name="eventType4">AwA</string>
+
+    <string name="titleCreateNewTask">Crear una nueva Tarea</string>
+    <string name="nameCreateNewTask">Nombre de la Tarea: </string>
+    <string name="dateCreateNewTask">Fecha (dd/mm/aaaa)</string>
+    <string name="directionCreateNewProject">Direccion</string>
+    <string name="locationCreateNewProject">Ubicación (Link)</string>
+    <string name="timeCreateNewProject">Hora </string>
+    <string name="artistCreateNewProject">Artista(s) </string>
+
+    <string name="titleModifyProject">Modificar Evento</string>
+    <string name="nameModifyProject">Nombre</string>
+    <string name="dateModifyProject">Fecha</string>
+    <string name="directionModifyProject">Direccion</string>
+    <string name="locationModifyProject">Ubicación</string>
+    <string name="timeModifyProject">Hora</string>
+    <string name="artistModifyProject">Artista(s)</string>
+    <string name="typeModifyProject">Tipo</string>
+
+</resources>

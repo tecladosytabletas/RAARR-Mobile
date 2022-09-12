@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="programming_languages">
+        <item>Evento1</item>
+        <item>Evento2</item>
+        <item>Evento3</item>
+        <item>Evento4</item>
+    </string-array>
+</resources>
