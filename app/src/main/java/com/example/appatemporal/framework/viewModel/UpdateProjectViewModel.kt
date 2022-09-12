@@ -6,7 +6,7 @@ import com.example.appatemporal.data.requirements.UpdateProjectRequirement
 import com.example.appatemporal.domain.Repository
 
 class UpdateProjectViewModel:ViewModel() {
-    val requirement = UpdateProjectRequirement()
+    private val requirement = UpdateProjectRequirement()
 
     suspend fun editProject(proyecto: Proyecto, repository: Repository){
         requirement.updateProject(proyecto, repository)
