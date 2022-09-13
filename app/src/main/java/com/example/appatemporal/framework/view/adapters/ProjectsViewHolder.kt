@@ -1,15 +1,22 @@
 package com.example.appatemporal.framework.view.adapters
 
+import android.R
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.ProyectosOrganizadorItemBinding
 import com.example.appatemporal.framework.view.ActivityProyectoOrganizador
-import com.example.appatemporal.framework.view.dialogFragment.DeleteDialogFragment
+
 
 class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
     val binding = ProyectosOrganizadorItemBinding.bind(view)
 
     fun render(projectModel: Proyecto){
@@ -24,14 +31,26 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             itemView.context.startActivity(intent)
         }
 
+
         binding.deleteProjectButton.setOnClickListener{
-            val intent = Intent(itemView.context, DeleteDialogFragment::class.java)
-            with(intent){
-                putExtra("id_proyecto", projectModel.id_proyecto)
-                putExtra("nombre_proyecto", projectModel.nombre_proyecto)
-                putExtra("fecha_inicio", projectModel.fecha_inicio)
+            val intent = Intent(itemView.context, ActivityProyectoOrganizador::class.java)
+
+            val builder = AlertDialog.Builder(itemView.context)
+            builder.setTitle("¿Estás seguro?")
+            builder.setMessage("¿Estás seguro de que quieres eliminar este proyecto? Este proceso no puede revertirse")
+            //builder.setIcon(android.R.drawable.ic_dialog_alert)
+            builder.setPositiveButton("Eliminar"){dialogInterface, which ->
+                //Mandar a llamar la funcion delete()
+                Toast.makeText(itemView.context,"Se eliminó el proyecto correctamente",Toast.LENGTH_LONG).show()
             }
-            itemView.context.startActivity(intent)
+            builder.setNeutralButton("Cancelar"){dialogInterface , which ->
+
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
     }
 }

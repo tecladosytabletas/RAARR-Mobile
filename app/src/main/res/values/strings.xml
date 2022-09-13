@@ -4,6 +4,6 @@
     <string name="tittleDeleteDialog">¿Estás seguro de que quieres eliminar este proyecto?</string>
     <string name="deleteText">Eliminar</string>
     <string name="cancelText">Cancelar</string>
-    <string name="adviceDialog">¿Estás seguro de que quieres eliminar este proyecto? Este rpoceso no puede revertirse</string>
+    <string name="adviceDialog">¿Estás seguro de que quieres eliminar este proyecto? Este proceso no puede revertirse</string>
     <string name="tittleDialog">¿Estás seguro?</string>
 </resources>
