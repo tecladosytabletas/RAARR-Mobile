@@ -136,6 +136,10 @@ class OTPActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     progressBar.visibility = View.VISIBLE
                     Toast.makeText(this,"Authenticate Succesfully", Toast.LENGTH_SHORT).show()
+                    val uid: String = auth.currentUser?.uid.toString()
+                    val intent = Intent(this, RegisterActivity::class.java)
+                    intent.putExtra("userUid", uid)
+                    startActivity(intent)
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
