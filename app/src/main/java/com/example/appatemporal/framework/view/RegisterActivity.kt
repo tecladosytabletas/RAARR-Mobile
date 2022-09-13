@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -28,17 +29,11 @@ class RegisterActivity : AppCompatActivity() {
 
                 val user = UserModel(binding.editnameReg2.text.toString(), binding.editlnameReg2.text.toString(),
                     binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), binding.editGenderReg2.text.toString())
-
                 registerUserViewModel.addUser(userUid, user, repository)
+                val intent = Intent(this, Main::class.java)
+                intent.putExtra("userUid", userUid)
+                startActivity(intent)
             }
-
-
-
         }
-
-
-
-
-
     }
 }

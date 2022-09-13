@@ -13,6 +13,10 @@ class Repository(context: Context) {
         firestoreAPI.addUser(uid, user)
     }
 
+    suspend fun verifyUser (uid: String) : Boolean {
+        return firestoreAPI.verifyUser(uid)
+    }
+
 
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
