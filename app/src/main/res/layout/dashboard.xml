@@ -29,9 +29,9 @@
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scrollDash"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/scrollDash"
         android:layout_above="@+id/navbarDash"
         android:layout_below="@+id/headerDash"
         android:fillViewport="true">
@@ -39,10 +39,10 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
             android:layout_margin="16dp"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/dashTitle"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto"
-                android:text="Metrics"
+                android:text="Métricas"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="32sp" />
@@ -58,50 +58,55 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:orientation="horizontal"
                 android:layout_margin="24dp"
-                >
+                android:gravity="right"
+                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/BtnMes"
-                    android:layout_width="90dp"
+                <TextView
+                    android:id="@+id/filterMonth"
+                    android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:layout_weight="1"
-
-                    android:fontFamily="@font/roboto"
                     android:text="Este mes"
-                    android:textSize="12sp" />
+                    android:background="@drawable/gradent_horizontal"
+                    android:fontFamily="@font/roboto"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
-                    android:layout_weight="0.2">
-                </Space>
+                    android:layout_weight="0.2"></Space>
 
-                <Button
-                    android:id="@+id/BtnYr"
-                    android:layout_width="90dp"
+                <TextView
+                    android:id="@+id/filterYear"
+                    android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:layout_weight="1"
-
-                    android:fontFamily="@font/roboto"
                     android:text="Este año"
-                    android:textSize="12sp" />
+                    android:background="@drawable/gradent_horizontal"
+                    android:fontFamily="@font/roboto"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
-                    android:layout_weight="0.2">
-                </Space>
+                    android:layout_weight="0.2"></Space>
 
-                <Button
-                    android:id="@+id/BtnAll"
-                    android:layout_width="90dp"
+                <TextView
+                    android:id="@+id/filterAll"
+                    android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:layout_weight="1"
-
-                    android:fontFamily="@font/roboto"
                     android:text="Todos"
-                    android:textSize="12sp" />
+                    android:background="@drawable/gradent_horizontal"
+                    android:fontFamily="@font/roboto"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
 
             </LinearLayout>
 
@@ -110,19 +115,39 @@
                 android:layout_width="328dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
-                app:cardCornerRadius="15dp"
                 android:layout_weight="1"
-                app:cardPreventCornerOverlap="false"
-                >
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
+                    android:id="@+id/ingresos"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/ingresos"
-                    android:orientation="horizontal"
-                    android:background="@drawable/gradent_horizontal">
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/lightGray"
+                    android:orientation="vertical">
 
-                    <!-- agregar TextView -->
+                    <TextView
+                        android:id="@+id/eventCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="$4000.00"
+                        android:textAlignment="center"
+                        android:textSize="50sp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/eventCoun2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="En x eventos"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -131,27 +156,29 @@
             <Space
                 android:layout_width="1dp"
                 android:layout_height="16dp"
-                android:layout_weight="0.2">
-            </Space>
+                android:layout_weight="0.2"></Space>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/middleCard"
                 android:layout_width="328dp"
                 android:layout_height="240dp"
                 android:layout_gravity="center"
-                app:cardCornerRadius="15dp"
                 android:layout_weight="1"
-                app:cardPreventCornerOverlap="false"
-                >
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
+                    android:id="@+id/asistBoletosVendidos"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:id="@+id/asistBoletosVendidos"
-                    android:background="@drawable/gradent_horizontal">
+                    android:background="@color/lightGray"
+                    android:orientation="vertical">
 
-                    <!-- agregar grafica -->
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent">
+
+                    </com.github.mikephil.charting.charts.PieChart>
 
                 </LinearLayout>
 
@@ -160,27 +187,46 @@
             <Space
                 android:layout_width="1dp"
                 android:layout_height="16dp"
-                android:layout_weight="0.2">
-            </Space>
+                android:layout_weight="0.2"></Space>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/thirdCard"
                 android:layout_width="328dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
-                app:cardCornerRadius="15dp"
                 android:layout_weight="1"
+                app:cardCornerRadius="15dp"
                 app:cardPreventCornerOverlap="false"
-                >
+                android:layout_marginBottom="32dp">
 
                 <LinearLayout
+                    android:id="@+id/avgRating"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/avgRating"
-                    android:orientation="horizontal"
-                    android:background="@drawable/gradent_horizontal">
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/lightGray"
+                    android:orientation="vertical">
 
-                    <!-- agregar TextView -->
+                    <RatingBar
+                        android:id="@+id/ratingStars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:rating="3.4"
+                        android:stepSize="0.5" />
+
+                    <TextView
+                        android:id="@+id/ratingAvg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="Rating promedio de x"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="italic" />
 
                 </LinearLayout>
 

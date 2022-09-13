@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="Graficas Detalladas por Evento"
+                android:text="'Nombre del evento'"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="32sp" />
@@ -75,7 +75,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/chartLayout1"
-                    android:background="@drawable/gradent_horizontal">
+                    android:background="@color/lightGray">
 
                     <!-- agregar grafica -->
 
@@ -102,7 +102,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/chartLayout2"
-                    android:background="@drawable/gradent_horizontal">
+                    android:background="@color/lightGray">
 
                     <!-- agregar grafica -->
 
@@ -131,7 +131,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/chartLayout3"
-                    android:background="@drawable/gradent_horizontal">
+                    android:background="@color/lightGray">
 
                     <!-- agregar grafica -->
 
@@ -159,7 +159,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/chartLayout4"
-                    android:background="@drawable/gradent_horizontal">
+                    android:background="@color/lightGray">
 
                     <!-- agregar grafica -->
 
