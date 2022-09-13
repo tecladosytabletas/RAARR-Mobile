@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background">
+    <RelativeLayout
+        android:id="@+id/headerDash"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_gravity = "center">
+
+        <include layout = "@layout/header"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/navbarDash"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true">
+
+        <include layout="@layout/navbar" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollDash"
+        android:layout_above="@+id/navbarDash"
+        android:layout_below="@+id/headerDash"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:fillViewport="true">
+
+
+            <TextView
+                android:id="@+id/dashTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Graficas Detalladas por Evento"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="16dp"
+                android:layout_weight="0.2">
+            </Space>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
+                android:layout_width="328dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/chartLayout1"
+                    android:background="@drawable/gradent_horizontal">
+
+                    <!-- agregar grafica -->
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="16dp"
+                android:layout_weight="0.2">
+            </Space>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card2"
+                android:layout_width="328dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/chartLayout2"
+                    android:background="@drawable/gradent_horizontal">
+
+                    <!-- agregar grafica -->
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="16dp"
+                android:layout_weight="0.2">
+            </Space>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card3"
+                android:layout_width="328dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/chartLayout3"
+                    android:background="@drawable/gradent_horizontal">
+
+                    <!-- agregar grafica -->
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="16dp"
+                android:layout_weight="0.2">
+            </Space>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card4"
+                android:layout_width="328dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/chartLayout4"
+                    android:background="@drawable/gradent_horizontal">
+
+                    <!-- agregar grafica -->
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
