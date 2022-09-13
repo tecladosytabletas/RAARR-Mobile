@@ -32,6 +32,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".framework.view.ModificarProyecto"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".framework.view.ActivityProyectoOrganizador"
             android:exported="true">
         </activity>
