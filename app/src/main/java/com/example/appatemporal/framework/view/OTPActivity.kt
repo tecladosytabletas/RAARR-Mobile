@@ -1,6 +1,7 @@
-package com.example.myapplication
+package com.example.appatemporal.framework.view
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.example.appatemporal.databinding.ActivityOtpactivityBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit
 class OTPActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
+    private lateinit var binding: ActivityOtpactivityBinding
     private lateinit var verifyBtn : Button
     private lateinit var resendTV : TextView
     private lateinit var inputOTP1 : EditText
@@ -34,7 +37,9 @@ class OTPActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_otpactivity)
+
+        binding = ActivityOtpactivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         OTP = intent.getStringExtra("OTP").toString()
@@ -55,6 +60,7 @@ class OTPActivity : AppCompatActivity() {
             //colect otp from all the edit text
             val typedOTP = inputOTP1.text.toString() + inputOTP2.text.toString() + inputOTP3.text.toString() +
                     inputOTP4.text.toString() + inputOTP5.text.toString() + inputOTP6.text.toString()
+            Log.d("typedOTP", typedOTP)
             if (typedOTP.isNotEmpty()){
                 if (typedOTP.length == 6){
                     val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
@@ -79,14 +85,15 @@ class OTPActivity : AppCompatActivity() {
         inputOTP4.setText("")
         inputOTP5.setText("")
         inputOTP6.setText("")
-        resendTV.visibility = View.INVISIBLE
         resendTV.isEnabled = false
+        resendTV.setTextColor(Color.parseColor("#606060"))
 
         Handler(Looper.myLooper()!!).postDelayed(Runnable{
-            resendTV.visibility = View.VISIBLE
+            resendTV.setTextColor(Color.parseColor("#E4EBF1"))
             resendTV.isEnabled = true
         },60000)
     }
+
     private fun resenderVerificationCode(){
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
@@ -100,20 +107,10 @@ class OTPActivity : AppCompatActivity() {
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            // This callback will be invoked in two situations:
-            // 1 - Instant verification. In some cases the phone number can be instantly
-            //     verified without needing to send or enter a verification code.
-            // 2 - Auto-retrieval. On some devices Google Play services can automatically
-            //     detect the incoming verification SMS and perform verification without
-            //     user action.
-            signInWithPhoneAuthCredential(credential)
+            //signInWithPhoneAuthCredential(credential)
         }
 
         override fun onVerificationFailed(e: FirebaseException) {
-            // This callback is invoked in an invalid request for verification is made,
-            // for instance if the the phone number format is not valid.
-
-
             if (e is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request\
                 Log.d("TAG", "onVerificationFailed: ${e.toString()}")
@@ -122,23 +119,16 @@ class OTPActivity : AppCompatActivity() {
                 Log.d("TAG", "onVerificationFailed: ${e.toString()}")
             }
 
-            // Show a message and update the UI
         }
 
         override fun onCodeSent(
             verificationId: String,
             token: PhoneAuthProvider.ForceResendingToken
         ) {
-            // The SMS verification code has been sent to the provided phone number, we
-            // now need to ask the user to enter the code and then construct a credential
-            // by combining the code with a verification ID.
-            // Save verification ID and resending token so we can use them later
            OTP = verificationId
             resendToken = token
         }
     }
-
-
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
@@ -146,19 +136,16 @@ class OTPActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     progressBar.visibility = View.VISIBLE
                     Toast.makeText(this,"Authenticate Succesfully", Toast.LENGTH_SHORT).show()
-                    sendtoMain()
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
+                         Log.d("TAG","Incorrect SMS")
                     }
                     // Update UI
                 }
             }
-    }
-    private fun sendtoMain(){
-        startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun addTextChangeListener(){
@@ -168,21 +155,19 @@ class OTPActivity : AppCompatActivity() {
         inputOTP4.addTextChangedListener(EditTextWatcher(inputOTP4))
         inputOTP5.addTextChangedListener(EditTextWatcher(inputOTP5))
         inputOTP6.addTextChangedListener(EditTextWatcher(inputOTP6))
-
-
     }
 
     private fun init() {
         auth = FirebaseAuth.getInstance()
-        progressBar = findViewById(R.id.otpProgressBar)
-        verifyBtn = findViewById(R.id.verifyOTPBtn)
-        resendTV = findViewById(R.id.resendTextView)
-        inputOTP1 = findViewById(R.id.otpEditText1)
-        inputOTP2 = findViewById(R.id.otpEditText2)
-        inputOTP3 = findViewById(R.id.otpEditText3)
-        inputOTP4 = findViewById(R.id.otpEditText4)
-        inputOTP5 = findViewById(R.id.otpEditText5)
-        inputOTP6 = findViewById(R.id.otpEditText6)
+        progressBar = binding.otpProgressBar
+        verifyBtn = binding.verifyOTPBtn
+        resendTV = binding.resendTextView
+        inputOTP1 = binding.otpEditText1
+        inputOTP2 = binding.otpEditText2
+        inputOTP3 = binding.otpEditText3
+        inputOTP4 = binding.otpEditText4
+        inputOTP5 = binding.otpEditText5
+        inputOTP6 = binding.otpEditText6
     }
 
     inner class EditTextWatcher(private val view : View) : TextWatcher {
@@ -195,21 +180,16 @@ class OTPActivity : AppCompatActivity() {
         }
 
         override fun afterTextChanged(p0: Editable?) {
-
             val text = p0.toString()
             when(view.id){
-                R.id.otpEditText1 -> if(text.length == 1 ) inputOTP2.requestFocus()
-                R.id.otpEditText2 -> if(text.length == 1 ) inputOTP3.requestFocus() else if (text.isEmpty()) inputOTP1.requestFocus()
-                R.id.otpEditText3 -> if(text.length == 1 ) inputOTP4.requestFocus() else if (text.isEmpty()) inputOTP2.requestFocus()
-                R.id.otpEditText4 -> if(text.length == 1 ) inputOTP5.requestFocus() else if (text.isEmpty()) inputOTP3.requestFocus()
-                R.id.otpEditText5 -> if(text.length == 1 ) inputOTP6.requestFocus() else if (text.isEmpty()) inputOTP4 .requestFocus()
-                R.id.otpEditText6 -> if(text.isEmpty()) inputOTP5.requestFocus()
-
-
-
+                binding.otpEditText1.id -> if(text.length == 1 ) inputOTP2.requestFocus() else if (text.isEmpty()) inputOTP1.requestFocus()
+                binding.otpEditText2.id -> if(text.length == 1 ) inputOTP3.requestFocus() else if (text.isEmpty()) inputOTP1.requestFocus()
+                binding.otpEditText3.id -> if(text.length == 1 ) inputOTP4.requestFocus() else if (text.isEmpty()) inputOTP2.requestFocus()
+                binding.otpEditText4.id -> if(text.length == 1 ) inputOTP5.requestFocus() else if (text.isEmpty()) inputOTP3.requestFocus()
+                binding.otpEditText5.id -> if(text.length == 1 ) inputOTP6.requestFocus() else if (text.isEmpty()) inputOTP4 .requestFocus()
+                binding.otpEditText6.id -> if(text.isEmpty()) inputOTP5.requestFocus()
             }
         }
-
     }
 }
 
