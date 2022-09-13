@@ -12,7 +12,6 @@ class ModificarProyecto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.vista_modificarproyecto)
 
-
         // get reference to the string array that we just created
         val languages = resources.getStringArray(R.array.programming_languages)
         // create an array adapter and pass the required parameter
