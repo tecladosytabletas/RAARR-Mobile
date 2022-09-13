@@ -1,10 +1,9 @@
 plugins {
     id 'kotlin-kapt' // include this
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
     id 'com.android.application'
     id 'kotlin-android'
-    //Conexión con FireBase
-    id 'com.google.gms.google-services'
     //Solución de errores en cuestión de FireStorm
     id 'org.jetbrains.kotlin.android'
     //Solución de errores en implementación de RecyclerView
@@ -47,6 +46,17 @@ android {
 }
 
 dependencies {
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+
+    //Firebase Google Analitics
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    //Firebase Auth
+    implementation 'com.google.firebase:firebase-auth'
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'

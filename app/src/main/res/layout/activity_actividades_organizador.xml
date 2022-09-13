@@ -94,7 +94,6 @@
                     android:id="@+id/recivler_view"
                     android:layout_below="@+id/search_edit"
                     android:layout_margin="32dp"/>
-
             </LinearLayout>
 
         </LinearLayout>
