@@ -26,7 +26,6 @@ class ModificarProyecto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ModifyNewProjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         binding.nameModifyProject.setText(myExtras?.getString("nombre_proyecto"))

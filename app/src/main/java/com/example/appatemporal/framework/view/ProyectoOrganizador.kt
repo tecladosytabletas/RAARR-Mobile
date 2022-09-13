@@ -32,8 +32,6 @@ class ProyectoOrganizador : AppCompatActivity() {
             initRecyclerView(repository)
         }
 
-
-
         binding.tvNewProject.setOnClickListener {
             val intent = Intent(this, AddNewProjectForm::class.java)
             startActivity(intent)
@@ -45,9 +43,5 @@ class ProyectoOrganizador : AppCompatActivity() {
         binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList)
         Log.d("ProyectoOrganizador", "initRecyclerView: $projectList")
-
-
-
     }
-
 }
