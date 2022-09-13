@@ -22,7 +22,7 @@
 
         </activity>
         <activity
-            android:name=".framework.view.ProyectoOrganizador"
+            android:name=".framework.view.DashPieChart"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
