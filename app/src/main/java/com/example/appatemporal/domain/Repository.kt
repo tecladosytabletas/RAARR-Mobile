@@ -12,11 +12,11 @@ class Repository(context: Context) {
     val objetivoDao = LocalDatabase.getInstance(context).objetivoDao
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
 
-    suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
+    suspend fun insertActividad(actividad: Actividad) = actividadDao.insertTask(actividad)
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
     suspend fun getAllActividades() = actividadDao.getAll()
-    suspend fun getActividadById(id: Int) = actividadDao.getById(id)
-    suspend fun deleteActividad(actividad: Actividad) = actividadDao.delete(actividad)
+    suspend fun getActividadById(id: Int) = actividadDao.getTask(id)
+    suspend fun deleteActividad(actividad: Actividad) = actividadDao.deleteTask(actividad)
     suspend fun deleteAllActividades() = actividadDao.deleteAll()
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
