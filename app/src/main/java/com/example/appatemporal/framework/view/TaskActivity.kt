@@ -8,29 +8,29 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.Actividad
-import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.example.appatemporal.data.localdatabase.dao.ActividadDao
-import java.util.*
+import com.example.appatemporal.databinding.ActivityTaskBinding
 
 class TaskActivity : AppCompatActivity(), View.OnClickListener {
 
     private val area_labels = arrayListOf("Personal", "Business", "Insurance", "Shopping", "Banking")
     private val estatus_labels = arrayListOf("Baja", "Media", "Alta")
 
+
     val db by lazy {
         LocalDatabase.getInstance(this).actividadDao
     }
-
+    private lateinit var binding : ActivityTaskBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task)
+        binding = ActivityTaskBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        nameActivity.setOnClickListener(this)
-        saveBtn.setOnClickListener(this)
+        binding.nameActivity.setOnClickListener(this)
+        binding.saveBtn.setOnClickListener(this)
 
 
         setUpSpinnerArea()
@@ -43,7 +43,7 @@ class TaskActivity : AppCompatActivity(), View.OnClickListener {
 
         area_labels.sort()
 
-        spinnerArea.adapter = adapter
+        binding.spinnerArea.adapter = adapter
     }
 
     private fun setUpSpinnerEstatus() {
@@ -52,7 +52,7 @@ class TaskActivity : AppCompatActivity(), View.OnClickListener {
 
         estatus_labels.sort()
 
-        spinnerEstatus.adapter = adapter
+        binding.spinnerEstatus.adapter = adapter
     }
 
     override fun onClick(v: View) {
@@ -65,9 +65,9 @@ class TaskActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun saveTodo() {
-        val area = spinnerArea.selectedItem.toString()
-        val estatus = spinnerEstatus.selectedItem.toString()
-        val nombre = nameActivity.text.toString()
+        val area = binding.spinnerArea.selectedItem.toString()
+        val estatus = binding.spinnerEstatus.selectedItem.toString()
+        val nombre = binding.nameActivity.text.toString()
 
         GlobalScope.launch(Dispatchers.Main) {
             val id = withContext(Dispatchers.IO) {

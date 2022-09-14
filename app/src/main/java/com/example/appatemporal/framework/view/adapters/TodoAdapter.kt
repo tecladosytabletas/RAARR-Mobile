@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Actividad
-import kotlinx.android.synthetic.main.activity_task.*
-import kotlinx.android.synthetic.main.item_todo.view.*
-import java.util.*
+import com.example.appatemporal.databinding.ItemTodoBinding
+
 
 class TodoAdapter(val list: List<Actividad>) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
+    private lateinit var binding : ItemTodoBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         return TodoViewHolder(
@@ -31,11 +31,13 @@ class TodoAdapter(val list: List<Actividad>) : RecyclerView.Adapter<TodoAdapter.
     }
 
     class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val binding = ItemTodoBinding.bind(itemView)
         fun bind(todoModel: Actividad) {
             with(itemView) {
-                txtShowTitle.text = todoModel.nombre
-                txtShowArea.text = todoModel.area
-                txtShowEstatus.text = todoModel.estatus
+                binding.txtShowTitle.text = todoModel.nombre
+                binding.txtShowArea.text = todoModel.area
+                binding.txtShowEstatus.text = todoModel.estatus
 
             }
         }

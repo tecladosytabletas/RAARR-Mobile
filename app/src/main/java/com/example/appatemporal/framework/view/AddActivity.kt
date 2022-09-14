@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.Actividad
+import com.example.appatemporal.databinding.AddActivitiesBinding
 import com.example.appatemporal.framework.view.adapters.TodoAdapter
-import kotlinx.android.synthetic.main.add_activities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -25,15 +25,17 @@ class AddActivity : AppCompatActivity() {
 
     val list = arrayListOf<Actividad>()
     var adapter = TodoAdapter(list)
+    private lateinit var binding : AddActivitiesBinding
     val db by lazy {
         LocalDatabase.getInstance(this).actividadDao
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = AddActivitiesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.add_activities)
-        todoRv.apply {
+        binding.todoRv.apply {
             layoutManager = LinearLayoutManager(this@AddActivity)
             adapter = this@AddActivity.adapter
         }
@@ -150,7 +152,7 @@ class AddActivity : AppCompatActivity() {
         }
 
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(todoRv)
+        itemTouchHelper.attachToRecyclerView(binding.todoRv)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
