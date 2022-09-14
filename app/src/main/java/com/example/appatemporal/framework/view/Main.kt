@@ -33,9 +33,6 @@ class Main : AppCompatActivity() {
         mainViewModel.userData.observe(this, Observer {
             binding.textView2.text = "${it.nombre_Usuario}"
         })
-
-
-
     }
 }
 

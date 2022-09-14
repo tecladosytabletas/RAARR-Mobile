@@ -39,6 +39,7 @@
         android:gravity="center"
         android:textColor="#E4EBF1"
         android:inputType="number"
+        android:maxLength="1"
         android:hint="0"
         android:textColorHint="#606060"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
@@ -53,6 +54,7 @@
         android:gravity="center"
         android:textColorHint="#606060"
         android:textColor="#E4EBF1"
+        android:maxLength="1"
         android:hint="0"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
@@ -69,6 +71,7 @@
         android:textColor="#E4EBF1"
         android:inputType="number"
         android:textColorHint="#606060"
+        android:maxLength="1"
         android:gravity="center"
         android:hint="0"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
@@ -85,6 +88,7 @@
         android:inputType="number"
         android:textColorHint="#606060"
         android:gravity="center"
+        android:maxLength="1"
         android:textColor="#E4EBF1"
         android:hint="0"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
@@ -100,6 +104,7 @@
         android:layout_height="45dp"
         android:ems="10"
         android:inputType="number"
+        android:maxLength="1"
         android:gravity="center"
         android:textColorHint="#606060"
         android:textColor="#E4EBF1"
@@ -111,7 +116,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         tools:layout_editor_absoluteY="198dp" />
 
-
     <EditText
         android:id="@+id/otpEditText6"
         android:layout_width="45dp"
@@ -120,6 +124,7 @@
         android:textColorHint="#606060"
         android:ems="10"
         android:inputType="number"
+        android:maxLength="1"
         android:gravity="center"
         android:textColor="#E4EBF1"
         android:hint="0"
