@@ -3,6 +3,8 @@ package com.example.appatemporal.domain
 import android.content.Context
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 class Repository(context: Context) {
 
@@ -18,6 +20,21 @@ class Repository(context: Context) {
     suspend fun getActividadById(id: Int) = actividadDao.getById(id)
     suspend fun deleteActividad(actividad: Actividad) = actividadDao.delete(actividad)
     suspend fun deleteAllActividades() = actividadDao.deleteAll()
+    fun countPendingActivities(id_a: Int, id_e: Int): Int = runBlocking {
+        val count = async {
+            actividadDao.countPendingActivities(id_a, id_e)
+        }
+        count.start()
+        count.await()
+    }
+
+    fun countDoneActivities(id_a: Int, id_e: Int): Int = runBlocking {
+        val count = async {
+            actividadDao.countDoneActivities(id_a, id_e)
+        }
+        count.start()
+        count.await()
+    }
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
     suspend fun insertAllAreas(areas: List<Area>) = areaDao.insertAll(areas)
