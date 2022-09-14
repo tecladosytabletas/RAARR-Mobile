@@ -4,16 +4,21 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.R
 import com.example.appatemporal.data.network.dataclasses.DashPieModel
+import com.example.appatemporal.domain.FirestoreService
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.main.dashboard.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 
 class DashboardMetrics : AppCompatActivity(){
     private lateinit var ourPieChart: PieChart
@@ -23,9 +28,9 @@ class DashboardMetrics : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
 
-        // Declaraciom de datos dinamicos
+        // Declaracion de datos dinamicos
         val eventCount = findViewById<TextView>(R.id.eventCount)
-        ourPieChart = findViewById(R.id.dashPieChart)
+        ourPieChart = findViewById<PieChart>(R.id.dashPieChart)
 
 
         populateEventCount()
@@ -36,11 +41,29 @@ class DashboardMetrics : AppCompatActivity(){
 
     // Ejemplo de poblar ingresos de evento
 
-    private fun populateEventCount() {
+    private suspend fun populateEventCount() {
 
         // Aqui debe de recuperar los datos de Firebase y asignarlos a la variable eventCountEntry
 
-        val eventCountEntry = "PRUEBA"
+        val sessionIdaux : String = "HWRTS0ZBbnk8IffKtrNx"
+        var eventCountEntry = "PRUEBA"
+
+        val rootRef = FirebaseFirestore.getInstance()
+        rootRef.collection("Usuario_Evento")
+            .whereEqualTo("Id_Usuario", sessionIdaux)
+            .get().addOnSuccessListener { task ->
+            if (!task.isEmpty){
+                var count = 0
+                task.documents.let {
+                    for (snapshot in it) {
+                        count++
+                    }
+                }
+                eventCountEntry = count.toString()
+            }
+        }.addOnFailureListener{
+            Log.d("ERROR", it.message.toString())
+            }
 
         eventCount.text = eventCountEntry
 
