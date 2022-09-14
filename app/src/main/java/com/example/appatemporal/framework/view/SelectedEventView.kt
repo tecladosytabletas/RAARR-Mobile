@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.appatemporal.R
 
-
-class Main : AppCompatActivity() {
+class SelectedEventView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-            }
-}
+        setContentView(R.layout.activity_selected_event_view)
+    }
 
-    // Insert activity into database
+}

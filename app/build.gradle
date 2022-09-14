@@ -2,9 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id 'kotlin-kapt' // include this
     id 'dagger.hilt.android.plugin'
-    id 'kotlin-android-extensions'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -39,10 +40,25 @@ android {
         viewBinding = true
     }
 
+    viewBinding {
+        enabled = true
+    }
+
 
 }
 
 dependencies {
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+
+    //Firebase Google Analitics
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    //Firebase Auth
+    implementation 'com.google.firebase:firebase-auth'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -71,6 +87,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
     // View model
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.fragment:fragment-ktx:1.5.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
 }
