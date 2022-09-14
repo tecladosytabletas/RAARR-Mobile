@@ -5,6 +5,7 @@ import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
 
@@ -12,9 +13,7 @@ class Repository(context: Context) {
 
     suspend fun addUser(uid: String, user: UserModel, role: String) {
         firestoreAPI.addUser(uid, user)
-        //firestoreAPI.addRole(role)
         firestoreAPI.addUserRole(uid, role)
-
     }
 
     suspend fun verifyUser(uid: String) : Boolean {
@@ -23,6 +22,10 @@ class Repository(context: Context) {
 
     suspend fun getUser(uid: String) : DocumentSnapshot{
         return firestoreAPI.getUser(uid)
+    }
+
+    suspend fun getUserRole(uid: String) : DocumentSnapshot {
+        return firestoreAPI.getUserRole(uid)
     }
 
 

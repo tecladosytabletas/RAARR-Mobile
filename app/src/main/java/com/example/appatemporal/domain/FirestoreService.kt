@@ -3,6 +3,7 @@ package com.example.appatemporal.domain
 import android.util.Log
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -66,5 +67,19 @@ class FirestoreService {
             .get()
             .await()
         return userData
+    }
+
+    suspend fun getUserRole(uid: String) : DocumentSnapshot {
+        var dbRole: QuerySnapshot =
+            db.collection("Usuario_Rol")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        var userRole: DocumentSnapshot =
+            db.collection("Rol")
+                .document(dbRole.documents[0].data?.get("id_Rol").toString())
+                .get()
+                .await()
+        return userRole
     }
 }
