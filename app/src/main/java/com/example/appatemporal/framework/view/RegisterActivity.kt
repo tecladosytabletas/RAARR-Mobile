@@ -71,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d("Role", role)
                 val user = UserModel(binding.editnameReg2.text.toString(), binding.editlnameReg2.text.toString(),
                     binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), gender)
-                registerUserViewModel.addUser(userUid, user, repository)
+                registerUserViewModel.addUser(userUid, user, role, repository)
                 val intent = Intent(this, Main::class.java)
                 intent.putExtra("userUid", userUid)
                 startActivity(intent)

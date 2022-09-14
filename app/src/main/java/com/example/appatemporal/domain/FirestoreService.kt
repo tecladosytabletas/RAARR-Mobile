@@ -22,8 +22,39 @@ class FirestoreService {
             }
     }
 
+    fun addRole(role: String) {
+        val dbRole = hashMapOf<String, String>(
+            "nombre_Rol" to role
+        )
+
+        db.collection("Rol")
+            .document(role)
+            .set(dbRole)
+            .addOnSuccessListener {
+                Log.d("FirestoreLogs","Added Role Correctly")
+            }
+            .addOnFailureListener {
+                Log.d("FirestoreLogs","Added user failed, exception: $it")
+            }
+    }
+
+    fun addUserRole(uid: String, role: String) {
+        val userRole = hashMapOf(
+            "id_Usuario" to uid,
+            "id_Rol" to role
+        )
+        db.collection("Usuario_Rol")
+            .add(userRole)
+            .addOnSuccessListener {
+                Log.d("FirestoreLogs","Added User wih Role Correctly")
+            }
+            .addOnFailureListener {
+                Log.d("FirestoreLogs","Added user failed, exception: $it")
+            }
+    }
+
     suspend fun verifyUser(uid: String) : Boolean {
-        var userExists: Boolean = false
+        var userExists = false
         db.collection("Usuario")
             .document(uid)
             .get()

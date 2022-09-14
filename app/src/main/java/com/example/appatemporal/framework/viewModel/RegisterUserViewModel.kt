@@ -9,8 +9,8 @@ class RegisterUserViewModel : ViewModel() {
 
     val registerUserRequirement = RegisterUserRequirement()
 
-    fun addUser(uid: String ,user: UserModel, repository: Repository) {
-        registerUserRequirement(uid, user, repository)
+    fun addUser(uid: String ,user: UserModel, role: String, repository: Repository) {
+        registerUserRequirement(uid, user, role, repository)
     }
 
 }

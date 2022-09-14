@@ -10,8 +10,11 @@ class Repository(context: Context) {
 
     val firestoreAPI = FirestoreService()
 
-    fun addUser(uid: String, user: UserModel) {
+    fun addUser(uid: String, user: UserModel, role: String) {
         firestoreAPI.addUser(uid, user)
+        firestoreAPI.addRole(role)
+        firestoreAPI.addUserRole(uid, role)
+
     }
 
     suspend fun verifyUser(uid: String) : Boolean {
