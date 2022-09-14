@@ -30,7 +30,7 @@ interface ActividadDao {
     fun finishTask(uid:Long)
 
     @Query("Delete from actividad_table where id_actividad=:uid")
-    fun deleteTask(uid: Actividad)
+    fun deleteTask(uid:Long)
 
     // Delete all activities
     @Query("DELETE FROM actividad_table")

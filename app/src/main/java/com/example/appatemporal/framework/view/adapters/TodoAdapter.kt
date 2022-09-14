@@ -33,7 +33,7 @@ class TodoAdapter(val list: List<Actividad>) : RecyclerView.Adapter<TodoAdapter.
     class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(todoModel: Actividad) {
             with(itemView) {
-                txtShowTitle.text = todoModel.nombre_actividad
+                txtShowTitle.text = todoModel.nombre
                 txtShowArea.text = todoModel.area
                 txtShowEstatus.text = todoModel.estatus
 

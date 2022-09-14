@@ -18,8 +18,8 @@ import java.util.*
 
 class TaskActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val labels = arrayListOf("Personal", "Business", "Insurance", "Shopping", "Banking")
-
+    private val area_labels = arrayListOf("Personal", "Business", "Insurance", "Shopping", "Banking")
+    private val estatus_labels = arrayListOf("Baja", "Media", "Alta")
 
     val db by lazy {
         LocalDatabase.getInstance(this).actividadDao
@@ -39,18 +39,18 @@ class TaskActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setUpSpinnerArea() {
         val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, labels)
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, area_labels)
 
-        labels.sort()
+        area_labels.sort()
 
         spinnerArea.adapter = adapter
     }
 
     private fun setUpSpinnerEstatus() {
         val adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, labels)
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, estatus_labels)
 
-        labels.sort()
+        estatus_labels.sort()
 
         spinnerEstatus.adapter = adapter
     }

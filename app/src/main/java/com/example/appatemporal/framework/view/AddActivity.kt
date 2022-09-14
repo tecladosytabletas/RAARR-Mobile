@@ -32,7 +32,7 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.add_activities)
         todoRv.apply {
             layoutManager = LinearLayoutManager(this@AddActivity)
             adapter = this@AddActivity.adapter
