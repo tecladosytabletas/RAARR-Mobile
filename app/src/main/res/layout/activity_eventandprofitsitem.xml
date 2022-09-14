@@ -37,30 +37,7 @@
             android:text="Categoria del evento"
             android:textColor="@color/white"
             android:textFontWeight="600" />
-        <TextView
-            android:id="@+id/ratingEvent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradent_horizontal"
-            android:backgroundTint="#33000000"
-            android:backgroundTintMode="src_atop"
-            android:fontFamily="@font/inter"
-            android:padding="16dp"
-            android:text="Rating del evento"
-            android:textColor="@color/white"
-            android:textFontWeight="600" />
-        <TextView
-            android:id="@+id/profitsEvent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradent_horizontal"
-            android:backgroundTint="#33000000"
-            android:backgroundTintMode="src_atop"
-            android:fontFamily="@font/inter"
-            android:padding="16dp"
-            android:text="Ganancias del evento"
-            android:textColor="@color/white"
-            android:textFontWeight="600" />
+
     </LinearLayout>
 
 </LinearLayout>

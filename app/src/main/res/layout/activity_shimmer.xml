@@ -33,24 +33,7 @@
             android:background="@drawable/gradent_horizontal"
 
             />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Rating"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:id = "@+id/ratingEvent"
-            android:background="@drawable/gradent_horizontal"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Profits"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:id = "@+id/profitsEvent"
-            android:background="@drawable/gradent_horizontal"
-            />
+
     </LinearLayout>
 
 </LinearLayout>
