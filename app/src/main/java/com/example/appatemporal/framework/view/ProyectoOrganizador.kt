@@ -42,6 +42,9 @@ class ProyectoOrganizador : AppCompatActivity() {
         val projectList = viewModel.getProjects(repository)
         binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList)
-        Log.d("ProyectoOrganizador", "initRecyclerView: $projectList")
+        // Log each project
+        projectList.forEach {
+            Log.d("Project", it.toString())
+        }
     }
 }

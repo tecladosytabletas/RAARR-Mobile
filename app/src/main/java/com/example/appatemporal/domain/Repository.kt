@@ -15,6 +15,7 @@ class Repository(context: Context) {
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insertTask(actividad)
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
     suspend fun getAllActividades() = actividadDao.getAll()
+    suspend fun getTasks(id:Int) = actividadDao.getTasks(id)
     suspend fun getActividadById(id: Int) = actividadDao.getTask(id)
     //suspend fun deleteActividad(actividad: Actividad) = actividadDao.deleteTask(actividad)
     suspend fun deleteAllActividades() = actividadDao.deleteAll()

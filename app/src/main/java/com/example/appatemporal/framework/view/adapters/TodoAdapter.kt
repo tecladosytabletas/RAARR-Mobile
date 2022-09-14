@@ -9,9 +9,7 @@ import com.example.appatemporal.data.localdatabase.entities.Actividad
 import com.example.appatemporal.databinding.ItemTodoBinding
 
 
-class TodoAdapter(val list: List<Actividad>) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
-
-    private lateinit var binding : ItemTodoBinding
+class TodoAdapter(val list: List<Actividad>) : RecyclerView.Adapter<TodoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         return TodoViewHolder(
@@ -20,29 +18,27 @@ class TodoAdapter(val list: List<Actividad>) : RecyclerView.Adapter<TodoAdapter.
         )
     }
 
-    override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.bind(list[position])
+        val item = list[position]
+        holder.bind(item)
     }
 
-    override fun getItemId(position: Int): Long {
-        return list[position].id_actividad.toLong()
-    }
+    override fun getItemCount(): Int = list.size
 
-    class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val binding = ItemTodoBinding.bind(itemView)
-        fun bind(todoModel: Actividad) {
-            with(itemView) {
-                binding.txtShowTitle.text = todoModel.nombre
-                binding.txtShowArea.text = todoModel.area
-                binding.txtShowEstatus.text = todoModel.estatus
 
-            }
-        }
+
+}
+class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    private val binding = ItemTodoBinding.bind(itemView)
+    fun bind(todoModel: Actividad) {
+        binding.txtShowTitle.text = todoModel.nombre
+        binding.txtShowArea.text = todoModel.area
+        binding.txtShowEstatus.text = todoModel.estatus
+
     }
 
 }
-
 

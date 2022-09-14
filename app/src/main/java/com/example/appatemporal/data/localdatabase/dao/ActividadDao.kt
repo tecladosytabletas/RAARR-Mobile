@@ -20,7 +20,7 @@ interface ActividadDao {
 
     // Insert one activity
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTask(actividad: Actividad):Long
+    suspend fun insertTask(actividad: Actividad)
 
     // Get activity by id
     @Query("SELECT * FROM actividad_table WHERE id_actividad = :id")
@@ -36,6 +36,6 @@ interface ActividadDao {
     @Query("DELETE FROM actividad_table")
     suspend fun deleteAll()
 
-    @Query("Select * from actividad_table where isFinished == 0")
-    fun getTasks():LiveData<List<Actividad>>
+    @Query("Select * from actividad_table where isFinished == 0 and id_proyecto_fk = :idProyecto")
+    suspend fun getTasks(idProyecto:Int):List<Actividad>
 }
