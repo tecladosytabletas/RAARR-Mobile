@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
 import com.example.appatemporal.domain.models.UserModel
+import com.google.firebase.firestore.DocumentSnapshot
 
 class Repository(context: Context) {
 
@@ -13,8 +14,12 @@ class Repository(context: Context) {
         firestoreAPI.addUser(uid, user)
     }
 
-    suspend fun verifyUser (uid: String) : Boolean {
+    suspend fun verifyUser(uid: String) : Boolean {
         return firestoreAPI.verifyUser(uid)
+    }
+
+    suspend fun getUser(uid: String) : DocumentSnapshot{
+        return firestoreAPI.getUser(uid)
     }
 
 

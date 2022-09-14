@@ -2,6 +2,7 @@ package com.example.appatemporal.domain
 
 import android.util.Log
 import com.example.appatemporal.domain.models.UserModel
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -21,7 +22,7 @@ class FirestoreService {
             }
     }
 
-    suspend fun verifyUser (uid: String) : Boolean{
+    suspend fun verifyUser(uid: String) : Boolean {
         var userExists: Boolean = false
         db.collection("Usuario")
             .document(uid)
@@ -33,5 +34,14 @@ class FirestoreService {
             }
             .await()
         return userExists
+    }
+
+    suspend fun getUser(uid: String) : DocumentSnapshot{
+        var userData: DocumentSnapshot =
+            db.collection("Usuario")
+            .document(uid)
+            .get()
+            .await()
+        return userData
     }
 }

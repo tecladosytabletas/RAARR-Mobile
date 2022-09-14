@@ -12,4 +12,5 @@ class RegisterUserViewModel : ViewModel() {
     fun addUser(uid: String ,user: UserModel, repository: Repository) {
         registerUserRequirement(uid, user, repository)
     }
+
 }

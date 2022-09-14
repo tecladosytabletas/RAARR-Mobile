@@ -146,7 +146,6 @@ class OTPActivity : AppCompatActivity() {
 
                     otpViewModel.userExists.observe(this, Observer {
                         val existence = it as Boolean
-
                         if (existence) {
                             val intent = Intent(this, Main::class.java)
                             intent.putExtra("userUid", uid)
