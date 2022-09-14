@@ -5,7 +5,7 @@ import com.example.appatemporal.domain.models.UserModel
 
 class RegisterUserRequirement {
 
-    operator fun invoke(uid: String, user: UserModel, role: String, repository: Repository) {
+    suspend operator fun invoke(uid: String, user: UserModel, role: String, repository: Repository) {
         repository.addUser(uid, user, role)
     }
 }
