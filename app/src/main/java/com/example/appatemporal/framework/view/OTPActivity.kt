@@ -11,7 +11,11 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.appatemporal.databinding.ActivityOtpactivityBinding
+import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.viewModel.OTPViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -34,13 +38,13 @@ class OTPActivity : AppCompatActivity() {
     private lateinit var OTP: String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var phoneNumber: String
+    private val otpViewModel: OTPViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityOtpactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         OTP = intent.getStringExtra("OTP").toString()
         resendToken = intent.getParcelableExtra("resendToken")!!
@@ -136,6 +140,24 @@ class OTPActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     progressBar.visibility = View.VISIBLE
                     Toast.makeText(this,"Authenticate Succesfully", Toast.LENGTH_SHORT).show()
+                    val uid: String = auth.currentUser?.uid.toString()
+                    val repository = Repository(this)
+                    otpViewModel.verifyUser(uid, repository)
+
+                    otpViewModel.userExists.observe(this, Observer {
+                        val existence = it as Boolean
+                        if (existence) {
+                            val intent = Intent(this, Main::class.java)
+                            intent.putExtra("userUid", uid)
+                            startActivity(intent)
+                        } else {
+                            val intent = Intent(this, RegisterActivity::class.java)
+                            intent.putExtra("userUid", uid)
+                            startActivity(intent)
+                        }
+                    })
+
+
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
