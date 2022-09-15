@@ -22,11 +22,15 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(activityModel: Actividad){
         binding.txtShowTitle.text = activityModel.nombre_actividad
+        binding.txtShowArea.text = activityModel.area
+        binding.txtShowEstatus.text = activityModel.estatus
         binding.ivEditIcon.setOnClickListener{
             val intent1 = Intent(itemView.context, ModificarActividad::class.java)
             with(intent1){
                 putExtra("id_actividad", activityModel.id_actividad)
                 putExtra("nombre_actividad", activityModel.nombre_actividad)
+                putExtra("area", activityModel.area)
+                putExtra("estatus", activityModel.estatus)
             }
             itemView.context.startActivity(intent1)
         }
@@ -35,6 +39,8 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             with(intent){
                 putExtra("id_actividad", activityModel.id_actividad)
                 putExtra("nombre_actividad", activityModel.nombre_actividad)
+                putExtra("area", activityModel.area)
+                putExtra("estatus", activityModel.estatus)
             }
             itemView.context.startActivity(intent)
         }
