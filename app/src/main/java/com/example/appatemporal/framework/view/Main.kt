@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.appatemporal.R
 import com.example.appatemporal.databinding.ActivityMainBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.MainViewModel
