@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#302E3B"
-    tools:context=".framework.view.AddActivity">
+    android:id="@+id/DeleteActivity">
 
 
     <include
@@ -42,6 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="32dp"
         android:layout_marginStart="24dp"
+        android:background="@color/blue"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="36dp"

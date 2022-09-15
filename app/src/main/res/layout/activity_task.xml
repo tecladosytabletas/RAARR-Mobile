@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#302E3B"
-    tools:context=".framework.view.TaskActivity">
+    android:background="#302E3B">
 
 
     <include
@@ -21,12 +20,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="314dp"
-        android:text="Task Title"
+        android:text="Nombre de la actividad"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
@@ -76,7 +76,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewActArea" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewActArea"
+        android:prompt="@string/eventType"
+        android:entries="@array/eventTypeList"/>
 
 
     <TextView
@@ -107,7 +109,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewActEstatus" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewActEstatus"
+        android:prompt="@string/eventType"
+        android:entries="@array/eventTypeList"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveBtn"

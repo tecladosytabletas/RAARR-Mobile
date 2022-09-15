@@ -1,11 +1,17 @@
 package com.example.appatemporal.data.requirements
 
+import android.util.Log
 import com.example.appatemporal.data.localdatabase.entities.Actividad
 import com.example.appatemporal.domain.Repository
 
 class AddActivityRequirement {
 
-    suspend fun getActivities(id:Int , repository: Repository  ): List<Actividad> {
-        return repository.getTasks(id)
+    suspend fun createActividad(actividad: Actividad, repository:Repository){
+
+        repository.insertActividad(actividad)
+        repository.getAllProyectos().forEach {
+            Log.d("Proyecto", it.toString())
+        }
+
     }
 }
