@@ -25,16 +25,6 @@ class OTPActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var binding: ActivityOtpactivityBinding
-    private lateinit var verifyBtn : Button
-    private lateinit var resendTV : TextView
-    private lateinit var inputOTP1 : EditText
-    private lateinit var inputOTP2 : EditText
-    private lateinit var inputOTP3 : EditText
-    private lateinit var inputOTP4 : EditText
-    private lateinit var inputOTP5 : EditText
-    private lateinit var inputOTP6 : EditText
-    private lateinit var progressBar : ProgressBar
-
     private lateinit var OTP: String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var phoneNumber: String
@@ -42,6 +32,7 @@ class OTPActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
 
         binding = ActivityOtpactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,27 +41,27 @@ class OTPActivity : AppCompatActivity() {
         resendToken = intent.getParcelableExtra("resendToken")!!
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
-        init()
-        progressBar.visibility = View.INVISIBLE
+        binding.otpProgressBar.visibility = View.INVISIBLE
+        binding.otpEditText1.requestFocus()
         addTextChangeListener()
-        resendOTPvVIsibility()
+        resendOTPvVisibility()
 
-        resendTV.setOnClickListener {
+        binding.resendTextView.setOnClickListener {
             resenderVerificationCode()
-            resendOTPvVIsibility()
+            resendOTPvVisibility()
         }
 
-        verifyBtn.setOnClickListener {
+        binding.verifyOTPBtn.setOnClickListener {
             //colect otp from all the edit text
-            val typedOTP = inputOTP1.text.toString() + inputOTP2.text.toString() + inputOTP3.text.toString() +
-                    inputOTP4.text.toString() + inputOTP5.text.toString() + inputOTP6.text.toString()
+            val typedOTP = binding.otpEditText1.text.toString() + binding.otpEditText2.text.toString() + binding.otpEditText3.text.toString() +
+                    binding.otpEditText4.text.toString() + binding.otpEditText5.text.toString() + binding.otpEditText6.text.toString()
             Log.d("typedOTP", typedOTP)
             if (typedOTP.isNotEmpty()){
                 if (typedOTP.length == 6){
                     val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
                         OTP, typedOTP
                     )
-                    progressBar.visibility = View.VISIBLE
+                    binding.otpProgressBar.visibility = View.VISIBLE
                     signInWithPhoneAuthCredential(credential)
                 }else{
                     Toast.makeText( this, "Please enter coerrect OTP", Toast.LENGTH_SHORT).show()
@@ -82,19 +73,19 @@ class OTPActivity : AppCompatActivity() {
 
     }
 
-    private fun resendOTPvVIsibility(){
-        inputOTP1.setText("")
-        inputOTP2.setText("")
-        inputOTP3.setText("")
-        inputOTP4.setText("")
-        inputOTP5.setText("")
-        inputOTP6.setText("")
-        resendTV.isEnabled = false
-        resendTV.setTextColor(Color.parseColor("#606060"))
+    private fun resendOTPvVisibility(){
+        binding.otpEditText1.setText("")
+        binding.otpEditText2.setText("")
+        binding.otpEditText3.setText("")
+        binding.otpEditText4.setText("")
+        binding.otpEditText5.setText("")
+        binding.otpEditText6.setText("")
+        binding.resendTextView.isEnabled = false
+        binding.resendTextView.setTextColor(Color.parseColor("#606060"))
 
         Handler(Looper.myLooper()!!).postDelayed(Runnable{
-            resendTV.setTextColor(Color.parseColor("#E4EBF1"))
-            resendTV.isEnabled = true
+            binding.resendTextView.setTextColor(Color.parseColor("#E4EBF1"))
+            binding.resendTextView.isEnabled = true
         },60000)
     }
 
@@ -129,7 +120,7 @@ class OTPActivity : AppCompatActivity() {
             verificationId: String,
             token: PhoneAuthProvider.ForceResendingToken
         ) {
-           OTP = verificationId
+            OTP = verificationId
             resendToken = token
         }
     }
@@ -138,12 +129,11 @@ class OTPActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    progressBar.visibility = View.VISIBLE
+                    binding.otpProgressBar.visibility = View.VISIBLE
                     Toast.makeText(this,"Authenticate Succesfully", Toast.LENGTH_SHORT).show()
                     val uid: String = auth.currentUser?.uid.toString()
                     val repository = Repository(this)
                     otpViewModel.verifyUser(uid, repository)
-
                     otpViewModel.userExists.observe(this, Observer {
                         val existence = it as Boolean
                         if (existence) {
@@ -171,26 +161,14 @@ class OTPActivity : AppCompatActivity() {
     }
 
     private fun addTextChangeListener(){
-        inputOTP1.addTextChangedListener(EditTextWatcher(inputOTP1))
-        inputOTP2.addTextChangedListener(EditTextWatcher(inputOTP2))
-        inputOTP3.addTextChangedListener(EditTextWatcher(inputOTP3))
-        inputOTP4.addTextChangedListener(EditTextWatcher(inputOTP4))
-        inputOTP5.addTextChangedListener(EditTextWatcher(inputOTP5))
-        inputOTP6.addTextChangedListener(EditTextWatcher(inputOTP6))
+        binding.otpEditText1.addTextChangedListener(EditTextWatcher(binding.otpEditText1))
+        binding.otpEditText2.addTextChangedListener(EditTextWatcher(binding.otpEditText2))
+        binding.otpEditText3.addTextChangedListener(EditTextWatcher(binding.otpEditText3))
+        binding.otpEditText4.addTextChangedListener(EditTextWatcher(binding.otpEditText4))
+        binding.otpEditText5.addTextChangedListener(EditTextWatcher(binding.otpEditText5))
+        binding.otpEditText6.addTextChangedListener(EditTextWatcher(binding.otpEditText6))
     }
 
-    private fun init() {
-        auth = FirebaseAuth.getInstance()
-        progressBar = binding.otpProgressBar
-        verifyBtn = binding.verifyOTPBtn
-        resendTV = binding.resendTextView
-        inputOTP1 = binding.otpEditText1
-        inputOTP2 = binding.otpEditText2
-        inputOTP3 = binding.otpEditText3
-        inputOTP4 = binding.otpEditText4
-        inputOTP5 = binding.otpEditText5
-        inputOTP6 = binding.otpEditText6
-    }
 
     inner class EditTextWatcher(private val view : View) : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -204,12 +182,12 @@ class OTPActivity : AppCompatActivity() {
         override fun afterTextChanged(p0: Editable?) {
             val text = p0.toString()
             when(view.id){
-                binding.otpEditText1.id -> if(text.length == 1 ) inputOTP2.requestFocus() else if (text.isEmpty()) inputOTP1.requestFocus()
-                binding.otpEditText2.id -> if(text.length == 1 ) inputOTP3.requestFocus() else if (text.isEmpty()) inputOTP1.requestFocus()
-                binding.otpEditText3.id -> if(text.length == 1 ) inputOTP4.requestFocus() else if (text.isEmpty()) inputOTP2.requestFocus()
-                binding.otpEditText4.id -> if(text.length == 1 ) inputOTP5.requestFocus() else if (text.isEmpty()) inputOTP3.requestFocus()
-                binding.otpEditText5.id -> if(text.length == 1 ) inputOTP6.requestFocus() else if (text.isEmpty()) inputOTP4 .requestFocus()
-                binding.otpEditText6.id -> if(text.isEmpty()) inputOTP5.requestFocus()
+                binding.otpEditText1.id -> if(text.length == 1 ) binding.otpEditText2.requestFocus() else if (text.isEmpty()) binding.otpEditText1.requestFocus()
+                binding.otpEditText2.id -> if(text.length == 1 ) binding.otpEditText3.requestFocus() else if (text.isEmpty()) binding.otpEditText1.requestFocus()
+                binding.otpEditText3.id -> if(text.length == 1 ) binding.otpEditText4.requestFocus() else if (text.isEmpty()) binding.otpEditText2.requestFocus()
+                binding.otpEditText4.id -> if(text.length == 1 ) binding.otpEditText5.requestFocus() else if (text.isEmpty()) binding.otpEditText3.requestFocus()
+                binding.otpEditText5.id -> if(text.length == 1 ) binding.otpEditText6.requestFocus() else if (text.isEmpty()) binding.otpEditText4.requestFocus()
+                binding.otpEditText6.id -> if(text.isEmpty()) binding.otpEditText5.requestFocus()
             }
         }
     }
