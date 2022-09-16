@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.appatemporal.data.localdatabase.entities.Estatus
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.CreateNewProjectBinding
 import com.example.appatemporal.databinding.ModifyNewProjectBinding
@@ -36,8 +37,18 @@ class ModificarProyecto : AppCompatActivity() {
             // Get values from view
             val name = binding.nameModifyProject.text.toString()
             val date = binding.dateModifyProject.text.toString()
+
+            //
+            //val id1 = 1
+            //val estado1 = "Completado"
+            //val id = 2
+            //val estado = "No Completado"
+            //val estatus1: Estatus = Estatus(id1, estado1, date, date)
+            //val estatus2: Estatus = Estatus(id, estado, date, date)
             val project: Proyecto = Proyecto(idproject, 1, name, date)
             lifecycleScope.launch{
+                //viewModel.inserEstatus(repository, estatus1)
+                //viewModel.inserEstatus(repository, estatus2)
                 viewModel.updateProject(project, repository)
             }
             // Go back to main activity

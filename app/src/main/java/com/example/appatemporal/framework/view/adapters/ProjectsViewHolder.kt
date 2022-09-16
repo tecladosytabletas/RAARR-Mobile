@@ -41,6 +41,10 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.tvProjectName.setOnClickListener{
             val intent = Intent(itemView.context, ActivityProyectoOrganizador::class.java)
             with(intent){
+                val viewModel = ProyectoOrganizadorViewModel()
+                val repository = Repository(itemView.context)
+                putExtra("pendingActivities", viewModel.countPendingActivities(repository, projectModel.id_proyecto, 0))
+                putExtra("doneActivities", viewModel.countPendingActivities(repository, projectModel.id_proyecto, 1))
                 putExtra("id_proyecto", projectModel.id_proyecto)
                 putExtra("nombre_proyecto", projectModel.nombre_proyecto)
                 putExtra("fecha_inicio", projectModel.fecha_inicio)
