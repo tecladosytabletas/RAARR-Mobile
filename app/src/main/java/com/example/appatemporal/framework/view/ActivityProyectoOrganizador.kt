@@ -11,8 +11,10 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProyectoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         var myExtras :Bundle? = intent.extras
 
         binding.projectName.text = myExtras?.getString("nombre_proyecto")
+        binding.activitiesCompleted.text = myExtras?.getString("")
     }
 }

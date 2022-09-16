@@ -55,7 +55,7 @@
                                     android:text="Dias     Hrs      Sg"
                                     android:textAlignment="center"/>
                                 <TextView
-                                    android:id="@+id/line4"
+                                    android:id="@+id/activitiesCompleted"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
@@ -65,7 +65,7 @@
                                     android:textAlignment="center"
                                     android:paddingTop="10dp"/>
                                 <TextView
-                                    android:id="@+id/line5"
+                                    android:id="@+id/activitiesToDo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"

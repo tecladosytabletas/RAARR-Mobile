@@ -18,4 +18,8 @@ class ProyectoOrganizadorViewModel: ViewModel() {
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return requirement.getProjects(repository)
     }
+
+    fun countPendingActivities(repository: Repository,id_a: Int, id_e: Int): Int{
+        return requirement.countPendingActivities(repository, id_a, id_e)
+    }
 }

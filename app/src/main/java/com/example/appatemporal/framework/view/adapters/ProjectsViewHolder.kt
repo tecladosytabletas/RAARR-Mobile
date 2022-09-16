@@ -37,6 +37,7 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             }
             itemView.context.startActivity(intent1)
         }
+
         binding.tvProjectName.setOnClickListener{
             val intent = Intent(itemView.context, ActivityProyectoOrganizador::class.java)
             with(intent){
@@ -56,22 +57,16 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val builder = AlertDialog.Builder(itemView.context)
             builder.setTitle("¿Estás seguro?")
             builder.setMessage("¿Estás seguro de que quieres eliminar este proyecto? Este proceso no puede revertirse")
-            //builder.setIcon(android.R.drawable.ic_dialog_alert)
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
                 //Mandar a llamar la funcion delete()
                 CoroutineScope(Dispatchers.IO ).launch {
                     viewModel.removeProject(projectModel, repository)
-                    //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
                 }
                 itemView.context.startActivity(intent)
-
-
-                //Toast.makeText(itemView.context,"Se eliminó el proyecto correctamente",Toast.LENGTH_LONG).show()
             }
             builder.setNeutralButton("Cancelar"){dialogInterface , which ->
 
             }
-            // Create the AlertDialog
             val alertDialog: AlertDialog = builder.create()
             // Set other dialog properties
             alertDialog.setCancelable(false)

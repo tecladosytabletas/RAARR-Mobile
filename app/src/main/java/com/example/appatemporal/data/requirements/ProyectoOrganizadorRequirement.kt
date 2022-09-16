@@ -21,4 +21,8 @@ class ProyectoOrganizadorRequirement {
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return repository.getAllProyectos()
     }
+
+    fun countPendingActivities(repository: Repository, id_a: Int, id_e: Int): Int{
+        return repository.countPendingActivities(id_a, id_e)
+    }
 }
