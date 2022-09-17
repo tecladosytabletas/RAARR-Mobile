@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,12 +26,11 @@ class RegisterActivity : AppCompatActivity() {
         repository = Repository(this)
         val registerUserViewModel: RegisterUserViewModel by viewModels()
 
-        val userUid: String = intent.getStringExtra("userUid").toString()
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
 
         val defaultRadioGenderBtn = binding.male.id
         val defaultRadioRoleBtn = binding.espectador.id
-
-
 
         val maleRadioBtn = binding.male.id
         val femaleRadioBtn = binding.female.id
@@ -64,7 +64,6 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-
         binding.registerBtn.setOnClickListener {
             if (!binding.editnameReg2.text.isNullOrEmpty() && !binding.editlnameReg2.text.isNullOrEmpty()
                 && !binding.editemailReg2.text.isNullOrEmpty() && !binding.editDateReg2.text.isNullOrEmpty()
@@ -73,9 +72,11 @@ class RegisterActivity : AppCompatActivity() {
                 val user = UserModel(binding.editnameReg2.text.toString(), binding.editlnameReg2.text.toString(),
                     binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), gender)
                 registerUserViewModel.addUser(userUid, user, role, repository)
+
                 val localDbUser = Usuario(userUid, binding.editnameReg2.text.toString(), binding.editlnameReg2.text.toString(),
                     binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), gender, role)
                 registerUserViewModel.addUserLocalDB(localDbUser, repository)
+
                 val intent = Intent(this, Main::class.java)
                 intent.putExtra("userUid", userUid)
                 startActivity(intent)
