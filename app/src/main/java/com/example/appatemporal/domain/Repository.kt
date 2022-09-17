@@ -34,6 +34,7 @@ class Repository(context: Context) {
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
     val objetivoDao = LocalDatabase.getInstance(context).objetivoDao
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
+    val usuarioDao = LocalDatabase.getInstance(context).usuarioDao
 
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
@@ -70,6 +71,7 @@ class Repository(context: Context) {
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
 
-
+    suspend fun insertUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
+    suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
 
 }

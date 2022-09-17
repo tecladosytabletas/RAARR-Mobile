@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.appatemporal.data.localdatabase.dao.*
 import com.example.appatemporal.data.localdatabase.entities.*
 
-@Database(entities = [Actividad::class, Area::class, Costo::class, Estatus::class, Objetivo::class, Proyecto::class], version = 1)
+@Database(entities = [Actividad::class, Area::class, Costo::class, Estatus::class, Objetivo::class, Proyecto::class, Usuario::class], version = 1)
 abstract class LocalDatabase: RoomDatabase() {
     abstract val actividadDao: ActividadDao
     abstract val areaDao: AreaDao
@@ -15,6 +15,7 @@ abstract class LocalDatabase: RoomDatabase() {
     abstract val estatusDao: EstatusDao
     abstract val objetivoDao: ObjetivoDao
     abstract val proyectoDao: ProyectoDao
+    abstract val usuarioDao: UsuarioDao
 
     companion object{
         @Volatile
