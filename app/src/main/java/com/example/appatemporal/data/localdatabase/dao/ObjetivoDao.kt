@@ -28,4 +28,9 @@ interface ObjetivoDao {
     // Delete a Objetivo
     @Delete
     suspend fun delete(objetivo: Objetivo)
+
+    // Update presupuesto
+    @Query("UPDATE objetivo_table SET presupuesto=:presupuestoNew WHERE id_objetivo = :id")
+    suspend fun update(presupuestoNew: Double, id: Int)
+
 }

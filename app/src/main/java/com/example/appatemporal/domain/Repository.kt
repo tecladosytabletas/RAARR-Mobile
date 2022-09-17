@@ -40,6 +40,7 @@ class Repository(context: Context) {
     suspend fun getObjetivoById(id: Int) = objetivoDao.getById(id)
     suspend fun deleteObjetivo(objetivo: Objetivo) = objetivoDao.delete(objetivo)
     suspend fun deleteAllObjetivos() = objetivoDao.deleteAll()
+    suspend fun updatePresupuesto(presupuestoN:Double, id: Int) =objetivoDao.update(presupuestoN,id)
 
     suspend fun insertProyecto(proyecto: Proyecto) = proyectoDao.insert(proyecto)
     suspend fun insertAllProyectos(proyectos: List<Proyecto>) = proyectoDao.insertAll(proyectos)
