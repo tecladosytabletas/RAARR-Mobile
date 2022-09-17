@@ -1,5 +1,7 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,20 +25,17 @@ class Main : AppCompatActivity() {
 
         val mainViewModel : MainViewModel by viewModels()
 
-        val userUid = intent.getStringExtra("userUid").toString()
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+                        .getString("userUid", "").toString()
 
         Log.d("User Auth Successfully", userUid)
 
-        mainViewModel.getUser(userUid, repository)
+        mainViewModel.getUserLocalDB(userUid, repository)
 
         mainViewModel.userData.observe(this, Observer {
-            binding.textView2.text = "${it.nombre_Usuario}"
+            binding.textView2.text = "${it.nombre} ${it.apellido}"
+            binding.textView3.text = it.rol
         })
 
-        mainViewModel.userRole.observe(this, Observer {
-            binding.textView3.text = it
-        })
     }
 }
-
-    // Insert activity into database

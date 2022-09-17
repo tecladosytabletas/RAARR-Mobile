@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -132,22 +133,26 @@ class OTPActivity : AppCompatActivity() {
                     binding.otpProgressBar.visibility = View.VISIBLE
                     Toast.makeText(this,"Authenticate Succesfully", Toast.LENGTH_SHORT).show()
                     val uid: String = auth.currentUser?.uid.toString()
+
+                    val userUidSharedPref = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+                    var sharedPrefEdit = userUidSharedPref.edit()
+                    sharedPrefEdit.putString("userUid", uid)
+                    sharedPrefEdit.putBoolean("login", true)
+                    sharedPrefEdit.apply()
+
                     val repository = Repository(this)
                     otpViewModel.verifyUser(uid, repository)
+
                     otpViewModel.userExists.observe(this, Observer {
                         val existence = it as Boolean
                         if (existence) {
                             val intent = Intent(this, Main::class.java)
-                            intent.putExtra("userUid", uid)
                             startActivity(intent)
                         } else {
                             val intent = Intent(this, RegisterActivity::class.java)
-                            intent.putExtra("userUid", uid)
                             startActivity(intent)
                         }
                     })
-
-
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
