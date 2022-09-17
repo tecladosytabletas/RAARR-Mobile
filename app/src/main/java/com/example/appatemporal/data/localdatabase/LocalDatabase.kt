@@ -16,6 +16,7 @@ abstract class LocalDatabase: RoomDatabase() {
     abstract val objetivoDao: ObjetivoDao
     abstract val proyectoDao: ProyectoDao
     abstract val usuarioDao: UsuarioDao
+    abstract val privilegioDao: PrivilegioDao
 
     companion object{
         @Volatile
