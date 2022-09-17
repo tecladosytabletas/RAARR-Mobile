@@ -36,6 +36,7 @@ class Main : AppCompatActivity() {
         mainViewModel.userRole.observe(this, Observer {
             binding.textView3.text = it
         })
+
     }
 }
 

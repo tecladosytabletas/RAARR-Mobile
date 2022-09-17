@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.appatemporal.data.localdatabase.entities.Usuario
 import com.example.appatemporal.databinding.ActivityRegisterBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.domain.models.UserModel
@@ -72,6 +73,9 @@ class RegisterActivity : AppCompatActivity() {
                 val user = UserModel(binding.editnameReg2.text.toString(), binding.editlnameReg2.text.toString(),
                     binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), gender)
                 registerUserViewModel.addUser(userUid, user, role, repository)
+                val localDbUser = Usuario(userUid, binding.editnameReg2.text.toString(), binding.editlnameReg2.text.toString(),
+                    binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), gender, role)
+                registerUserViewModel.addUserLocalDB(localDbUser, repository)
                 val intent = Intent(this, Main::class.java)
                 intent.putExtra("userUid", userUid)
                 startActivity(intent)

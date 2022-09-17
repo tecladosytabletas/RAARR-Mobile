@@ -12,7 +12,8 @@ data class Usuario(
     @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "nombre") val nombre: String,
     @ColumnInfo(name = "apellidos") val apellido: String,
-    @ColumnInfo(name = "fechaNacimiento") val fechaNac: Int,
+    @ColumnInfo(name = "email") val email: String,
+    @ColumnInfo(name = "fechaNacimiento") val fechaNac: String,
     @ColumnInfo(name = "genero") val genero: String,
     @ColumnInfo(name = "rol") val rol: String,
 )

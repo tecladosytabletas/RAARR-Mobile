@@ -146,8 +146,6 @@ class OTPActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                     })
-
-
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
