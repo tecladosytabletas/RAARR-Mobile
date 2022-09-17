@@ -13,4 +13,7 @@ interface UsuarioDao {
 
     @Query("SELECT * FROM usuario_table WHERE id = :userUid")
     suspend fun getUserLocalDB(userUid: String) : Usuario
+
+    @Query("UPDATE usuario_table SET rol = :rol WHERE id = :userUid")
+    suspend fun updateUserRole(userUid: String, rol: String)
 }

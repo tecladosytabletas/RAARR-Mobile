@@ -36,5 +36,6 @@ class Main : AppCompatActivity() {
             binding.textView2.text = "${it.nombre} ${it.apellido}"
             binding.textView3.text = it.rol
         })
+
     }
 }
