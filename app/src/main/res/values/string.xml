@@ -26,4 +26,16 @@
     <string name="artistModifyProject">Artista(s)</string>
     <string name="typeModifyProject">Tipo</string>
 
+    <string name="areaType">Area</string>
+    <string name="areaType1">Negocios</string>
+    <string name="areaType2">Personales</string>
+    <string name="areaType3">Compras</string>
+    <string name="areaType4">Mercancias</string>
+    <string name="areaType5">Seguridad</string>
+
+    <string name="estatusType">Prioridad</string>
+    <string name="estatusType1">Baja</string>
+    <string name="estatusType2">Media</string>
+    <string name="estatusType3">Alta </string>
+
 </resources>

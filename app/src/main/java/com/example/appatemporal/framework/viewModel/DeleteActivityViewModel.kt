@@ -9,13 +9,13 @@ class DeleteActivityViewModel : ViewModel(){
     private val requirement = TasksActivityRequirement()
 
     suspend fun removeActividad(actividad: Actividad, repository: Repository){
-        requirement.deleteProject(actividad, repository)
+        requirement.deleteActividad(actividad, repository)
     }
     suspend fun updateActividad(actividad: Actividad, repository: Repository){
-        requirement.updateProject(actividad, repository)
+        requirement.updateActividad(actividad, repository)
     }
 
     suspend fun getActivities(repository: Repository): List<Actividad>{
-        return requirement.getProjects(repository)
+        return requirement.getActivities(repository)
     }
 }

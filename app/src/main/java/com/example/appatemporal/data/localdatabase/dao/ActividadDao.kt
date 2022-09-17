@@ -34,4 +34,6 @@ interface ActividadDao {
     // Update a Actividad
     @Update
     suspend fun update(actividad: Actividad)
+
+
 }
