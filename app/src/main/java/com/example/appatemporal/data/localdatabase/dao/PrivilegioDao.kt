@@ -12,7 +12,10 @@ interface PrivilegioDao {
     suspend fun insertPrivilegio(vararg privilegio: Privilegio)
 
     @Query("SELECT * FROM privilegio_table WHERE idPrivilegio = :idPrivilegio")
-    suspend fun getPrivilegio(idPrivilegio: Int)
+    suspend fun getPrivilegio(idPrivilegio: Int) : Privilegio
+
+    @Query("SELECT * FROM privilegio_table")
+    suspend fun getAllPrivilegios() : List<Privilegio>
 
     @Query("UPDATE privilegio_table SET privilegio = :privilegio WHERE idPrivilegio = :idPrivilegio")
     suspend fun updatePrivilegio(idPrivilegio: Int, privilegio: String)

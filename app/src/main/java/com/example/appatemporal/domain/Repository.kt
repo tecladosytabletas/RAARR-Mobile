@@ -36,6 +36,7 @@ class Repository(context: Context) {
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
     val usuarioDao = LocalDatabase.getInstance(context).usuarioDao
     val privilegioDao = LocalDatabase.getInstance(context).privilegioDao
+    val rolDao = LocalDatabase.getInstance(context).rolDao
 
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
