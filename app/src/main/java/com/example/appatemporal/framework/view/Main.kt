@@ -30,16 +30,11 @@ class Main : AppCompatActivity() {
 
         Log.d("User Auth Successfully", userUid)
 
-        mainViewModel.getUser(userUid, repository)
+        mainViewModel.getUserLocalDB(userUid, repository)
 
         mainViewModel.userData.observe(this, Observer {
-            binding.textView2.text = "${it.nombre_Usuario}"
-        })
-
-        mainViewModel.userRole.observe(this, Observer {
-            binding.textView3.text = it
+            binding.textView2.text = "${it.nombre} ${it.apellido}"
+            binding.textView3.text = it.rol
         })
     }
 }
-
-    // Insert activity into database
