@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.CheckBox
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.data.localdatabase.entities.Usuario
@@ -17,6 +19,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var repository: Repository
     private lateinit var gender: String
     private lateinit var role: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,8 @@ class RegisterActivity : AppCompatActivity() {
         val femaleRadioBtn = binding.female.id
         val otherRadioBtn = binding.other.id
 
+
+
         gender = binding.male.text.toString()
 
         binding.editGenderReg2.check(defaultRadioGenderBtn)
@@ -52,6 +57,8 @@ class RegisterActivity : AppCompatActivity() {
         val orgRadioBtn = binding.organizador.id
         val ayudRadioBtn = binding.ayudante.id
 
+        binding.registerBtn.isEnabled = false
+
         binding.editRoleReg2.check(defaultRadioRoleBtn)
 
         role = binding.espectador.text.toString()
@@ -62,6 +69,14 @@ class RegisterActivity : AppCompatActivity() {
                 orgRadioBtn -> role = binding.organizador.text.toString()
                 ayudRadioBtn -> role = binding.ayudante.text.toString()
             }
+        }
+        
+        binding.termsId.setOnClickListener {
+            var intent = Intent(this@RegisterActivity, TermsCond::class.java)
+            startActivity(intent)
+        }
+        binding.checkId.setOnCheckedChangeListener { compoundButton, b ->
+            binding.registerBtn.isEnabled = b
         }
 
         binding.registerBtn.setOnClickListener {
@@ -82,5 +97,9 @@ class RegisterActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
     }
+
+
 }
+

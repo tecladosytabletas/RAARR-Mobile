@@ -272,10 +272,36 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#0F2DFF"
         android:text="Crear Cuenta"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/endMargin"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/startMargin"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.878" />
+
+    <CheckBox
+        android:id="@+id/check_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Acepto los"
+        android:textColor="#E4EBF1"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="@id/startMargin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94" />
+
+    <TextView
+        android:id="@+id/terms_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Terminos y condiciones"
+        android:textColor="#7586FD"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/check_id"
+        app:layout_constraintEnd_toEndOf="@id/endMargin"
+        app:layout_constraintStart_toEndOf="@+id/check_id"
+        app:layout_constraintTop_toTopOf="@+id/check_id" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
