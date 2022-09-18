@@ -304,5 +304,4 @@
         app:layout_constraintStart_toEndOf="@+id/check_id"
         app:layout_constraintTop_toTopOf="@+id/check_id" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
