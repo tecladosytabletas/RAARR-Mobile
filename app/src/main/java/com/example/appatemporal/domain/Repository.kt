@@ -8,7 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
-
+    // Firestore
     val firestoreAPI = FirestoreService()
 
     suspend fun addUser(uid: String, user: UserModel, role: String) {
@@ -28,12 +28,15 @@ class Repository(context: Context) {
         return firestoreAPI.getUserRole(uid)
     }
 
-
+    // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
     val objetivoDao = LocalDatabase.getInstance(context).objetivoDao
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
+    val usuarioDao = LocalDatabase.getInstance(context).usuarioDao
+    val privilegioDao = LocalDatabase.getInstance(context).privilegioDao
+    val rolDao = LocalDatabase.getInstance(context).rolDao
 
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
@@ -70,6 +73,7 @@ class Repository(context: Context) {
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
 
-
+    suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
+    suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
 
 }
