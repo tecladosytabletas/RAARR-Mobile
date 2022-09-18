@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppAtemporal"
         tools:targetApi="31">
         <activity
-            android:name=".TermsCond"
+            android:name=".framework.view.TermsCond"
             android:exported="false" />
         <activity
             android:name=".framework.view.SelectedEventView"

@@ -17,7 +17,7 @@ class TermsCond : AppCompatActivity() {
 
 
         binding.button2.setOnClickListener {
-            var intent = Intent(this,RegisterActivity::class.java)
+            var intent = Intent(this@TermsCond,RegisterActivity::class.java)
             startActivity(intent)
         }
 

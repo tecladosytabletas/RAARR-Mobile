@@ -70,7 +70,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         binding.termsId.setOnClickListener {
-            var intent = Intent(this, TermsCond::class.java)
+            var intent = Intent(this@RegisterActivity, TermsCond::class.java)
             startActivity(intent)
         }
         binding.checkId.setOnCheckedChangeListener { compoundButton, b ->
