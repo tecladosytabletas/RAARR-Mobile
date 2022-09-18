@@ -28,6 +28,10 @@ class Repository(context: Context) {
         return firestoreAPI.getUserRole(uid)
     }
 
+    suspend fun updateTicketValue(resulted: String) : String {
+        return firestoreAPI.updateTicketValue(resulted)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao

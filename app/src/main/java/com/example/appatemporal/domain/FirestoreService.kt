@@ -1,10 +1,13 @@
 package com.example.appatemporal.domain
 
+import android.content.ContentValues
 import android.util.Log
+import android.widget.Toast
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -81,5 +84,30 @@ class FirestoreService {
                 .get()
                 .await()
         return userRole
+    }
+
+    suspend fun updateTicketValue(resulted: String) : String {
+        var result:String = resulted
+
+        var exito:String = ""
+
+        db.collection("Qrs")
+            .whereEqualTo("valor", result)
+            .get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    result = document.getField<String>("estado").toString()
+                    if (result == "activo") {
+                        db.collection("Qrs").document(document.id).update("estado", "inactivo")
+                        exito = "Boleto escaneado con éxito"
+                    } else {
+                        exito = "Boleto ya escaneado"
+                    }
+                }
+            }
+            .await()
+
+        return exito
+
     }
 }
