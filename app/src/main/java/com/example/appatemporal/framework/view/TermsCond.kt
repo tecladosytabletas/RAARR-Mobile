@@ -16,7 +16,7 @@ class TermsCond : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        binding.button2.setOnClickListener {
+        binding.btnReturnRegister.setOnClickListener {
             var intent = Intent(this@TermsCond,RegisterActivity::class.java)
             startActivity(intent)
         }
