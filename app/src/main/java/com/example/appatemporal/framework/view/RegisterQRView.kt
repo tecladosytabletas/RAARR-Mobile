@@ -15,6 +15,8 @@ import com.google.zxing.integration.android.IntentIntegrator
 class RegisterQRView : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterQrviewBinding
 
+    val scanQRViewModel : ScanQRViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterQrviewBinding.inflate(layoutInflater)
@@ -38,7 +40,7 @@ class RegisterQRView : AppCompatActivity() {
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         val repository = Repository(this)
 
-        val scanQRViewModel : ScanQRViewModel by viewModels()
+
         if (result != null) {
             if (result.contents == null) {
                 Toast.makeText(this, "No se encontró un valor.", Toast.LENGTH_SHORT).show()

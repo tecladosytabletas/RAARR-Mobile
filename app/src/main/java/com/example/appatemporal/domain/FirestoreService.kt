@@ -1,8 +1,6 @@
 package com.example.appatemporal.domain
 
-import android.content.ContentValues
 import android.util.Log
-import android.widget.Toast
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
