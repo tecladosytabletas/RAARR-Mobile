@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.appatemporal.data.localdatabase.entities.Usuario
 import com.example.appatemporal.databinding.ActivityOtpactivityBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.OTPViewModel
@@ -146,8 +147,13 @@ class OTPActivity : AppCompatActivity() {
                     otpViewModel.userExists.observe(this, Observer {
                         val existence = it as Boolean
                         if (existence) {
-                            val intent = Intent(this, Main::class.java)
-                            startActivity(intent)
+                            otpViewModel.getUser(uid, repository)
+                            otpViewModel.userData.observe(this, Observer {
+                                val localDbUser = it
+                                otpViewModel.addUserLocalDB(localDbUser, repository)
+                                val intent = Intent(this, Main::class.java)
+                                startActivity(intent)
+                            })
                         } else {
                             val intent = Intent(this, RegisterActivity::class.java)
                             startActivity(intent)

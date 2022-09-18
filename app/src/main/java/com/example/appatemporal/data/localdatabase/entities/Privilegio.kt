@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "privilegio_table")
 data class Privilegio(
-    @PrimaryKey(autoGenerate = true) val idPrivilegio: Int = 0,
+    @PrimaryKey()
+    @ColumnInfo(name = "idPrivilegio")  val idPrivilegio: Int,
     @ColumnInfo(name = "privilegio") val privilegio: String
 )

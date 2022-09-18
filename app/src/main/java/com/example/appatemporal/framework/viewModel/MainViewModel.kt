@@ -22,25 +22,4 @@ class MainViewModel : ViewModel() {
             userData.postValue(user)
         }
     }
-
-    // val userData = MutableLiveData<UserModel>()
-    // val userRole = MutableLiveData<String>()
-
-
-    //private val getUserDataRequirement = GetUserDataRequirement()
-    //private val getUserRoleRequirement = GetUserRoleRequirement()
-
-
-    /*
-    fun getUser(uid: String, repository: Repository) {
-        viewModelScope.launch {
-            val userInfo = getUserDataRequirement(uid, repository).data
-            val role = getUserRoleRequirement(uid, repository).data
-            val user = UserModel(userInfo?.get("nombre_Usuario").toString(), userInfo?.get("apellidos_Usuario").toString(),
-                userInfo?.get("email").toString(), userInfo?.get("fecha_Nacimiento").toString(), userInfo?.get("genero").toString())
-            userRole.postValue(role?.get("nombre_Rol").toString())
-            userData.postValue(user)
-        }
-    }
-    */
 }
