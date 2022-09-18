@@ -86,22 +86,22 @@ class FirestoreService {
         return userRole
     }
 
-    suspend fun updateTicketValue(resulted: String) : String {
+    suspend fun updateTicketValue(resulted: String) : Boolean {
         var result:String = resulted
 
-        var exito:String = ""
+        var exito: Boolean = false
 
-        db.collection("Qrs")
-            .whereEqualTo("valor", result)
+        db.collection("Boleto")
+            .whereEqualTo("hash_QR", result)
             .get()
             .addOnSuccessListener {
                 for (document in it) {
-                    result = document.getField<String>("estado").toString()
+                    result = document.getField<String>("activo").toString()
                     if (result == "activo") {
-                        db.collection("Qrs").document(document.id).update("estado", "inactivo")
-                        exito = "Boleto escaneado con éxito"
+                        db.collection("Boleto").document(document.id).update("activo", "inactivo")
+                        exito = true
                     } else {
-                        exito = "Boleto ya escaneado"
+                        exito = false
                     }
                 }
             }

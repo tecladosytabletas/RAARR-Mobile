@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.appatemporal.databinding.ActivityRegisterQrviewBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.MainViewModel
@@ -43,7 +44,15 @@ class RegisterQRView : AppCompatActivity() {
                 Toast.makeText(this, "No se encontró un valor.", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Boleto escaneado con éxito.", Toast.LENGTH_SHORT).show()
-                scanQRViewModel.updateTicketValue(result.contents, repository)}
+                scanQRViewModel.updateTicketValue(result.contents, repository)
+                scanQRViewModel.qrcode.observe(this, Observer {
+                    if(it == true){
+                        Toast.makeText(this,"Boleto valido!",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,"Boleto ya fue Escaneado.",Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }

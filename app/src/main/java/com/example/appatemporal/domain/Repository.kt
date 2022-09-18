@@ -28,7 +28,7 @@ class Repository(context: Context) {
         return firestoreAPI.getUserRole(uid)
     }
 
-    suspend fun updateTicketValue(resulted: String) : String {
+    suspend fun updateTicketValue(resulted: String) : Boolean {
         return firestoreAPI.updateTicketValue(resulted)
     }
 
