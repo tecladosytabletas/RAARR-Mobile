@@ -9,7 +9,7 @@ import com.example.appatemporal.data.localdatabase.entities.Usuario
 @Dao
 interface UsuarioDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUserLocalDB(vararg usuarioDao: Usuario)
+    suspend fun insertUserLocalDB(vararg usuario: Usuario)
 
     @Query("SELECT * FROM usuario_table WHERE id = :userUid")
     suspend fun getUserLocalDB(userUid: String) : Usuario
