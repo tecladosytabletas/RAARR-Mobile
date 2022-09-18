@@ -2,12 +2,10 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.appatemporal.R
+import com.example.appatemporal.data.localdatabase.entities.Objetivo
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.CreateNewProjectBinding
 import com.example.appatemporal.domain.Repository
@@ -29,13 +27,13 @@ class AddNewProjectForm : AppCompatActivity() {
             // Get values from view
             val name = binding.nameCreateNewProject.text.toString()
             val date = binding.dateCreateNewProject.text.toString()
-
-            val project: Proyecto = Proyecto(0, 1, name, date)
+            val tsLong = System.currentTimeMillis() / 1000
+            val ts: String = tsLong.toString()
+            val project: Proyecto = Proyecto(0, 1, name, date,0.0,0.0,ts)
 
             lifecycleScope.launch{
                 viewModel.addNewProject(project, repository)
             }
-
 
             // Go back to main activity
             val intent = Intent(this, ProyectoOrganizador::class.java)

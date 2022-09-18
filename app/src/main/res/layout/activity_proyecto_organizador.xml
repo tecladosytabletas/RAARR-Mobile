@@ -36,16 +36,18 @@
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp" />
-                                <TextView
-                                    android:id="@+id/line2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="24sp"
-                                    android:fontFamily="@font/roboto"
-                                    android:text="12 : 10 : 09"
-                                    android:textAlignment="center"/>
-                                <TextView
+
+                        <TextView
+                            android:id="@+id/line2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:text="12 : 10 : 09"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+
+                        <TextView
                                     android:id="@+id/line3"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"

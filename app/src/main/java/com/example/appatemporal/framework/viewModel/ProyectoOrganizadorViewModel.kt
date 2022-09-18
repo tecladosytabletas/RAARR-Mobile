@@ -15,6 +15,10 @@ class ProyectoOrganizadorViewModel: ViewModel() {
         requirement.updateProject(proyecto, repository)
     }
 
+    suspend fun updateModify(name: String, date: String,time:String,id:Int ,repository: Repository){
+        requirement.updateMod(name,date,time,id,repository)
+    }
+
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return requirement.getProjects(repository)
     }
