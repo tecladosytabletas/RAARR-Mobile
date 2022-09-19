@@ -11,7 +11,7 @@ class CostoAdapter(private val costoList: List<Costo>):
     RecyclerView.Adapter<CostoViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CostoViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CostoViewHolder(layoutInflater.inflate(R.layout.costo_adapter, parent, false))
+        return CostoViewHolder(layoutInflater.inflate(R.layout.item_costo, parent, false))
     }
 
     override fun onBindViewHolder(holder: CostoViewHolder, position: Int) {

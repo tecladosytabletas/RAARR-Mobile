@@ -5,53 +5,54 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appatemporal.data.localdatabase.entities.Actividad
-import com.example.appatemporal.databinding.ItemTodoBinding
+import com.example.appatemporal.data.localdatabase.entities.Costo
+import com.example.appatemporal.databinding.ItemCostoBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.AddCosto
 import com.example.appatemporal.framework.view.DeleteCosto
-import com.example.appatemporal.framework.viewModel.DeleteActivityViewModel
+import com.example.appatemporal.framework.viewModel.DeleteCostoViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val binding = ItemTodoBinding.bind(view)
+    val binding = ItemCostoBinding.bind(view)
 
-    fun render(activityModel: Actividad){
-        binding.txtShowTitle.text = activityModel.nombre_actividad
-        binding.ivEditIcon.setOnClickListener{
-            val intent1 = Intent(itemView.context, ModificarActividad::class.java)
-            with(intent1){
-                putExtra("id_actividad", activityModel.id_actividad)
-                putExtra("nombre_actividad", activityModel.nombre_actividad)
-            }
-            itemView.context.startActivity(intent1)
-        }
+    fun render(costoModel: Costo){
+        binding.txtShowTitle.text = costoModel.nombre_costo
+//        binding.ivEditIcon.setOnClickListener{
+//            val intent1 = Intent(itemView.context, ModificarCosto::class.java)
+//            with(intent1){
+//                putExtra("id_costo", costoModel.id_costo)
+//                putExtra("nombre_costo", costoModel.nombre_costo)
+//            }
+//            itemView.context.startActivity(intent1)
+//        }
+        binding.txtShowMonto.inputType = costoModel.monto
         binding.txtShowTitle.setOnClickListener{
-            val intent = Intent(itemView.context, AddActivity::class.java)
+            val intent = Intent(itemView.context, AddCosto::class.java)
             with(intent){
-                putExtra("id_actividad", activityModel.id_actividad)
-                putExtra("nombre_actividad", activityModel.nombre_actividad)
+                putExtra("id_costo", costoModel.id_costo)
+                putExtra("nombre_costo", costoModel.nombre_costo)
             }
             itemView.context.startActivity(intent)
         }
 
 
-        binding.deleteActivityButton.setOnClickListener{
-            val intent = Intent(itemView.context, DeleteActivity::class.java)
-            val viewModel = DeleteActivityViewModel()
+        binding.deleteCostoButton.setOnClickListener{
+            val intent = Intent(itemView.context, DeleteCosto::class.java)
+            val viewModel = DeleteCostoViewModel()
 
             val repository = Repository(itemView.context)
             val builder = AlertDialog.Builder(itemView.context)
             builder.setTitle("¿Estás seguro?")
-            builder.setMessage("¿Estás seguro de que quieres eliminar este proyecto? Este proceso no puede revertirse")
+            builder.setMessage("¿Estás seguro de que quieres eliminar este proveedor? Este proceso no puede revertirse")
             //builder.setIcon(android.R.drawable.ic_dialog_alert)
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
                 //Mandar a llamar la funcion delete()
                 CoroutineScope(Dispatchers.IO ).launch {
-                    viewModel.removeActividad(activityModel, repository)
+                    viewModel.removeCosto(costoModel, repository)
                     //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
                 }
                 itemView.context.startActivity(intent)
