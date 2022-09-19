@@ -1,16 +1,10 @@
 package com.example.appatemporal.framework.view.adapters
 
-import android.R
-import android.app.Activity
+
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.ProyectosOrganizadorItemBinding
 import com.example.appatemporal.domain.Repository

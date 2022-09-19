@@ -4,20 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.appatemporal.R
 import com.example.appatemporal.databinding.ProyectosOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.ProjectsAdapter
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ProyectoOrganizador : AppCompatActivity() {
@@ -42,6 +35,9 @@ class ProyectoOrganizador : AppCompatActivity() {
         val projectList = viewModel.getProjects(repository)
         binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList)
-        Log.d("ProyectoOrganizador", "initRecyclerView: $projectList")
+        // Log each project
+        projectList.forEach {
+            Log.d("Project", it.toString())
+        }
     }
 }

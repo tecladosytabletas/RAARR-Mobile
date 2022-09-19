@@ -3,6 +3,7 @@ package com.example.appatemporal.data.localdatabase.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.appatemporal.data.localdatabase.entities.Actividad
+import com.example.appatemporal.data.localdatabase.entities.Proyecto
 
 
 @Dao
@@ -40,5 +41,10 @@ interface ActividadDao {
     // Delete an activity
     @Delete
     suspend fun delete(actividad: Actividad)
+
+    // Update a Actividad
+    @Update
+    suspend fun update(actividad: Actividad)
+
 
 }
