@@ -31,9 +31,14 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             }
             itemView.context.startActivity(intent1)
         }
+
         binding.tvProjectName.setOnClickListener{
             val intent = Intent(itemView.context, ActivityProyectoOrganizador::class.java)
             with(intent){
+                val viewModel = ProyectoOrganizadorViewModel()
+                val repository = Repository(itemView.context)
+                putExtra("pendingActivities", viewModel.countPendingActivities(repository, projectModel.id_proyecto, 0))
+                putExtra("doneActivities", viewModel.countPendingActivities(repository, projectModel.id_proyecto, 1))
                 putExtra("id_proyecto", projectModel.id_proyecto)
                 putExtra("nombre_proyecto", projectModel.nombre_proyecto)
                 putExtra("fecha_inicio", projectModel.fecha_inicio)
@@ -50,22 +55,16 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val builder = AlertDialog.Builder(itemView.context)
             builder.setTitle("¿Estás seguro?")
             builder.setMessage("¿Estás seguro de que quieres eliminar este proyecto? Este proceso no puede revertirse")
-            //builder.setIcon(android.R.drawable.ic_dialog_alert)
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
                 //Mandar a llamar la funcion delete()
                 CoroutineScope(Dispatchers.IO ).launch {
                     viewModel.removeProject(projectModel, repository)
-                    //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
                 }
                 itemView.context.startActivity(intent)
-
-
-                //Toast.makeText(itemView.context,"Se eliminó el proyecto correctamente",Toast.LENGTH_LONG).show()
             }
             builder.setNeutralButton("Cancelar"){dialogInterface , which ->
 
             }
-            // Create the AlertDialog
             val alertDialog: AlertDialog = builder.create()
             // Set other dialog properties
             alertDialog.setCancelable(false)
