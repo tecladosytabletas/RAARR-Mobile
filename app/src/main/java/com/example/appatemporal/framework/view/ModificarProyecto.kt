@@ -49,6 +49,23 @@ class ModificarProyecto : AppCompatActivity() {
 
         }
 
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            finish()
+        }
+
     }
 
 }

@@ -195,7 +195,9 @@
                 </LinearLayout>
 
                 <include
-                    layout="@layout/navbar" />
+                    layout="@layout/navbar"
+                    android:id="@+id/navbar"
+                    />
         </LinearLayout>
 
 

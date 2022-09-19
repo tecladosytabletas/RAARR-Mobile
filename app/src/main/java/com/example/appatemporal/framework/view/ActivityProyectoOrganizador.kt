@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Objetivo
+import com.example.appatemporal.databinding.ActivityProyectoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
 import kotlinx.coroutines.launch
@@ -30,6 +31,23 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
         var ganancia:Double = (myExtras?.getDouble("ganancia_proyecto")?:-1) as Double
         var presupuesto:Double = (myExtras?.getDouble("presupuesto_proyecto")?:-1) as Double
         var meta:Double = (myExtras?.getDouble("meta_proyecto")?:-1) as Double
+
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+           finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+          finish()
+        }
 
 
         binding.bottomObjective.setOnClickListener {

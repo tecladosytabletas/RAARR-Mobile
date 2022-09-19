@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class Actividad(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_actividad") val id_actividad: Int,
-    //@ColumnInfo(name = "id_estatus") val id_estatus: Int,
+    @ColumnInfo(name = "id_estatus") val id_estatus: Int,
     @ColumnInfo(name = "nombre_actividad") var nombre_actividad: String,
     @ColumnInfo(name = "area") val area: String,
     @ColumnInfo(name = "estatus") val estatus: String,

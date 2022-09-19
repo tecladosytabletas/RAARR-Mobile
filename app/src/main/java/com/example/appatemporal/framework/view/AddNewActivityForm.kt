@@ -29,7 +29,7 @@ class AddNewActivityForm : AppCompatActivity(){
             val estatus = binding.spinnerEstatus.selectedItem.toString()
             val prioridad = binding.spinnerPrioridad.selectedItem.toString()
 
-            val actividad: Actividad = Actividad(0, name, area, estatus, prioridad)
+            val actividad: Actividad = Actividad(0, 1,name, area, estatus, prioridad)
 
             lifecycleScope.launch{
                 viewModel.addNewActividad(actividad, repository)
@@ -40,6 +40,23 @@ class AddNewActivityForm : AppCompatActivity(){
             val intent = Intent(this, DeleteActivity::class.java)
             startActivity(intent)
 
+        }
+
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            finish()
         }
 
     }
