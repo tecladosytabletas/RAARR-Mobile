@@ -3,6 +3,7 @@ package com.example.appatemporal.domain
 import android.content.Context
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
+import kotlin.math.cos
 
 class Repository(context: Context) {
 
@@ -10,6 +11,7 @@ class Repository(context: Context) {
     val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
     val objetivoDao = LocalDatabase.getInstance(context).objetivoDao
+    val costoDao = LocalDatabase.getInstance(context).costoDao
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
 
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
@@ -49,6 +51,12 @@ class Repository(context: Context) {
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
     suspend fun updateProyecto(proyecto: Proyecto) = proyectoDao.update(proyecto)
 
+    suspend fun insertCosto(costo: Costo) = costoDao.insert(costo)
+    suspend fun insertAllCostos(costos: List<Costo>) = costoDao.insertAll(costos)
+    suspend fun getAllCostos() = costoDao.getAll()
+    suspend fun getCostoById(id: Int) = costoDao.getById(id)
+    suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
+    suspend fun deleteAllCostos() = costoDao.deleteAll()
 
 
 }

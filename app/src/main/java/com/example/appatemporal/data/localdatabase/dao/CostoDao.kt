@@ -27,6 +27,6 @@ interface CostoDao {
 
     // Delete a costo
     @Delete
-    suspend fun delete(cosoto: Costo)
+    suspend fun delete(costo: Costo)
 
 }
