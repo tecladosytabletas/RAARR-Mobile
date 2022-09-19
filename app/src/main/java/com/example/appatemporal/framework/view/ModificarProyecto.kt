@@ -37,19 +37,11 @@ class ModificarProyecto : AppCompatActivity() {
             // Get values from view
             val name = binding.nameModifyProject.text.toString()
             val date = binding.dateModifyProject.text.toString()
-
-            //
-            //val id1 = 1
-            //val estado1 = "Completado"
-            //val id = 2
-            //val estado = "No Completado"
-            //val estatus1: Estatus = Estatus(id1, estado1, date, date)
-            //val estatus2: Estatus = Estatus(id, estado, date, date)
-            val project: Proyecto = Proyecto(idproject, 1, name, date)
+            val tsLong = System.currentTimeMillis() / 1000
+            val ts: String = tsLong.toString()
+            //val project: Proyecto = Proyecto(idproject, 1, name, date,0.0,0.0,ts)
             lifecycleScope.launch{
-                //viewModel.inserEstatus(repository, estatus1)
-                //viewModel.inserEstatus(repository, estatus2)
-                viewModel.updateProject(project, repository)
+                viewModel.updateModify(name,date,ts,idproject, repository)
             }
             // Go back to main activity
             val intent = Intent(this, ProyectoOrganizador::class.java)

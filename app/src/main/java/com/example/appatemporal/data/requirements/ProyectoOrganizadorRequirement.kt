@@ -20,6 +20,10 @@ class ProyectoOrganizadorRequirement {
         repository.updateProyecto(projectToUpdate)
     }
 
+    suspend fun updateMod(name: String, date: String, time: String, id: Int, repository: Repository){
+        repository.updateModifyProyect(name,date,time,id)
+    }
+
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return repository.getAllProyectos()
     }

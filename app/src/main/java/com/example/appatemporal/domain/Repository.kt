@@ -58,6 +58,7 @@ class Repository(context: Context) {
     suspend fun deleteObjetivo(objetivo: Objetivo) = objetivoDao.delete(objetivo)
     suspend fun deleteAllObjetivos() = objetivoDao.deleteAll()
 
+
     suspend fun insertProyecto(proyecto: Proyecto) = proyectoDao.insert(proyecto)
     suspend fun insertAllProyectos(proyectos: List<Proyecto>) = proyectoDao.insertAll(proyectos)
     suspend fun getAllProyectos() = proyectoDao.getAll()
@@ -65,6 +66,9 @@ class Repository(context: Context) {
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
     suspend fun updateProyecto(proyecto: Proyecto) = proyectoDao.update(proyecto)
+    suspend fun updatePresupuesto(presupuestoN:Double, id: Int) =proyectoDao.updatePresupuesto(presupuestoN,id)
+    suspend fun updateMeta(metaN:Double, id: Int) =proyectoDao.updateMeta(metaN,id)
+    suspend fun updateModifyProyect(name: String, date: String,time: String, id: Int) =proyectoDao.updateModify(name,date,time,id)
 
 
 

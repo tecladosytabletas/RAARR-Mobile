@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appatemporal.data.localdatabase.entities.Objetivo
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.ProyectosOrganizadorItemBinding
 import com.example.appatemporal.domain.Repository
@@ -42,6 +43,9 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 putExtra("id_proyecto", projectModel.id_proyecto)
                 putExtra("nombre_proyecto", projectModel.nombre_proyecto)
                 putExtra("fecha_inicio", projectModel.fecha_inicio)
+                putExtra("ganancia_proyecto", projectModel.ganancia)
+                putExtra("presupuesto_proyecto", projectModel.presupuesto)
+                putExtra("meta_proyecto", projectModel.meta)
             }
             itemView.context.startActivity(intent)
         }
