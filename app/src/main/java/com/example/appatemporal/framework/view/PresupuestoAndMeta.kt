@@ -14,8 +14,6 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.ModifyPresupuesto
 import com.example.appatemporal.framework.viewModel.PresupuestoOrganizadorViewModel
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
-import kotlinx.android.synthetic.main.modify_new_project.*
-import kotlinx.android.synthetic.main.objective_presupuesto_meta.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,7 +45,7 @@ class PresupuestoAndMeta: AppCompatActivity()  {
         // On button click, a bundle is initialized and the
         // text from the EditText is passed in the custom
         // fragment using this bundle
-        ivPresupuestoImage.setOnClickListener {
+        binding.tvNewPresupuesto.setOnClickListener {
             val fragment = ModifyPresupuesto()
             val bundle = Bundle()
             bundle.putString("idProyecto", idProyecto.toString())
@@ -58,7 +56,7 @@ class PresupuestoAndMeta: AppCompatActivity()  {
             fragment.show(supportFragmentManager, "newTaskTag")
 
         }
-        ivEditMeta.setOnClickListener{
+        binding.ivEditMeta.setOnClickListener{
             val fragment = ModifyMeta()
             val bundle = Bundle()
             bundle.putString("idProyecto", idProyecto.toString())
