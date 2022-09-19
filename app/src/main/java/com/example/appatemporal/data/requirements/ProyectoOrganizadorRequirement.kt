@@ -1,5 +1,7 @@
 package com.example.appatemporal.data.requirements
 
+import android.util.Log
+import com.example.appatemporal.data.localdatabase.entities.Estatus
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.domain.Repository
 
@@ -24,5 +26,13 @@ class ProyectoOrganizadorRequirement {
 
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return repository.getAllProyectos()
+    }
+
+    fun countPendingActivities(repository: Repository, id_a: Int, id_e: Int): Int{
+        return repository.countPendingActivities(id_a, id_e)
+    }
+
+    suspend fun insertEstatus(estatus: Estatus, repository:Repository){
+        repository.insertEstatus(estatus)
     }
 }

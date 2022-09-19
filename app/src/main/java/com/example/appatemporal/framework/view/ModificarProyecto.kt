@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.appatemporal.data.localdatabase.entities.Estatus
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.CreateNewProjectBinding
 import com.example.appatemporal.databinding.ModifyNewProjectBinding

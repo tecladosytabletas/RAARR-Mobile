@@ -25,8 +25,11 @@ class AddNewActivityForm : AppCompatActivity(){
         binding.saveBtn.setOnClickListener {
             // Get values from view
             val name = binding.nameActivity.text.toString()
+            val area = binding.spinnerArea.selectedItem.toString()
+            val estatus = binding.spinnerEstatus.selectedItem.toString()
+            val prioridad = binding.spinnerPrioridad.selectedItem.toString()
 
-            val actividad: Actividad = Actividad(0, name)
+            val actividad: Actividad = Actividad(0, name, area, estatus, prioridad)
 
             lifecycleScope.launch{
                 viewModel.addNewActividad(actividad, repository)

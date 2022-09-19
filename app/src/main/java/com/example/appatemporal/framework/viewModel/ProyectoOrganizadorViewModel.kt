@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.example.appatemporal.data.localdatabase.entities.Estatus
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.data.requirements.ProyectoOrganizadorRequirement
 import com.example.appatemporal.domain.Repository
@@ -21,5 +22,13 @@ class ProyectoOrganizadorViewModel: ViewModel() {
 
     suspend fun getProjects(repository: Repository): List<Proyecto>{
         return requirement.getProjects(repository)
+    }
+
+    fun countPendingActivities(repository: Repository,id_a: Int, id_e: Int): Int{
+        return requirement.countPendingActivities(repository, id_a, id_e)
+    }
+
+    suspend fun inserEstatus(repository: Repository, estatus: Estatus) {
+        requirement.insertEstatus(estatus, repository)
     }
 }
