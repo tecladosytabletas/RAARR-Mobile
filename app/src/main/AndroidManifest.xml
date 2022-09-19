@@ -4,6 +4,7 @@
     package="com.example.appatemporal">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
     <application
         android:allowBackup="true"
@@ -12,10 +13,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:hardwareAccelerated="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppAtemporal"
         tools:targetApi="31">
         <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+        <activity
+            android:name=".framework.view.RegisterQRView"
+            android:exported="true"
+            >
+        </activity>
             android:name=".framework.view.TermsCond"
             android:exported="false" />
         <activity
@@ -38,17 +48,15 @@
             android:exported="true"></activity>
         <activity
             android:name=".framework.view.RegisterActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".framework.view.CheckIfLogged"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".framework.view.CheckIfLogged"
-            android:exported="true"></activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

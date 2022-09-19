@@ -9,6 +9,7 @@ import com.example.appatemporal.data.localdatabase.entities.*
 
 @Database(entities = [Actividad::class, Area::class, Costo::class, Estatus::class, Objetivo::class,
                         Proyecto::class, Usuario::class, Privilegio::class ,Rol::class], version = 1)
+                        
 abstract class LocalDatabase: RoomDatabase() {
     abstract val actividadDao: ActividadDao
     abstract val areaDao: AreaDao
