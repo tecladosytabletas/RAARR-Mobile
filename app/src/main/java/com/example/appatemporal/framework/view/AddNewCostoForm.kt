@@ -25,7 +25,7 @@ class AddNewCostoForm : AppCompatActivity(){
         binding.savecostoBtn.setOnClickListener {
             // Get values from view
             val name = binding.nameCosto.text.toString()
-            val amount = binding.montoCosto.inputType
+            val amount = binding.montoCosto.text.toString().toInt()
 
             val costo: Costo = Costo(0, name, amount)
 

@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="328dp"
-    android:layout_height="120dp"
+    android:layout_height="80dp"
     android:padding="10dp"
     android:background="#302E3B"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,7 +20,7 @@
 
     <RelativeLayout
         android:layout_width="328dp"
-        android:layout_height="120dp"
+        android:layout_height="80dp"
         android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/gradent_horizontal"
@@ -45,7 +45,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="Task Title" />
 
@@ -61,29 +61,29 @@
                 android:maxLines="1"
                 android:src="@drawable/delete_button" />
 
-<!--            <ImageView-->
-<!--                android:id="@+id/ivEditIcon"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:src="@drawable/edit_white" />-->
-
-
-
-            <TextView
-                android:id="@+id/txtShowArea"
+            <ImageView
+                android:id="@+id/ivEditIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtShowTitle"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="210dp"
-                android:layout_marginTop="41dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                tools:text="Task Subtitle" />
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/edit_white" />
+
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtShowArea"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/txtShowTitle"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginStart="210dp"-->
+<!--                android:layout_marginTop="41dp"-->
+<!--                android:ellipsize="end"-->
+<!--                android:maxLines="1"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="16dp"-->
+<!--                tools:text="Task Subtitle" />-->
 
             <TextView
                 android:id="@+id/txtShowMonto"
@@ -92,11 +92,11 @@
                 android:layout_below="@+id/txtShowTitle"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="0dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 tools:text="Task Subtitle" />
 
 

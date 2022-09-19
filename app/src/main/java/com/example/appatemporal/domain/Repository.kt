@@ -57,6 +57,7 @@ class Repository(context: Context) {
     suspend fun getCostoById(id: Int) = costoDao.getById(id)
     suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
     suspend fun deleteAllCostos() = costoDao.deleteAll()
+    suspend fun updateCosto(costo: Costo) = costoDao.update(costo)
 
 
 }

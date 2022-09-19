@@ -10,12 +10,13 @@ class TasksCostoRequirement {
         repository.deleteCosto(costoToDelete)
     }
 
-//    suspend fun updateCosto(costo: Costo, repository: Repository){
-//        var costoToUpdate = repository.getCostoById(costo.id_costo)
-//        costoToUpdate.nombre_costo = costo.nombre_costo
-//
-//        repository.updateCosto(costoToUpdate)
-//    }
+    suspend fun updateCosto(costo: Costo, repository: Repository){
+        var costoToUpdate = repository.getCostoById(costo.id_costo)
+        costoToUpdate.nombre_costo = costo.nombre_costo
+        costoToUpdate.monto=costo.monto
+
+        repository.updateCosto(costoToUpdate)
+    }
 
     suspend fun getCostos(repository: Repository): List<Costo>{
         return repository.getAllCostos()

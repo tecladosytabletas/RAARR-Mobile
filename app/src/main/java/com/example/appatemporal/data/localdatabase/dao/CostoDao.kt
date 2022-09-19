@@ -1,6 +1,7 @@
 package com.example.appatemporal.data.localdatabase.dao
 
 import androidx.room.*
+import com.example.appatemporal.data.localdatabase.entities.Actividad
 import com.example.appatemporal.data.localdatabase.entities.Costo
 
 @Dao
@@ -28,5 +29,8 @@ interface CostoDao {
     // Delete a costo
     @Delete
     suspend fun delete(costo: Costo)
+
+    @Update
+    suspend fun update(costo: Costo)
 
 }

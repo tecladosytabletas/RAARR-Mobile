@@ -10,6 +10,7 @@ import com.example.appatemporal.databinding.ItemCostoBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.AddCosto
 import com.example.appatemporal.framework.view.DeleteCosto
+import com.example.appatemporal.framework.view.ModificarCosto
 import com.example.appatemporal.framework.viewModel.DeleteCostoViewModel
 import kotlinx.android.synthetic.main.costo_task.view.*
 import kotlinx.android.synthetic.main.dropdown_menu.view.*
@@ -23,16 +24,17 @@ class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(costoModel: Costo){
         binding.txtShowTitle.text = costoModel.nombre_costo
-//        binding.ivEditIcon.setOnClickListener{
-//            val intent1 = Intent(itemView.context, ModificarCosto::class.java)
-//            with(intent1){
-//                putExtra("id_costo", costoModel.id_costo)
-//                putExtra("nombre_costo", costoModel.nombre_costo)
-//            }
-//            itemView.context.startActivity(intent1)
-//        }
-
-        binding.txtShowMonto.inputType = costoModel.monto
+        binding.ivEditIcon.setOnClickListener{
+            val intent1 = Intent(itemView.context, ModificarCosto::class.java)
+            with(intent1){
+                putExtra("id_costo", costoModel.id_costo)
+                putExtra("nombre_costo", costoModel.nombre_costo)
+                putExtra("monto", costoModel.monto)
+            }
+            itemView.context.startActivity(intent1)
+        }
+            println(costoModel.monto)
+        binding.txtShowMonto.setText(costoModel.monto.toString())
         binding.txtShowTitle.setOnClickListener{
             val intent = Intent(itemView.context, AddCosto::class.java)
             with(intent){

@@ -10,8 +10,8 @@ data class Costo(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_costo") val id_costo : Int,
     //@ColumnInfo(name = "id_proyecto") val id_proyecto : Int,
-    @ColumnInfo(name = "nombre_costo") val nombre_costo : String,
-    @ColumnInfo(name = "monto") val monto : Int,
+    @ColumnInfo(name = "nombre_costo") var nombre_costo : String,
+    @ColumnInfo(name = "monto") var monto : Int,
     //@ColumnInfo(name = "created_at") val created_at : String,
     //@ColumnInfo(name = "modified_at") val modified_at : String,
 )
