@@ -15,5 +15,8 @@ class PresupuestoOrganizadorViewModel: ViewModel()  {
         suspend fun getProyectoByid(id: Int, repository: Repository):Proyecto{
             return requirement.getProyectoById(id,repository)
         }
+        suspend fun updateMeta(metaNew: Double, id: Int, repository: Repository){
+            requirement.updateMeta(metaNew, id,repository)
+        }
 
 }

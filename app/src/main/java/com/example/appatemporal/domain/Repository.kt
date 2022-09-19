@@ -50,6 +50,7 @@ class Repository(context: Context) {
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
     suspend fun updateProyecto(proyecto: Proyecto) = proyectoDao.update(proyecto)
     suspend fun updatePresupuesto(presupuestoN:Double, id: Int) =proyectoDao.updatePresupuesto(presupuestoN,id)
+    suspend fun updateMeta(metaN:Double, id: Int) =proyectoDao.updateMeta(metaN,id)
     suspend fun updateModifyProyect(name: String, date: String,time: String, id: Int) =proyectoDao.updateModify(name,date,time,id)
 
 

@@ -27,6 +27,7 @@ class ModifyPresupuesto :BottomSheetDialogFragment() {
             val idP = data!!.get("idProyecto").toString()
             val ganancia = data!!.get("ganancia").toString()
             val presupuesto = data!!.get("presupuesto").toString()
+            val meta = data!!.get("meta").toString()
             val repository = Repository(requireContext())
             binding.descPresupuesto.hint="Presupuesto Actual: "+ presupuesto
 
@@ -44,6 +45,7 @@ class ModifyPresupuesto :BottomSheetDialogFragment() {
                     putExtra("id_proyecto", idP.toInt())
                     putExtra("gananciaK", ganancia.toDouble())
                     putExtra("presupuestoK", presupuesto)
+                    putExtra("presupuestoK", meta.toDouble())
                 }
                 startActivity(intent)
                 saveAction()

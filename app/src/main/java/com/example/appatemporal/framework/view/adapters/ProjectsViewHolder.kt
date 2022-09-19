@@ -40,6 +40,7 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 putExtra("fecha_inicio", projectModel.fecha_inicio)
                 putExtra("ganancia_proyecto", projectModel.ganancia)
                 putExtra("presupuesto_proyecto", projectModel.presupuesto)
+                putExtra("meta_proyecto", projectModel.meta)
             }
             itemView.context.startActivity(intent)
         }

@@ -34,24 +34,39 @@ class PresupuestoAndMeta: AppCompatActivity()  {
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         var ganancia:Double = (myExtras?.getDouble("gananciaK")?:-1) as Double
         var presupuesto:Double = (myExtras?.getDouble("presupuestoK")?:-1) as Double
+        var meta:Double = (myExtras?.getDouble("metaK")?:-1) as Double
 
         lifecycleScope.launch{
             var myProyecto : Proyecto= viewModel.getProyectoByid(idProyecto,repository)
             binding.tvNewPresupuesto.text="Presupuesto: "+ myProyecto.presupuesto.toString()
+            var myMeta : Proyecto= viewModel.getProyectoByid(idProyecto,repository)
+            binding.tvMetaName.text="Meta: "+ myMeta.meta.toString()
+            binding.MetaValue.text = myMeta.meta.toString()
         }
 
         // On button click, a bundle is initialized and the
         // text from the EditText is passed in the custom
         // fragment using this bundle
-        tvNewPresupuesto.setOnClickListener {
+        ivPresupuestoImage.setOnClickListener {
             val fragment = ModifyPresupuesto()
             val bundle = Bundle()
             bundle.putString("idProyecto", idProyecto.toString())
             bundle.putString("ganancia", ganancia.toString())
             bundle.putString("presupuesto", presupuesto.toString())
+            bundle.putString("meta", meta.toString())
             fragment.arguments = bundle
             fragment.show(supportFragmentManager, "newTaskTag")
 
+        }
+        ivEditMeta.setOnClickListener{
+            val fragment = ModifyMeta()
+            val bundle = Bundle()
+            bundle.putString("idProyecto", idProyecto.toString())
+            bundle.putString("ganancia", ganancia.toString())
+            bundle.putString("presupuesto", presupuesto.toString())
+            bundle.putString("meta", meta.toString())
+            fragment.arguments = bundle
+            fragment.show(supportFragmentManager, "newTaskTag")
         }
 
 
@@ -69,6 +84,28 @@ class PresupuestoAndMeta: AppCompatActivity()  {
                         viewModel.updatePrespuesto(0.0,idProyecto, repository)
                     }
                     binding.tvDeletePresupuesto.context.startActivity(intent)
+                }
+                builder.setNeutralButton("Cancelar"){dialogInterface , which ->
+                }
+                val alertDialog: AlertDialog = builder.create()
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            }
+
+            binding.deleteMetaButton.setOnClickListener{
+                val intent = Intent(binding.deleteMetaButton.context, PresupuestoAndMeta::class.java)
+                with(intent){
+                    putExtra("id_proyecto", idProyecto)
+                }
+                val repository = Repository(binding.deleteMetaButton.context)
+                val builder = AlertDialog.Builder(binding.deleteMetaButton.context)
+                builder.setTitle("¿Estás seguro?")
+                builder.setMessage("¿Estás seguro de que quieres Establecer la meta como 0?")
+                builder.setPositiveButton("Eliminar"){dialogInterface, which ->
+                    CoroutineScope(Dispatchers.IO ).launch {
+                        viewModel.updateMeta(0.0,idProyecto, repository)
+                    }
+                    binding.deleteMetaButton.context.startActivity(intent)
                 }
                 builder.setNeutralButton("Cancelar"){dialogInterface , which ->
                 }

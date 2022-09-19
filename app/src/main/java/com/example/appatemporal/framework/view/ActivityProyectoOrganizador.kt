@@ -23,6 +23,9 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
         var idProyecto:Int =  myExtras?.getInt("id_proyecto")?:-1
         var ganancia:Double = (myExtras?.getDouble("ganancia_proyecto")?:-1) as Double
         var presupuesto:Double = (myExtras?.getDouble("presupuesto_proyecto")?:-1) as Double
+        var meta:Double = (myExtras?.getDouble("meta_proyecto")?:-1) as Double
+
+
         binding.bottomObjective.setOnClickListener {
 
             val intent = Intent(this, PresupuestoAndMeta::class.java)
@@ -30,6 +33,7 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
                 putExtra("id_proyecto", idProyecto)
                 putExtra("gananciaK", ganancia)
                 putExtra("presupuestoK", presupuesto)
+                putExtra("metaK", meta)
             }
             startActivity(intent)
         }

@@ -12,5 +12,7 @@ class PresupuestoOrganizadorRequirement {
     suspend fun getProyectoById(id: Int, repository: Repository): Proyecto {
         return repository.getProyectoById(id)
     }
-
+    suspend fun updateMeta(metaNew: Double, id: Int, repository: Repository){
+        repository.updateMeta(metaNew,id)
+    }
 }

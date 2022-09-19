@@ -13,5 +13,6 @@ data class Proyecto(
     @ColumnInfo(name = "fecha_inicio") var fecha_inicio: String,
     @ColumnInfo(name = "ganancia") val ganancia: Double,
     @ColumnInfo(name = "presupuesto") val presupuesto: Double,
+    @ColumnInfo(name = "meta") val meta: Double,
     @ColumnInfo(name = "created_at") val created_at: String
 )
