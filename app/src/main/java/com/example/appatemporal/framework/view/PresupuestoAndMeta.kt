@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.ObjectivePresupuestoMetaBinding
 import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.view.adapters.ModifyPresupuesto
 import com.example.appatemporal.framework.viewModel.PresupuestoOrganizadorViewModel
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -27,24 +28,31 @@ class PresupuestoAndMeta: AppCompatActivity()  {
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
+
         lifecycleScope.launch{
             var myProyecto : Proyecto= viewModel.getProyectoByid(idProyecto,repository)
-            binding.tvNewPresupuesto.text=myProyecto.presupuesto.toString()
+            binding.tvNewPresupuesto.text="Presupuesto: "+ myProyecto.presupuesto.toString()
+            var presupuesto: String=myProyecto.presupuesto.toString()
+            binding.tvNewPresupuesto.setOnClickListener {
+                ModifyPresupuesto().show(supportFragmentManager.beginTransaction(), "newTaskTag")
+            }
         }
 
-        lifecycleScope.launch{
 
             binding.tvDeletePresupuesto.setOnClickListener{
-                val intent = Intent(binding.tvNewPresupuesto.context, PresupuestoAndMeta::class.java)
-                val repository = Repository(binding.tvNewPresupuesto.context)
-                val builder = AlertDialog.Builder(binding.tvNewPresupuesto.context)
+                val intent = Intent(binding.tvDeletePresupuesto.context, PresupuestoAndMeta::class.java)
+                with(intent){
+                    putExtra("id_proyecto", idProyecto)
+                }
+                val repository = Repository(binding.tvDeletePresupuesto.context)
+                val builder = AlertDialog.Builder(binding.tvDeletePresupuesto.context)
                 builder.setTitle("¿Estás seguro?")
                 builder.setMessage("¿Estás seguro de que quieres Establecer el presupuesto como 0?")
                 builder.setPositiveButton("Eliminar"){dialogInterface, which ->
                     CoroutineScope(Dispatchers.IO ).launch {
-                        viewModel.updatePrespuesto(2.0,idProyecto, repository)
+                        viewModel.updatePrespuesto(0.0,idProyecto, repository)
                     }
-                    binding.tvNewPresupuesto.context.startActivity(intent)
+                    binding.tvDeletePresupuesto.context.startActivity(intent)
                 }
                 builder.setNeutralButton("Cancelar"){dialogInterface , which ->
                 }
@@ -53,6 +61,5 @@ class PresupuestoAndMeta: AppCompatActivity()  {
                 alertDialog.show()
             }
 
-        }
     }
 }
