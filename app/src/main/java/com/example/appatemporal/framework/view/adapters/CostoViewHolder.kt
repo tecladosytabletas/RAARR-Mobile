@@ -11,6 +11,8 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.AddCosto
 import com.example.appatemporal.framework.view.DeleteCosto
 import com.example.appatemporal.framework.viewModel.DeleteCostoViewModel
+import kotlinx.android.synthetic.main.costo_task.view.*
+import kotlinx.android.synthetic.main.dropdown_menu.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +31,7 @@ class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 //            }
 //            itemView.context.startActivity(intent1)
 //        }
+
         binding.txtShowMonto.inputType = costoModel.monto
         binding.txtShowTitle.setOnClickListener{
             val intent = Intent(itemView.context, AddCosto::class.java)
