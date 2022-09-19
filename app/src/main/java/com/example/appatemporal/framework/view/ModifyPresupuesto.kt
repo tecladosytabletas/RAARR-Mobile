@@ -23,25 +23,32 @@ class ModifyPresupuesto :BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val repository = Repository(requireContext())
+            val data = arguments
+            val idP = data!!.get("idProyecto").toString()
+            val ganancia = data!!.get("ganancia").toString()
+            val presupuesto = data!!.get("presupuesto").toString()
+            val repository = Repository(requireContext())
+            binding.descPresupuesto.hint="Presupuesto Actual: "+ presupuesto
 
-        var myExtras :Bundle? = intent.extras
-        binding.descPresupuesto.setText(myExtras?.getString("Presupuesto"))
-        val idproject: Int = myExtras?.getInt("id_proyecto")?:-1
 
-        binding.saveButton.setOnClickListener {
-            val taskViewModel = PresupuestoOrganizadorViewModel()
-            val presupuesto = binding.descPresupuesto.text.toString().toDouble()
-            CoroutineScope(Dispatchers.IO ).launch {
-                taskViewModel.updatePrespuesto(presupuesto,idproject, repository)
+            binding.saveButton.setOnClickListener {
+                val taskViewModel = PresupuestoOrganizadorViewModel()
+                val presupuesto = binding.descPresupuesto.text.toString().toDouble()
+                CoroutineScope(Dispatchers.IO).launch {
+
+                    taskViewModel.updatePrespuesto(presupuesto, idP.toInt(), repository)
+
+                }
+                val intent = Intent(requireContext(), PresupuestoAndMeta::class.java)
+                with(intent) {
+                    putExtra("id_proyecto", idP.toInt())
+                    putExtra("gananciaK", ganancia.toDouble())
+                    putExtra("presupuestoK", presupuesto)
+                }
+                startActivity(intent)
+                saveAction()
             }
-            val intent = Intent(requireContext(), PresupuestoAndMeta::class.java)
-            with(intent){
-                putExtra("id_proyecto", idproject)
-            }
-            startActivity(intent)
-            saveAction()
-        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

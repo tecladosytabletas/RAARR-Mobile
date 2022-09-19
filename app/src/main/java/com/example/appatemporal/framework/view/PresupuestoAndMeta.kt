@@ -1,17 +1,21 @@
 package com.example.appatemporal.framework.view
 
+import android.app.ProgressDialog.show
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.ObjectivePresupuestoMetaBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.ModifyPresupuesto
 import com.example.appatemporal.framework.viewModel.PresupuestoOrganizadorViewModel
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
+import kotlinx.android.synthetic.main.modify_new_project.*
+import kotlinx.android.synthetic.main.objective_presupuesto_meta.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,14 +32,26 @@ class PresupuestoAndMeta: AppCompatActivity()  {
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
+        var ganancia:Double = (myExtras?.getDouble("gananciaK")?:-1) as Double
+        var presupuesto:Double = (myExtras?.getDouble("presupuestoK")?:-1) as Double
 
         lifecycleScope.launch{
             var myProyecto : Proyecto= viewModel.getProyectoByid(idProyecto,repository)
             binding.tvNewPresupuesto.text="Presupuesto: "+ myProyecto.presupuesto.toString()
-            var presupuesto: String=myProyecto.presupuesto.toString()
-            binding.tvNewPresupuesto.setOnClickListener {
-                ModifyPresupuesto().show(supportFragmentManager.beginTransaction(), "newTaskTag")
-            }
+        }
+
+        // On button click, a bundle is initialized and the
+        // text from the EditText is passed in the custom
+        // fragment using this bundle
+        tvNewPresupuesto.setOnClickListener {
+            val fragment = ModifyPresupuesto()
+            val bundle = Bundle()
+            bundle.putString("idProyecto", idProyecto.toString())
+            bundle.putString("ganancia", ganancia.toString())
+            bundle.putString("presupuesto", presupuesto.toString())
+            fragment.arguments = bundle
+            fragment.show(supportFragmentManager, "newTaskTag")
+
         }
 
 

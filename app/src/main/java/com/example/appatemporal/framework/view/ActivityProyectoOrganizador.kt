@@ -21,8 +21,8 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
 
         binding.projectName.text = myExtras?.getString("nombre_proyecto")
         var idProyecto:Int =  myExtras?.getInt("id_proyecto")?:-1
-        var ganancia:Int =  myExtras?.getInt("ganancia_proyecto")?:-1
-        var presupuesto:Int =  myExtras?.getInt("presupuesto_proyecto")?:-1
+        var ganancia:Double = (myExtras?.getDouble("ganancia_proyecto")?:-1) as Double
+        var presupuesto:Double = (myExtras?.getDouble("presupuesto_proyecto")?:-1) as Double
         binding.bottomObjective.setOnClickListener {
 
             val intent = Intent(this, PresupuestoAndMeta::class.java)
