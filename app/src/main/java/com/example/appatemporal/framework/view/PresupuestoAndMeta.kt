@@ -1,6 +1,5 @@
 package com.example.appatemporal.framework.view
 
-import android.app.ProgressDialog.show
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
