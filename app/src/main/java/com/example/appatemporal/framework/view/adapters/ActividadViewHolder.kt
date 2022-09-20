@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binding = ItemTodoBinding.bind(view)
 
-    fun render(activityModel: Actividad){
+    fun render(activityModel: Actividad, viewModel: DeleteActivityViewModel) {
         binding.txtShowTitle.text = activityModel.nombre_actividad
         binding.txtShowArea.text = activityModel.area
         binding.txtShowEstatus.text = activityModel.estatus
@@ -39,8 +39,6 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
         binding.deleteActivityButton.setOnClickListener{
-            val intent = Intent(itemView.context, DeleteActivity::class.java)
-            val viewModel = DeleteActivityViewModel()
 
             val repository = Repository(itemView.context)
             val builder = AlertDialog.Builder(itemView.context)
@@ -53,7 +51,7 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     viewModel.removeActividad(activityModel, repository)
                     //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
                 }
-                itemView.context.startActivity(intent)
+
 
 
                 //Toast.makeText(itemView.context,"Se eliminó el proyecto correctamente",Toast.LENGTH_LONG).show()

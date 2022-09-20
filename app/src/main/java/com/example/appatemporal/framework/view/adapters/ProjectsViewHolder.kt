@@ -4,6 +4,7 @@ package com.example.appatemporal.framework.view.adapters
 import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.data.localdatabase.entities.Objetivo
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binding = ProyectosOrganizadorItemBinding.bind(view)
 
-    fun render(projectModel: Proyecto){
+    fun render(projectModel: Proyecto, viewModel: ProyectoOrganizadorViewModel) {
         binding.tvProjectName.text = projectModel.nombre_proyecto
         binding.ivEditIcon.setOnClickListener{
             val intent1 = Intent(itemView.context, ModificarProyecto::class.java)
@@ -52,20 +53,16 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
         binding.deleteProjectButton.setOnClickListener{
-            val intent = Intent(itemView.context, ProyectoOrganizador::class.java)
-            val viewModel = ProyectoOrganizadorViewModel()
-
             val repository = Repository(itemView.context)
             val builder = AlertDialog.Builder(itemView.context)
             builder.setTitle("¿Estás seguro?")
             builder.setMessage("¿Estás seguro de que quieres eliminar este proyecto? Este proceso no puede revertirse")
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
-                //Mandar a llamar la funcion delete()
-                CoroutineScope(Dispatchers.IO ).launch {
-                    viewModel.removeProject(projectModel, repository)
-                }
-                itemView.context.startActivity(intent)
+                viewModel.removeProject(projectModel, repository)
+
+
             }
+
             builder.setNeutralButton("Cancelar"){dialogInterface , which ->
 
             }

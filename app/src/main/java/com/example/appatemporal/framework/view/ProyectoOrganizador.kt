@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.databinding.ProyectosOrganizadorBinding
@@ -21,9 +22,15 @@ class ProyectoOrganizador : AppCompatActivity() {
         binding = ProyectosOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
-        lifecycleScope .launch {
-            initRecyclerView(repository)
-        }
+
+        viewModel.getProjects(repository)
+        viewModel.projects.observe(this, Observer { projectList ->
+            Log.d("Prueba", projectList.toString())
+            binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
+            binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
+        })
+
+
 
         binding.tvNewProject.setOnClickListener {
             val intent = Intent(this, AddNewProjectForm::class.java)
@@ -48,13 +55,5 @@ class ProyectoOrganizador : AppCompatActivity() {
         }
     }
 
-    private suspend fun initRecyclerView(repository: Repository) {
-        val projectList = viewModel.getProjects(repository)
-        binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList)
-        // Log each project
-        projectList.forEach {
-            Log.d("Project", it.toString())
-        }
-    }
+
 }

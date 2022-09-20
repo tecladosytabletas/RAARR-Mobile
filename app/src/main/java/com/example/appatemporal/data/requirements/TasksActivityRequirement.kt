@@ -17,7 +17,8 @@ class TasksActivityRequirement {
         repository.updateActividad(actividadToUpdate)
     }
 
-    suspend fun getActivities(repository: Repository): List<Actividad>{
-        return repository.getAllActividades()
+    suspend fun getActivities(repository: Repository): List<Actividad> {
+
+       return repository.getAllActividades()
     }
 }
