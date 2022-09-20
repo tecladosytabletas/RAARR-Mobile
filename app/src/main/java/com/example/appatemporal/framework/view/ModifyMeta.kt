@@ -17,7 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ModifyMeta :BottomSheetDialogFragment() {
+class ModifyMeta(private val viewModel: PresupuestoOrganizadorViewModel) :BottomSheetDialogFragment() {
     private lateinit var binding: FormularioMetaBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,21 +32,9 @@ class ModifyMeta :BottomSheetDialogFragment() {
 
 
         binding.saveButtonMeta.setOnClickListener {
-            val taskViewModel = PresupuestoOrganizadorViewModel()
             val meta = binding.descMeta.text.toString().toDouble()
-            CoroutineScope(Dispatchers.IO).launch {
+            viewModel.updateMeta(meta, idP.toInt(), repository)
 
-                taskViewModel.updateMeta(meta, idP.toInt(), repository)
-
-            }
-            val intent = Intent(requireContext(), PresupuestoAndMeta::class.java)
-            with(intent) {
-                putExtra("id_proyecto", idP.toInt())
-                putExtra("gananciaK", ganancia.toDouble())
-                putExtra("presupuestoK", presupuesto.toDouble())
-                putExtra("presupuestoK", meta)
-            }
-            startActivity(intent)
             saveAction()
         }
         

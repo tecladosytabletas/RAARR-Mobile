@@ -18,7 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ModifyPresupuesto :BottomSheetDialogFragment() {
+class ModifyPresupuesto(private val viewModel: PresupuestoOrganizadorViewModel) :BottomSheetDialogFragment() {
     private lateinit var binding: FormularioPresupuestoBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,21 +33,8 @@ class ModifyPresupuesto :BottomSheetDialogFragment() {
 
 
             binding.saveButton.setOnClickListener {
-                val taskViewModel = PresupuestoOrganizadorViewModel()
                 val presupuesto = binding.descPresupuesto.text.toString().toDouble()
-                CoroutineScope(Dispatchers.IO).launch {
-
-                    taskViewModel.updatePrespuesto(presupuesto, idP.toInt(), repository)
-
-                }
-                val intent = Intent(requireContext(), PresupuestoAndMeta::class.java)
-                with(intent) {
-                    putExtra("id_proyecto", idP.toInt())
-                    putExtra("gananciaK", ganancia.toDouble())
-                    putExtra("presupuestoK", presupuesto)
-                    putExtra("presupuestoK", meta.toDouble())
-                }
-                startActivity(intent)
+                viewModel.updatePrespuesto(presupuesto, idP.toInt(), repository)
                 saveAction()
             }
 
