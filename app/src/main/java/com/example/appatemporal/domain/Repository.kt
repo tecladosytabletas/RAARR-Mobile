@@ -70,6 +70,14 @@ class Repository(context: Context) {
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
 
+    suspend fun getUserTicket(uid: String, eid: String, fid: String) : QuerySnapshot {
+        return firestoreAPI.getUserTicket(uid, eid, fid)
+    }
+
+    suspend fun getUserFunction(uid: String) : QuerySnapshot {
+        return firestoreAPI.getUserFunctions(uid)
+    }
+
 
 
 }

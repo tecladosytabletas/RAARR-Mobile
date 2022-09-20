@@ -82,4 +82,24 @@ class FirestoreService {
                 .await()
         return userRole
     }
+
+    // uid: userId, eid: eventId, fid: funcionId
+    suspend fun getUserTicket(uid: String, eid: String, fid: String) : QuerySnapshot {
+        val ticket = db.collection("Boleto")
+            .whereEqualTo("ID_Usuario", uid)
+            .whereEqualTo("ID_Evento", eid)
+            .whereEqualTo("ID_Funcion", fid)
+            .get()
+            .await()
+
+        return ticket
+    }
+
+    suspend fun getUserFunctions(uid: String) : QuerySnapshot {
+        val funcion = db.collection("Usuario_Evento")
+            .whereEqualTo("Id_Usuario", uid)
+            .get()
+            .await()
+        return funcion
+    }
 }
