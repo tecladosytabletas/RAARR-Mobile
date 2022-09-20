@@ -82,4 +82,39 @@ class FirestoreService {
                 .await()
         return userRole
     }
+
+    suspend fun eventCount(uid: String) : Int {
+        var events: QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("Id_Usuario", uid)
+                .get()
+                .await()
+        return events.count()
+    }
+
+    /*suspend fun asistenciasCount(uid : String) : Int {
+        var asistenciasCount : Int = 0
+        var asistencias: QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("Id_Usuario", uid)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents){
+                        var funciones: QuerySnapshot =
+                            db.collection("Funcion")
+                                .whereEqualTo("Id_Evento", document.data.get("Id_Evento").toString())
+                                .get()
+                                .addOnSuccessListener { documents ->
+                                    for (document in documents){
+                                        var boletos: QuerySnapshot =
+                                            db.collection("Boleto")
+                                                .whereEqualTo("Id_Funcion", document.data.get("Id_Funcion").toString())
+                                                .get()
+                                                .await()
+                                        asistenciasCount = asistenciasCount + boletos.count()
+                                    }
+                                }
+                    }
+                }
+    }*/
 }

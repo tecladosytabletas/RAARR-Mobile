@@ -28,6 +28,9 @@ class Repository(context: Context) {
         return firestoreAPI.getUserRole(uid)
     }
 
+    suspend fun eventCount(uid: String) : Int {
+        return firestoreAPI.eventCount(uid)
+    }
 
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
@@ -69,7 +72,6 @@ class Repository(context: Context) {
     suspend fun getProyectoById(id: Int) = proyectoDao.getById(id)
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
-
 
 
 }

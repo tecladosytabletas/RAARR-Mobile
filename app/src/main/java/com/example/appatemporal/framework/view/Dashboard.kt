@@ -7,8 +7,15 @@ import android.os.PersistableBundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.example.appatemporal.R
 import com.example.appatemporal.data.network.dataclasses.DashPieModel
+import com.example.appatemporal.databinding.ActivityActividadesOrganizadorBinding.inflate
+import com.example.appatemporal.databinding.DashboardBinding
+import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.viewModel.CountEventViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -17,15 +24,30 @@ import kotlinx.android.synthetic.main.dashboard.*
 
 class Dashboard : AppCompatActivity(){
     private lateinit var ourPieChart: PieChart
+    private lateinit var ourEventCount : TextView
+    private lateinit var ourEventRevenue : TextView
+    private lateinit var eventCountTotal : String
+    private lateinit var binding : DashboardBinding
+    private lateinit var countEventViewModel : CountEventViewModel
+    private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // En el onCreate se deben poblar las graficas
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
 
+        binding = DashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         // Declaraciom de datos dinamicos
-        val eventCount = findViewById<TextView>(R.id.eventCount)
+        ourEventCount = findViewById(R.id.eventCountTotal)
+        ourEventRevenue = findViewById(R.id.eventCount)
         ourPieChart = findViewById(R.id.dashPieChart)
+
+
+        val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
+
+        countEventViewModel.countEvent(tempUserId, repository)
 
 
         populateEventCount()
@@ -40,9 +62,15 @@ class Dashboard : AppCompatActivity(){
 
         // Aqui debe de recuperar los datos de Firebase y asignarlos a la variable eventCountEntry
 
-        val eventCountEntry = "PRUEBA"
+        val eventRevenueEntry = "REVENUE"
 
-        eventCount.text = eventCountEntry
+        //ourEventRevenue.text = "$ ${eventRevenueEntry} MXN"
+
+        countEventViewModel.count.observe(this, Observer{
+            eventCountTotal = it.toString()
+        })
+
+        ourEventCount.text = "En ${eventCountTotal} eventos"
 
     }
 
