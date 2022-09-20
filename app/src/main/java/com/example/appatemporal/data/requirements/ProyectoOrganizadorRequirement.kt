@@ -28,8 +28,12 @@ class ProyectoOrganizadorRequirement {
         return repository.getAllProyectos()
     }
 
-    fun countPendingActivities(repository: Repository, id_a: Int, id_e: Int): Int{
-        return repository.countPendingActivities(id_a, id_e)
+    fun countPendingActivities(repository: Repository, id_a: Int, stringStatus: String): Int{
+        return repository.countPendingActivities(id_a, stringStatus)
+    }
+
+    fun countDoneActivities(repository: Repository, id_a: Int, stringStatus: String): Int{
+        return repository.countDoneActivities(id_a, stringStatus)
     }
 
     suspend fun insertEstatus(estatus: Estatus, repository:Repository){
