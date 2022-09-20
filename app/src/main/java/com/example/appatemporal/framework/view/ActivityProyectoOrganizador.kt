@@ -61,5 +61,13 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
             }
             startActivity(intent)
         }
+        binding.bottomActivity.setOnClickListener {
+
+            val intent = Intent(this, DeleteActivity::class.java)
+            with(intent){
+                putExtra("id_proyecto", idProyecto)
+            }
+            startActivity(intent)
+        }
     }
 }

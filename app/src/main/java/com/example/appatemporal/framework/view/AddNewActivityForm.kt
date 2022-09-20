@@ -2,9 +2,12 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Actividad
 import com.example.appatemporal.databinding.ActivityTaskBinding
 import com.example.appatemporal.domain.Repository
@@ -19,15 +22,35 @@ class AddNewActivityForm : AppCompatActivity(){
         binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // get reference to the string array that we just created
+        val areaList = resources.getStringArray(R.array.prioridadList)
+        // create an array adapter and pass the required parameter
+        // in our case pass the context, drop down layout , and array.
+        val arrayAdapter1 = ArrayAdapter(this, R.layout.dropdown_menu, areaList)
+        // get reference to the autocomplete text view
+        val autocompleteTV1 = findViewById<AutoCompleteTextView>(R.id.spinnerArea)
+        // set adapter to the autocomplete tv to the arrayAdapter
+        autocompleteTV1.setAdapter(arrayAdapter1)
+
+        val estatusList = resources.getStringArray(R.array.estatusList)
+        val arrayAdapter2 = ArrayAdapter(this, R.layout.dropdown_menu, estatusList)
+        val autocompleteTV2 = findViewById<AutoCompleteTextView>(R.id.spinnerEstatus)
+        autocompleteTV2.setAdapter(arrayAdapter2)
+
+        val prioridadList = resources.getStringArray(R.array.prioridadList)
+        val arrayAdapter3 = ArrayAdapter(this, R.layout.dropdown_menu, prioridadList)
+        val autocompleteTV3 = findViewById<AutoCompleteTextView>(R.id.spinnerPrioridad)
+        autocompleteTV3.setAdapter(arrayAdapter3)
+
         val repository = Repository(this)
 
         // Set click listener
         binding.saveBtn.setOnClickListener {
             // Get values from view
             val name = binding.nameActivity.text.toString()
-            val area = binding.spinnerArea.selectedItem.toString()
-            val estatus = binding.spinnerEstatus.selectedItem.toString()
-            val prioridad = binding.spinnerPrioridad.selectedItem.toString()
+            val area = binding.spinnerArea.text.toString()
+            val estatus = binding.spinnerEstatus.text.toString()
+            val prioridad = binding.spinnerPrioridad.text.toString()
 
             val actividad: Actividad = Actividad(0, 1,name, area, estatus, prioridad)
 
