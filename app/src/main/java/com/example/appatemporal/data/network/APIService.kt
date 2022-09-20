@@ -15,7 +15,9 @@ class APIService {
                 for(document in result){
                     val EventName = document.getString("EventName")
                     val EventCategory = document.getString("EventCategory")
-                    val event = DC_Event(EventName!!,EventCategory!!)
+                    val EventRating = document.getDouble("EventRating")
+                    val EventProfits = document.getDouble("EventProfits")
+                    val event = DC_Event(EventName!!,EventCategory!!,EventRating!!,EventProfits!!)
                     listData.add(event)
                 }
                 mutableData.value = listData
