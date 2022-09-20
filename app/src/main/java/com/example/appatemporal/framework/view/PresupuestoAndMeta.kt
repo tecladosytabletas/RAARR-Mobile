@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
@@ -33,19 +34,22 @@ class PresupuestoAndMeta: AppCompatActivity()  {
         var presupuesto:Double = (myExtras?.getDouble("presupuestoK")?:-1) as Double
         var meta:Double = (myExtras?.getDouble("metaK")?:-1) as Double
 
-        lifecycleScope.launch{
-            var myProyecto : Proyecto= viewModel.getProyectoByid(idProyecto,repository)
+        viewModel.getProyectoByid(idProyecto, repository)
+
+        viewModel.project.observe(this, Observer{ myProyecto ->
             binding.tvNewPresupuesto.text="Presupuesto: "+ myProyecto.presupuesto.toString()
-            var myMeta : Proyecto= viewModel.getProyectoByid(idProyecto,repository)
-            binding.tvMetaName.text="Meta: "+ myMeta.meta.toString()
-            binding.MetaValue.text = myMeta.meta.toString()
-        }
+            binding.tvMetaName.text="Meta: "+ myProyecto.meta.toString()
+            binding.MetaValue.text = myProyecto.meta.toString()
+        })
+
+
+
 
         // On button click, a bundle is initialized and the
         // text from the EditText is passed in the custom
         // fragment using this bundle
         binding.tvNewPresupuesto.setOnClickListener {
-            val fragment = ModifyPresupuesto()
+            val fragment = ModifyPresupuesto(viewModel)
             val bundle = Bundle()
             bundle.putString("idProyecto", idProyecto.toString())
             bundle.putString("ganancia", ganancia.toString())
@@ -56,7 +60,7 @@ class PresupuestoAndMeta: AppCompatActivity()  {
 
         }
         binding.ivEditMeta.setOnClickListener{
-            val fragment = ModifyMeta()
+            val fragment = ModifyMeta(viewModel)
             val bundle = Bundle()
             bundle.putString("idProyecto", idProyecto.toString())
             bundle.putString("ganancia", ganancia.toString())
@@ -68,19 +72,13 @@ class PresupuestoAndMeta: AppCompatActivity()  {
 
 
             binding.tvDeletePresupuesto.setOnClickListener{
-                val intent = Intent(binding.tvDeletePresupuesto.context, PresupuestoAndMeta::class.java)
-                with(intent){
-                    putExtra("id_proyecto", idProyecto)
-                }
                 val repository = Repository(binding.tvDeletePresupuesto.context)
                 val builder = AlertDialog.Builder(binding.tvDeletePresupuesto.context)
                 builder.setTitle("¿Estás seguro?")
                 builder.setMessage("¿Estás seguro de que quieres Establecer el presupuesto como 0?")
                 builder.setPositiveButton("Eliminar"){dialogInterface, which ->
-                    CoroutineScope(Dispatchers.IO ).launch {
-                        viewModel.updatePrespuesto(0.0,idProyecto, repository)
-                    }
-                    binding.tvDeletePresupuesto.context.startActivity(intent)
+                    viewModel.updatePrespuesto(0.0,idProyecto, repository)
+
                 }
                 builder.setNeutralButton("Cancelar"){dialogInterface , which ->
                 }
@@ -90,19 +88,13 @@ class PresupuestoAndMeta: AppCompatActivity()  {
             }
 
             binding.deleteMetaButton.setOnClickListener{
-                val intent = Intent(binding.deleteMetaButton.context, PresupuestoAndMeta::class.java)
-                with(intent){
-                    putExtra("id_proyecto", idProyecto)
-                }
                 val repository = Repository(binding.deleteMetaButton.context)
                 val builder = AlertDialog.Builder(binding.deleteMetaButton.context)
                 builder.setTitle("¿Estás seguro?")
                 builder.setMessage("¿Estás seguro de que quieres Establecer la meta como 0?")
                 builder.setPositiveButton("Eliminar"){dialogInterface, which ->
-                    CoroutineScope(Dispatchers.IO ).launch {
-                        viewModel.updateMeta(0.0,idProyecto, repository)
-                    }
-                    binding.deleteMetaButton.context.startActivity(intent)
+
+                    viewModel.updateMeta(0.0,idProyecto, repository)
                 }
                 builder.setNeutralButton("Cancelar"){dialogInterface , which ->
                 }

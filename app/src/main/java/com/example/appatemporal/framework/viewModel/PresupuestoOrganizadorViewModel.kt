@@ -1,22 +1,38 @@
 package com.example.appatemporal.framework.viewModel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.data.requirements.PresupuestoOrganizadorRequirement
 import com.example.appatemporal.domain.Repository
+import kotlinx.coroutines.launch
 
 class PresupuestoOrganizadorViewModel: ViewModel()  {
 
         private val requirement = PresupuestoOrganizadorRequirement()
+        val project = MutableLiveData<Proyecto>()
+        fun updatePrespuesto(presupuestoNew: Double, id: Int, repository: Repository){
+            viewModelScope.launch {
+                requirement.updatePresupuestos(presupuestoNew, id, repository)
+                val proyecto = requirement.getProyectoById(id, repository)
+                project.postValue(proyecto)
+            }
+        }
+        fun getProyectoByid(id: Int, repository: Repository){
+            viewModelScope.launch {
+                val proyecto = requirement.getProyectoById(id, repository)
+                project.postValue(proyecto)
 
-        suspend fun updatePrespuesto(presupuestoNew: Double, id: Int, repository: Repository){
-            requirement.updatePresupuestos(presupuestoNew, id,repository)
+            }
         }
-        suspend fun getProyectoByid(id: Int, repository: Repository):Proyecto{
-            return requirement.getProyectoById(id,repository)
-        }
-        suspend fun updateMeta(metaNew: Double, id: Int, repository: Repository){
-            requirement.updateMeta(metaNew, id,repository)
+
+        fun updateMeta(metaNew: Double, id: Int, repository: Repository){
+            viewModelScope.launch {
+                requirement.updateMeta(metaNew, id, repository)
+                val proyecto = requirement.getProyectoById(id, repository)
+                project.postValue(proyecto)
+            }
         }
 
 }
