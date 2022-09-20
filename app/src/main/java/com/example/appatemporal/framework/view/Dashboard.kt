@@ -8,9 +8,15 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.example.appatemporal.R
 import com.example.appatemporal.data.network.dataclasses.DashPieModel
-import com.example.appatemporal.domain.FirestoreService
+import com.example.appatemporal.databinding.ActivityActividadesOrganizadorBinding.inflate
+import com.example.appatemporal.databinding.DashboardBinding
+import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.viewModel.CountEventViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -20,17 +26,31 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
 
-class DashboardMetrics : AppCompatActivity(){
+class Dashboard : AppCompatActivity(){
     private lateinit var ourPieChart: PieChart
+    private lateinit var ourEventCount : TextView
+    private lateinit var ourEventRevenue : TextView
+    private lateinit var eventCountTotal : String
+    private lateinit var binding : DashboardBinding
+    private lateinit var countEventViewModel : CountEventViewModel
+    private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // En el onCreate se deben poblar las graficas
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
 
-        // Declaracion de datos dinamicos
-        val eventCount = findViewById<TextView>(R.id.eventCount)
-        ourPieChart = findViewById<PieChart>(R.id.dashPieChart)
+        binding = DashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Declaraciom de datos dinamicos
+        ourEventCount = findViewById(R.id.eventCountTotal)
+        ourEventRevenue = findViewById(R.id.eventCount)
+        ourPieChart = findViewById(R.id.dashPieChart)
+
+        val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
+
+        countEventViewModel.countEvent(tempUserId, repository)
 
 
         populateEventCount()
@@ -41,32 +61,19 @@ class DashboardMetrics : AppCompatActivity(){
 
     // Ejemplo de poblar ingresos de evento
 
-    private suspend fun populateEventCount() {
+    private fun populateEventCount() {
 
         // Aqui debe de recuperar los datos de Firebase y asignarlos a la variable eventCountEntry
 
-        val sessionIdaux : String = "HWRTS0ZBbnk8IffKtrNx"
-        var eventCountEntry = "PRUEBA"
+        val eventRevenueEntry = "REVENUE"
 
-        val rootRef = FirebaseFirestore.getInstance()
-        rootRef.collection("Usuario_Evento")
-            .whereEqualTo("Id_Usuario", sessionIdaux)
-            .get().addOnSuccessListener { task ->
-            if (!task.isEmpty){
-                var count = 0
-                task.documents.let {
-                    for (snapshot in it) {
-                        count++
-                    }
-                }
-                eventCountEntry = count.toString()
+        //ourEventRevenue.text = "$ ${eventRevenueEntry} MXN"
 
-            }
-        }.addOnFailureListener{
-            Log.d("ERROR", it.message.toString())
-            }
+        countEventViewModel.count.observe(this, Observer{
+            eventCountTotal = it.toString()
+        })
 
-        eventCount.text = eventCountEntry
+        ourEventCount.text = "En ${eventCountTotal} eventos"
 
     }
 
