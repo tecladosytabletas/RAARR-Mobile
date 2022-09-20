@@ -21,9 +21,9 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
         setContentView(binding.root)
 
         var myExtras :Bundle? = intent.extras
+        val stringToDo = "Actividades por completar: ".plus(myExtras?.getInt("pendingActivities"))
+        val stringCompleted = "Actividades completadas: ".plus(myExtras?.getInt("doneActivities"))
 
-        val stringToDo = "Actividades por completar:".plus(" ").plus(myExtras?.getString("doneActivities"))
-        val stringCompleted = "Actividades completadas:".plus(" ").plus(myExtras?.getString("pendingActivities"))
         binding.activitiesCompleted.text = stringToDo
         binding.activitiesToDo.text = stringCompleted
         binding.projectName.text = myExtras?.getString("nombre_proyecto")
