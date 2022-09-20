@@ -4,10 +4,10 @@
     <string name="dateCreateNewProject">Fecha (dd/mm/aaaa)</string>
 
     <string name="eventType">Tipo de Evento</string>
-    <string name="eventType1">OwO</string>
-    <string name="eventType2">UwU</string>
-    <string name="eventType3">UnU</string>
-    <string name="eventType4">AwA</string>
+    <string name="eventType1">Alta</string>
+    <string name="eventType2">Media</string>
+    <string name="eventType3">Baja</string>
+    <string name="eventType4">Muy Baja</string>
 
     <string name="titleCreateNewTask">Crear una nueva Tarea</string>
     <string name="nameCreateNewTask">Nombre de la Tarea: </string>
@@ -34,6 +34,7 @@
     <string name="areaType5">Seguridad</string>
 
     <string name="estatusType">Estatus</string>
+
     <string name="estatusType1">En Proceso</string>
     <string name="estatusType2">No Completado</string>
     <string name="estatusType3">Completado </string>

@@ -22,7 +22,7 @@
 
         </activity>
         <activity
-            android:name=".framework.view.ProyectoOrganizador"
+            android:name=".framework.view.DeleteActivity"
             android:exported="true">
         </activity>
         <activity
@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name=".framework.view.DeleteActivity"
+            android:name=".framework.view.ProyectoOrganizador"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

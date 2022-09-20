@@ -20,17 +20,17 @@ class Repository(context: Context) {
     suspend fun getActividadById(id: Int) = actividadDao.getById(id)
     suspend fun deleteActividad(actividad: Actividad) = actividadDao.delete(actividad)
     suspend fun deleteAllActividades() = actividadDao.deleteAll()
-    fun countPendingActivities(id_a: Int, id_e: Int): Int = runBlocking {
+    fun countPendingActivities(id_a: Int, stringStatus: String): Int = runBlocking {
         val count = async {
-            actividadDao.countPendingActivities(id_a, id_e)
+            actividadDao.countPendingActivities(id_a, stringStatus)
         }
         count.start()
         count.await()
     }
 
-    fun countDoneActivities(id_a: Int, id_e: Int): Int = runBlocking {
+    fun countDoneActivities(id_a: Int, stringStatus: String): Int = runBlocking {
         val count = async {
-            actividadDao.countDoneActivities(id_a, id_e)
+            actividadDao.countDoneActivities(id_a, stringStatus)
         }
         count.start()
         count.await()

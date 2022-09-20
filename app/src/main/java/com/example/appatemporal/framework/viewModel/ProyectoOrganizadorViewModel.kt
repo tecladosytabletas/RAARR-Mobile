@@ -37,8 +37,11 @@ class ProyectoOrganizadorViewModel: ViewModel() {
 
     }
 
-    fun countPendingActivities(repository: Repository,id_a: Int, id_e: Int): Int{
-        return requirement.countPendingActivities(repository, id_a, id_e)
+    fun countPendingActivities(repository: Repository, id_a: Int, stringStatus: String): Int{
+        return requirement.countPendingActivities(repository, id_a, stringStatus)
+    }
+    fun countDoneActivities(repository: Repository, id_a: Int, stringStatus: String): Int{
+        return requirement.countDoneActivities(repository, id_a, stringStatus)
     }
 
     suspend fun inserEstatus(repository: Repository, estatus: Estatus) {
