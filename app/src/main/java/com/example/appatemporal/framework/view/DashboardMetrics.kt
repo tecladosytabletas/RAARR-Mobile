@@ -60,6 +60,7 @@ class DashboardMetrics : AppCompatActivity(){
                     }
                 }
                 eventCountEntry = count.toString()
+
             }
         }.addOnFailureListener{
             Log.d("ERROR", it.message.toString())
