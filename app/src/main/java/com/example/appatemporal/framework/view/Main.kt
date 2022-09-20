@@ -9,7 +9,6 @@ import com.example.appatemporal.databinding.ActivityMainBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.MainViewModel
 
-
 class Main : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {

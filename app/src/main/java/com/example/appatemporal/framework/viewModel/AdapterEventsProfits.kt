@@ -21,8 +21,6 @@ class AdapterEventsProfits(private val context: Context) : RecyclerView.Adapter<
         fun bindView(event:DC_Event){
             itemView.nameEvent.text = event.EventName
             itemView.categoryEvent.text = event.EventCategory
-            itemView.ratingEvent.text = event.EventRating.toString()
-            itemView.profitsEvent.text = event.EventProfits.toString()
         }
     }
 
