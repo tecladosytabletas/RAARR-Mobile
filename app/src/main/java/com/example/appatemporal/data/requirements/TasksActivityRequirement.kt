@@ -21,4 +21,8 @@ class TasksActivityRequirement {
 
        return repository.getAllActividades()
     }
+
+    suspend fun getAllActivitiesId(id: Int,repository: Repository): List<Actividad> {
+        return repository.getAllActividadById(id)
+    }
 }

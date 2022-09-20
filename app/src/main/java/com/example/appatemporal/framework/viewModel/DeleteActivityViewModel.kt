@@ -32,4 +32,10 @@ class DeleteActivityViewModel : ViewModel(){
 
         }
     }
+    fun getAllActivitiesid(id:Int, repository: Repository){
+        viewModelScope.launch {
+            val list = requirement.getAllActivitiesId(id,repository)
+            activities.setValue(list)
+        }
+    }
 }

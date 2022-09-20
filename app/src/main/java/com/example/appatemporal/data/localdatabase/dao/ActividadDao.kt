@@ -10,6 +10,10 @@ import com.example.appatemporal.data.localdatabase.entities.Proyecto
 interface ActividadDao {
 
     // Get all activities
+    @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id")
+    suspend fun getAllActivityId(id: Int): List<Actividad>
+
+    // Get all activities
     @Query("SELECT * FROM actividad_table")
     suspend fun getAll(): List<Actividad>
 
