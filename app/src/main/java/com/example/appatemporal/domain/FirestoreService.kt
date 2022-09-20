@@ -84,7 +84,7 @@ class FirestoreService {
     }
 
     suspend fun eventCount(uid: String) : Int {
-        var events: QuerySnapshot =
+        var events : QuerySnapshot =
             db.collection("Usuario_Evento")
                 .whereEqualTo("Id_Usuario", uid)
                 .get()
@@ -92,29 +92,39 @@ class FirestoreService {
         return events.count()
     }
 
-    /*suspend fun asistenciasCount(uid : String) : Int {
-        var asistenciasCount : Int = 0
-        var asistencias: QuerySnapshot =
+    suspend fun ventasCount(uid : String) : Pair<Int, Int> {
+        var ventasCount : Int = 0
+        var asistenciasCount: Int = 0
+        var ventas: QuerySnapshot =
             db.collection("Usuario_Evento")
                 .whereEqualTo("Id_Usuario", uid)
                 .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents){
-                        var funciones: QuerySnapshot =
-                            db.collection("Funcion")
-                                .whereEqualTo("Id_Evento", document.data.get("Id_Evento").toString())
-                                .get()
-                                .addOnSuccessListener { documents ->
-                                    for (document in documents){
-                                        var boletos: QuerySnapshot =
-                                            db.collection("Boleto")
-                                                .whereEqualTo("Id_Funcion", document.data.get("Id_Funcion").toString())
-                                                .get()
-                                                .await()
-                                        asistenciasCount = asistenciasCount + boletos.count()
-                                    }
-                                }
-                    }
-                }
-    }*/
+                .await()
+        for (document in ventas){
+            var funciones: QuerySnapshot =
+                db.collection("Funcion")
+                    .whereEqualTo("Id_Evento",document.data?.get("Id_Evento").toString())
+                    .get()
+                    .await()
+            for (document in funciones){
+                var boletosAuxVentas: QuerySnapshot =
+                    db.collection("Boleto")
+                        .whereEqualTo("Id_Funcion", document.data?.get("Id_Funcion").toString())
+                        .get()
+                        .await()
+                ventasCount += boletosAuxVentas.count()
+            }
+            for (document in funciones){
+                var boletosAuxAsistencias: QuerySnapshot =
+                    db.collection("Boleto")
+                        .whereEqualTo("Id_Funcion", document.data?.get("Id_Funcion").toString())
+                        .whereEqualTo("Activo", false)
+                        .get()
+                        .await()
+                asistenciasCount += boletosAuxAsistencias.count()
+            }
+        }
+        val result = Pair(ventasCount, asistenciasCount)
+        return result
+    }
 }
