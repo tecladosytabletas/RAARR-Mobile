@@ -29,10 +29,6 @@ class ProyectoOrganizadorViewModel: ViewModel() {
 
     }
 
-    /*suspend fun getProjects(repository: Repository): List<Proyecto>{
-        return requirement.getProjects(repository)
-    }*/
-
     fun getProjects(repository: Repository){
         viewModelScope.launch {
             val project = requirement.getProjects(repository)

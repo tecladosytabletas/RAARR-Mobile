@@ -40,9 +40,9 @@ class ModificarProyecto : AppCompatActivity() {
             val tsLong = System.currentTimeMillis() / 1000
             val ts: String = tsLong.toString()
             //val project: Proyecto = Proyecto(idproject, 1, name, date,0.0,0.0,ts)
-            lifecycleScope.launch{
-                viewModel.updateModify(name,date,ts,idproject, repository)
-            }
+
+            viewModel.updateModify(name,date,ts,idproject, repository)
+
             // Go back to main activity
             val intent = Intent(this, ProyectoOrganizador::class.java)
             startActivity(intent)
