@@ -34,11 +34,11 @@ interface ActividadDao {
     suspend fun deleteAll()
 
     //Count activities by status
-    @Query("SELECT COUNT(*) FROM actividad_table WHERE id_actividad = :id_a AND estatus = :stringStatus")
+    @Query("SELECT COUNT(*) FROM actividad_table WHERE id_proyecto = :id_a AND estatus = :stringStatus")
     suspend fun countPendingActivities(id_a: Int, stringStatus: String): Int
 
     //Count activities by status
-    @Query("SELECT COUNT(*) FROM actividad_table WHERE id_actividad = :id_a AND estatus = :stringStatus")
+    @Query("SELECT COUNT(*) FROM actividad_table WHERE id_proyecto = :id_a AND estatus = :stringStatus")
     suspend fun countDoneActivities(id_a: Int, stringStatus: String): Int
 
     // Delete an activity

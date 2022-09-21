@@ -39,7 +39,7 @@ class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             with(intent){
                 val viewModel = ProyectoOrganizadorViewModel()
                 val repository = Repository(itemView.context)
-                putExtra("pendingActivities", viewModel.countPendingActivities(repository, projectModel.id_proyecto, "Pendiente"))
+                putExtra("pendingActivities", viewModel.countPendingActivities(repository, projectModel.id_proyecto, "No Completado"))
                 putExtra("doneActivities", viewModel.countPendingActivities(repository, projectModel.id_proyecto, "Completado"))
                 putExtra("id_proyecto", projectModel.id_proyecto)
                 putExtra("nombre_proyecto", projectModel.nombre_proyecto)
