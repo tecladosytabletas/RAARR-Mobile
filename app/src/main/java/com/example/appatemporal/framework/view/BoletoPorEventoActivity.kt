@@ -12,13 +12,13 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetUserTicketViewModel
 
 class BoletoPorEventoActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityBoletoPorEventoBinding
-    private val getTicketViewModel : GetUserTicketViewModel by viewModels()
-    private val repository = Repository(this)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val getTicketViewModel : GetUserTicketViewModel by viewModels()
+         val repository = Repository(this)
         super.onCreate(savedInstanceState)
-        binding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
+        var binding: ActivityBoletoPorEventoBinding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         getTicketViewModel.getUserTicket("pod6xLDUeRNZItm7u93DC5CYbgJ2", repository)
