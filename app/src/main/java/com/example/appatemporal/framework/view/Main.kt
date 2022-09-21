@@ -29,13 +29,13 @@ class Main : AppCompatActivity() {
 
         mainViewModel.getUser(userUid, repository)
 
-        mainViewModel.userData.observe(this, Observer {
-            binding.textView2.text = "${it.nombre_Usuario}"
-        })
+       // mainViewModel.userData.observe(this, Observer {
+            //binding.textView2.text = "${it.nombre_Usuario}"
+        //})
 
-        mainViewModel.userRole.observe(this, Observer {
-            binding.textView3.text = it
-        })
+        //mainViewModel.userRole.observe(this, Observer {
+           // binding.textView3.text = it
+        //})
     }
 }
 

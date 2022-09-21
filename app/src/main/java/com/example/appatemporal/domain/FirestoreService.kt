@@ -85,7 +85,7 @@ class FirestoreService {
 
     // uid: userId, eid: eventId, fid: funcionId
     suspend fun getUserTicket(uid: String, eid: String, fid: String) : QuerySnapshot {
-        val ticket = db.collection("Boleto")
+        val ticket :QuerySnapshot = db.collection("Boleto")
             .whereEqualTo("ID_Usuario", uid)
             .whereEqualTo("ID_Evento", eid)
             .whereEqualTo("ID_Funcion", fid)

@@ -21,7 +21,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/image3"
+                android:background="@drawable/background_proyectos_organizador"
                 android:id="@+id/imagenTarjetaChica"
                 android:scaleType="centerCrop">
             </ImageView>
@@ -35,13 +35,13 @@
             android:textStyle="bold"
             android:id="@+id/nombreArtistaTarjetaChica"
             android:paddingLeft="10dp"
-            android:textColor="@color/grey1">
+            android:textColor="@color/grayBtn">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Fecha del evento"
-            android:textColor="@color/acent_yellow"
+            android:textColor="@color/grayBtn"
             android:id="@+id/fechaTarjetaChica"
             android:paddingLeft="10dp">
         </TextView>
@@ -51,7 +51,7 @@
             android:text="Lugar"
             android:id="@+id/lugarTarjetaChica"
             android:paddingLeft="10dp"
-            android:textColor="@color/grey1">
+            android:textColor="@color/grayBtn">
         </TextView>
     </LinearLayout>
 

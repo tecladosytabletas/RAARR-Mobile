@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="Mis Eventos"
             android:textStyle="bold"
-            android:textColor="@color/grey1"
+            android:textColor="@color/grayBtn"
             android:textSize="24sp"
             android:id="@+id/ORVHorizontal_1"
             android:layout_margin="16dp">
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="Todos los Eventos"
                 android:textStyle="bold"
-                android:textColor="@color/grey1"
+                android:textColor="@color/grayBtn"
                 android:textSize="24sp"
                 android:id="@+id/ORVVertical_1"
                 android:layout_margin="16dp">

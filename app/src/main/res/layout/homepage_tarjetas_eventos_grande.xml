@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/image3"
+        android:src="@drawable/background_proyectos_organizador"
         android:scaleType="centerCrop"
         >
     </ImageView>
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
-                android:textColor="@color/grey1"
+                android:textColor="@color/grayBtn"
                 android:textSize="24dp"
                 >
             </TextView>
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nombreTarjetaGrande"
                 android:text="Fecha"
-                android:textColor="@color/acent_yellow"
+                android:textColor="@color/grayBtn"
                 android:textSize="16dp"
                 >
             </TextView>
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fechaTarjetaGrande"
                 android:text="Descripcion"
-                android:textColor="@color/grey1"
+                android:textColor="@color/grayBtn"
                 android:textSize="16dp"
                 >
             </TextView>

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AppAtemporal</string>
+    <item name="A0_RV" type="id" />
 </resources>

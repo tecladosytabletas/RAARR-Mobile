@@ -56,6 +56,11 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".framework.view.consultarboletoespectador.Consultar_Boleto_Activity"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".framework.view.CheckIfLogged"
             android:exported="true">
             <intent-filter>

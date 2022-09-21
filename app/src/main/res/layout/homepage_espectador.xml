@@ -63,7 +63,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/VerticalViewEspectador"
+                android:id="@+id/VerticalView_Espectador"
                 android:layout_below="@+id/ORVVertical_1_Espectador">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>

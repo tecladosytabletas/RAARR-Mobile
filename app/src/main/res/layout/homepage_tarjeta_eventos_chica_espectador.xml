@@ -21,7 +21,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/image3"
+                android:background="@drawable/background_proyectos_organizador"
                 android:id="@+id/imagen"
                 android:scaleType="centerCrop">
             </ImageView>
@@ -35,7 +35,7 @@
             android:textStyle="bold"
             android:id="@+id/nombreArtista"
             android:paddingLeft="10dp"
-            android:textColor="@color/grey1">
+            android:textColor="@color/grayBtn">
         </TextView>
         <TextView
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:text="Lugar"
             android:id="@+id/lugar"
             android:paddingLeft="10dp"
-            android:textColor="@color/grey1">
+            android:textColor="@color/grayBtn">
         </TextView>
     </LinearLayout>
 
