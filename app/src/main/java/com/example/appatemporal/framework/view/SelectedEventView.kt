@@ -10,4 +10,6 @@ class SelectedEventView : AppCompatActivity() {
         setContentView(R.layout.activity_selected_event_view)
     }
 
+
+
 }

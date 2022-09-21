@@ -6,4 +6,20 @@
         <item>@string/eventType3</item>
         <item>@string/eventType4</item>
     </string-array>
+    <string-array name="areaList">
+        <item>@string/areaType1</item>
+        <item>@string/areaType2</item>
+        <item>@string/areaType3</item>
+        <item>@string/areaType4</item>
+    </string-array>
+    <string-array name="estatusList">
+        <item>@string/estatusType1</item>
+        <item>@string/estatusType2</item>
+        <item>@string/estatusType3</item>
+    </string-array>
+    <string-array name="prioridadList">
+        <item>@string/prioridadType1</item>
+        <item>@string/prioridadType2</item>
+        <item>@string/prioridadType3</item>
+    </string-array>
 </resources>

@@ -19,5 +19,9 @@ class CheckIfLogged : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
     }
 }
