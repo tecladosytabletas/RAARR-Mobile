@@ -12,10 +12,10 @@ class DeleteActivityViewModel : ViewModel(){
     private val requirement = TasksActivityRequirement()
     val activities = MutableLiveData<List<Actividad>>()
 
-    fun removeActividad(actividad: Actividad, repository: Repository){
+    fun removeActividad(id:Int, actividad: Actividad, repository: Repository){
         viewModelScope.launch {
             requirement.deleteActividad(actividad, repository)
-            val list = requirement.getActivities(repository)
+            val list = requirement.getAllActivitiesId(id,repository)
             activities.setValue(list)
         }
     }

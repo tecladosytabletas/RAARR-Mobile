@@ -60,8 +60,6 @@ class AddNewActivityForm : AppCompatActivity(){
             lifecycleScope.launch{
                 viewModel.addNewActividad(actividad, repository)
             }
-
-
             // Go back to main activity
             val intent = Intent(this, DeleteActivity::class.java)
             with(intent){

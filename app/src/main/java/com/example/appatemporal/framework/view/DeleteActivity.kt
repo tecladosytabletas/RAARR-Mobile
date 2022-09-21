@@ -29,10 +29,10 @@ class DeleteActivity : AppCompatActivity(){
         initRecyclerView(repository, idProyecto)
         binding.newTaskButton.setOnClickListener {
             val intent = Intent(this, AddNewActivityForm::class.java)
-            startActivity(intent)
             with(intent){
                 putExtra("id_proyecto", idProyecto)
             }
+            startActivity(intent)
         }
 
         binding.navbar.homeIcon.setOnClickListener {
@@ -56,10 +56,6 @@ class DeleteActivity : AppCompatActivity(){
     private fun initRecyclerView( repository: Repository,id: Int) {
         viewModel.getAllActivitiesid(id,repository)
         viewModel.activities.observe(this, Observer { activityList ->
-            activityList.forEach{
-                Log.d("activity", it.toString())
-            }
-
             binding.todoRv.layoutManager = LinearLayoutManager(this)
             binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
         })
