@@ -34,7 +34,6 @@ class ProyectoOrganizadorViewModel: ViewModel() {
             val project = requirement.getProjects(repository)
             projects.setValue(project)
         }
-
     }
 
     fun countPendingActivities(repository: Repository, id_a: Int, stringStatus: String): Int{

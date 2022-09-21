@@ -30,8 +30,6 @@ class ProyectoOrganizador : AppCompatActivity() {
             binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
         })
 
-
-
         binding.tvNewProject.setOnClickListener {
             val intent = Intent(this, AddNewProjectForm::class.java)
             startActivity(intent)
