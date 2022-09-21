@@ -42,6 +42,9 @@ class AddNewActivityForm : AppCompatActivity(){
         val autocompleteTV3 = findViewById<AutoCompleteTextView>(R.id.spinnerPrioridad)
         autocompleteTV3.setAdapter(arrayAdapter3)
 
+        var myExtras :Bundle? = intent.extras
+        val idproject: Int = myExtras?.getInt("id_proyecto")?:-1
+
         val repository = Repository(this)
 
         // Set click listener
@@ -52,15 +55,16 @@ class AddNewActivityForm : AppCompatActivity(){
             val estatus = binding.spinnerEstatus.text.toString()
             val prioridad = binding.spinnerPrioridad.text.toString()
 
-            val actividad: Actividad = Actividad(0, 1,name, area, estatus, prioridad)
+            val actividad: Actividad = Actividad(0, 1,name, area, estatus, prioridad,idproject)
 
             lifecycleScope.launch{
                 viewModel.addNewActividad(actividad, repository)
             }
-
-
             // Go back to main activity
             val intent = Intent(this, DeleteActivity::class.java)
+            with(intent){
+                putExtra("id_proyecto", idproject)
+            }
             startActivity(intent)
 
         }

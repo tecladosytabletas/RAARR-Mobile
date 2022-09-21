@@ -33,6 +33,7 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 putExtra("area", activityModel.area)
                 putExtra("estatus", activityModel.estatus)
                 putExtra("prioridad", activityModel.prioridad)
+                putExtra("id_proyecto", activityModel.id_proyecto)
             }
             itemView.context.startActivity(intent1)
         }
@@ -48,11 +49,9 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
                 //Mandar a llamar la funcion delete()
                 CoroutineScope(Dispatchers.IO ).launch {
-                    viewModel.removeActividad(activityModel, repository)
+                    viewModel.removeActividad(activityModel.id_proyecto,activityModel, repository)
                     //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
                 }
-
-
 
                 //Toast.makeText(itemView.context,"Se eliminó el proyecto correctamente",Toast.LENGTH_LONG).show()
             }

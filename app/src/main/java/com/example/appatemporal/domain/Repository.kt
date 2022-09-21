@@ -18,6 +18,7 @@ class Repository(context: Context) {
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
     suspend fun getAllActividades() = actividadDao.getAll()
     suspend fun getActividadById(id: Int) = actividadDao.getById(id)
+    suspend fun getAllActividadById(id: Int) = actividadDao.getAllActivityId(id)
     suspend fun deleteActividad(actividad: Actividad) = actividadDao.delete(actividad)
     suspend fun deleteAllActividades() = actividadDao.deleteAll()
     fun countPendingActivities(id_a: Int, stringStatus: String): Int = runBlocking {

@@ -2,6 +2,7 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -67,6 +68,7 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
             with(intent){
                 putExtra("id_proyecto", idProyecto)
             }
+            Log.d("prueba", idProyecto.toString())
             startActivity(intent)
         }
     }

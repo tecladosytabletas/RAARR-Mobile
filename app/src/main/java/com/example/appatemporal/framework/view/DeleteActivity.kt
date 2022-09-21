@@ -23,10 +23,15 @@ class DeleteActivity : AppCompatActivity(){
         binding = AddActivitiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
-        initRecyclerView(repository)
-
+        var myExtras :Bundle? = intent.extras
+        var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
+        Log.d("activityPrueba", idProyecto.toString())
+        initRecyclerView(repository, idProyecto)
         binding.newTaskButton.setOnClickListener {
             val intent = Intent(this, AddNewActivityForm::class.java)
+            with(intent){
+                putExtra("id_proyecto", idProyecto)
+            }
             startActivity(intent)
         }
 
@@ -48,8 +53,8 @@ class DeleteActivity : AppCompatActivity(){
         }
     }
 
-    private fun initRecyclerView(repository: Repository) {
-        viewModel.getActivities(repository)
+    private fun initRecyclerView( repository: Repository,id: Int) {
+        viewModel.getAllActivitiesid(id,repository)
         viewModel.activities.observe(this, Observer { activityList ->
             binding.todoRv.layoutManager = LinearLayoutManager(this)
             binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
