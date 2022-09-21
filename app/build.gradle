@@ -72,6 +72,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     //Corrutinas
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0"
+    
     //ROOM
     implementation "androidx.room:room-runtime:2.4.3"
     implementation "androidx.room:room-ktx:2.4.3"
@@ -89,4 +91,8 @@ dependencies {
     // View model
     implementation 'androidx.fragment:fragment-ktx:1.5.2'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+
+    //await
+
+
 }
