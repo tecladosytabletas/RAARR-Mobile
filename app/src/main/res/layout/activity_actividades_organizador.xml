@@ -94,12 +94,12 @@
                     android:id="@+id/recivler_view"
                     android:layout_below="@+id/search_edit"
                     android:layout_margin="32dp"/>
-
             </LinearLayout>
 
         </LinearLayout>
         <include
-            layout="@layout/navbar" />
+            layout="@layout/navbar"
+            android:id="@+id/navbar"/>
     </LinearLayout>
 
 </LinearLayout>
