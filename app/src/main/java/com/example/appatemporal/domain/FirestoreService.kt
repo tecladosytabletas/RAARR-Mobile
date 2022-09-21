@@ -5,6 +5,7 @@ import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -81,5 +82,32 @@ class FirestoreService {
                 .get()
                 .await()
         return userRole
+    }
+
+    suspend fun updateTicketValue(resulted: String) : Boolean {
+        var result:String = resulted
+
+        var exito: Boolean = false
+
+        var Queryresult :Boolean = true
+
+        db.collection("Boleto")
+            .whereEqualTo("hash_QR", result)
+            .get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    Queryresult = document.getField<Boolean>("activo") as Boolean
+                    if (Queryresult == true) {
+                        db.collection("Boleto").document(document.id).update("activo", false)
+                        exito = true
+                    } else {
+                        exito = false
+                    }
+                }
+            }
+            .await()
+
+        return exito
+
     }
 }
