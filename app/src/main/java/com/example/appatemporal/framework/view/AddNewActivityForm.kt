@@ -2,6 +2,7 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.activity.viewModels
@@ -57,9 +58,8 @@ class AddNewActivityForm : AppCompatActivity(){
 
             val actividad: Actividad = Actividad(0, 1,name, area, estatus, prioridad,idproject)
 
-            lifecycleScope.launch{
-                viewModel.addNewActividad(actividad, repository)
-            }
+            viewModel.addNewActividad(actividad, repository)
+
             // Go back to main activity
             val intent = Intent(this, DeleteActivity::class.java)
             with(intent){

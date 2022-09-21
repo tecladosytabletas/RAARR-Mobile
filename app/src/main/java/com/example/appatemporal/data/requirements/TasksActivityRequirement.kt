@@ -10,8 +10,8 @@ class TasksActivityRequirement {
         repository.deleteActividad(actividadToDelete)
     }
 
-    suspend fun updateActividad(actividad: Actividad, repository: Repository){
-        repository.updateActividad(actividad)
+    suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int, repository: Repository){
+        repository.updateActividad(nombre, estatus, area, prioridad, id)
     }
 
     suspend fun getActivities(repository: Repository): List<Actividad> {

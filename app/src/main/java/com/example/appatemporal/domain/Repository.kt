@@ -36,7 +36,7 @@ class Repository(context: Context) {
         count.start()
         count.await()
     }
-    suspend fun updateActividad(actividad: Actividad) = actividadDao.update(actividad)
+    suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
     suspend fun insertAllAreas(areas: List<Area>) = areaDao.insertAll(areas)

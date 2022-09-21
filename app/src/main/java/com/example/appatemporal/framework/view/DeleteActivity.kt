@@ -25,7 +25,6 @@ class DeleteActivity : AppCompatActivity(){
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
-        Log.d("activityPrueba", idProyecto.toString())
         initRecyclerView(repository, idProyecto)
         binding.newTaskButton.setOnClickListener {
             val intent = Intent(this, AddNewActivityForm::class.java)

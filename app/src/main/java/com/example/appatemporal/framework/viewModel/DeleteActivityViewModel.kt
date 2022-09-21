@@ -19,9 +19,9 @@ class DeleteActivityViewModel : ViewModel(){
             activities.setValue(list)
         }
     }
-    fun updateActividad(actividad: Actividad, repository: Repository){
+    fun updateActividad(idProyecto:Int, nombre:String, estatus:String, area:String, prioridad:String, id: Int, repository: Repository){
         viewModelScope.launch {
-            requirement.updateActividad(actividad, repository)
+            requirement.updateActividad(nombre, estatus, area, prioridad, id, repository)
         }
     }
 

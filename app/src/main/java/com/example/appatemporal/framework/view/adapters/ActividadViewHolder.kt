@@ -48,10 +48,9 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             //builder.setIcon(android.R.drawable.ic_dialog_alert)
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
                 //Mandar a llamar la funcion delete()
-                CoroutineScope(Dispatchers.IO ).launch {
                     viewModel.removeActividad(activityModel.id_proyecto,activityModel, repository)
                     //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
-                }
+
 
                 //Toast.makeText(itemView.context,"Se eliminó el proyecto correctamente",Toast.LENGTH_LONG).show()
             }

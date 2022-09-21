@@ -46,8 +46,8 @@ interface ActividadDao {
     suspend fun delete(actividad: Actividad)
 
     // Update a Actividad
-    @Update
-    suspend fun update(actividad: Actividad)
+    @Query("UPDATE actividad_table SET nombre_actividad = :nombre,  estatus = :estatus, area = :area, prioridad = :prioridad  WHERE id_actividad = :id")
+    suspend fun update(nombre:String, estatus:String, area:String, prioridad:String, id: Int)
 
 
 }

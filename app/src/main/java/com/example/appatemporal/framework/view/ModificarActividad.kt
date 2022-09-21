@@ -2,6 +2,7 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.activity.viewModels
@@ -46,6 +47,9 @@ class ModificarActividad : AppCompatActivity(){
 
         // Set click listener
         binding.saveModifiedBtn.setOnClickListener {
+            Log.d("idPrueba", idproyecto.toString())
+            Log.d("idActividad", idactividad.toString())
+
             // Get values from view
             val name = binding.nameModifedActivity.text.toString()
             val area = binding.spinnerModifiedArea.text.toString()
@@ -53,9 +57,10 @@ class ModificarActividad : AppCompatActivity(){
             val prioridad = binding.spinnerModifiedPrioridad.text.toString()
 
             val actividad: Actividad = Actividad( idactividad, 0,name, area, estatus, prioridad, idproyecto)
-            viewModel.updateActividad(actividad, repository)
+            viewModel.updateActividad(idproyecto,name,estatus,area,prioridad, idactividad, repository)
             // Go back to main activity
             val intent = Intent(this, DeleteActivity::class.java)
+            intent.putExtra("id_proyecto", idproyecto)
             startActivity(intent)
 
         }
