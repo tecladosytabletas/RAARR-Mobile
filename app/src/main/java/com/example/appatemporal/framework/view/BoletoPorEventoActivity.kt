@@ -21,23 +21,22 @@ class BoletoPorEventoActivity : AppCompatActivity() {
         var binding: ActivityBoletoPorEventoBinding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getTicketViewModel.getUserTicket("pod6xLDUeRNZItm7u93DC5CYbgJ2", repository)
-        getTicketViewModel.ticket.observe(this, Observer { value ->
+        val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
 
-        })
+        val recyclerView = findViewById<RecyclerView>(R.id.boletosRecyclerView)
+        var adapter = boletosPorEventoAdapter()
+        recyclerView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
+        // recyclerView.adapter = boletosPorEventoAdapter.proyectoAdapter(boletosPorEventoProvider.proyectoList)
+        recyclerView.adapter = adapter
 
-        //getTicketViewModel.getUserTicket("x02BQ0RcJmRjhsvYJJ9z", "12hEWP8xQQgQGjCyuWon","UUX75bE59gTT0RBOqHLB", repository)
-        //getTicketViewModel.ticket.observe(this, Observer { value ->
-        //    hash_qr = value.toString()
-        //})
-
-        initRecyclerView()
+        initRecyclerView(getTicketViewModel, userIdTemp, repository)
     }
 
-    private fun initRecyclerView(){
-        val recyclerView = findViewById<RecyclerView>(R.id.boletosRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
-        recyclerView.adapter = boletosPorEventoAdapter.proyectoAdapter(boletosPorEventoProvider.proyectoList)
+    private fun initRecyclerView(getTicketViewModel: GetUserTicketViewModel, userIdTemp: String, repository: Repository){
+        getTicketViewModel.getUserTicket(userIdTemp, repository)
+        getTicketViewModel.ticket.observe(this, Observer {
+            ada
+        })
     }
 
 }

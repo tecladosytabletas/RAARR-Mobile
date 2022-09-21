@@ -1,13 +1,13 @@
 package com.example.appatemporal.domain.models
 
 data class TicketModel(
-    val nombre_evento: String,
-    //val foto_evento: String,
-    val fecha: String,
-    val horario: String,
-    val lugar: String,
-    val direccion: String,
-    val ciudad: String,
-    val estado: String,
-    val hash_qr: String
+    var nombre_evento: String = "",
+    //var foto_evento: String,
+    var fecha: String = "",
+    var horario: String = "",
+    var lugar: String = "",
+    var direccion: String = "",
+    var ciudad: String = "",
+    var estado: String = "",
+    var hash_qr: String = ""
 )

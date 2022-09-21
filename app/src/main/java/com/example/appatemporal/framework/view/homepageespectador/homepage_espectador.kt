@@ -1,11 +1,16 @@
 package com.example.appatemporal.framework.view.homepageespectador
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
+import com.example.appatemporal.framework.view.BoletoPorEventoActivity
 import com.example.appatemporal.framework.view.homepageespectador.recyclerview.AdapterRVHorizontal
 import com.example.appatemporal.framework.view.homepageespectador.recyclerview.AdapterRVVertical
 
@@ -14,6 +19,12 @@ class homepage_espectador : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage_espectador)
         initRecyclerView()
+
+        val Buttontickets_icon = findViewById<ImageView>(R.id.tickets_icon)
+        Buttontickets_icon.setOnClickListener{
+            val myIntent = Intent(this, BoletoPorEventoActivity::class.java)
+            startActivity(myIntent)
+        }
     }
     @SuppressLint("WrongViewCast")
     private fun initRecyclerView(){
@@ -51,4 +62,6 @@ class homepage_espectador : AppCompatActivity() {
         recyclerViewHorizontal.layoutManager = linearLayoutManagerHorizontal
         recyclerViewHorizontal.adapter = AdapterRVHorizontal(dataHorizontal)
     }
+
+
 }
