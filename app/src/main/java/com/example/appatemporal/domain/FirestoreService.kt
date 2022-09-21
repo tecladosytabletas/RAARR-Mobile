@@ -8,6 +8,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.lang.Integer.max
+import java.lang.Integer.parseInt
 
 class FirestoreService {
     private val db = Firebase.firestore
@@ -106,8 +108,41 @@ class FirestoreService {
                 }
             }
             .await()
-
         return exito
+    }
 
+    suspend fun getTicketDropDown(idEvent: String) : List<Triple<String, Int, String>> {
+        var dropDown : MutableList<Triple<String, Int, String>> = mutableListOf()
+        val ticketInfo = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_Evento", idEvent)
+            .get()
+            .await()
+        for (id in ticketInfo) {
+            var info = id.getField<String>("id_Tipo_Boleto").toString()
+            var precio = id.getField<Int>("precio") as Int
+            val name = db.collection("Tipo_Boleto")
+                .document(info)
+                .get()
+                .await()
+            dropDown.add(Triple(name.data?.get("nombre_Tipo_Boleto").toString(), precio, name.id))
+        }
+        return dropDown
+    }
+
+    suspend fun currentTicketsFun(idEvent: String, idFuncion: String) : List<Triple<String, Int, Int>> {
+        val maxCountEvent: MutableList<Triple<String, Int, Int>> = mutableListOf()
+        val tipoEventoBoleto = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_Evento", idEvent)
+            .get()
+            .await()
+        for (document in tipoEventoBoleto) {
+            val boletosEventoTipo = db.collection("Boleto")
+                .whereEqualTo("id_Funcion", idFuncion)
+                .whereEqualTo("id_Tipo_Boleto", document.data.get("id_Tipo_Boleto"))
+                .get()
+                .await()
+            maxCountEvent.add(Triple(document.data?.get("id_Tipo_Boleto").toString(), boletosEventoTipo.documents.size, parseInt(document.data?.get("max_Boletos").toString())))
+        }
+        return maxCountEvent
     }
 }
