@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".boletoPorEventoActivity"
+    tools:context=".framework.view.BoletoPorEventoActivity"
     android:background="@color/background"
     android:orientation="vertical">
 
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/mis_boletos"
-        android:textColor="@color/paleta1"
+        android:textColor="@color/grayBtn"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_margin="16dp"

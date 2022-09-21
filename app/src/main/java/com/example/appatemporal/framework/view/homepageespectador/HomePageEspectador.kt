@@ -6,13 +6,18 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
+import com.example.appatemporal.databinding.HomepageEspectadorBinding
 import com.example.appatemporal.framework.view.homepageespectador.recyclerview.AdapterRVHorizontal
 import com.example.appatemporal.framework.view.homepageespectador.recyclerview.AdapterRVVertical
 
-class homepage_espectador : AppCompatActivity() {
+class HomePageEspectador : AppCompatActivity() {
+    private lateinit var binding: HomepageEspectadorBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.homepage_espectador)
+        binding = HomepageEspectadorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         initRecyclerView()
     }
     @SuppressLint("WrongViewCast")
@@ -39,8 +44,9 @@ class homepage_espectador : AppCompatActivity() {
             TarjetaChica_espectador("Luis miguel","22/12/2022","Mexico"),
             TarjetaChica_espectador("Luis miguel","22/12/2022","Mexico")
         )
-        val recyclerViewVertical  = findViewById<RecyclerView>(R.id.VerticalView_Espectador)
-        val recyclerViewHorizontal = findViewById<RecyclerView>(R.id.HorizontalView_Espectador)
+
+        val recyclerViewVertical  =  binding.VerticalViewEspectador
+        val recyclerViewHorizontal = binding.HorizontalViewEspectador
         val linearLayoutManager = LinearLayoutManager(this )
         val linearLayoutManagerHorizontal = LinearLayoutManager(this )
         linearLayoutManager.orientation=LinearLayoutManager.VERTICAL

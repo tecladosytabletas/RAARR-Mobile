@@ -10,7 +10,7 @@ import com.example.lab.HorizontalViewHolder
 class AdapterRVHorizontal(private val data:List<TarjetaChica_espectador>) : RecyclerView.Adapter<HorizontalViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return HorizontalViewHolder(layoutInflater.inflate(R.layout.homepage_tarjeta_eventos_chica,parent,false))
+        return HorizontalViewHolder(layoutInflater.inflate(R.layout.activity_homepage_tarjeta_eventos_chica,parent,false))
 
     }
 

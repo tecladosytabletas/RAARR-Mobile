@@ -1,4 +1,4 @@
-package com.example.test_02
+package com.example.appatemporal.framework.view
 
 data class boletoPorEventoClass (
     var boletoTitulo: String,

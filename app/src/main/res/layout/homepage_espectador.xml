@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context=".framework.view.homepageespectador.HomePageEspectador">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+      >
+
+        <TextView
+            android:id="@+id/ORVHorizontal_1_espectador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Los eventos de la semana"
+            android:textColor="@color/grayBtn"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            >
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/RVHorizontal"
+            android:layout_below="@id/ORVHorizontal_1_espectador">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/HorizontalView_Espectador">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/RVVertical_Espectador"
+            android:layout_below="@id/RVHorizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Todos los Eventos"
+                android:textStyle="bold"
+                android:textColor="@color/grayBtn"
+                android:textSize="24sp"
+                android:id="@+id/ORVVertical_1_Espectador"
+                android:layout_margin="16dp">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/VerticalViewEspectador"
+                android:layout_below="@+id/ORVVertical_1_Espectador">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                layout="@layout/navbar_espectador" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

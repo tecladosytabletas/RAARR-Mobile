@@ -1,10 +1,9 @@
-package com.example.test_02.adapter
+package com.example.appatemporal.framework.view
 
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.test_02.R
-import com.example.test_02.boletoPorEventoClass
+import com.example.appatemporal.R
 
 class boletosPorEventoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val titulo_boleto = view.findViewById<TextView>(R.id.Nombre)

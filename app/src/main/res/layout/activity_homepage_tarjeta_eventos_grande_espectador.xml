@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/boleto_por_evento_img"
+        android:src="@drawable/img_background"
         android:scaleType="centerCrop"
         >
     </ImageView>
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
-                android:textColor="@color/paleta1"
+                android:textColor="@color/grayBtn"
                 android:textSize="24dp"
                 >
             </TextView>
@@ -55,33 +55,21 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Nombre"
                 android:text="Fecha"
-                android:textColor="@color/paleta3"
+                android:textColor="@color/yellow"
                 android:textSize="16dp"
                 >
             </TextView>
             <TextView
-                android:id="@+id/Hora"
+                android:id="@+id/Descripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Fecha"
-                android:text="Hora"
-                android:textColor="@color/paleta1"
+                android:text="Descripcion"
+                android:textColor="@color/grayBtn"
                 android:textSize="16dp"
                 >
             </TextView>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="#80000000">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/foward_arrow">
-
-            </ImageView>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

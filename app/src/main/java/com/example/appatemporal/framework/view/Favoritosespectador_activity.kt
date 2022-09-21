@@ -1,18 +1,21 @@
-package com.example.lab
+package com.example.appatemporal.framework.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
-import com.example.appatemporal.framework.view.favoritosespectador.TarjetaGrande_favoritosespectador
-import com.example.appatemporal.framework.view.favoritosespectador.recyclerview.AdapterRVVertical
+import com.example.appatemporal.databinding.ActivityMainFavoritosEspectadorBinding
 
-class favoritosespectador_activity : AppCompatActivity() {
+class Favoritosespectador_activity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainFavoritosEspectadorBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_favoritos_espectador)
+        binding = ActivityMainFavoritosEspectadorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initRecyclerView()
     }
     @SuppressLint("WrongViewCast")
@@ -29,10 +32,10 @@ class favoritosespectador_activity : AppCompatActivity() {
             TarjetaGrande_favoritosespectador("Luis miguel","22/12/2022","Mexico")
         )
 
-        val recyclerViewVerticalFavoritosEspectador  = findViewById<RecyclerView>(R.id.RVFavoritosEspectador)
+        val recyclerViewVerticalFavoritosEspectador  = binding.RVFavoritosEspectador
         val linearLayoutManager = LinearLayoutManager(this )
         linearLayoutManager.orientation=LinearLayoutManager.VERTICAL
         recyclerViewVerticalFavoritosEspectador.layoutManager = linearLayoutManager
-        recyclerViewVerticalFavoritosEspectador.adapter = AdapterRVVertical(dataVertical)
+        recyclerViewVerticalFavoritosEspectador.adapter = AdapterRVVerticalFavoritosEspectador(dataVertical)
     }
 }

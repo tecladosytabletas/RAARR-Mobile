@@ -11,7 +11,7 @@ import com.example.lab.VerticalViewHolder
 class AdapterRVVertical(private val tarjetaGrandeEspectadorList: List<TarjetaGrande_espectador>) : RecyclerView.Adapter<VerticalViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return VerticalViewHolder(layoutInflater.inflate(R.layout.homepage_tarjetas_eventos_grande, parent, false))
+        return VerticalViewHolder(layoutInflater.inflate(R.layout.activity_homepage_tarjetas_eventos_grande, parent, false))
     }
 
     override fun onBindViewHolder(holder: VerticalViewHolder, position: Int) {
