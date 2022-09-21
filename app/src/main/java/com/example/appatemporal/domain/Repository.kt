@@ -32,8 +32,12 @@ class Repository(context: Context) {
         return firestoreAPI.eventCount(uid)
     }
 
-    suspend fun  ventasCount(uid: String) : Pair<Int, Int> {
+    suspend fun ventasCount(uid: String) : Pair<Int, Int> {
         return firestoreAPI.ventasCount(uid)
+    }
+
+    suspend fun getRating(uid: String) : Float{
+        return firestoreAPI.getRating(uid)
     }
 
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
