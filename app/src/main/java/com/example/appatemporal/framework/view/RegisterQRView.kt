@@ -15,7 +15,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 class RegisterQRView : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterQrviewBinding
 
-    private lateinit var scanQRViewModel : ScanQRViewModel by viewModels()
+    private val scanQRViewModel : ScanQRViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +28,7 @@ class RegisterQRView : AppCompatActivity() {
             initScanner()
         }
     }
+
     private fun initScanner(){
         val integrator = IntentIntegrator(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
