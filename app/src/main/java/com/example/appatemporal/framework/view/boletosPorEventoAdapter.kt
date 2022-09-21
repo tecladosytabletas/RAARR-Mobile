@@ -22,5 +22,5 @@ class boletosPorEventoAdapter (private val list: MutableList<TicketModel>) : Rec
 
 
 
-        override fun getItemCount(): Int = proyectoList.size
+        override fun getItemCount(): Int = list.size
 }
