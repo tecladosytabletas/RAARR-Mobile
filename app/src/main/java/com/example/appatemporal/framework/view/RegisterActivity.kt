@@ -92,7 +92,7 @@ class RegisterActivity : AppCompatActivity() {
                     binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), gender, role)
                 registerUserViewModel.addUserLocalDB(localDbUser, repository)
 
-                val intent = Intent(this, SelectedEventView::class.java)
+                val intent = Intent(this, Main::class.java)
                 intent.putExtra("userUid", userUid)
                 startActivity(intent)
             }
