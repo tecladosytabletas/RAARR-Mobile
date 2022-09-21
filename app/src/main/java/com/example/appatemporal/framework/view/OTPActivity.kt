@@ -115,7 +115,6 @@ class OTPActivity : AppCompatActivity() {
                 // The SMS quota for the project has been exceeded
                 Log.d("TAG", "onVerificationFailed: ${e.toString()}")
             }
-
         }
 
         override fun onCodeSent(
@@ -133,6 +132,7 @@ class OTPActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     binding.otpProgressBar.visibility = View.VISIBLE
                     Toast.makeText(this,"Authenticate Succesfully", Toast.LENGTH_SHORT).show()
+
                     val uid: String = auth.currentUser?.uid.toString()
 
                     val userUidSharedPref = getSharedPreferences("userUid", Context.MODE_PRIVATE)
