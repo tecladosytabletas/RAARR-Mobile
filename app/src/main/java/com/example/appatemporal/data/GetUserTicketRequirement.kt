@@ -1,12 +1,13 @@
 package com.example.appatemporal.data
 
 import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.domain.models.TicketModel
 import com.google.firebase.firestore.QuerySnapshot
 
 class GetUserTicketRequirement {
 
-    suspend operator fun invoke(uid: String, eid: String, fid: String, repository:Repository) : String {
-        val ticket = repository.getUserTicket(uid, eid, fid).documents[0].data?.get("Hash_QR").toString()
+    suspend operator fun invoke(uid: String, repository:Repository) : MutableList<TicketModel> {
+        val ticket = repository.getUserTickets(uid)
         return ticket
     }
 }

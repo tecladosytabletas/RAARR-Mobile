@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".framework.view.consultarboletoespectador.Consultar_Boleto_Activity"
+    tools:context=".framework.view.ConsultarBoletoActivity"
     android:background="@color/background">
 
     <LinearLayout

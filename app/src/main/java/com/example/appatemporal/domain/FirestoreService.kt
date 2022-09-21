@@ -1,10 +1,13 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
+import com.example.appatemporal.domain.models.TicketModel
 import com.example.appatemporal.domain.models.UserModel
+import com.google.common.base.Enums.getField
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -83,16 +86,54 @@ class FirestoreService {
         return userRole
     }
 
+    // Que evento le corresponde al boleto
     // uid: userId, eid: eventId, fid: funcionId
-    suspend fun getUserTicket(uid: String, eid: String, fid: String) : QuerySnapshot {
+    // getUserTicket
+    suspend fun getUserTickets(uid: String) : MutableList<TicketModel> {
+
+        val ticket_list: MutableList<TicketModel> = arrayListOf()
+
         val ticket = db.collection("Boleto")
-            .whereEqualTo("ID_Usuario", uid)
-            .whereEqualTo("ID_Evento", eid)
-            .whereEqualTo("ID_Funcion", fid)
+            .whereEqualTo("Id_Usuario", uid)
             .get()
             .await()
 
-        return ticket
+        for(documents in ticket){
+
+            val hash_qr = documents.getField<String>("Hash_Qr").toString()
+
+            val boleto_funcion = documents.getField<String>("Id_Funcion").toString()
+
+            val funcion = db.collection("Funcion")
+                .document(boleto_funcion)
+                .get()
+                .await()
+
+            val fecha = funcion.getField<String>("FechaFuncion").toString()
+            val horario = funcion.getField<String>("HorarioFuncion").toString()
+
+            val funcion_evento = funcion.getField<String>("Id_Evento").toString()
+
+            val evento = db.collection("Evento")
+                .document(funcion_evento)
+                .get()
+                .await()
+
+            val nombre_evento = evento.getField<String>("EventName").toString()
+            val lugar = evento.getField<String>("LugarEvento").toString()
+            val direccion = evento.getField<String>("DireccionEvento").toString()
+            val ciudad = evento.getField<String>("CiudadEvento").toString()
+            val estado = evento.getField<String>("EstadoEvento").toString()
+
+            val objeto_ticket = TicketModel(nombre_evento, fecha, horario, lugar, direccion, ciudad, estado, hash_qr)
+
+            ticket_list.add(objeto_ticket)
+        }
+
+        Log.d("Lista de objetos", ticket_list.toString())
+
+
+        return ticket_list
     }
 
     suspend fun getUserFunctions(uid: String) : QuerySnapshot {
