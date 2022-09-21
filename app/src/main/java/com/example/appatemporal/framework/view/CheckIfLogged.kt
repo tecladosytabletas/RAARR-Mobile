@@ -23,6 +23,5 @@ class CheckIfLogged : AppCompatActivity() {
             val intent = Intent(this, ProyectoOrganizador::class.java)
             startActivity(intent)
         }
-
     }
 }

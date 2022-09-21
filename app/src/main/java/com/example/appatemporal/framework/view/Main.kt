@@ -50,6 +50,5 @@ class Main : AppCompatActivity() {
             val intent = Intent(this, CheckIfLogged::class.java)
             startActivity(intent)
         }
-
     }
 }

@@ -3,6 +3,7 @@ package com.example.appatemporal.domain
 import android.util.Log
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
@@ -84,6 +85,114 @@ class FirestoreService {
         return userRole
     }
 
+    suspend fun eventCount(uid: String) : Int {
+        var events : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        return events.count()
+    }
+
+    suspend fun ventasCount(uid : String) : Pair<Int, Int> {
+        var ventasCount : Int = 0
+        var asistenciasCount : Int = 0
+        var ventas : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        for (document in ventas){
+            var funciones : QuerySnapshot =
+                db.collection("Funcion")
+                    .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                    .get()
+                    .await()
+            for (document in funciones){
+                var boletosAuxVentas : QuerySnapshot =
+                    db.collection("Boleto")
+                        .whereEqualTo("id_Funcion", document.id)
+                        .get()
+                        .await()
+                ventasCount += boletosAuxVentas.count()
+            }
+            for (document in funciones){
+                var boletosAuxAsistencias : QuerySnapshot =
+                    db.collection("Boleto")
+                        .whereEqualTo("id_Funcion", document.id)
+                        .whereEqualTo("activo", false)
+                        .get()
+                        .await()
+                asistenciasCount += boletosAuxAsistencias.count()
+            }
+        }
+        val result = Pair(ventasCount, asistenciasCount)
+        return result
+    }
+
+    suspend fun getRating(uid: String) : Float {
+        var acumulado = 0f
+        var count = 0f
+        var events : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        for (document in events){
+            var feedbacks : QuerySnapshot =
+                db.collection("Feedback")
+                .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                .get()
+                .await()
+            for (document in feedbacks){
+                acumulado += document.data?.get("rating").toString().toInt()
+                count += 1
+            }
+        }
+        if (count <= 0) return 0f
+        return (acumulado/count).toFloat()
+    }
+
+    suspend fun getRevenue(uid: String) : Int {
+        var ventaTotal = 0
+        var boletos : QuerySnapshot
+        var tiposBoleto : QuerySnapshot
+        var events : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        for (document in events){
+            var funciones : QuerySnapshot =
+                db.collection("Funcion")
+                    .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                    .get()
+                    .await()
+            for (document in funciones){
+                boletos =
+                    db.collection("Boleto")
+                        .whereEqualTo("id_Funcion",document.id)
+                        .get()
+                        .await()
+                Log.d("LOG boletos",boletos.count().toString())
+                tiposBoleto =
+                    db.collection("Evento_Tipo_Boleto")
+                        .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                        .get()
+                        .await()
+                for (tipoBoleto in tiposBoleto){
+                    for (document in boletos){
+                        if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")){
+                            Log.d("IF de los boletos",tipoBoleto.data?.get("precio").toString())
+                            ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
+                        }
+                        Log.d("LOG for boletos",document.id.toString())
+                    }
+                }
+            }
+        }
+        return ventaTotal
+
     suspend fun updateTicketValue(resulted: String) : Boolean {
         var result:String = resulted
 
@@ -108,6 +217,5 @@ class FirestoreService {
             .await()
 
         return exito
-
     }
 }
