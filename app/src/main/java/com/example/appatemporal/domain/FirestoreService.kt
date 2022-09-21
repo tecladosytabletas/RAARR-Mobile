@@ -86,7 +86,7 @@ class FirestoreService {
     suspend fun eventCount(uid: String) : Int {
         var events : QuerySnapshot =
             db.collection("Usuario_Evento")
-                .whereEqualTo("Id_Usuario", uid)
+                .whereEqualTo("id_Usuario", uid)
                 .get()
                 .await()
         return events.count()
@@ -97,19 +97,19 @@ class FirestoreService {
         var asistenciasCount: Int = 0
         var ventas: QuerySnapshot =
             db.collection("Usuario_Evento")
-                .whereEqualTo("Id_Usuario", uid)
+                .whereEqualTo("id_Usuario", uid)
                 .get()
                 .await()
         for (document in ventas){
             var funciones: QuerySnapshot =
                 db.collection("Funcion")
-                    .whereEqualTo("Id_Evento",document.data?.get("Id_Evento").toString())
+                    .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
                     .get()
                     .await()
             for (document in funciones){
                 var boletosAuxVentas: QuerySnapshot =
                     db.collection("Boleto")
-                        .whereEqualTo("Id_Funcion", document.data?.get("Id_Funcion").toString())
+                        .whereEqualTo("id_Funcion", document.id)
                         .get()
                         .await()
                 ventasCount += boletosAuxVentas.count()
@@ -117,8 +117,8 @@ class FirestoreService {
             for (document in funciones){
                 var boletosAuxAsistencias: QuerySnapshot =
                     db.collection("Boleto")
-                        .whereEqualTo("Id_Funcion", document.data?.get("Id_Funcion").toString())
-                        .whereEqualTo("Activo", false)
+                        .whereEqualTo("id_Funcion", document.id)
+                        .whereEqualTo("activo", false)
                         .get()
                         .await()
                 asistenciasCount += boletosAuxAsistencias.count()

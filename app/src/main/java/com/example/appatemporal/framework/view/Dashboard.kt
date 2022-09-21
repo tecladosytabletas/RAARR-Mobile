@@ -7,6 +7,7 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import com.example.appatemporal.databinding.ActivityActividadesOrganizadorBindin
 import com.example.appatemporal.databinding.DashboardBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.CountEventViewModel
+import com.example.appatemporal.framework.viewModel.VentasCountViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -32,7 +34,8 @@ class Dashboard : AppCompatActivity(){
     private lateinit var ourEventRevenue : TextView
     private lateinit var eventCountTotal : String
     private lateinit var binding : DashboardBinding
-    private lateinit var countEventViewModel : CountEventViewModel
+    private val countEventViewModel : CountEventViewModel by viewModels()
+    private val ventasCountViewModel : VentasCountViewModel by viewModels()
     private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,13 +52,18 @@ class Dashboard : AppCompatActivity(){
         ourPieChart = findViewById(R.id.dashPieChart)
 
         val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
+        repository = Repository(this)
+        var ventasTotal : Int = 0
+        var asistenciasTotal : Int = 0
 
-        countEventViewModel.countEvent(tempUserId, repository)
-
+        ventasCountViewModel.ventasEvent(tempUserId, repository)
+        ventasCountViewModel.ventas.observe(this, Observer{
+            ventasTotal = it.first
+            asistenciasTotal = it.second
+            populatePieChart(ventasTotal, asistenciasTotal)
+        })
 
         populateEventCount()
-        populatePieChart()
-
         activityTest()
     }
 
@@ -66,25 +74,28 @@ class Dashboard : AppCompatActivity(){
         // Aqui debe de recuperar los datos de Firebase y asignarlos a la variable eventCountEntry
 
         val eventRevenueEntry = "REVENUE"
+        val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
 
+        repository = Repository(this)
+        countEventViewModel.countEvent(tempUserId, repository)
         //ourEventRevenue.text = "$ ${eventRevenueEntry} MXN"
 
         countEventViewModel.count.observe(this, Observer{
             eventCountTotal = it.toString()
+            ourEventCount.text = "En ${eventCountTotal} eventos"
         })
-
-        ourEventCount.text = "En ${eventCountTotal} eventos"
-
     }
 
     // Ejemplo de poblar la grafica de pastel
 
-    private fun populatePieChart() {
+    private fun populatePieChart(ventasTotal: Int, asistenciasTotal : Int) {
         // Aqui se reciben los datos en teoria
         val ourPieEntry = ArrayList<PieEntry>()
+        var noAssist = ventasTotal - asistenciasTotal
+        Log.d("LOG out-Observer", noAssist.toString())
 
-        ourPieEntry.add(PieEntry(100f, "Asistencias Totales"))
-        ourPieEntry.add(PieEntry(250f, "Asistencias Esperadas"))
+        ourPieEntry.add(PieEntry(noAssist.toFloat(), "No Asistieron"))
+        ourPieEntry.add(PieEntry(asistenciasTotal.toFloat(), "Asistieron"))
 
         val ourSet = PieDataSet(ourPieEntry, "")
         val data = PieData(ourSet)
@@ -97,6 +108,7 @@ class Dashboard : AppCompatActivity(){
 
         ourSet.colors = pieShades
         ourPieChart.data = data
+        ourPieChart.invalidate()
 
         data.setValueTextColor(Color.DKGRAY)
         data.setValueTextSize(20f)
