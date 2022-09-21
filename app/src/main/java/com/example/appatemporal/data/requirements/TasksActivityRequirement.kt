@@ -11,10 +11,7 @@ class TasksActivityRequirement {
     }
 
     suspend fun updateActividad(actividad: Actividad, repository: Repository){
-        var actividadToUpdate = repository.getActividadById(actividad.id_actividad)
-        actividadToUpdate.nombre_actividad = actividad.nombre_actividad
-
-        repository.updateActividad(actividadToUpdate)
+        repository.updateActividad(actividad)
     }
 
     suspend fun getActivities(repository: Repository): List<Actividad> {
