@@ -37,6 +37,7 @@
 
     <EditText
         android:id="@+id/nameModifyProject"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
@@ -49,23 +50,44 @@
         app:layout_constraintTop_toBottomOf="@+id/titleModifyProject"
         app:layout_constraintVertical_bias="0.03" />
 
-    <EditText
-        android:id="@+id/dateModifyProject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:clickable="true"
-        android:ems="15"
-        android:focusable="true"
-        android:hint="@string/dateCreateNewProject"
-        android:inputType="date"
-        android:maxLines="1"
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/DateLayout"
+        android:layout_width="310dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="55dp"
+        android:layout_weight="1"
+        android:background="#302E3B"
+        android:textColor="@color/white"
+        style="@style/Widget.Design.TextInputLayout"
         android:textColorHint="@color/white"
-        app:layout_constraintVertical_bias="0.03"
-        app:layout_constraintBottom_toTopOf="@+id/navbar"
+        app:hintTextColor="@color/colorAccent"
+        app:boxStrokeColor="@color/colorAccent"
+        android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameModifyProject" />
+        app:layout_constraintTop_toBottomOf="@+id/nameModifyProject">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dateCreateNewProject"
+            android:clickable="true"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:id="@+id/dateEdt"
+            android:cursorVisible="false"
+            android:drawablePadding="8dp"
+            android:drawableEnd="@drawable/ic_date_range_black_24dp"
+            android:drawableTint="@color/white"
+            android:focusable="false"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textSize="20dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <Button
@@ -80,6 +102,6 @@
         app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateModifyProject" />
+        app:layout_constraintTop_toBottomOf="@+id/DateLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

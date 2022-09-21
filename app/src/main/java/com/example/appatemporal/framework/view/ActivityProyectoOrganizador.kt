@@ -27,6 +27,7 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
 
         binding.activitiesCompleted.text = stringToDo
         binding.activitiesToDo.text = stringCompleted
+        binding.line2.text = myExtras?.getString("fecha_inicio")
         binding.projectName.text = myExtras?.getString("nombre_proyecto")
         var idProyecto:Int =  myExtras?.getInt("id_proyecto")?:-1
         var ganancia:Double = (myExtras?.getDouble("ganancia_proyecto")?:-1) as Double
