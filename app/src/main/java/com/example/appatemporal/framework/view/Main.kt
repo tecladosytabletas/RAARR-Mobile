@@ -1,5 +1,8 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,9 +11,12 @@ import androidx.lifecycle.Observer
 import com.example.appatemporal.databinding.ActivityMainBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.MainViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 
 class Main : AppCompatActivity() {
+    private var auth = FirebaseAuth.getInstance()
+
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
@@ -23,20 +29,28 @@ class Main : AppCompatActivity() {
 
         val mainViewModel : MainViewModel by viewModels()
 
-        val userUid = intent.getStringExtra("userUid").toString()
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+                        .getString("userUid", "").toString()
 
         Log.d("User Auth Successfully", userUid)
 
-        mainViewModel.getUser(userUid, repository)
+        mainViewModel.getUserLocalDB(userUid, repository)
 
         mainViewModel.userData.observe(this, Observer {
-            binding.textView2.text = "${it.nombre_Usuario}"
+            binding.textView2.text = "${it.nombre} ${it.apellido}"
+            binding.textView3.text = it.rol
+            Log.d("LocalDB", it.toString())
         })
 
-        mainViewModel.userRole.observe(this, Observer {
-            binding.textView3.text = it
-        })
+        binding.logoutTemp.setOnClickListener {
+            auth.signOut()
+            val userUidSharedPref = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            var sharedPrefEdit = userUidSharedPref.edit()
+            sharedPrefEdit.remove("userUid")
+            sharedPrefEdit.remove("login")
+            val intent = Intent(this, CheckIfLogged::class.java)
+            startActivity(intent)
+        }
+
     }
 }
-
-    // Insert activity into database
