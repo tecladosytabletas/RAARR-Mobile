@@ -173,6 +173,7 @@ class FirestoreService {
                         .whereEqualTo("id_Funcion",document.id)
                         .get()
                         .await()
+                Log.d("LOG boletos",boletos.count().toString())
                 tiposBoleto =
                     db.collection("Evento_Tipo_Boleto")
                         .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
@@ -181,11 +182,14 @@ class FirestoreService {
                 for (tipoBoleto in tiposBoleto){
                     for (document in boletos){
                         if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")){
+                            Log.d("IF de los boletos",tipoBoleto.data?.get("precio").toString())
                             ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
                         }
+                        Log.d("LOG for boletos",document.id.toString())
                     }
                 }
             }
         }
+        return ventaTotal
     }
 }
