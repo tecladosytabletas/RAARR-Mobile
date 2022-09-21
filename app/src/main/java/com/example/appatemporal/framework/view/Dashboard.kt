@@ -2,10 +2,12 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.graphics.Color
+import android.media.Rating
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,8 @@ import com.example.appatemporal.databinding.ActivityActividadesOrganizadorBindin
 import com.example.appatemporal.databinding.DashboardBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.CountEventViewModel
+import com.example.appatemporal.framework.viewModel.GetRatingViewModel
+import com.example.appatemporal.framework.viewModel.GetRevenueViewModel
 import com.example.appatemporal.framework.viewModel.VentasCountViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -36,6 +40,8 @@ class Dashboard : AppCompatActivity(){
     private lateinit var binding : DashboardBinding
     private val countEventViewModel : CountEventViewModel by viewModels()
     private val ventasCountViewModel : VentasCountViewModel by viewModels()
+    private val getRatingViewModel : GetRatingViewModel by viewModels()
+    private val getRevenueViewModel : GetRevenueViewModel by viewModels()
     private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +70,7 @@ class Dashboard : AppCompatActivity(){
         })
 
         populateEventCount()
-        activityTest()
+        populateRating()
     }
 
     // Ejemplo de poblar ingresos de evento
@@ -73,16 +79,23 @@ class Dashboard : AppCompatActivity(){
 
         // Aqui debe de recuperar los datos de Firebase y asignarlos a la variable eventCountEntry
 
-        val eventRevenueEntry = "REVENUE"
+        var eventRevenueEntry = "REVENUE"
         val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
+        val ourRevenue = binding.eventCount
 
         repository = Repository(this)
         countEventViewModel.countEvent(tempUserId, repository)
+        getRevenueViewModel.getRevenue(tempUserId, repository)
+
         //ourEventRevenue.text = "$ ${eventRevenueEntry} MXN"
 
         countEventViewModel.count.observe(this, Observer{
             eventCountTotal = it.toString()
             ourEventCount.text = "En ${eventCountTotal} eventos"
+        })
+
+        getRevenueViewModel.revenue.observe(this, Observer{
+            ourRevenue.text = "$ ${it} MXN"
         })
     }
 
@@ -92,7 +105,6 @@ class Dashboard : AppCompatActivity(){
         // Aqui se reciben los datos en teoria
         val ourPieEntry = ArrayList<PieEntry>()
         var noAssist = ventasTotal - asistenciasTotal
-        Log.d("LOG out-Observer", noAssist.toString())
 
         ourPieEntry.add(PieEntry(noAssist.toFloat(), "No Asistieron"))
         ourPieEntry.add(PieEntry(asistenciasTotal.toFloat(), "Asistieron"))
@@ -121,10 +133,16 @@ class Dashboard : AppCompatActivity(){
         ourPieChart.setDrawEntryLabels(false)
     }
 
-    fun activityTest(){
-        eventCount.setOnClickListener{
-            val intent = Intent(this, ListEventsProfits::class.java)
-            startActivity(intent)
-        }
+    private fun populateRating(){
+        val ourRatingBar = binding.ratingStars
+        val ourRatingValue = binding.ratingAvg
+        repository = Repository(this)
+        val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
+
+        getRatingViewModel.getRating(tempUserId, repository)
+        getRatingViewModel.rating.observe(this, Observer{
+            ourRatingBar.rating = it
+            ourRatingValue.text = "Rating promedio de ${it}"
+        })
     }
 }
