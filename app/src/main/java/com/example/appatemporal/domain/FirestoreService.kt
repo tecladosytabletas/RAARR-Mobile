@@ -91,14 +91,16 @@ class FirestoreService {
 
         var exito: Boolean = false
 
+        var Queryresult :Boolean = true
+
         db.collection("Boleto")
             .whereEqualTo("hash_QR", result)
             .get()
             .addOnSuccessListener {
                 for (document in it) {
-                    result = document.getField<String>("activo").toString()
-                    if (result == "activo") {
-                        db.collection("Boleto").document(document.id).update("activo", "inactivo")
+                    Queryresult = document.getField<Boolean>("activo") as Boolean
+                    if (Queryresult == true) {
+                        db.collection("Boleto").document(document.id).update("activo", false)
                         exito = true
                     } else {
                         exito = false
