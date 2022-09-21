@@ -1,10 +1,17 @@
 package com.example.appatemporal.data.localdatabase.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.appatemporal.data.localdatabase.entities.Actividad
+import com.example.appatemporal.data.localdatabase.entities.Proyecto
+
 
 @Dao
 interface ActividadDao {
+
+    // Get all activities
+    @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id")
+    suspend fun getAllActivityId(id: Int): List<Actividad>
 
     // Get all activities
     @Query("SELECT * FROM actividad_table")
@@ -26,8 +33,21 @@ interface ActividadDao {
     @Query("DELETE FROM actividad_table")
     suspend fun deleteAll()
 
+    //Count activities by status
+    @Query("SELECT COUNT(*) FROM actividad_table WHERE id_proyecto = :id_a AND estatus = :stringStatus")
+    suspend fun countPendingActivities(id_a: Int, stringStatus: String): Int
+
+    //Count activities by status
+    @Query("SELECT COUNT(*) FROM actividad_table WHERE id_proyecto = :id_a AND estatus = :stringStatus")
+    suspend fun countDoneActivities(id_a: Int, stringStatus: String): Int
+
     // Delete an activity
     @Delete
     suspend fun delete(actividad: Actividad)
+
+    // Update a Actividad
+    @Query("UPDATE actividad_table SET nombre_actividad = :nombre,  estatus = :estatus, area = :area, prioridad = :prioridad  WHERE id_actividad = :id")
+    suspend fun update(nombre:String, estatus:String, area:String, prioridad:String, id: Int)
+
 
 }

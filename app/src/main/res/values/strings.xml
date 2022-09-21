@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AppAtemporal</string>
+    <string name="tittleDeleteDialog">¿Estás seguro de que quieres eliminar este proyecto?</string>
+    <string name="deleteText">Eliminar</string>
+    <string name="cancelText">Cancelar</string>
+    <string name="adviceDialog">¿Estás seguro de que quieres eliminar este proyecto? Este proceso no puede revertirse</string>
+    <string name="tittleDialog">¿Estás seguro?</string>
 </resources>
