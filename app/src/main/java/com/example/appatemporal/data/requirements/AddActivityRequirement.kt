@@ -9,9 +9,7 @@ class AddActivityRequirement {
     suspend fun createActividad(actividad: Actividad, repository:Repository){
 
         repository.insertActividad(actividad)
-        repository.getAllProyectos().forEach {
-            Log.d("Proyecto", it.toString())
-        }
+       
 
     }
 }

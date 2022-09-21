@@ -64,6 +64,9 @@ class AddNewActivityForm : AppCompatActivity(){
 
             // Go back to main activity
             val intent = Intent(this, DeleteActivity::class.java)
+            with(intent){
+                putExtra("id_proyecto", idproject)
+            }
             startActivity(intent)
 
         }
