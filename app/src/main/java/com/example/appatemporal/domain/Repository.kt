@@ -1,6 +1,7 @@
 package com.example.appatemporal.domain
 
 import android.content.Context
+import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
 import com.example.appatemporal.domain.models.TicketModel
@@ -73,6 +74,7 @@ class Repository(context: Context) {
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
 
     suspend fun getUserTickets(uid: String) : MutableList<TicketModel> {
+        Log.d("LOG Repositorio",firestoreAPI.getUserTickets(uid).toString())
         return firestoreAPI.getUserTickets(uid)
     }
 

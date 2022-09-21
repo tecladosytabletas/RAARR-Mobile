@@ -5,16 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
 import com.example.appatemporal.domain.models.TicketModel
+import com.example.appatemporal.framework.view.boletosPorEventoProvider.Companion.proyectoList
 
-class boletosPorEventoAdapter {
-
-    class proyectoAdapter(private val proyectoList:List<boletoPorEventoClass>) : RecyclerView.Adapter<boletosPorEventoViewHolder>(){
-
-        private var list = mutableListOf<TicketModel>()
-
-        fun setList(externaltList: MutableList<TicketModel>){
-            list = externaltList
-        }
+class boletosPorEventoAdapter (private val list: MutableList<TicketModel>) : RecyclerView.Adapter<boletosPorEventoViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): boletosPorEventoViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
@@ -30,6 +23,4 @@ class boletosPorEventoAdapter {
 
 
         override fun getItemCount(): Int = proyectoList.size
-
-    }
 }

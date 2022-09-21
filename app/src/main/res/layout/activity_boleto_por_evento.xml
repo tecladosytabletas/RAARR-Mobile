@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="mis_boletos"
+        android:text="Mis Boletos"
         android:textColor="@color/grayBtn"
         android:textSize="24sp"
         android:textStyle="bold"

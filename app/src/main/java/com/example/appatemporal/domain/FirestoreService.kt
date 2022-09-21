@@ -132,7 +132,6 @@ class FirestoreService {
 
         Log.d("Lista de objetos", ticket_list.toString())
 
-
         return ticket_list
     }*/
 

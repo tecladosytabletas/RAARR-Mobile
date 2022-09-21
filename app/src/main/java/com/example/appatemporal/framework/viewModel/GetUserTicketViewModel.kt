@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ class GetUserTicketViewModel : ViewModel() {
     fun getUserTicket(uid: String, repository: Repository){
         viewModelScope.launch {
             val ticketAux = getUserTicketRequirement(uid, repository)
+            Log.d("LOG ViewModel", getUserTicketRequirement(uid, repository).toString())
             ticket.postValue(ticketAux)
         }
     }
