@@ -7,8 +7,6 @@ plugins {
     id 'kotlin-kapt' // include this
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
-
-    id 'kotlin-android-extensions'
 }
 
 android {

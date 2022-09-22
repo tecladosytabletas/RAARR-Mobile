@@ -49,9 +49,8 @@ class ProyectoOrganizador : AppCompatActivity() {
         }
 
         binding.navbar.metricsIcon.setOnClickListener {
-            finish()
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
         }
     }
-
-
 }

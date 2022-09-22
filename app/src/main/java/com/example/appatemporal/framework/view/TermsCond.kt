@@ -20,6 +20,5 @@ class TermsCond : AppCompatActivity() {
             var intent = Intent(this@TermsCond,RegisterActivity::class.java)
             startActivity(intent)
         }
-
     }
 }
