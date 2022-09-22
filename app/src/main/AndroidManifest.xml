@@ -47,15 +47,33 @@
         <activity
             android:name=".framework.view.DeleteActivity"
             android:exported="true">
-
+        </activity>
+        <activity
+            android:name=".framework.view.homepageespectador.HomePageEspectador"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.VisualizarEventoActivity"
+            android:exported="true">
         </activity>
         <activity
             android:name=".framework.view.Dashboard"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".framework.view.AddNewProjectForm"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.BoletoPorEventoActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.Favoritosespectador_activity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.PhoneActivity"
             android:exported="true">
         </activity>
         <activity
@@ -65,6 +83,7 @@
         <activity
             android:name=".framework.view.ModificarProyecto"
             android:exported="true">
+
         </activity>
         <activity
             android:name=".framework.view.PresupuestoAndMeta"
@@ -75,7 +94,26 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".framework.view.ConsultarBoleto"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.CheckIfLogged"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.DeleteCosto"
+            android:exported="true"/>
+        <activity
             android:name=".framework.view.AddNewActivityForm"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.AddNewCostoForm"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.ModificarCosto"
             android:exported="true">
         </activity>
         <activity

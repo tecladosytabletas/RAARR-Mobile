@@ -73,5 +73,13 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
             Log.d("prueba", idProyecto.toString())
             startActivity(intent)
         }
+
+        binding.buttonCostos.setOnClickListener{
+            val intent = Intent(this, DeleteCosto::class.java)
+            with(intent){
+                putExtra("id_proyecto", idProyecto)
+            }
+            startActivity(intent)
+        }
     }
 }

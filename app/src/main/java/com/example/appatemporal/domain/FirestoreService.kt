@@ -1,10 +1,17 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
+<<<<<<< HEAD
+import com.example.appatemporal.domain.models.GetTicketModel
+import com.example.appatemporal.domain.models.UserModel
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldPath
+=======
 import com.example.appatemporal.domain.models.TicketModel
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
+>>>>>>> origin/develop
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
@@ -88,6 +95,46 @@ class FirestoreService {
                 .get()
                 .await()
         return userRole
+    }
+
+    // Que evento le corresponde al boleto
+    // uid: userId, eid: eventId, fid: funcionId
+    // getUserTicket
+
+    suspend fun getUserTickets(uid : String) : MutableList<GetTicketModel> {
+        var result : MutableList<GetTicketModel> = arrayListOf()
+        var ticket : GetTicketModel = GetTicketModel()
+        var boletos : QuerySnapshot =
+            db.collection("Boleto")
+                .whereEqualTo("id_Usuario",uid)
+                .get()
+                .await()
+        for (boleto in boletos){
+            var funciones : QuerySnapshot =
+                db.collection("Funcion")
+                    .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_Funcion"))
+                    .get()
+                    .await()
+            var evento : QuerySnapshot =
+                db.collection("Evento")
+                    .whereEqualTo(FieldPath.documentId(),funciones.documents[0].data?.get("id_Evento"))
+                    .get()
+                    .await()
+            ticket.nombre_evento = evento.documents[0].data?.get("nombre_Evento").toString()
+            ticket.fecha = funciones.documents[0].data?.get("fecha").toString()
+            ticket.horario = funciones.documents[0].data?.get("hora_Inicio").toString()
+            ticket.lugar = evento.documents[0].data?.get("nombre_Ubicacion").toString()
+            ticket.direccion = evento.documents[0].data?.get("direccion").toString()
+            ticket.ciudad = evento.documents[0].data?.get("ciudad").toString()
+            ticket.estado = evento.documents[0].data?.get("estado").toString()
+            ticket.hash_qr = boleto.data?.get("hash_QR").toString()
+
+            result.add(ticket)
+
+            Log.d("LOG ticket",ticket.toString())
+        }
+        Log.d("LOG aqui",result.isEmpty().toString())
+        return result
     }
 
     suspend fun eventCount(uid: String) : Int {

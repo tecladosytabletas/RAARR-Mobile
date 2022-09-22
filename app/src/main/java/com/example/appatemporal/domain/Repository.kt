@@ -1,13 +1,15 @@
 package com.example.appatemporal.domain
 
 import android.content.Context
+import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
+import com.example.appatemporal.domain.models.GetTicketModel
+import kotlin.math.cos
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
 
@@ -68,10 +70,12 @@ class Repository(context: Context) {
     val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
     val objetivoDao = LocalDatabase.getInstance(context).objetivoDao
+    val costoDao = LocalDatabase.getInstance(context).costoDao
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
     val usuarioDao = LocalDatabase.getInstance(context).usuarioDao
     val privilegioDao = LocalDatabase.getInstance(context).privilegioDao
     val rolDao = LocalDatabase.getInstance(context).rolDao
+
 
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
@@ -130,6 +134,25 @@ class Repository(context: Context) {
     suspend fun updateMeta(metaN:Double, id: Int) =proyectoDao.updateMeta(metaN,id)
     suspend fun updateModifyProyect(name: String, date: String,time: String, id: Int) =proyectoDao.updateModify(name,date,time,id)
 
+
+    suspend fun insertCosto(costo: Costo) = costoDao.insert(costo)
+    suspend fun insertAllCostos(costos: List<Costo>) = costoDao.insertAll(costos)
+    suspend fun getAllCostos(id:Int) = costoDao.getAll(id)
+    suspend fun getCostoById(id: Int) = costoDao.getById(id)
+    suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
+    suspend fun deleteAllCostos() = costoDao.deleteAll()
+    suspend fun updateCosto(costo: Costo) = costoDao.update(costo)
+
+
+    suspend fun getUserTickets(uid: String) : MutableList<GetTicketModel> {
+        Log.d("LOG Repositorio",firestoreAPI.getUserTickets(uid).toString())
+        return firestoreAPI.getUserTickets(uid)
+    }
+
+
+
+
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
     suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
+
 }
