@@ -10,5 +10,9 @@ data class Proyecto(
     @ColumnInfo(name = "id_proyecto") val id_proyecto: Int,
     @ColumnInfo(name = "id_usuario") val id_usuario: Int,
     @ColumnInfo(name = "nombre_proyecto") var nombre_proyecto: String,
-    @ColumnInfo(name = "fecha_inicio") var fecha_inicio: String
+    @ColumnInfo(name = "fecha_inicio") var fecha_inicio: String,
+    @ColumnInfo(name = "ganancia") val ganancia: Double,
+    @ColumnInfo(name = "presupuesto") val presupuesto: Double,
+    @ColumnInfo(name = "meta") val meta: Double,
+    @ColumnInfo(name = "created_at") val created_at: String
 )

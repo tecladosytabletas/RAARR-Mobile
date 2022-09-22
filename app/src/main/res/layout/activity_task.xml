@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="314dp"
         android:text="Nombre de la actividad"
         android:textColor="@color/white"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="244dp"
         android:text="Area de la actividad"
         android:textColor="@color/white"
@@ -63,22 +63,40 @@
         app:layout_constraintTop_toBottomOf="@+id/nameActivity" />
 
 
-    <Spinner
-        android:id="@+id/spinnerArea"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:id="@+id/AreaLayout"
         android:layout_width="328dp"
-        android:popupBackground="@color/white"
-        android:textColorHint="@color/white"
-        android:layout_height="28dp"
+        android:layout_height="60dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="55dp"
         android:layout_weight="1"
+        android:prompt="@string/eventType"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewActArea"
-        android:prompt="@string/eventType"
-        android:entries="@array/eventTypeList"/>
+        app:endIconTint="@color/white"
+        android:textColor="@color/white"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/spinnerArea"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:text="@string/areaType1"
+            android:textSize="15dp"
+            android:popupBackground="@color/white"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewActArea"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <TextView
@@ -86,7 +104,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="244dp"
+        android:text="Estatus de la actividad"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AreaLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:id="@+id/EstatusLayout"
+        android:layout_width="328dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="55dp"
+        android:layout_weight="1"
+        android:prompt="@string/eventType"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewActEstatus"
+        app:endIconTint="@color/white"
+        android:textColor="@color/white"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/spinnerEstatus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:text="@string/estatusType1"
+            android:textSize="15dp"
+            android:popupBackground="@color/white"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewActEstatus"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textViewActPrioridad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="244dp"
         android:text="Prioridad de la actividad"
         android:textColor="@color/white"
@@ -94,24 +162,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerArea" />
+        app:layout_constraintTop_toBottomOf="@+id/EstatusLayout" />
 
-    <Spinner
-        android:id="@+id/spinnerEstatus"
-        android:layout_width="328dp"
-        android:popupBackground="@color/white"
-        android:textColorHint="@color/white"
-        android:layout_height="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="55dp"
-        android:layout_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewActEstatus"
-        android:prompt="@string/eventType"
-        android:entries="@array/eventTypeList"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/PrioridadLayout"
+            android:layout_width="328dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="55dp"
+            android:layout_weight="1"
+            android:prompt="@string/eventType"
+            android:textColorHint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewActPrioridad"
+            app:endIconTint="@color/white"
+            android:textColor="@color/white"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/spinnerPrioridad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="@string/prioridadType1"
+                android:textSize="15dp"
+                android:popupBackground="@color/white"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewActPrioridad"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveBtn"
@@ -119,16 +207,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginStart="126dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="47dp"
         android:layout_marginEnd="126dp"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/gradent_horizontal"
         android:text="Agregar Tarea"
         app:cornerRadius="25dp"
         app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerEstatus" />
+        app:layout_constraintTop_toBottomOf="@+id/PrioridadLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
 
     <include
         layout="@layout/navbar"

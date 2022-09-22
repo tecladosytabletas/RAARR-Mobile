@@ -36,26 +36,19 @@
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp" />
-                                <TextView
-                                    android:id="@+id/line2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="24sp"
-                                    android:fontFamily="@font/roboto"
-                                    android:text="12 : 10 : 09"
-                                    android:textAlignment="center"/>
-                                <TextView
-                                    android:id="@+id/line3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="13sp"
-                                    android:fontFamily="@font/roboto"
-                                    android:text="Dias     Hrs      Sg"
-                                    android:textAlignment="center"/>
-                                <TextView
-                                    android:id="@+id/line4"
+
+                        <TextView
+                            android:id="@+id/line2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:text="12 : 10 : 09"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+
+                        <TextView
+                                    android:id="@+id/activitiesCompleted"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
@@ -65,7 +58,7 @@
                                     android:textAlignment="center"
                                     android:paddingTop="10dp"/>
                                 <TextView
-                                    android:id="@+id/line5"
+                                    android:id="@+id/activitiesToDo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
@@ -193,7 +186,9 @@
                 </LinearLayout>
 
                 <include
-                    layout="@layout/navbar" />
+                    layout="@layout/navbar"
+                    android:id="@+id/navbar"
+                    />
         </LinearLayout>
 
 

@@ -1,14 +1,18 @@
 package com.example.appatemporal.framework.view
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.appatemporal.R
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.DatePicker
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.appatemporal.data.localdatabase.entities.Estatus
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.CreateNewProjectBinding
 import com.example.appatemporal.databinding.ModifyNewProjectBinding
@@ -17,34 +21,100 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.AddNewProjectViewModel
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
-class ModificarProyecto : AppCompatActivity() {
+class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
 
     private val viewModel: ProyectoOrganizadorViewModel by viewModels()
     private lateinit var binding : ModifyNewProjectBinding
+    lateinit var myCalendar: Calendar
+    lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
+    var finalDate = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ModifyNewProjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.dateEdt.setOnClickListener(this)
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         binding.nameModifyProject.setText(myExtras?.getString("nombre_proyecto"))
-        binding.dateModifyProject.setText(myExtras?.getString("fecha_inicio"))
+        binding.dateEdt.setText(myExtras?.getString("fecha_inicio"))
         val idproject: Int = myExtras?.getInt("id_proyecto")?:-1
         // Set click listener
         binding.modifybutton.setOnClickListener {
             // Get values from view
             val name = binding.nameModifyProject.text.toString()
-            val date = binding.dateModifyProject.text.toString()
-            val project: Proyecto = Proyecto(idproject, 1, name, date)
-            lifecycleScope.launch{
-                viewModel.updateProject(project, repository)
-            }
+            val date = binding.dateEdt.text.toString()
+            val tsLong = System.currentTimeMillis() / 1000
+            val ts: String = tsLong.toString()
+            //val project: Proyecto = Proyecto(idproject, 1, name, date,0.0,0.0,ts)
+
+            viewModel.updateModify(name,date,ts,idproject, repository)
+
             // Go back to main activity
             val intent = Intent(this, ProyectoOrganizador::class.java)
             startActivity(intent)
 
         }
+
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.dateEdt -> {
+                setListener()
+            }
+        }
+
+    }
+
+    private fun setListener() {
+        myCalendar = Calendar.getInstance()
+
+        dateSetListener =
+            DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                myCalendar.set(Calendar.YEAR, year)
+                myCalendar.set(Calendar.MONTH, month)
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDate()
+
+            }
+
+        val datePickerDialog = DatePickerDialog(
+            this, dateSetListener, myCalendar.get(Calendar.YEAR),
+            myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        datePickerDialog.show()
+    }
+
+    private fun updateDate() {
+        //01/03/2022
+        val myformat = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(myformat)
+        finalDate = myCalendar.time.time
+        binding.dateEdt.setText(sdf.format(myCalendar.time))
+
+        //timeInptLay.visibility = View.VISIBLE
 
     }
 

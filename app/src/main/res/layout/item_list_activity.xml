@@ -7,18 +7,17 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/tvProjectActCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradent_horizontal"
+        android:backgroundTint="#33000000"
+        android:backgroundTintMode="src_atop"
         android:fontFamily="@font/inter"
         android:padding="16dp"
         android:text="Nueva Tarea"
         android:textColor="@color/white"
-        android:textFontWeight="600"
-        android:id="@+id/tvProjectActCreate"
-        android:backgroundTint="#33000000"
-        android:backgroundTintMode="src_atop"
-        />
+        android:textFontWeight="600" />
 
     <ImageView
         android:id="@+id/ivProjectImage"
