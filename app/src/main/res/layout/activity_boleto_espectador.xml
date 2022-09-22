@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".framework.view.ConsultarBoletoActivity"
+    tools:context=".framework.view.ConsultarBoleto"
     android:background="@color/background">
 
     <LinearLayout
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nombre del evento"
                     android:textAlignment="center"
-                    android:textColor="@color/grayBtn"
+                    android:textColor="@color/yellow"
                     android:textSize="30dp" />
 
                 <TextView

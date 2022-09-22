@@ -78,9 +78,9 @@ class Repository(context: Context) {
         return firestoreAPI.getUserTickets(uid)
     }
 
-    suspend fun getUserFunction(uid: String) : QuerySnapshot {
+    /*suspend fun getUserFunction(uid: String) : QuerySnapshot {
         return firestoreAPI.getUserFunctions(uid)
-    }
+    }*/
 
 
 

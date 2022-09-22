@@ -61,7 +61,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".framework.view.ConsultarBoletoActivity"
+            android:name=".framework.view.ConsultarBoleto"
             android:exported="true">
         </activity>
         <activity

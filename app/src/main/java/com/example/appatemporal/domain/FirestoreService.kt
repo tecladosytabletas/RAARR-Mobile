@@ -162,7 +162,9 @@ class FirestoreService {
             ticket.ciudad = evento.documents[0].data?.get("ciudad").toString()
             ticket.estado = evento.documents[0].data?.get("estado").toString()
             ticket.hash_qr = boleto.data?.get("hash_QR").toString()
+
             result.add(ticket)
+
             Log.d("LOG ticket",ticket.toString())
         }
         Log.d("LOG aqui",result.isEmpty().toString())
