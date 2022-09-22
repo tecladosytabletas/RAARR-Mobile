@@ -15,7 +15,7 @@ class DeleteCostoViewModel : ViewModel(){
         requirement.updateCosto(costo, repository)
     }
 
-    suspend fun getCosto(repository: Repository): List<Costo>{
-        return requirement.getCostos(repository)
+    suspend fun getCosto(repository: Repository, idProject:Int): List<Costo>{
+        return requirement.getCostos(repository, idProject)
     }
 }

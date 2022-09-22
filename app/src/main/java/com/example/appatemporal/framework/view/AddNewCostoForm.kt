@@ -18,7 +18,8 @@ class AddNewCostoForm : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = CostoTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        var myExtras :Bundle? = intent.extras
+        var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         val repository = Repository(this)
 
         // Set click listener
@@ -27,7 +28,7 @@ class AddNewCostoForm : AppCompatActivity(){
             val name = binding.nameCosto.text.toString()
             val amount = binding.montoCosto.text.toString().toInt()
 
-            val costo: Costo = Costo(0, name, amount)
+            val costo: Costo = Costo(0, name, amount, idProyecto)
 
             lifecycleScope.launch{
                 viewModel.addNewCosto(costo, repository)
@@ -36,6 +37,9 @@ class AddNewCostoForm : AppCompatActivity(){
 
             // Go back to main activity
             val intent = Intent(this, DeleteCosto::class.java)
+            with(intent){
+                putExtra("id_proyecto", idProyecto)
+            }
             startActivity(intent)
 
         }
