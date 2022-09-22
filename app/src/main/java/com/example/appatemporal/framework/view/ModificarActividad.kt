@@ -23,24 +23,6 @@ class ModificarActividad : AppCompatActivity(){
         binding = ModifyNewActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.navbar.homeIcon.setOnClickListener {
-            finish()
-        }
-
-        binding.navbar.budgetIcon.setOnClickListener {
-            val intent = Intent(this, ProyectoOrganizador::class.java)
-            startActivity(intent)
-        }
-
-        binding.navbar.ticketsIcon.setOnClickListener {
-            finish()
-        }
-
-        binding.navbar.metricsIcon.setOnClickListener {
-            val intent = Intent(this, Dashboard::class.java)
-            startActivity(intent)
-        }
-
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         binding.nameModifedActivity.setText(myExtras?.getString("nombre_actividad"))
@@ -90,7 +72,6 @@ class ModificarActividad : AppCompatActivity(){
             val intent = Intent(this, ProyectoOrganizador::class.java)
             startActivity(intent)
         }
-
         binding.navbar.ticketsIcon.setOnClickListener {
             finish()
         }

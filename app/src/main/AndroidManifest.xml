@@ -48,6 +48,7 @@
             android:name=".framework.view.DeleteActivity"
             android:exported="true">
 
+
         </activity>
         <activity
             android:name=".framework.view.Dashboard"
@@ -57,6 +58,8 @@
         <activity
             android:name=".framework.view.AddNewProjectForm"
             android:exported="true">
+
+
         </activity>
         <activity
             android:name=".framework.view.ModificarActividad"
@@ -65,6 +68,7 @@
         <activity
             android:name=".framework.view.ModificarProyecto"
             android:exported="true">
+
         </activity>
         <activity
             android:name=".framework.view.PresupuestoAndMeta"
@@ -75,12 +79,32 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".framework.view.DeleteCosto"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+         </activity>
+        <activity
             android:name=".framework.view.AddNewActivityForm"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".framework.view.AddNewCostoForm"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".framework.view.ModificarCosto"
+            android:exported="true">
+
         </activity>
         <activity
             android:name=".framework.view.ActivityProyectoOrganizador"
             android:exported="true">
+
         </activity>
         <activity
             android:name=".framework.view.PhoneActivity"
@@ -98,10 +122,7 @@
         <activity
             android:name=".framework.view.CheckIfLogged"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <meta-data
             android:name="preloaded_fonts"
