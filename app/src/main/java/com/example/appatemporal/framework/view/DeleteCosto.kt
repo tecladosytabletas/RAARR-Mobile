@@ -22,6 +22,25 @@ class DeleteCosto : AppCompatActivity(){
         setContentView(binding.root)
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
+
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
+
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         lifecycleScope .launch {
             initRecyclerView(repository, idProyecto)
