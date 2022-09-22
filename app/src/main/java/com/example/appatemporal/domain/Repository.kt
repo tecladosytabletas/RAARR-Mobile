@@ -9,9 +9,7 @@ import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
-
 class Repository(context: Context) {
-    // Firestore
     val firestoreAPI = FirestoreService()
 
     suspend fun addUser(uid: String, user: UserModel, role: String) {
@@ -29,6 +27,22 @@ class Repository(context: Context) {
 
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         return firestoreAPI.getUserRole(uid)
+    }
+
+    suspend fun eventCount(uid: String) : Int {
+        return firestoreAPI.eventCount(uid)
+    }
+
+    suspend fun ventasCount(uid: String) : Pair<Int, Int> {
+        return firestoreAPI.ventasCount(uid)
+    }
+
+    suspend fun getRating(uid: String) : Float {
+        return firestoreAPI.getRating(uid)
+    }
+
+    suspend fun getRevenue(uid: String) : Int {
+        return firestoreAPI.getRevenue(uid)
     }
 
     suspend fun updateTicketValue(resulted: String) : Boolean {
@@ -104,5 +118,4 @@ class Repository(context: Context) {
 
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
     suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
-
 }

@@ -23,6 +23,25 @@ class AddNewActivityForm : AppCompatActivity(){
         binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
+
+
         // get reference to the string array that we just created
         val areaList = resources.getStringArray(R.array.prioridadList)
         // create an array adapter and pass the required parameter

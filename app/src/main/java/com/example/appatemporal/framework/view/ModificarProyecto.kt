@@ -72,7 +72,8 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
         }
 
         binding.navbar.metricsIcon.setOnClickListener {
-            finish()
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
         }
 
     }
