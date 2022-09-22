@@ -3,6 +3,7 @@ package com.example.appatemporal.domain
 import android.content.Context
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
+import kotlin.math.cos
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
@@ -54,6 +55,7 @@ class Repository(context: Context) {
     val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
     val objetivoDao = LocalDatabase.getInstance(context).objetivoDao
+    val costoDao = LocalDatabase.getInstance(context).costoDao
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
     val usuarioDao = LocalDatabase.getInstance(context).usuarioDao
     val privilegioDao = LocalDatabase.getInstance(context).privilegioDao
@@ -116,6 +118,18 @@ class Repository(context: Context) {
     suspend fun updateMeta(metaN:Double, id: Int) =proyectoDao.updateMeta(metaN,id)
     suspend fun updateModifyProyect(name: String, date: String,time: String, id: Int) =proyectoDao.updateModify(name,date,time,id)
 
+
+    suspend fun insertCosto(costo: Costo) = costoDao.insert(costo)
+    suspend fun insertAllCostos(costos: List<Costo>) = costoDao.insertAll(costos)
+    suspend fun getAllCostos(id:Int) = costoDao.getAll(id)
+    suspend fun getCostoById(id: Int) = costoDao.getById(id)
+    suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
+    suspend fun deleteAllCostos() = costoDao.deleteAll()
+    suspend fun updateCosto(costo: Costo) = costoDao.update(costo)
+
+
+
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
     suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
+
 }

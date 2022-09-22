@@ -80,7 +80,7 @@
                     >
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="275dp"
+                            android:layout_height="250dp"
                             android:orientation="vertical"
                             android:id="@+id/bottom_activity"
                             android:background="@drawable/rounded_corner"
@@ -133,9 +133,10 @@
 
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="275dp"
+                            android:layout_height="250dp"
                             android:orientation="vertical"
                             android:background="@drawable/rounded_corner"
                             android:layout_weight=".5"
@@ -184,6 +185,38 @@
                                 </LinearLayout>
                         </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/buttonCostos"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/gradent_horizontal"
+                    android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/gradent_horizontal"
+                            android:text="Costos"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/inter"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="70dp"
+                            android:layout_gravity="center"
+                            android:id="@+id/costos"
+                            app:srcCompat="@drawable/billete"
+                            />
+
+                </LinearLayout>
+
+
+
+
 
                 <include
                     layout="@layout/navbar"
