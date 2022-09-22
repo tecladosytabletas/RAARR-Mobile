@@ -121,7 +121,7 @@ class Repository(context: Context) {
 
     suspend fun insertCosto(costo: Costo) = costoDao.insert(costo)
     suspend fun insertAllCostos(costos: List<Costo>) = costoDao.insertAll(costos)
-    suspend fun getAllCostos() = costoDao.getAll()
+    suspend fun getAllCostos(id:Int) = costoDao.getAll(id)
     suspend fun getCostoById(id: Int) = costoDao.getById(id)
     suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
     suspend fun deleteAllCostos() = costoDao.deleteAll()

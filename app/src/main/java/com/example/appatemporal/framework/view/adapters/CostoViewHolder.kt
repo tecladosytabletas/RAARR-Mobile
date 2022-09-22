@@ -30,6 +30,7 @@ class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 putExtra("id_costo", costoModel.id_costo)
                 putExtra("nombre_costo", costoModel.nombre_costo)
                 putExtra("monto", costoModel.monto)
+                putExtra("id_proyecto", costoModel.id_proyecto)
             }
             itemView.context.startActivity(intent1)
         }

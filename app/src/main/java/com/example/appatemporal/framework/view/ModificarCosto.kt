@@ -23,17 +23,18 @@ class ModificarCosto : AppCompatActivity() {
         var myExtras: Bundle? = intent.extras
         binding.newNameCosto.setText(myExtras?.getString("nombre_actividad"))
         binding.newMontoCosto.setText(myExtras?.getInt("monto").toString())
+        val idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         val idcosto: Int = myExtras?.getInt("id_costo") ?: -1
         // Set click listener
         binding.newcostoBtn.setOnClickListener {
             val name = binding.newNameCosto.text.toString()
             val amount = binding.newMontoCosto.text.toString().toInt()
-            val costo: Costo = Costo(idcosto, name, amount)
+            val costo: Costo = Costo(idcosto, name, amount, idProyecto)
 
             lifecycleScope.launch {
                 viewModel.updateCosto(costo, repository)
             }
-            val intent = Intent(this, ProyectoOrganizador::class.java)
+            val intent = Intent(this, DeleteCosto::class.java)
             startActivity(intent)
         }
 

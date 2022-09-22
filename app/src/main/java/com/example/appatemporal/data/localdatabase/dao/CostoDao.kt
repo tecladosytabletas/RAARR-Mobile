@@ -7,8 +7,8 @@ import com.example.appatemporal.data.localdatabase.entities.Costo
 @Dao
 interface CostoDao {
     // Get all costos
-    @Query("SELECT * FROM costo_table")
-    suspend fun getAll(): List<Costo>
+    @Query("SELECT * FROM costo_table where id_proyecto = :id")
+    suspend fun getAll(id: Int): List<Costo>
 
     // Insert all costos
     @Insert(onConflict = OnConflictStrategy.REPLACE)

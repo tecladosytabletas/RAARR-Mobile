@@ -21,18 +21,40 @@ class DeleteCosto : AppCompatActivity(){
         binding = AddCostosBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
+        var myExtras :Bundle? = intent.extras
+        var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         lifecycleScope .launch {
-            initRecyclerView(repository)
+            initRecyclerView(repository, idProyecto)
+        }
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
         }
 
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
         binding.newCostoButton.setOnClickListener {
             val intent = Intent(this, AddNewCostoForm::class.java)
+            with(intent){
+                putExtra("id_proyecto", idProyecto)
+            }
+
             startActivity(intent)
         }
     }
 
-    private suspend fun initRecyclerView(repository: Repository) {
-        val costoList = viewModel.getCosto(repository)
+    private suspend fun initRecyclerView(repository: Repository, idProyecto: Int) {
+        val costoList = viewModel.getCosto(repository, idProyecto)
         binding.costoRv.layoutManager = LinearLayoutManager(this)
         binding.costoRv.adapter = CostoAdapter(costoList)
         // Log each project

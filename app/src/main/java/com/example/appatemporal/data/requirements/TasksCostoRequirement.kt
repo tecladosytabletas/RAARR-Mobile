@@ -18,7 +18,7 @@ class TasksCostoRequirement {
         repository.updateCosto(costoToUpdate)
     }
 
-    suspend fun getCostos(repository: Repository): List<Costo>{
-        return repository.getAllCostos()
+    suspend fun getCostos(repository: Repository, idProject:Int): List<Costo>{
+        return repository.getAllCostos(idProject)
     }
 }
