@@ -23,6 +23,24 @@ class RegisterQRView : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
+
         val btnQR = binding.btnConsulta
         btnQR.setOnClickListener{
             initScanner()

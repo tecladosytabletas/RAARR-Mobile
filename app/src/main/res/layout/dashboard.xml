@@ -24,7 +24,8 @@
         android:layout_height="80dp"
         android:layout_alignParentBottom="true">
 
-        <include layout="@layout/navbar" />
+        <include layout="@layout/navbar"
+            android:id="@+id/navbar"/>
 
     </RelativeLayout>
 

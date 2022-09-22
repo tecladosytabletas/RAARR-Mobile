@@ -155,50 +155,51 @@ class FirestoreService {
 
     suspend fun getRevenue(uid: String) : Int {
         var ventaTotal = 0
-        var boletos : QuerySnapshot
-        var tiposBoleto : QuerySnapshot
-        var events : QuerySnapshot =
+        var boletos: QuerySnapshot
+        var tiposBoleto: QuerySnapshot
+        var events: QuerySnapshot =
             db.collection("Usuario_Evento")
                 .whereEqualTo("id_Usuario", uid)
                 .get()
                 .await()
-        for (document in events){
-            var funciones : QuerySnapshot =
+        for (document in events) {
+            var funciones: QuerySnapshot =
                 db.collection("Funcion")
-                    .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                    .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
                     .get()
                     .await()
-            for (document in funciones){
+            for (document in funciones) {
                 boletos =
                     db.collection("Boleto")
-                        .whereEqualTo("id_Funcion",document.id)
+                        .whereEqualTo("id_Funcion", document.id)
                         .get()
                         .await()
-                Log.d("LOG boletos",boletos.count().toString())
+                Log.d("LOG boletos", boletos.count().toString())
                 tiposBoleto =
                     db.collection("Evento_Tipo_Boleto")
-                        .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                        .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
                         .get()
                         .await()
-                for (tipoBoleto in tiposBoleto){
-                    for (document in boletos){
-                        if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")){
-                            Log.d("IF de los boletos",tipoBoleto.data?.get("precio").toString())
+                for (tipoBoleto in tiposBoleto) {
+                    for (document in boletos) {
+                        if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
+                            Log.d("IF de los boletos", tipoBoleto.data?.get("precio").toString())
                             ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
                         }
-                        Log.d("LOG for boletos",document.id.toString())
+                        Log.d("LOG for boletos", document.id.toString())
                     }
                 }
             }
         }
         return ventaTotal
+    }
 
-    suspend fun updateTicketValue(resulted: String) : Boolean {
-        var result:String = resulted
+    suspend fun updateTicketValue(resulted: String): Boolean {
+        var result: String = resulted
 
         var exito: Boolean = false
 
-        var Queryresult :Boolean = true
+        var Queryresult: Boolean = true
 
         db.collection("Boleto")
             .whereEqualTo("hash_QR", result)
@@ -218,4 +219,5 @@ class FirestoreService {
 
         return exito
     }
+
 }

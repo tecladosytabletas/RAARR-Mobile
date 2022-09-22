@@ -52,6 +52,26 @@ class Dashboard : AppCompatActivity(){
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
+
+
+
         // Declaraciom de datos dinamicos
         ourEventCount = findViewById(R.id.eventCountTotal)
         ourEventRevenue = findViewById(R.id.eventCount)
