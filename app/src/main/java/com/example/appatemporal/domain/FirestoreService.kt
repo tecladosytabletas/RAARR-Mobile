@@ -1,14 +1,26 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
+<<<<<<< HEAD
 import com.example.appatemporal.domain.models.GetTicketModel
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
+=======
+import com.example.appatemporal.domain.models.TicketModel
+import com.example.appatemporal.domain.models.UserModel
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
+>>>>>>> origin/develop
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.lang.Integer.max
+import java.lang.Integer.parseInt
+import java.time.LocalDateTime
+import java.util.*
 
 class FirestoreService {
     private val db = Firebase.firestore
@@ -88,50 +100,6 @@ class FirestoreService {
     // Que evento le corresponde al boleto
     // uid: userId, eid: eventId, fid: funcionId
     // getUserTicket
-    /*suspend fun agetUserTickets(uid: String) : MutableList<TicketModel> {
-
-        val ticket_list: MutableList<TicketModel> = arrayListOf()
-
-        val ticket = db.collection("Boleto")
-            .whereEqualTo("Id_Usuario", uid)
-            .get()
-            .await()
-
-        for(documents in ticket){
-
-            val hash_qr = documents.getField<String>("hash_Qr").toString()
-
-            val boleto_funcion = documents.getField<String>("id_Funcion").toString()
-
-            val funcion = db.collection("Funcion")
-                .document(boleto_funcion)
-                .get()
-                .await()
-
-            val fecha = funcion.getField<String>("fechaFuncion").toString()
-            val horario = funcion.getField<String>("horarioFuncion").toString()
-
-            val funcion_evento = funcion.getField<String>("id_Evento").toString()
-
-            val evento = db.collection("Evento")
-                .document(funcion_evento)
-                .get()
-                .await()
-
-            val nombre_evento = evento.getField<String>("EventName").toString()
-            val lugar = evento.getField<String>("LugarEvento").toString()
-            val direccion = evento.getField<String>("DireccionEvento").toString()
-            val ciudad = evento.getField<String>("CiudadEvento").toString()
-            val estado = evento.getField<String>("EstadoEvento").toString()
-
-            val objeto_ticket = TicketModel(nombre_evento, fecha, horario, lugar, direccion, ciudad, estado, hash_qr)
-            ticket_list.add(objeto_ticket)
-        }
-
-        Log.d("Lista de objetos", ticket_list.toString())
-
-        return ticket_list
-    }*/
 
     suspend fun getUserTickets(uid : String) : MutableList<GetTicketModel> {
         var result : MutableList<GetTicketModel> = arrayListOf()
@@ -167,5 +135,181 @@ class FirestoreService {
         }
         Log.d("LOG aqui",result.isEmpty().toString())
         return result
+    }
+
+    suspend fun eventCount(uid: String) : Int {
+        var events : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        return events.count()
+    }
+
+    suspend fun ventasCount(uid : String) : Pair<Int, Int> {
+        var ventasCount : Int = 0
+        var asistenciasCount : Int = 0
+        var ventas : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        for (document in ventas){
+            var funciones : QuerySnapshot =
+                db.collection("Funcion")
+                    .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                    .get()
+                    .await()
+            for (document in funciones){
+                var boletosAuxVentas : QuerySnapshot =
+                    db.collection("Boleto")
+                        .whereEqualTo("id_Funcion", document.id)
+                        .get()
+                        .await()
+                ventasCount += boletosAuxVentas.count()
+            }
+            for (document in funciones){
+                var boletosAuxAsistencias : QuerySnapshot =
+                    db.collection("Boleto")
+                        .whereEqualTo("id_Funcion", document.id)
+                        .whereEqualTo("activo", false)
+                        .get()
+                        .await()
+                asistenciasCount += boletosAuxAsistencias.count()
+            }
+        }
+        val result = Pair(ventasCount, asistenciasCount)
+        return result
+    }
+
+    suspend fun getRating(uid: String) : Float {
+        var acumulado = 0f
+        var count = 0f
+        var events : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        for (document in events){
+            var feedbacks : QuerySnapshot =
+                db.collection("Feedback")
+                .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                .get()
+                .await()
+            for (document in feedbacks){
+                acumulado += document.data?.get("rating").toString().toInt()
+                count += 1
+            }
+        }
+        if (count <= 0) return 0f
+        return (acumulado/count).toFloat()
+    }
+
+    suspend fun getRevenue(uid: String) : Int {
+        var ventaTotal = 0
+        var boletos: QuerySnapshot
+        var tiposBoleto: QuerySnapshot
+        var events: QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_Usuario", uid)
+                .get()
+                .await()
+        for (document in events) {
+            var funciones: QuerySnapshot =
+                db.collection("Funcion")
+                    .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
+                    .get()
+                    .await()
+            for (document in funciones) {
+                boletos =
+                    db.collection("Boleto")
+                        .whereEqualTo("id_Funcion", document.id)
+                        .get()
+                        .await()
+                Log.d("LOG boletos", boletos.count().toString())
+                tiposBoleto =
+                    db.collection("Evento_Tipo_Boleto")
+                        .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
+                        .get()
+                        .await()
+                for (tipoBoleto in tiposBoleto) {
+                    for (document in boletos) {
+                        if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
+                            Log.d("IF de los boletos", tipoBoleto.data?.get("precio").toString())
+                            ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
+                        }
+                        Log.d("LOG for boletos", document.id.toString())
+                    }
+                }
+            }
+        }
+        return ventaTotal
+    }
+
+    suspend fun updateTicketValue(resulted: String): Boolean {
+        var result: String = resulted
+
+        var exito: Boolean = false
+
+        var Queryresult: Boolean = true
+
+        db.collection("Boleto")
+            .whereEqualTo("hash_QR", result)
+            .get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    Queryresult = document.getField<Boolean>("activo") as Boolean
+                    if (Queryresult == true) {
+                        db.collection("Boleto").document(document.id).update("activo", false)
+                        exito = true
+                    } else {
+                        exito = false
+                    }
+                }
+            }
+            .await()
+        return exito
+    }
+
+    suspend fun getTicketDropDown(idEvent: String) : List<Triple<String, Int, String>> {
+        var dropDown : MutableList<Triple<String, Int, String>> = mutableListOf()
+        val ticketInfo = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_Evento", idEvent)
+            .get()
+            .await()
+        for (id in ticketInfo) {
+            var info = id.getField<String>("id_Tipo_Boleto").toString()
+            var precio = id.getField<Int>("precio") as Int
+            val name = db.collection("Tipo_Boleto")
+                .document(info)
+                .get()
+                .await()
+            dropDown.add(Triple(name.data?.get("nombre_Tipo_Boleto").toString(), precio, name.id))
+        }
+        return dropDown
+    }
+
+    suspend fun currentTicketsFun(idEvent: String, idFuncion: String) : List<Triple<String, Int, Int>> {
+        val maxCountEvent: MutableList<Triple<String, Int, Int>> = mutableListOf()
+        val tipoEventoBoleto = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_Evento", idEvent)
+            .get()
+            .await()
+        for (document in tipoEventoBoleto) {
+            val boletosEventoTipo = db.collection("Boleto")
+                .whereEqualTo("id_Funcion", idFuncion)
+                .whereEqualTo("id_Tipo_Boleto", document.data.get("id_Tipo_Boleto"))
+                .get()
+                .await()
+            maxCountEvent.add(Triple(document.data?.get("id_Tipo_Boleto").toString(), boletosEventoTipo.documents.size, parseInt(document.data?.get("max_Boletos").toString())))
+        }
+        return maxCountEvent
+    }
+
+    fun RegisterSale(idFuncion: String, id_Metodo_Pago: String,id_Tipo_Boleto : String){
+        var currentDate = Date()
+        db.collection("Boleto")
+            .document()
+            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
     }
 }
