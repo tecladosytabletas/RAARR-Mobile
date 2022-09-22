@@ -17,8 +17,7 @@ class TermsCond : AppCompatActivity() {
 
 
         binding.btnReturnRegister.setOnClickListener {
-            var intent = Intent(this@TermsCond,RegisterActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 }
