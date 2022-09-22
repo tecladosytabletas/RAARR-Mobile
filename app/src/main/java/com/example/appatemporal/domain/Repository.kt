@@ -40,6 +40,10 @@ class Repository(context: Context) {
         return firestoreAPI.currentTicketsFun(idEvento, idFuncion)
     }
 
+    suspend fun registerSale(idFuncion: String,id_Metodo_Pago: String,id_Tipo_Boleto: String){
+        return firestoreAPI.RegisterSale(idFuncion,id_Metodo_Pago,id_Tipo_Boleto)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao

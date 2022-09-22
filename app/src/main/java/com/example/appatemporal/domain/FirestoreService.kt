@@ -1,6 +1,7 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
+import com.example.appatemporal.domain.models.TicketModel
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -10,6 +11,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.lang.Integer.max
 import java.lang.Integer.parseInt
+import java.time.LocalDateTime
+import java.util.*
 
 class FirestoreService {
     private val db = Firebase.firestore
@@ -144,5 +147,12 @@ class FirestoreService {
             maxCountEvent.add(Triple(document.data?.get("id_Tipo_Boleto").toString(), boletosEventoTipo.documents.size, parseInt(document.data?.get("max_Boletos").toString())))
         }
         return maxCountEvent
+    }
+
+    fun RegisterSale(idFuncion: String, id_Metodo_Pago: String,id_Tipo_Boleto : String){
+        var currentDate = Date()
+        db.collection("Boleto")
+            .document()
+            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
     }
 }

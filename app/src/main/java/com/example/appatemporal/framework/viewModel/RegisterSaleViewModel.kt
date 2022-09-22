@@ -5,15 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.appatemporal.data.GetCurrentTicketsFunRequirement
 import com.example.appatemporal.data.GetDropDownNamesRequirement
+import com.example.appatemporal.data.RegisterSaleRequirement
 import com.example.appatemporal.domain.Repository
 import kotlinx.coroutines.launch
 
 class RegisterSaleViewModel : ViewModel() {
     private val getDropDownNamesRequirement = GetDropDownNamesRequirement()
     private val getCurrentTicketsFunRequirement = GetCurrentTicketsFunRequirement()
+    private val RegisterSaleRequirement = RegisterSaleRequirement()
 
     val dropdownList = MutableLiveData<ArrayList<Triple<String, Int, String>>>()
     val ticketAvailability = MutableLiveData<Pair<Int, Int>>()
+
 
     fun getDropdownNames(idEvent: String, repository: Repository) {
         viewModelScope.launch {
@@ -36,6 +39,11 @@ class RegisterSaleViewModel : ViewModel() {
                     break
                 }
             }
+        }
+    }
+   fun RegisterSale(idFuncion: String,id_Metodo_Pago:String, id_Tipo_Boleto :String, repository: Repository){
+        viewModelScope.launch{
+            RegisterSaleRequirement(idFuncion,id_Metodo_Pago,id_Tipo_Boleto, repository)
         }
     }
 

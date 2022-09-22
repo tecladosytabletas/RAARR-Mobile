@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.R
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,7 @@ class RegisterSale : AppCompatActivity() {
     private lateinit var idEvent: String
     private lateinit var idFuncion: String
     private val activityContext = this
+    private lateinit var repository : Repository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterSaleBinding.inflate(layoutInflater)
@@ -27,6 +29,8 @@ class RegisterSale : AppCompatActivity() {
 
         val mSpinner2 = binding.spinner2
         val mSpinner3 = binding.spinner3
+
+        repository = Repository(this)
 
         idEvent = "ih83lF54LmwoNdFuopeB"
         idFuncion = "qIdvPoINxUTuvPWt8UiB"
@@ -57,12 +61,31 @@ class RegisterSale : AppCompatActivity() {
                 registerSaleViewModel.ticketAvailability.observe(activityContext, Observer {
                     //Log.d("SelectedDropdown", it.toString())
                     if (it.first < it.second) {
+                        binding.btnRegisterSale.setBackgroundColor(Color.BLUE)
                         binding.btnRegisterSale.isEnabled = true
                         // Hacer Lógica de boton set on click listener para registrar venta
-                        // Volver a llamar a la función de getTicketAvailability con parámetro de tipo boleto p2
+                        binding.btnRegisterSale.setOnClickListener{
+                        registerSaleViewModel.RegisterSale(idFuncion,"JsCPG2YuCgqYyZUypktB", ticketType[p2], Repository(activityContext))
+                            registerSaleViewModel.ticketAvailability.observe(activityContext, Observer {
+                                //Log.d("SelectedDropdown", it.toString())
+                                if (it.first < it.second) {
+                                    binding.btnRegisterSale.setBackgroundColor(Color.BLUE)
+                                    binding.btnRegisterSale.isEnabled = true
+                                    // Hacer Lógica de boton set on click listener para registrar venta
+
+                                } else {
+                                    binding.btnRegisterSale.isEnabled = false
+                                    binding.btnRegisterSale.setBackgroundColor(Color.RED)
+
+                                }
+                            })
+                        }
+
 
                     } else {
                         binding.btnRegisterSale.isEnabled = false
+                        binding.btnRegisterSale.setBackgroundColor(Color.RED)
+
                     }
                 })
             }
