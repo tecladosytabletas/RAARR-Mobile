@@ -1,10 +1,7 @@
 package com.example.appatemporal.framework.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.appatemporal.R
-import com.example.appatemporal.databinding.ActivityRegisterBinding
 import com.example.appatemporal.databinding.ActivityTermsCondBinding
 
 class TermsCond : AppCompatActivity() {
