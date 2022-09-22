@@ -1,6 +1,6 @@
 package com.example.appatemporal.domain.models
 
-data class TicketModel(
+data class GetTicketModel(
     var nombre_evento: String = "",
     //var foto_evento: String,
     var fecha: String = "",

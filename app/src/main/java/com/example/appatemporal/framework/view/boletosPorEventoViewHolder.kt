@@ -1,20 +1,16 @@
 package com.example.appatemporal.framework.view
 
-import android.app.Activity
 import android.content.Intent
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appatemporal.databinding.ActivityBoletoEspectadorBinding
-import com.example.appatemporal.databinding.ActivityBoletoPorEventoBinding
 import com.example.appatemporal.databinding.ActivityCardBoletoPorEventoBinding
-import com.example.appatemporal.domain.models.TicketModel
+import com.example.appatemporal.domain.models.GetTicketModel
 
 class boletosPorEventoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binding = ActivityCardBoletoPorEventoBinding.bind(view)
 
 
-    fun render(boletoClass: TicketModel){
+    fun render(boletoClass: GetTicketModel){
         binding.Nombre.text = boletoClass.nombre_evento
         binding.Fecha.text = boletoClass.fecha
         binding.Hora.text = boletoClass.horario

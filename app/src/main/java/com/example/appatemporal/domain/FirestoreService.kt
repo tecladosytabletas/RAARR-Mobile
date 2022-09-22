@@ -1,14 +1,12 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
-import com.example.appatemporal.domain.models.TicketModel
+import com.example.appatemporal.domain.models.GetTicketModel
 import com.example.appatemporal.domain.models.UserModel
-import com.google.common.base.Enums.getField
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -135,9 +133,9 @@ class FirestoreService {
         return ticket_list
     }*/
 
-    suspend fun getUserTickets(uid : String) : MutableList<TicketModel> {
-        var result : MutableList<TicketModel> = arrayListOf()
-        var ticket : TicketModel = TicketModel()
+    suspend fun getUserTickets(uid : String) : MutableList<GetTicketModel> {
+        var result : MutableList<GetTicketModel> = arrayListOf()
+        var ticket : GetTicketModel = GetTicketModel()
         var boletos : QuerySnapshot =
             db.collection("Boleto")
                 .whereEqualTo("id_Usuario",uid)
