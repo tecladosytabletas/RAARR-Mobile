@@ -7,18 +7,16 @@
     android:background="@color/light_grey"
     tools:context=".framework.view.RegisterSale">
 
-    <View
+    <include
         android:id="@+id/header"
-        android:layout_height="56dp"
-        android:layout_width="415dp"
-        android:background="@color/dark_grey"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        layout="@layout/header"
+        android:layout_height="80dp"
+        android:layout_width="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0"/>
 
     <TextView
         android:id="@+id/textview1"
