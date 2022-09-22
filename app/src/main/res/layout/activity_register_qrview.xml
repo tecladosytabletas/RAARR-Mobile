@@ -34,7 +34,7 @@
         android:textSize="30sp"
         android:background="@drawable/scanner_button"
         android:backgroundTint="@null"/>
-
+        
     <include
         layout="@layout/navbar"
         app:layout_constraintVertical_bias="1"

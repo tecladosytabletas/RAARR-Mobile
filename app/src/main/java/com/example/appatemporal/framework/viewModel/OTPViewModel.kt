@@ -43,6 +43,4 @@ class OTPViewModel : ViewModel() {
             userData.postValue(user)
         }
     }
-
-
 }

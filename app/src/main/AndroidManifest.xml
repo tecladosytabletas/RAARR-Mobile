@@ -42,8 +42,43 @@
             android:name=".framework.view.Main"
             android:exported="true" />
         <activity
+            android:name=".framework.view.DeleteActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".framework.view.Dashboard"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".framework.view.AddNewProjectForm"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.ModificarActividad"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.ModificarProyecto"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.PresupuestoAndMeta"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".framework.view.ProyectoOrganizador"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.AddNewActivityForm"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.ActivityProyectoOrganizador"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".framework.view.PhoneActivity"
             android:exported="true" />
@@ -51,16 +86,16 @@
             android:name=".framework.view.OTPActivity"
             android:exported="false" />
         <activity
-            android:name=".framework.view.AddNewProjectForm"
-            android:exported="true" />
-        <activity
             android:name=".framework.view.RegisterActivity"
             android:exported="true" />
+        <activity
+            android:name=".framework.view.TermsCond"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".framework.view.CheckIfLogged"
             android:exported="true">
         </activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
