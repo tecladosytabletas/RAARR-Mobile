@@ -10,7 +10,9 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
-    val firestoreAPI = FirestoreService()
+
+    // Firestore
+    private val firestoreAPI = FirestoreService()
 
     suspend fun addUser(uid: String, user: UserModel, role: String) {
         firestoreAPI.addUser(uid, user)
@@ -47,6 +49,18 @@ class Repository(context: Context) {
 
     suspend fun updateTicketValue(resulted: String) : Boolean {
         return firestoreAPI.updateTicketValue(resulted)
+    }
+
+    suspend fun getTicketDropdown(idEvento: String) : List<Triple<String, Int, String>> {
+        return firestoreAPI.getTicketDropDown(idEvento)
+    }
+
+    suspend fun getCurrentTicketsFun(idEvento: String, idFuncion: String) : List<Triple<String, Int, Int>> {
+        return firestoreAPI.currentTicketsFun(idEvento, idFuncion)
+    }
+
+    suspend fun registerSale(idFuncion: String,id_Metodo_Pago: String,id_Tipo_Boleto: String){
+        return firestoreAPI.RegisterSale(idFuncion,id_Metodo_Pago,id_Tipo_Boleto)
     }
 
     // Local database

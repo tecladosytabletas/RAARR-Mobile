@@ -207,7 +207,7 @@
 
             <RadioButton
                 android:id="@+id/other"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Otros"
                 android:textColor="#E4EBF1"
