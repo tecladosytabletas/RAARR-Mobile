@@ -1,15 +1,12 @@
 package com.example.appatemporal.framework.view
 
-import android.app.Activity
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
-import com.example.appatemporal.domain.models.TicketModel
-import com.example.appatemporal.framework.view.boletosPorEventoProvider.Companion.proyectoList
+import com.example.appatemporal.domain.models.GetTicketModel
 
-class boletosPorEventoAdapter (private val list: MutableList<TicketModel>) : RecyclerView.Adapter<boletosPorEventoViewHolder>(){
+class boletosPorEventoAdapter (private val list: MutableList<GetTicketModel>) : RecyclerView.Adapter<boletosPorEventoViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): boletosPorEventoViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
