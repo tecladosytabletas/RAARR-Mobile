@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.R
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +28,24 @@ class RegisterSale : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterSaleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
 
         val mSpinner2 = binding.spinner2
         val mSpinner3 = binding.spinner3

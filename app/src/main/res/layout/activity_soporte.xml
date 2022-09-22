@@ -35,9 +35,7 @@
 
     <android.widget.Button
         android:id="@+id/btnFAQ_3"
-        android:layout_width="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_width="347dp"
         android:layout_height="55dp"
         android:background="@drawable/fade_shape"
         android:backgroundTint="@null"
