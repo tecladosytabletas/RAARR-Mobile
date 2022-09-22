@@ -14,7 +14,6 @@ class RegisterUserViewModel : ViewModel() {
     val registerUserRequirement = RegisterUserRequirement()
     val addUserLocalDBRequirement = AddUserLocalDBRequirement()
 
-
     fun addUser(uid: String ,user: UserModel, role: String, repository: Repository) {
         viewModelScope.launch {
             registerUserRequirement(uid, user, role, repository)
@@ -26,5 +25,4 @@ class RegisterUserViewModel : ViewModel() {
             addUserLocalDBRequirement(user, repository)
         }
     }
-
 }

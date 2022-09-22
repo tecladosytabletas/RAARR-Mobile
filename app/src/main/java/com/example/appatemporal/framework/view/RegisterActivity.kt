@@ -20,7 +20,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var gender: String
     private lateinit var role: String
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -38,8 +37,6 @@ class RegisterActivity : AppCompatActivity() {
         val maleRadioBtn = binding.male.id
         val femaleRadioBtn = binding.female.id
         val otherRadioBtn = binding.other.id
-
-
 
         gender = binding.male.text.toString()
 
@@ -70,7 +67,7 @@ class RegisterActivity : AppCompatActivity() {
                 ayudRadioBtn -> role = binding.ayudante.text.toString()
             }
         }
-        
+
         binding.termsId.setOnClickListener {
             var intent = Intent(this@RegisterActivity, TermsCond::class.java)
             startActivity(intent)
@@ -97,9 +94,5 @@ class RegisterActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
     }
-
-
 }
-

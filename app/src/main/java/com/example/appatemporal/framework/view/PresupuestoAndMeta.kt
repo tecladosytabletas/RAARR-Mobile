@@ -36,6 +36,24 @@ class PresupuestoAndMeta: AppCompatActivity()  {
 
         viewModel.getProyectoByid(idProyecto, repository)
 
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
+
         viewModel.project.observe(this, Observer{ myProyecto ->
             binding.tvNewPresupuesto.text="Presupuesto: "+ myProyecto.presupuesto.toString()
             binding.tvMetaName.text="Meta: "+ myProyecto.meta.toString()
