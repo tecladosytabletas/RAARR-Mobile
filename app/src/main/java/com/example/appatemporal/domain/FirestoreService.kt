@@ -170,12 +170,4 @@ class FirestoreService {
         Log.d("LOG aqui",result.isEmpty().toString())
         return result
     }
-
-    suspend fun getUserFunctions(uid: String) : QuerySnapshot {
-        val funcion = db.collection("Usuario_Evento")
-            .whereEqualTo("Id_Usuario", uid)
-            .get()
-            .await()
-        return funcion
-    }
 }
