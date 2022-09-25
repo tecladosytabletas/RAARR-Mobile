@@ -24,8 +24,9 @@
         android:layout_height="80dp"
         android:layout_alignParentBottom="true">
 
-        <include layout="@layout/navbar"
-            android:id="@+id/navbar"/>
+        <include
+            android:id="@+id/navbar"
+            layout="@layout/navbar" />
 
     </RelativeLayout>
 
@@ -67,13 +68,13 @@
                     android:id="@+id/filterMonth"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:text="Este mes"
+                    android:layout_gravity="center"
                     android:background="@drawable/gradent_horizontal"
                     android:fontFamily="@font/roboto"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
                     android:gravity="center"
-                    android:textColor="@color/white"/>
+                    android:text="Este mes"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
 
                 <Space
                     android:layout_width="0dp"
@@ -84,13 +85,13 @@
                     android:id="@+id/filterYear"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:text="Este año"
+                    android:layout_gravity="center"
                     android:background="@drawable/gradent_horizontal"
                     android:fontFamily="@font/roboto"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
                     android:gravity="center"
-                    android:textColor="@color/white"/>
+                    android:text="Este año"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
 
                 <Space
                     android:layout_width="0dp"
@@ -101,13 +102,13 @@
                     android:id="@+id/filterAll"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:text="Todos"
+                    android:layout_gravity="center"
                     android:background="@drawable/gradent_horizontal"
                     android:fontFamily="@font/roboto"
-                    android:layout_gravity="center"
-                    android:textAlignment="center"
                     android:gravity="center"
-                    android:textColor="@color/white"/>
+                    android:text="Todos"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -117,6 +118,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:color="@color/cardview_shadow_end_color"
                 app:cardCornerRadius="15dp"
                 app:cardPreventCornerOverlap="false">
 
@@ -148,6 +150,7 @@
                         android:fontFamily="@font/roboto"
                         android:text="En x eventos"
                         android:textAlignment="center"
+                        android:gravity="center"
                         android:textSize="20sp" />
 
                 </LinearLayout>
@@ -177,8 +180,8 @@
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/dashPieChart"
-                        android:layout_height="fill_parent"
-                        android:layout_width="fill_parent">
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
 
                     </com.github.mikephil.charting.charts.PieChart>
 
@@ -196,10 +199,10 @@
                 android:layout_width="328dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="32dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="15dp"
-                app:cardPreventCornerOverlap="false"
-                android:layout_marginBottom="32dp">
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
                     android:id="@+id/avgRating"
@@ -218,7 +221,7 @@
                         android:isIndicator="true"
                         android:numStars="5"
                         android:rating="0"
-                        android:stepSize="0.01" />
+                        android:stepSize="0.001" />
 
                     <TextView
                         android:id="@+id/ratingAvg"
@@ -227,6 +230,7 @@
                         android:fontFamily="@font/roboto"
                         android:text="Rating promedio de x"
                         android:textAlignment="center"
+                        android:gravity="center"
                         android:textSize="20sp"
                         android:textStyle="italic" />
 

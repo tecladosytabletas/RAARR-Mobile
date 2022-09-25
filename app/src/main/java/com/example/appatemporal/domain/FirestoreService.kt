@@ -1,17 +1,17 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import com.example.appatemporal.domain.models.GetTicketModel
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
-=======
+//=======
 import com.example.appatemporal.domain.models.TicketModel
-import com.example.appatemporal.domain.models.UserModel
-import com.google.firebase.firestore.DocumentSnapshot
+//import com.example.appatemporal.domain.models.UserModel
+//import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
->>>>>>> origin/develop
+//>>>>>>> origin/develop
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
@@ -311,5 +311,14 @@ class FirestoreService {
         db.collection("Boleto")
             .document()
             .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
+    }
+
+    suspend fun getEventName(eid:String) : String {
+        var event : DocumentSnapshot =
+            db.collection("Evento")
+                .document(eid)
+                .get()
+                .await()
+        return event.data?.get("nombre_Evento").toString()
     }
 }

@@ -65,6 +65,10 @@ class Repository(context: Context) {
         return firestoreAPI.RegisterSale(idFuncion,id_Metodo_Pago,id_Tipo_Boleto)
     }
 
+    suspend fun getEventName(eid: String) : String{
+        return firestoreAPI.getEventName(eid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
