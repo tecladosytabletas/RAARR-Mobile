@@ -10,12 +10,15 @@ import com.example.appatemporal.R
 import com.example.appatemporal.databinding.DetailedMetricsBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetEventNameViewModel
+import com.example.appatemporal.framework.viewModel.GetEventProfitViewModel
 
 class DetailedMetrics : AppCompatActivity(){
 
     private lateinit var binding : DetailedMetricsBinding
     private lateinit var ourDashTitle : TextView
+    private lateinit var ourIngresosTotales : TextView
     private val eventNameViewModel : GetEventNameViewModel by viewModels()
+    private val totalProfitsViewModel : GetEventProfitViewModel by viewModels()
     private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,16 +48,27 @@ class DetailedMetrics : AppCompatActivity(){
         }
 
         ourDashTitle = findViewById(R.id.dashTitle)
+        ourIngresosTotales = findViewById(R.id.profitsEvent)
 
-        setEventName()
+        val tempEventId : String = "DM"
+
+        setEventName(tempEventId)
+        setTotalProfit(tempEventId)
     }
 
-    private fun setEventName() {
-        val tempEventId : String = "12hEWP8xQQgQGjCyuWon"
+    private fun setEventName(eid:String) {
         repository = Repository(this)
-        eventNameViewModel.getEventName(tempEventId,repository)
+        eventNameViewModel.getEventName(eid,repository)
         eventNameViewModel.eventName.observe(this, Observer{
             ourDashTitle.text = "${it}"
+        })
+    }
+
+    private fun setTotalProfit(eid:String) {
+        repository = Repository(this)
+        totalProfitsViewModel.getEventProfit(eid,repository)
+        totalProfitsViewModel.eventProfit.observe(this, Observer{
+            ourIngresosTotales.text = "${it}"
         })
     }
 
