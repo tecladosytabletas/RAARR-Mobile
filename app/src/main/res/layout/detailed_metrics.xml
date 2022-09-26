@@ -120,7 +120,12 @@
                     android:id="@+id/chartLayout1"
                     android:background="@color/lightGray">
 
-                    <!-- agregar grafica -->
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/PMLinechart"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                    </com.github.mikephil.charting.charts.BarChart>
 
                 </LinearLayout>
 

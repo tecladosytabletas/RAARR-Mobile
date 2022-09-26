@@ -357,5 +357,36 @@ class FirestoreService {
         }
         return ganancias
     }
-}
 
+    suspend fun getTicketsbyPM(eid:String): Pair<Int,Int> {
+
+        var boletos: QuerySnapshot
+        var countTarjeta : Int = 0
+        var countEfectivo : Int = 0
+
+        var funciones: QuerySnapshot = db.collection("Funcion")
+            .whereEqualTo("id_Evento", eid)
+            .get()
+            .await()
+        Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        for(element in funciones){
+            boletos = db.collection("Boleto")
+                .whereEqualTo("id_Funcion", element.id)
+                .get()
+                .await()
+            for(boleto in boletos){
+                if(boleto.data?.get("id_Metodo_Pago").toString() == "JsCPG2YuCgqYyZUypktB"){
+                    countTarjeta++
+                }
+                else {
+                    countEfectivo++
+                }
+            }
+        }
+
+        val result = Pair(countTarjeta, countEfectivo)
+        return result
+    }
+
+
+}
