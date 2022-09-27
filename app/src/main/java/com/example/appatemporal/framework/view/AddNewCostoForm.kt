@@ -30,6 +30,24 @@ class AddNewCostoForm : AppCompatActivity(){
 
             val costo: Costo = Costo(0, name, amount, idProyecto)
 
+            binding.navbar.homeIcon.setOnClickListener {
+                finish()
+            }
+
+            binding.navbar.budgetIcon.setOnClickListener {
+                val intent = Intent(this, ProyectoOrganizador::class.java)
+                startActivity(intent)
+            }
+
+            binding.navbar.ticketsIcon.setOnClickListener {
+                finish()
+            }
+
+            binding.navbar.metricsIcon.setOnClickListener {
+                val intent = Intent(this, Dashboard::class.java)
+                startActivity(intent)
+            }
+
             lifecycleScope.launch{
                 viewModel.addNewCosto(costo, repository)
             }
