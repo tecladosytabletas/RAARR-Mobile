@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,25 @@ class BoletoPorEventoActivity : AppCompatActivity() {
 
         val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
         initRecyclerView(getTicketViewModel, userIdTemp, repository)
+
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun initRecyclerView(getTicketViewModel: GetUserTicketViewModel, userIdTemp: String, repository: Repository){

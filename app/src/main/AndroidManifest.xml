@@ -16,8 +16,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppAtemporal"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
+        <activity
+            android:name=".framework.view.ReportFailureActivity"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".framework.view.RegisterSale"
             android:exported="true">
@@ -29,6 +33,10 @@
         <activity
             android:name=".framework.view.SupportActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
@@ -67,6 +75,7 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
+
         </activity>
         <activity
             android:name=".framework.view.Favoritosespectador_activity"
@@ -129,10 +138,6 @@
         <activity
             android:name=".framework.view.DetailedMetrics"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.CheckIfLogged"

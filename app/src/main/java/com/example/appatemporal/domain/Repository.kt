@@ -77,6 +77,10 @@ class Repository(context: Context) {
         return firestoreAPI.getTicketsbyPM(eid)
     }
 
+    suspend fun addFailure(title: String, description: String) {
+        firestoreAPI.addFailure(title, description)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
