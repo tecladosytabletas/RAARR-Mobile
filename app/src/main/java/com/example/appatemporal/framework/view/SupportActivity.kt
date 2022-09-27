@@ -21,5 +21,10 @@ class SupportActivity : AppCompatActivity() {
             val intent = Intent(this, TermsCond::class.java)
             startActivity(intent)
         }
+
+        binding.btnFallas3.setOnClickListener {
+            val intent = Intent(this, ReportFailureActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
