@@ -2,6 +2,7 @@ package com.example.appatemporal.domain
 
 import android.util.Log
 import com.example.appatemporal.domain.models.GetTicketModel
+import com.example.appatemporal.domain.models.ReportFailureModel
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
@@ -17,16 +18,14 @@ import java.util.*
 class FirestoreService {
     private val db = Firebase.firestore
 
-    fun addUser(uid: String, user: UserModel) {
+    suspend fun addUser(uid: String, user: UserModel) {
         db.collection("Usuario")
             .document(uid)
             .set(user)
             .addOnSuccessListener {
                 Log.d("FirestoreLogs","Added User Correctly")
             }
-            .addOnFailureListener {
-                Log.d("FirestoreLogs","Added user failed, exception: $it")
-            }
+            .await()
     }
 
     suspend fun addUserRole(uid: String, role: String) {
@@ -298,10 +297,25 @@ class FirestoreService {
         return maxCountEvent
     }
 
-    fun RegisterSale(idFuncion: String, id_Metodo_Pago: String,id_Tipo_Boleto : String){
+    suspend fun RegisterSale(idFuncion: String, id_Metodo_Pago: String,id_Tipo_Boleto : String){
         var currentDate = Date()
         db.collection("Boleto")
             .document()
             .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
+            .await()
+    }
+
+    /**
+     * Adds a document in ReporteFallas collection of Firestore
+     * @param title: String
+     * @param description: String
+     */
+    suspend fun addFailure(title: String, description: String) {
+        val failure = ReportFailureModel(title, description)
+        db.collection("ReporteFallas")
+            .add(failure)
+            .addOnSuccessListener {
+                Log.d("Firestore Log Failure", "Success")
+            }.await()
     }
 }
