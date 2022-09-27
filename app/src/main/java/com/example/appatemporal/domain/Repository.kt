@@ -69,6 +69,14 @@ class Repository(context: Context) {
         return firestoreAPI.getEventName(eid)
     }
 
+    suspend fun generalProfitsEvent(eid: String) : Int{
+        return firestoreAPI.generalProfitsEvent(eid)
+    }
+
+    suspend fun getTicketsbyPM(eid: String) : Pair<Int, Int>{
+        return firestoreAPI.getTicketsbyPM(eid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao

@@ -25,15 +25,16 @@
         android:layout_alignParentBottom="true">
 
         <include
+            layout="@layout/navbar"
             android:id="@+id/navbar"
-            layout="@layout/navbar" />
+            />
 
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scrollDash"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/scrollDash"
         android:layout_above="@+id/navbarDash"
         android:layout_below="@+id/headerDash"
         android:fillViewport="true">
@@ -41,27 +42,78 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
             android:layout_margin="16dp"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/dashTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
+                android:gravity="center"
                 android:text="'Nombre del evento'"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:gravity="center"
-                android:textSize="32sp" />
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
             <Space
                 android:layout_width="1dp"
                 android:layout_height="16dp"
-                android:layout_weight="0.2">
-            </Space>
+                android:layout_weight="0.2"></Space>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card0"
+                android:layout_width="328dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:background="@color/background"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false">
+
+                <LinearLayout
+                    android:id="@+id/chartLayout0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/lightGray"
+                    android:orientation="vertical">
+                    >
+
+                    <TextView
+                        android:id="@+id/LeyendaGanancias"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Ventas del evento:"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/profitsEvent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="$4000.00"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="36sp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="16dp"
+                android:layout_weight="0.2"></Space>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card1"
@@ -69,17 +121,45 @@
                 android:layout_height="240dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="15dp"
-                app:cardPreventCornerOverlap="false"
-                >
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
+                    android:id="@+id/chartLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:id="@+id/chartLayout1"
-                    android:background="@color/lightGray">
+                    android:background="@color/lightGray"
+                    android:orientation="vertical">
 
-                    <!-- agregar grafica -->
+                    <TextView
+                        android:id="@+id/LeyendaPMBarChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Boletos por metodo de pago:"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/MetodosPago"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Tarjeta                 Efectivo"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/PMLinechart"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                    </com.github.mikephil.charting.charts.BarChart>
 
                 </LinearLayout>
 
@@ -88,8 +168,7 @@
             <Space
                 android:layout_width="1dp"
                 android:layout_height="16dp"
-                android:layout_weight="0.2">
-            </Space>
+                android:layout_weight="0.2"></Space>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card2"
@@ -97,14 +176,14 @@
                 android:layout_height="240dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="15dp"
-                app:cardPreventCornerOverlap="false"
-                >
+                app:cardPreventCornerOverlap="false">
+
                 <LinearLayout
+                    android:id="@+id/chartLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:id="@+id/chartLayout2"
-                    android:background="@color/lightGray">
+                    android:background="@color/lightGray"
+                    android:orientation="horizontal">
 
                     <!-- agregar grafica -->
 
@@ -116,8 +195,7 @@
             <Space
                 android:layout_width="1dp"
                 android:layout_height="16dp"
-                android:layout_weight="0.2">
-            </Space>
+                android:layout_weight="0.2"></Space>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card3"
@@ -125,15 +203,14 @@
                 android:layout_height="240dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="15dp"
-                app:cardPreventCornerOverlap="false"
-                >
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
+                    android:id="@+id/chartLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:id="@+id/chartLayout3"
-                    android:background="@color/lightGray">
+                    android:background="@color/lightGray"
+                    android:orientation="horizontal">
 
                     <!-- agregar grafica -->
 
@@ -144,8 +221,7 @@
             <Space
                 android:layout_width="1dp"
                 android:layout_height="16dp"
-                android:layout_weight="0.2">
-            </Space>
+                android:layout_weight="0.2"></Space>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card4"
@@ -153,15 +229,14 @@
                 android:layout_height="240dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="15dp"
-                app:cardPreventCornerOverlap="false"
-                >
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
+                    android:id="@+id/chartLayout4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:id="@+id/chartLayout4"
-                    android:background="@color/lightGray">
+                    android:background="@color/lightGray"
+                    android:orientation="horizontal">
 
                     <!-- agregar grafica -->
 

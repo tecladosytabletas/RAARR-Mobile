@@ -131,9 +131,9 @@ class FirestoreService {
 
             result.add(ticket)
 
-            Log.d("LOG ticket",ticket.toString())
+            //Log.d("LOG ticket",ticket.toString())
         }
-        Log.d("LOG aqui",result.isEmpty().toString())
+        //Log.d("LOG aqui",result.isEmpty().toString())
         return result
     }
 
@@ -226,7 +226,7 @@ class FirestoreService {
                         .whereEqualTo("id_Funcion", document.id)
                         .get()
                         .await()
-                Log.d("LOG boletos", boletos.count().toString())
+                //Log.d("LOG boletos", boletos.count().toString())
                 tiposBoleto =
                     db.collection("Evento_Tipo_Boleto")
                         .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
@@ -238,7 +238,7 @@ class FirestoreService {
                             Log.d("IF de los boletos", tipoBoleto.data?.get("precio").toString())
                             ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
                         }
-                        Log.d("LOG for boletos", document.id.toString())
+                        //Log.d("LOG for boletos", document.id.toString())
                     }
                 }
             }
@@ -321,4 +321,72 @@ class FirestoreService {
                 .await()
         return event.data?.get("nombre_Evento").toString()
     }
+
+    suspend fun generalProfitsEvent(eid:String) : Int {
+
+        var ganancias = 0
+        var boletos: QuerySnapshot
+        var tiposBoleto: QuerySnapshot
+
+        var funciones: QuerySnapshot = db.collection("Funcion")
+            .whereEqualTo("id_Evento", eid)
+            .get()
+            .await()
+        Log.d("generalProfitsEvent-Funciones", funciones.count().toString())
+        for (element in funciones) {
+            boletos = db.collection("Boleto")
+                    .whereEqualTo("id_Funcion", element.id)
+                    .get()
+                    .await()
+            Log.d("generalProfitsEvent-Boletos", boletos.count().toString())
+            tiposBoleto =
+                db.collection("Evento_Tipo_Boleto")
+                    .whereEqualTo("id_Evento", element.data?.get("id_Evento"))
+                    .get()
+                    .await()
+            Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
+            for (tipoBoleto in tiposBoleto) {
+                for (document in boletos) {
+                    if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
+                        Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
+                        ganancias += tipoBoleto.data?.get("precio").toString().toInt()
+                    }
+                    //Log.d("generalProfitsEvent", document.id.toString())
+                }
+            }
+        }
+        return ganancias
+    }
+
+    suspend fun getTicketsbyPM(eid:String): Pair<Int,Int> {
+
+        var boletos: QuerySnapshot
+        var countTarjeta : Int = 0
+        var countEfectivo : Int = 0
+
+        var funciones: QuerySnapshot = db.collection("Funcion")
+            .whereEqualTo("id_Evento", eid)
+            .get()
+            .await()
+        Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        for(element in funciones){
+            boletos = db.collection("Boleto")
+                .whereEqualTo("id_Funcion", element.id)
+                .get()
+                .await()
+            for(boleto in boletos){
+                if(boleto.data?.get("id_Metodo_Pago").toString() == "JsCPG2YuCgqYyZUypktB"){
+                    countTarjeta++
+                }
+                else {
+                    countEfectivo++
+                }
+            }
+        }
+
+        val result = Pair(countTarjeta, countEfectivo)
+        return result
+    }
+
+
 }
