@@ -13,6 +13,7 @@ import com.example.appatemporal.framework.viewModel.GetEventNameViewModel
 import com.example.appatemporal.framework.viewModel.GetEventProfitViewModel
 import com.example.appatemporal.framework.viewModel.GetPMbyTicketsViewModel
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -95,26 +96,27 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setBCPMbyEvent(tarjeta : Int, efectivo : Int){
-        val tarjetf = tarjeta.toFloat()
-        val efectivof = efectivo.toFloat()
-        //declare x values
-        val xvalues = ArrayList<String>()
-        xvalues.add("Tarjeta")
-        xvalues.add("Efectivo")
-        //declare y values
+
+        //declare values of the chart
         val barEntries = ArrayList<BarEntry>()
-        barEntries.add(BarEntry(tarjeta.toFloat(), 0))
-        barEntries.add(BarEntry(efectivo.toFloat(), 0))
+        barEntries.add(BarEntry(1f, tarjeta.toFloat()))
+        barEntries.add(BarEntry(2f, efectivo.toFloat()))
+
         //bardata set
-        val bardataset = BarDataSet(barEntries,"Metodos de pago")
-        bardataset.color = resources.getColor(R.color.blue)
-        //make a bar data
-        val data = BarData(xvalues,bardataset)
+        val bardataSet = BarDataSet(barEntries,"Metodos de pago")
+
+        val data = BarData(bardataSet)
+
         //pass the data to the BarChar
         ourPMBarChart.data = data
-        //Decoration and animation of the BarChar
-        ourPMBarChart.setBackgroundColor(resources.getColor(R.color.atemporal_purple))
-        ourPMBarChart.animateXY(2000,2000)
+
+        val xAxis: XAxis = ourPMBarChart.xAxis
+
+        ourPMBarChart.axisLeft.setDrawGridLines(false)
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+        ourPMBarChart.animateY(3000)
+        ourPMBarChart.invalidate()
     }
 
 }
