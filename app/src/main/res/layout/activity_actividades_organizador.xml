@@ -91,7 +91,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/recivler_view"
+                    android:id="@+id/A0_RV"
                     android:layout_below="@+id/search_edit"
                     android:layout_margin="32dp"/>
             </LinearLayout>

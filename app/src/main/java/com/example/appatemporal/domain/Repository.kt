@@ -1,14 +1,15 @@
 package com.example.appatemporal.domain
 
 import android.content.Context
+import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
+import com.example.appatemporal.domain.models.GetTicketModel
 import kotlin.math.cos
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
 
@@ -75,6 +76,7 @@ class Repository(context: Context) {
     val privilegioDao = LocalDatabase.getInstance(context).privilegioDao
     val rolDao = LocalDatabase.getInstance(context).rolDao
 
+
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
     suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
     suspend fun getAllActividades() = actividadDao.getAll()
@@ -140,6 +142,13 @@ class Repository(context: Context) {
     suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
     suspend fun deleteAllCostos() = costoDao.deleteAll()
     suspend fun updateCosto(costo: Costo) = costoDao.update(costo)
+
+
+    suspend fun getUserTickets(uid: String) : MutableList<GetTicketModel> {
+        Log.d("LOG Repositorio",firestoreAPI.getUserTickets(uid).toString())
+        return firestoreAPI.getUserTickets(uid)
+    }
+
 
 
 
