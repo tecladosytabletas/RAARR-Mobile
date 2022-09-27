@@ -17,6 +17,11 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailedMetrics : AppCompatActivity(){
 
@@ -91,31 +96,36 @@ class DetailedMetrics : AppCompatActivity(){
         repository = Repository(this)
         totalProfitsViewModel.getEventProfit(eid,repository)
         totalProfitsViewModel.eventProfit.observe(this, Observer{
-            ourIngresosTotales.text = "${it}"
+            val profit: String = NumberFormat.getNumberInstance(Locale.US).format(it)
+            ourIngresosTotales.text = "$"+profit+" MXN"
         })
     }
 
     private fun setBCPMbyEvent(tarjeta : Int, efectivo : Int){
-
         //declare values of the chart
         val barEntries = ArrayList<BarEntry>()
         barEntries.add(BarEntry(1f, tarjeta.toFloat()))
         barEntries.add(BarEntry(2f, efectivo.toFloat()))
-
         //bardata set
         val bardataSet = BarDataSet(barEntries,"Metodos de pago")
-
+        bardataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
         val data = BarData(bardataSet)
-
         //pass the data to the BarChar
         ourPMBarChart.data = data
-
+        //declare the XAxis variable
         val xAxis: XAxis = ourPMBarChart.xAxis
 
+        //set the labels on the chart
+        val xAxisLabels = listOf("")
+        ourPMBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+
+        //decorative elements of the chart
         ourPMBarChart.axisLeft.setDrawGridLines(false)
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
-        ourPMBarChart.animateY(3000)
+        ourPMBarChart.legend.isEnabled = false
+        ourPMBarChart.description.isEnabled = false
+        ourPMBarChart.animateY(1000)
         ourPMBarChart.invalidate()
     }
 
