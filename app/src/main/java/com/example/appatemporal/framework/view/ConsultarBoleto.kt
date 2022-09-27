@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,24 @@ class ConsultarBoleto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBoletoEspectadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.navbar.homeIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            finish()
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
 
         val nombre = intent.getStringExtra("nombre")
         val fecha = intent.getStringExtra("fecha")
