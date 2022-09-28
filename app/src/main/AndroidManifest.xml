@@ -18,27 +18,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppAtemporal">
         <activity
+            android:name=".framework.view.FaqAyudante"
+            android:exported="false" />
+        <activity
             android:name=".framework.view.FaqEspectador"
             android:exported="false" />
         <activity
+            android:name=".framework.view.FaqOrganizador"
+            android:exported="false" />
+        <activity
             android:name=".framework.view.ReportFailureActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.RegisterSale"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.ContactInfo"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.SupportActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
         <activity
             android:name=".framework.view.RegisterQRView"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.SelectedEventView"
             android:exported="false" />
@@ -47,59 +53,58 @@
             android:exported="true" />
         <activity
             android:name=".framework.view.DeleteActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.homepageespectador.HomePageEspectador"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.VisualizarEventoActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.Dashboard"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.AddNewProjectForm"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.Favoritosespectador_activity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.PhoneActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.ModificarActividad"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.ModificarProyecto"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.PresupuestoAndMeta"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.ProyectoOrganizador"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".framework.view.ConsultarBoleto"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.DeleteCosto"
             android:exported="true" />
         <activity
             android:name=".framework.view.AddNewActivityForm"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.AddNewCostoForm"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.ModificarCosto"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.ActivityProyectoOrganizador"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.OTPActivity"
             android:exported="false" />
@@ -108,11 +113,10 @@
             android:exported="true" />
         <activity
             android:name=".framework.view.TermsCond"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".framework.view.DetailedMetrics"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".framework.view.CheckIfLogged"
             android:exported="true">
