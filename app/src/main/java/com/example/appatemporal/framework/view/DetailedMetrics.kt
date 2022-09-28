@@ -9,9 +9,7 @@ import androidx.lifecycle.Observer
 import com.example.appatemporal.R
 import com.example.appatemporal.databinding.DetailedMetricsBinding
 import com.example.appatemporal.domain.Repository
-import com.example.appatemporal.framework.viewModel.GetEventNameViewModel
-import com.example.appatemporal.framework.viewModel.GetEventProfitViewModel
-import com.example.appatemporal.framework.viewModel.GetPMbyTicketsViewModel
+import com.example.appatemporal.framework.viewModel.DetailedMetricsViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -30,9 +28,11 @@ class DetailedMetrics : AppCompatActivity(){
     private lateinit var ourPMBarChart: BarChart
     private lateinit var ourIngresosTotales : TextView
 
-    private val eventNameViewModel : GetEventNameViewModel by viewModels()
-    private val totalProfitsViewModel : GetEventProfitViewModel by viewModels()
-    private val totalTicketsbyPM : GetPMbyTicketsViewModel by viewModels()
+    //private val eventNameViewModel : GetEventNameViewModel by viewModels()
+    //private val totalProfitsViewModel : GetEventProfitViewModel by viewModels()
+    //private val totalTicketsbyPM : GetPMbyTicketsViewModel by viewModels()
+
+    private val detailedMetricsViewModel : DetailedMetricsViewModel by viewModels()
 
     private lateinit var repository: Repository
 
@@ -75,8 +75,8 @@ class DetailedMetrics : AppCompatActivity(){
 
         var ventasTarjeta : Int = 0
         var ventasEfectivo : Int = 0
-        totalTicketsbyPM.getPMbyTickets(tempEventId,repository)
-        totalTicketsbyPM.countPM.observe(this, Observer{
+        detailedMetricsViewModel.getPMbyTickets(tempEventId,repository)
+        detailedMetricsViewModel.countPM.observe(this, Observer{
             ventasTarjeta = it.first
             ventasEfectivo = it.second
             setBCPMbyEvent(ventasTarjeta, ventasEfectivo)
@@ -86,16 +86,16 @@ class DetailedMetrics : AppCompatActivity(){
 
     private fun setEventName(eid:String) {
         repository = Repository(this)
-        eventNameViewModel.getEventName(eid,repository)
-        eventNameViewModel.eventName.observe(this, Observer{
+        detailedMetricsViewModel.getEventName(eid,repository)
+        detailedMetricsViewModel.eventName.observe(this, Observer{
             ourDashTitle.text = "${it}"
         })
     }
 
     private fun setTotalProfit(eid:String) {
         repository = Repository(this)
-        totalProfitsViewModel.getEventProfit(eid,repository)
-        totalProfitsViewModel.eventProfit.observe(this, Observer{
+        detailedMetricsViewModel.getEventProfit(eid,repository)
+        detailedMetricsViewModel.eventProfit.observe(this, Observer{
             val profit: String = NumberFormat.getNumberInstance(Locale.US).format(it)
             ourIngresosTotales.text = "$"+profit+" MXN"
         })
