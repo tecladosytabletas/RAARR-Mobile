@@ -136,27 +136,29 @@ class OTPActivity : AppCompatActivity() {
 
                     val uid: String = auth.currentUser?.uid.toString()
 
-                    val userUidSharedPref = getSharedPreferences("userUid", Context.MODE_PRIVATE)
-                    var sharedPrefEdit = userUidSharedPref.edit()
-                    sharedPrefEdit.putString("userUid", uid)
-                    sharedPrefEdit.putBoolean("login", true)
-                    sharedPrefEdit.apply()
-
                     val repository = Repository(this)
                     otpViewModel.verifyUser(uid, repository)
 
                     otpViewModel.userExists.observe(this, Observer {
                         val existence = it as Boolean
                         if (existence) {
+                            val userUidSharedPref = getSharedPreferences("user", Context.MODE_PRIVATE)
+                            var userSharedPrefEdit = userUidSharedPref.edit()
+                            userSharedPrefEdit.putString("userUid", uid)
+                            userSharedPrefEdit.apply()
                             otpViewModel.getUser(uid, repository)
                             otpViewModel.userData.observe(this, Observer {
                                 val localDbUser = it
                                 otpViewModel.addUserLocalDB(localDbUser, repository)
-                                val intent = Intent(this, Main::class.java)
+                                userSharedPrefEdit.putString("rol", it.rol)
+                                userSharedPrefEdit.apply()
+                                val intent = Intent(this, SupportActivity::class.java)
                                 startActivity(intent)
+
                             })
                         } else {
                             val intent = Intent(this, RegisterActivity::class.java)
+                            intent.putExtra("userUid", uid)
                             startActivity(intent)
                         }
                     })

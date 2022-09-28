@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppAtemporal">
         <activity
-            android:name=".FaqEspectador"
+            android:name=".framework.view.FaqEspectador"
             android:exported="false" />
         <activity
             android:name=".framework.view.ReportFailureActivity"
@@ -81,11 +81,6 @@
         <activity
             android:name=".framework.view.ProyectoOrganizador"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.ConsultarBoleto"
@@ -117,16 +112,15 @@
         <activity
             android:name=".framework.view.DetailedMetrics"
             android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.CheckIfLogged"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".framework.view.CheckIfLogged"
-            android:exported="true">
-
             <!-- Aqui estaba el Intent Filter originalmente -->
         </activity>
 
