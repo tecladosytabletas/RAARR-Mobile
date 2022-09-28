@@ -98,10 +98,6 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".framework.view.CheckIfLogged"
-            android:exported="true">
-        </activity>
-        <activity
             android:name=".framework.view.DeleteCosto"
             android:exported="true"/>
         <activity
