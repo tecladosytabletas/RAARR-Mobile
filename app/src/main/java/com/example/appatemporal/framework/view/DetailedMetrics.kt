@@ -25,12 +25,9 @@ class DetailedMetrics : AppCompatActivity(){
 
     private lateinit var binding : DetailedMetricsBinding
     private lateinit var ourDashTitle : TextView
-    private lateinit var ourPMBarChart: BarChart
     private lateinit var ourIngresosTotales : TextView
-
-    //private val eventNameViewModel : GetEventNameViewModel by viewModels()
-    //private val totalProfitsViewModel : GetEventProfitViewModel by viewModels()
-    //private val totalTicketsbyPM : GetPMbyTicketsViewModel by viewModels()
+    private lateinit var ourPMBarChart: BarChart
+    private lateinit var ourTTSABarChart: BarChart
 
     private val detailedMetricsViewModel : DetailedMetricsViewModel by viewModels()
 
@@ -82,6 +79,7 @@ class DetailedMetrics : AppCompatActivity(){
             setBCPMbyEvent(ventasTarjeta, ventasEfectivo)
         })
 
+        setTTSABarChart(tempEventId)
     }
 
     private fun setEventName(eid:String) {
@@ -127,6 +125,16 @@ class DetailedMetrics : AppCompatActivity(){
         ourPMBarChart.description.isEnabled = false
         ourPMBarChart.animateY(1000)
         ourPMBarChart.invalidate()
+    }
+
+    private fun setTTSABarChart(eid: String){
+
+        detailedMetricsViewModel.getTypeSA(eid,repository)
+        detailedMetricsViewModel.eventsTicketsTypeSA.observe(this, Observer{
+
+        })
+
+
     }
 
 }

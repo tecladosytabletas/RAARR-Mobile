@@ -397,7 +397,7 @@ class FirestoreService {
     }
 
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
-
+        Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
         var boletos: QuerySnapshot
         var diccAsistencias = mutableMapOf<String, Int?>()
         var diccVentas = mutableMapOf<String, Int?>()
