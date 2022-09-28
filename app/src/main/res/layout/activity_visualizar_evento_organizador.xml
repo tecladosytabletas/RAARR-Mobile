@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".framework.view.VisualizarEventoActivity">
+    <RelativeLayout
+        android:id="@+id/headerDash"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <include layout = "@layout/header"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:layout_below="@id/headerDash">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/Tarjeta_VEE"
+                android:layout_width="match_parent"
+                android:layout_height="600px"
+                android:background="@drawable/djbackground"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#80000000">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/Nombre_ArtistaVEE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Ludovico Einaudi"
+                    android:textColor="@color/yellow"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/FechaVEE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/Nombre_ArtistaVEE"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
+                    android:text="Miércoles 14 de noviembre"
+                    android:textColor="@color/grayBtn"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/LugarVEE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/FechaVEE"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="Auditorio Josefa"
+                    android:textColor="@color/grayBtn"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/DirecionVEE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/LugarVEE"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="Av. 5 de Febrero #398"
+                    android:textColor="@color/grayBtn"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/CiudadVEE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/DirecionVEE"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:text="Querétaro, Qro"
+                    android:textColor="@color/grayBtn"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/btn_moregraphics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Tarjeta_VEE">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background=""
+                    android:text="Más gráficas"
+                    android:textSize="12sp"
+                    android:textColor="@color/yellow"
+                    android:layout_marginRight="16dp">
+
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Graphs_Layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_moregraphics"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="165dp"
+                    android:layout_height="180dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/grayBtn"
+                    app:cardCornerRadius="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:text="Pie Chart"
+                        android:layout_gravity="center">
+
+                    </TextView>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="170dp"
+                    android:layout_height="180dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="30dp"
+                    app:cardCornerRadius="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/fade_shape"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/first_ratingview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/ratingstar_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginLeft="16dp">
+
+                            </ImageView>
+                            <ImageView
+                                android:id="@+id/ratingstar_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginTop="12dp">
+
+                            </ImageView>
+                            <ImageView
+                                android:id="@+id/ratingstar_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginTop="12dp">
+
+                            </ImageView>
+                            <ImageView
+                                android:id="@+id/ratingstar_4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginTop="12dp">
+
+                            </ImageView>
+                            <ImageView
+                                android:id="@+id/ratingstar_5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginTop="12dp">
+
+                            </ImageView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginStart="12dp"
+                                android:textSize="16dp"
+                                android:text="4 de 5"
+                                android:textColor="@color/grayBtn">
+
+                            </TextView>
+
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/no_calificaciones"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/grayBtn"
+                            android:text="35 calificaciones"
+                            android:textSize="12sp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginVertical="8dp">
+
+                        </TextView>
+                        <LinearLayout
+                            android:id="@+id/second_ratingview1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/ratingstar1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginStart="16dp">
+
+                            </ImageView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="5"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+                            </TextView>
+
+                            // Progress Bar
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="13"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+
+                            </TextView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/second_ratingview3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/ratingstar3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginStart="16dp">
+
+                            </ImageView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="4"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+                            </TextView>
+
+                            // Progress Bar
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="8"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+
+                            </TextView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/second_ratingview2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/ratingstar2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginStart="16dp">
+
+                            </ImageView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="3"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+                            </TextView>
+
+                            // Progress Bar
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="10"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+
+                            </TextView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/second_ratingview4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/ratingstar4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginStart="16dp">
+
+                            </ImageView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="2"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+                            </TextView>
+
+                            // Progress Bar
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="4"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+
+                            </TextView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/second_ratingview5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/ratingstar5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:src="@drawable/rating_star"
+                                android:layout_marginStart="16dp">
+
+                            </ImageView>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="1"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+                            </TextView>
+
+                            // Progress Bar
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="1"
+                                android:textColor="@color/grayBtn"
+                                android:textSize="12sp">
+
+                            </TextView>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/Graphs_Layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="30dp"
+                android:drawableStart="@drawable/link"
+                android:fontFamily="@font/roboto"
+                android:text="Compra tu Boleto Aquí"
+                android:textColor="@color/yellow"
+                android:textSize="20sp"
+                app:cornerRadius="8dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/navbarDash"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true">
+
+            <include layout="@layout/navbar" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
