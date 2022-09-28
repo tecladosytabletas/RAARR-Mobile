@@ -65,10 +65,21 @@ class Repository(context: Context) {
         return firestoreAPI.RegisterSale(idFuncion,id_Metodo_Pago,id_Tipo_Boleto)
     }
 
+    suspend fun getEventName(eid: String) : String{
+        return firestoreAPI.getEventName(eid)
+    }
+
+    suspend fun generalProfitsEvent(eid: String) : Int{
+        return firestoreAPI.generalProfitsEvent(eid)
+    }
+
+    suspend fun getTicketsbyPM(eid: String) : Pair<Int, Int>{
+        return firestoreAPI.getTicketsbyPM(eid)
+    }
+
     suspend fun addFailure(title: String, description: String) {
         firestoreAPI.addFailure(title, description)
     }
-
 
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
