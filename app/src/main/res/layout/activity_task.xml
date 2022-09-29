@@ -86,15 +86,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="none"
-            android:text="@string/areaType1"
-            android:textSize="15dp"
             android:popupBackground="@color/white"
-            android:textColorHint="@color/white"
+            android:text="@string/areaType1"
             android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewActArea"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/textViewActArea" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
