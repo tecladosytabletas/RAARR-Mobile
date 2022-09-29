@@ -1,19 +1,30 @@
 package com.example.appatemporal.framework.view
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.DatePicker
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appatemporal.R
 import com.example.appatemporal.databinding.AddActivitiesBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.ActividadAdapter
 import com.example.appatemporal.framework.view.adapters.ProjectsAdapter
 import com.example.appatemporal.framework.viewModel.DeleteActivityViewModel
+import kotlinx.android.synthetic.main.add_activities.*
 import kotlinx.coroutines.launch
+import java.util.*
 
 class DeleteActivity : AppCompatActivity(){
     private val  viewModel : DeleteActivityViewModel by viewModels()
@@ -22,6 +33,46 @@ class DeleteActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = AddActivitiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // get reference to the autocomplete text view
+        val autocompleteTV2 = findViewById<AutoCompleteTextView>(R.id.spinnerFilterToFilter)
+
+        val areaList = resources.getStringArray(R.array.areaList)
+        val arrayAdapter2 = ArrayAdapter(this, R.layout.dropdown_menu, areaList)
+
+        val estatusList = resources.getStringArray(R.array.estatusList)
+        val arrayAdapter3 = ArrayAdapter(this, R.layout.dropdown_menu, estatusList)
+
+        val prioridadList = resources.getStringArray(R.array.prioridadList)
+        val arrayAdapter4 = ArrayAdapter(this, R.layout.dropdown_menu, prioridadList)
+
+        //Predetermined Array, Do not erase it :)
+        autocompleteTV2.setAdapter(arrayAdapter3)
+        binding.spinnerFilterMain.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {
+                if (binding.spinnerFilterMain.getText().toString()=="Area"){
+                    // set adapter to the autocomplete tv to the arrayAdapter
+                    autocompleteTV2.setAdapter(arrayAdapter2)
+
+                }
+                else if (binding.spinnerFilterMain.getText().toString()=="Estatus"){
+                    // set adapter to the autocomplete tv to the arrayAdapter
+                    autocompleteTV2.setAdapter(arrayAdapter3)
+
+                }
+                else if (binding.spinnerFilterMain.getText().toString()=="Prioridad"){
+                    // set adapter to the autocomplete tv to the arrayAdapter
+                    autocompleteTV2.setAdapter(arrayAdapter4)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {}
+        })
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
@@ -51,7 +102,17 @@ class DeleteActivity : AppCompatActivity(){
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
+        // get reference to the string array that we just created
+        val filterList = resources.getStringArray(R.array.filterList)
+        // create an array adapter and pass the required parameter
+        // in our case pass the context, drop down layout , and array.
+        val arrayAdapter1 = ArrayAdapter(this, R.layout.dropdown_menu, filterList)
+        // get reference to the autocomplete text view
+        val autocompleteTV1 = findViewById<AutoCompleteTextView>(R.id.spinnerFilterMain)
+        // set adapter to the autocomplete tv to the arrayAdapter
+        autocompleteTV1.setAdapter(arrayAdapter1)
     }
+
 
     private fun initRecyclerView( repository: Repository,id: Int) {
         viewModel.getAllActivitiesid(id,repository)

@@ -22,4 +22,9 @@
         <item>@string/prioridadType2</item>
         <item>@string/prioridadType3</item>
     </string-array>
+    <string-array name="filterList">
+        <item>@string/filterType1</item>
+        <item>@string/filterType2</item>
+        <item>@string/filterType3</item>
+    </string-array>
 </resources>
