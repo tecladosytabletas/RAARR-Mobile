@@ -265,8 +265,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
-                                android:progressTint="@color/ratingBarEvent"
-                                android:progress="25" />
+                                android:progress="25"
+                                android:progressTint="@color/ratingBarEvent" />
 
                             <TextView
                                 android:id="@+id/count5TV"
@@ -282,7 +282,7 @@
 
                         <LinearLayout
                             android:id="@+id/second_ratingview3"
-                            android:layout_width="wrap_content"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -306,11 +306,22 @@
 
                             // Progress Bar
 
+                            <ProgressBar
+                                android:id="@+id/count4PB"
+                                style="@android:style/Widget.ProgressBar.Horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="2dp"
+                                android:progress="25"
+                                android:progressTint="@color/ratingBarEvent" />
+
                             <TextView
+                                android:id="@+id/count4TV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="8"
+                                android:text="8 votos"
                                 android:textColor="@color/grayBtn"
                                 android:textSize="12sp">
 
@@ -319,7 +330,7 @@
 
                         <LinearLayout
                             android:id="@+id/second_ratingview2"
-                            android:layout_width="wrap_content"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -342,12 +353,22 @@
                                 android:textSize="12sp"></TextView>
 
                             // Progress Bar
+                            <ProgressBar
+                                android:id="@+id/count3PB"
+                                style="@android:style/Widget.ProgressBar.Horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="2dp"
+                                android:progress="25"
+                                android:progressTint="@color/ratingBarEvent" />
 
                             <TextView
+                                android:id="@+id/count3TV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="10"
+                                android:text="10 votos"
                                 android:textColor="@color/grayBtn"
                                 android:textSize="12sp">
 
@@ -356,7 +377,7 @@
 
                         <LinearLayout
                             android:id="@+id/second_ratingview4"
-                            android:layout_width="wrap_content"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -379,12 +400,22 @@
                                 android:textSize="12sp"></TextView>
 
                             // Progress Bar
+                            <ProgressBar
+                                android:id="@+id/count2PB"
+                                style="@android:style/Widget.ProgressBar.Horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="2dp"
+                                android:progress="25"
+                                android:progressTint="@color/ratingBarEvent" />
 
                             <TextView
+                                android:id="@+id/count2TV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="4"
+                                android:text="4 votos"
                                 android:textColor="@color/grayBtn"
                                 android:textSize="12sp">
 
@@ -393,7 +424,7 @@
 
                         <LinearLayout
                             android:id="@+id/second_ratingview5"
-                            android:layout_width="wrap_content"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -416,12 +447,22 @@
                                 android:textSize="12sp"></TextView>
 
                             // Progress Bar
+                            <ProgressBar
+                                android:id="@+id/count1PB"
+                                style="@android:style/Widget.ProgressBar.Horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="2dp"
+                                android:progress="25"
+                                android:progressTint="@color/ratingBarEvent" />
 
                             <TextView
+                                android:id="@+id/count1TV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="1"
+                                android:text="1 votos"
                                 android:textColor="@color/grayBtn"
                                 android:textSize="12sp">
 
