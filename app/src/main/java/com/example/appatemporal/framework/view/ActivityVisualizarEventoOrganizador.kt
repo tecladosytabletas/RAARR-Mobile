@@ -46,9 +46,14 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
     }
 
     fun populateRating(eid:String){
+        //Rating general del evento
         val ourRatingBar = binding.ratingStar
         val ourRatingValue = binding.ratingAvg
         val ourRatingCount = binding.ratingQuantity
+        //Barra de 5 estrellas
+        val ourRatingCount5 = binding.count5PB
+        val ourRating5 = binding.count5TV
+        //Declaración del repositorio
         repository = Repository(this)
         //Llamada a la función y al observador para modificar elementos de Rating
         graphicsEventDetailViewModel.getExtEventRating(eid, repository)
@@ -56,6 +61,13 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             ourRatingBar.rating = it[7]
             ourRatingValue.text = "${it[7]} de 5"
             ourRatingCount.text =  "${it[1].toInt()} calificaciones"
+            if(it[6]>0){
+                ourRatingCount5.progress = ((it[6]*100)/it[1]).toInt()
+                ourRating5.text = "${it[6].toInt()} votos"
+            }else{
+                ourRatingCount5.progress = 0
+                ourRating5.text = "0 votos"
+            }
         })
     }
 

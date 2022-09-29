@@ -35,6 +35,7 @@
                 android:layout_height="600px"
                 android:background="@drawable/djbackground"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -115,27 +116,31 @@
                     android:textStyle="bold" />
 
             </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/btn_moregraphics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Tarjeta_VEE">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3"/>
+                    android:layout_weight="0.3" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3"/>
+                    android:layout_weight="0.3" />
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
                     android:background="@color/background"
                     android:text="Más gráficas"
-                    android:textSize="12sp"
                     android:textColor="@color/yellow"
-                    android:layout_marginRight="16dp">
+                    android:textSize="12sp">
 
                 </Button>
             </LinearLayout>
@@ -193,11 +198,11 @@
                                 style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
                                 android:isIndicator="true"
                                 android:numStars="5"
                                 android:rating="5"
-                                android:layout_marginTop="6dp"
-                                android:stepSize="0.01"/>
+                                android:stepSize="0.01" />
 
                             <TextView
                                 android:id="@+id/ratingAvg"
@@ -227,7 +232,7 @@
 
                         <LinearLayout
                             android:id="@+id/second_ratingview1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -247,15 +252,28 @@
                                 android:layout_marginStart="4dp"
                                 android:text="5"
                                 android:textColor="@color/grayBtn"
-                                android:textSize="12sp"></TextView>
+                                android:textSize="12sp">
 
-                            // Progress Bar
+                            </TextView>
+
+                            // Progress
+
+                            <ProgressBar
+                                android:id="@+id/count5PB"
+                                style="@android:style/Widget.ProgressBar.Horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="2dp"
+                                android:progressTint="@color/ratingBarEvent"
+                                android:progress="25" />
 
                             <TextView
+                                android:id="@+id/count5TV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="13"
+                                android:text="13 votos"
                                 android:textColor="@color/grayBtn"
                                 android:textSize="12sp">
 
