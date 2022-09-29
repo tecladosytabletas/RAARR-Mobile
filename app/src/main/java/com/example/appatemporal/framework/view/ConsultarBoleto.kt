@@ -38,11 +38,6 @@ class ConsultarBoleto : AppCompatActivity() {
             finish()
         }
 
-        binding.navbar.metricsIcon.setOnClickListener {
-            val intent = Intent(this, Dashboard::class.java)
-            startActivity(intent)
-        }
-
         val idEvento = intent.getStringExtra("idEvento")
         val nombre = intent.getStringExtra("nombre")
         val fecha = intent.getStringExtra("fecha")
@@ -52,6 +47,19 @@ class ConsultarBoleto : AppCompatActivity() {
         val ciudad = intent.getStringExtra("ciudad")
         val estado = intent.getStringExtra("estado")
         val hashQr = intent.getStringExtra("hashQr")
+
+        binding.ivShareEvent.setOnClickListener {
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Checa este nuevo evento!! https://www.youtube.com/" + idEvento)
+            sendIntent.type = "text/plain"
+            startActivity(Intent.createChooser(sendIntent, "send to "))
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
 
         Log.d("id evento seleccionado", idEvento.toString())
 
