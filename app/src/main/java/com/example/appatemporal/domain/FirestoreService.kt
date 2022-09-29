@@ -182,18 +182,20 @@ class FirestoreService {
                 .whereEqualTo("id_Usuario", uid)
                 .get()
                 .await()
+        if (events.isEmpty){return 0f}
         for (document in events){
             var feedbacks : QuerySnapshot =
                 db.collection("Feedback")
                 .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
                 .get()
                 .await()
+            if (feedbacks.isEmpty){return 0f}
             for (document in feedbacks){
                 acumulado += document.data?.get("rating").toString().toInt()
                 count += 1
             }
         }
-        if (count <= 0) return 0f
+        if (count <= 0){return 0f}
         return (acumulado/count).toFloat()
     }
 
@@ -206,31 +208,32 @@ class FirestoreService {
                 .whereEqualTo("id_Usuario", uid)
                 .get()
                 .await()
+        if (events.isEmpty){return 0}
         for (document in events) {
             var funciones: QuerySnapshot =
                 db.collection("Funcion")
                     .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
                     .get()
                     .await()
+            if (funciones.isEmpty){return 0}
             for (document in funciones) {
                 boletos =
                     db.collection("Boleto")
                         .whereEqualTo("id_Funcion", document.id)
                         .get()
                         .await()
-                //Log.d("LOG boletos", boletos.count().toString())
+                if (boletos.isEmpty){return 0}
                 tiposBoleto =
                     db.collection("Evento_Tipo_Boleto")
                         .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
                         .get()
                         .await()
+                if (tiposBoleto.isEmpty){return 0}
                 for (tipoBoleto in tiposBoleto) {
                     for (document in boletos) {
                         if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
-                            Log.d("IF de los boletos", tipoBoleto.data?.get("precio").toString())
                             ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
                         }
-                        //Log.d("LOG for boletos", document.id.toString())
                     }
                 }
             }
@@ -354,7 +357,8 @@ class FirestoreService {
             Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
             for (tipoBoleto in tiposBoleto) {
                 for (document in boletos) {
-                    if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
+                    if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto") &&
+                            tipoBoleto.data?.get("id_Evento") == element.data?.get("id_Evento")) {
                         Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
                         ganancias += tipoBoleto.data?.get("precio").toString().toInt()
                     }
