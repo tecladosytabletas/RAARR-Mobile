@@ -38,6 +38,7 @@ class boletosPorEventoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             boletoIndividual.putExtra("ciudad", Ciudad)
             boletoIndividual.putExtra("estado", Estado)
             boletoIndividual.putExtra("hashQr", HashQR)
+            boletoIndividual.putExtra("idEvento", boletoClass.id_evento)
 
             itemView.context.startActivity(boletoIndividual)
         }
