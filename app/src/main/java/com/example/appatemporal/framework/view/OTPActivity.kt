@@ -67,10 +67,10 @@ class OTPActivity : AppCompatActivity() {
                     binding.otpProgressBar.visibility = View.VISIBLE
                     signInWithPhoneAuthCredential(credential)
                 }else{
-                    Toast.makeText( this, "Please enter coerrect OTP", Toast.LENGTH_SHORT).show()
+                    Toast.makeText( this, "Código incorrecto", Toast.LENGTH_SHORT).show()
                 }
             }else{
-                Toast.makeText( this, "Please enter OTP", Toast.LENGTH_SHORT).show()
+                Toast.makeText( this, "Ingresa el código envíado a tu celular", Toast.LENGTH_SHORT).show()
             }
         }
 
