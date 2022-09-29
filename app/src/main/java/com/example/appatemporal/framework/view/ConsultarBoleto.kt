@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -17,10 +18,7 @@ import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 
 class ConsultarBoleto : AppCompatActivity() {
-    private val getTicketViewModel : GetUserTicketViewModel by viewModels()
     private lateinit var binding: ActivityBoletoEspectadorBinding
-    //private lateinit var binding: BoletoEspectadorActivityBinding
-    //private val repository = Repository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +43,7 @@ class ConsultarBoleto : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val idEvento = intent.getStringExtra("idEvento")
         val nombre = intent.getStringExtra("nombre")
         val fecha = intent.getStringExtra("fecha")
         val hora = intent.getStringExtra("hora")
@@ -53,6 +52,8 @@ class ConsultarBoleto : AppCompatActivity() {
         val ciudad = intent.getStringExtra("ciudad")
         val estado = intent.getStringExtra("estado")
         val hashQr = intent.getStringExtra("hashQr")
+
+        Log.d("id evento seleccionado", idEvento.toString())
 
         binding.NombreEventoBoleto.text = nombre
         binding.FechaEvento.text = fecha
