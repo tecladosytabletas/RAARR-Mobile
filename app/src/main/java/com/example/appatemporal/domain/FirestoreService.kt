@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.lang.Integer.parseInt
 import java.util.*
+import kotlin.collections.ArrayList
 
 class FirestoreService {
     private val db = Firebase.firestore
@@ -399,5 +400,58 @@ class FirestoreService {
         return result
     }
 
+    suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
+        Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
+        var boletos: QuerySnapshot
+        var diccAsistencias = mutableMapOf<String, Int?>()
+        var diccVentas = mutableMapOf<String, Int?>()
+        var diccTotales = mutableMapOf<String, Pair<Int?, Int?>>()
+
+        var funciones: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_Evento", eid)
+            .get()
+            .await()
+        Log.d("getTicketTypeSA-Funciones", funciones.count().toString())
+
+        for (element in funciones) {
+            boletos = db.collection("Boleto")
+                .whereEqualTo("id_Funcion", element.id)
+                .get()
+                .await()
+            Log.d("getTicketTypeSA-Boletos", boletos.count().toString())
+
+            for(boleto in boletos){
+                if(boleto.data?.get("id_Tipo_Boleto").toString() !in diccAsistencias){
+                    var countVal = 0
+                    diccAsistencias.put(boleto.data?.get("id_Tipo_Boleto").toString(), countVal)
+                    diccVentas.put(boleto.data?.get("id_Tipo_Boleto").toString(), countVal)
+                }
+
+                if(boleto.data?.get("activo").toString() == "false"){
+                    diccAsistencias.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                    diccVentas.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                } else {
+                    diccVentas.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                }
+            }
+
+            var tiposBoleto: QuerySnapshot = db.collection("Tipo_Boleto")
+                .get()
+                .await()
+            Log.d("getTicketTypeSA-tiposBoleto", tiposBoleto.count().toString())
+
+            for ((k, v) in diccVentas) {
+                for (tipoBoleto in tiposBoleto) {
+                    if(tipoBoleto.id == k) {
+                        var countVal: Pair<Int?, Int?> = Pair(v, diccAsistencias.get(k))
+                        diccTotales.put(tipoBoleto.data?.get("nombre_Tipo_Boleto").toString(), countVal)
+                    }
+                }
+            }
+
+        }
+        Log.d("getTicketTypeSA-diccTotales", diccTotales.toString())
+        return diccTotales
+    }
 
 }
