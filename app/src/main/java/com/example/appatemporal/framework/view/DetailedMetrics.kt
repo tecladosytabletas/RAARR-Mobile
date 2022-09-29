@@ -159,20 +159,16 @@ class DetailedMetrics : AppCompatActivity(){
             j++
         }
         Log.d("Dataset2",entriesVAsistencias.toString())
-
         //bardata set
         val bardataSet1 = BarDataSet(entriesVTotales,"Ventas totales")
         bardataSet1.setColors(resources.getColor(R.color.Red))
         val bardataSet2 = BarDataSet(entriesVAsistencias,"Asistencias totales")
         bardataSet2.setColors(resources.getColor(R.color.purple_200))
         val data = BarData(bardataSet1,bardataSet2)
-
         //pass the data to the BarChar
         ourTTSABarChart.data = data
-
         //declare the XAxis variable
         val xAxis: XAxis = ourTTSABarChart.xAxis
-
         //set the labels on the chart
         val xAxisLabels: ArrayList<String> = ArrayList()
         var k = 0
