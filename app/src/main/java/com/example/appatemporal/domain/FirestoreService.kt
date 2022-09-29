@@ -95,7 +95,7 @@ class FirestoreService {
 
     suspend fun getUserTickets(uid : String) : MutableList<GetTicketModel> {
         var result : MutableList<GetTicketModel> = arrayListOf()
-        var ticket : GetTicketModel = GetTicketModel()
+
         var boletos : QuerySnapshot =
             db.collection("Boleto")
                 .whereEqualTo("id_Usuario",uid)
@@ -112,14 +112,11 @@ class FirestoreService {
                     .whereEqualTo(FieldPath.documentId(),funciones.documents[0].data?.get("id_Evento"))
                     .get()
                     .await()
-            ticket.nombre_evento = evento.documents[0].data?.get("nombre_Evento").toString()
-            ticket.fecha = funciones.documents[0].data?.get("fecha").toString()
-            ticket.horario = funciones.documents[0].data?.get("hora_Inicio").toString()
-            ticket.lugar = evento.documents[0].data?.get("nombre_Ubicacion").toString()
-            ticket.direccion = evento.documents[0].data?.get("direccion").toString()
-            ticket.ciudad = evento.documents[0].data?.get("ciudad").toString()
-            ticket.estado = evento.documents[0].data?.get("estado").toString()
-            ticket.hash_qr = boleto.data?.get("hash_QR").toString()
+            var ticket = GetTicketModel(evento.documents[0].id, evento.documents[0].data?.get("nombre_Evento").toString(),
+                funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
+                evento.documents[0].data?.get("lugar").toString(), evento.documents[0].data?.get("direccion").toString(),
+                evento.documents[0].data?.get("ciudad").toString(), evento.documents[0].data?.get("estado").toString(),
+                boleto.data?.get("hash_QR").toString())
 
             result.add(ticket)
 
