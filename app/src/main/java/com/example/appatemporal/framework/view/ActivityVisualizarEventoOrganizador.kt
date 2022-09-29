@@ -53,8 +53,8 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         //Llamada a la función y al observador para modificar elementos de Rating
         graphicsEventDetailViewModel.getExtEventRating(eid, repository)
         graphicsEventDetailViewModel.ratingExt.observe(this, Observer{
-            ourRatingBar.rating = it[0]
-            ourRatingValue.text = "${it[0]} de 5"
+            ourRatingBar.rating = it[7]
+            ourRatingValue.text = "${it[7]} de 5"
             ourRatingCount.text =  "${it[1].toInt()} calificaciones"
         })
     }
