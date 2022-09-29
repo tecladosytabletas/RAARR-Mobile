@@ -2,9 +2,11 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.appatemporal.R
 import com.example.appatemporal.databinding.DetailedMetricsBinding
@@ -62,6 +64,7 @@ class DetailedMetrics : AppCompatActivity(){
         ourDashTitle = findViewById(R.id.dashTitle)
         ourIngresosTotales = findViewById(R.id.profitsEvent)
         ourPMBarChart = findViewById(R.id.PMLinechart)
+        ourTTSABarChart = findViewById(R.id.TTASLinechart)
 
         repository = Repository(this)
 
@@ -79,7 +82,14 @@ class DetailedMetrics : AppCompatActivity(){
             setBCPMbyEvent(ventasTarjeta, ventasEfectivo)
         })
 
-        setTTSABarChart(tempEventId)
+        var dataTTSA : MutableList<Triple<String,Int?,Int?>> = mutableListOf()
+        detailedMetricsViewModel.getTypeSA(tempEventId,repository)
+        detailedMetricsViewModel.eventsTicketsTypeSA.observe(this, Observer{
+            for(element in it){
+                dataTTSA.add(Triple(element.key,element.value.first,element.value.second))
+                setTTSABarChart(dataTTSA)
+            }
+        })
     }
 
     private fun setEventName(eid:String) {
@@ -121,20 +131,82 @@ class DetailedMetrics : AppCompatActivity(){
         ourPMBarChart.axisLeft.setDrawGridLines(false)
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
+        ourPMBarChart.setScaleEnabled(false)
         ourPMBarChart.legend.isEnabled = false
         ourPMBarChart.description.isEnabled = false
         ourPMBarChart.animateY(1000)
         ourPMBarChart.invalidate()
     }
 
-    private fun setTTSABarChart(eid: String){
+    private fun setTTSABarChart(dataList : MutableList<Triple<String,Int?,Int?>>){
+        //declare values of the chart
+        //dataset 1 - ventas totales
+        val entriesVTotales: ArrayList<BarEntry> = ArrayList()
+        var i = 0
+        for (entry in dataList) {
+            var value = dataList[i].second!!.toFloat()
+            Log.d("Dentro de la grafica 1",value.toString())
+            entriesVTotales.add(BarEntry(i.toFloat(), value))
+            i++
+        }
+        //dataset 2 - asistencias totales
+        val entriesVAsistencias: ArrayList<BarEntry> = ArrayList()
+        var j = 0
+        for (entry in dataList) {
+            var value = dataList[j].third!!.toFloat()
+            Log.d("Dentro de la grafica 2",value.toString())
+            entriesVAsistencias.add(BarEntry(j.toFloat(), value))
+            j++
+        }
+        Log.d("Dataset2",entriesVAsistencias.toString())
 
-        detailedMetricsViewModel.getTypeSA(eid,repository)
-        detailedMetricsViewModel.eventsTicketsTypeSA.observe(this, Observer{
+        //bardata set
+        val bardataSet1 = BarDataSet(entriesVTotales,"Ventas totales")
+        bardataSet1.setColors(resources.getColor(R.color.Red))
+        val bardataSet2 = BarDataSet(entriesVAsistencias,"Asistencias totales")
+        bardataSet2.setColors(resources.getColor(R.color.purple_200))
+        val data = BarData(bardataSet1,bardataSet2)
 
-        })
+        //pass the data to the BarChar
+        ourTTSABarChart.data = data
 
+        //declare the XAxis variable
+        val xAxis: XAxis = ourTTSABarChart.xAxis
 
+        //set the labels on the chart
+        val xAxisLabels: ArrayList<String> = ArrayList()
+        var k = 0
+        for (entry in dataList) {
+            xAxisLabels.add(dataList[k].first)
+            k++
+        }
+        ourTTSABarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+
+        xAxis.setCenterAxisLabels(true)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setGranularity(1f)
+        //xAxis.setGranularityEnabled(false)
+
+        ourTTSABarChart.setDragEnabled(false)
+        ourTTSABarChart.setScaleEnabled(false)
+        ourTTSABarChart.setVisibleXRangeMaximum(3f)
+        val barSpace = 0.1f
+        val groupSpace = 0.01f
+        data.barWidth = 0.15f
+
+        ourTTSABarChart.xAxis.axisMinimum = 0f
+        ourTTSABarChart.groupBars(0f, groupSpace, barSpace)
+
+        //decorative elements of the chart
+        ourTTSABarChart.axisLeft.setDrawGridLines(false)
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+        ourTTSABarChart.legend.isEnabled = false
+        ourTTSABarChart.description.isEnabled = false
+        ourTTSABarChart.animateY(1000)
+        //xAxis.setGranularityEnabled(true)
+        //ourTTSABarChart.setVisibleXRange(1f,1f)
+        ourTTSABarChart.invalidate()
     }
 
 }
