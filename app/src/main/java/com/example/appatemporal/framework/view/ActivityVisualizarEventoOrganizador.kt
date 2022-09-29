@@ -50,9 +50,28 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         val ourRatingBar = binding.ratingStar
         val ourRatingValue = binding.ratingAvg
         val ourRatingCount = binding.ratingQuantity
+
         //Barra de 5 estrellas
         val ourRatingCount5 = binding.count5PB
         val ourRating5 = binding.count5TV
+        //Barra de 4 estrellas
+        val ourRatingCount4 = binding.count4PB
+        val ourRating4 = binding.count4TV
+        //Barra de 3 estrellas
+        val ourRatingCount3 = binding.count3PB
+        val ourRating3 = binding.count3TV
+        //Barra de 2 estrellas
+        val ourRatingCount2 = binding.count2PB
+        val ourRating2 = binding.count2TV
+        //Barra de 1 estrella
+        val ourRatingCount1 = binding.count1PB
+        val ourRating1 = binding.count1TV
+
+        val ourRatingCountList = mutableListOf(ourRatingCount1,
+            ourRatingCount2,ourRatingCount3,ourRatingCount4,ourRatingCount5)
+        val ourRatingList = mutableListOf(ourRating1, ourRating2,
+            ourRating3, ourRating4,ourRating5)
+
         //Declaración del repositorio
         repository = Repository(this)
         //Llamada a la función y al observador para modificar elementos de Rating
@@ -61,13 +80,24 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             ourRatingBar.rating = it[7]
             ourRatingValue.text = "${it[7]} de 5"
             ourRatingCount.text =  "${it[1].toInt()} calificaciones"
-            if(it[6]>0){
+
+            for (i in 0..4) {
+                if(it[i+2]>0){
+                    ourRatingCountList[i].progress = ((it[i+2]*100)/it[1]).toInt()
+                    ourRatingList[i].text = "${it[i+2].toInt()} votos"
+                }else{
+                    ourRatingCountList[i].progress = 0
+                    ourRatingList[i].text = "0 votos"
+                }
+            }
+
+            /*if(it[6]>0){
                 ourRatingCount5.progress = ((it[6]*100)/it[1]).toInt()
                 ourRating5.text = "${it[6].toInt()} votos"
             }else{
                 ourRatingCount5.progress = 0
                 ourRating5.text = "0 votos"
-            }
+            }*/
         })
     }
 
