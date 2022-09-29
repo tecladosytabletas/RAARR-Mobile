@@ -85,6 +85,10 @@ class Repository(context: Context) {
         return firestoreAPI.getTicketTypeSA(eid)
     }
 
+    suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
+        return firestoreAPI.getRatingByEvent(eid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
