@@ -454,4 +454,43 @@ class FirestoreService {
         return diccTotales
     }
 
+    suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
+        var acumulado = 0f
+        var countTotal = 0f
+        var count1 = 0f
+        var count2 = 0f
+        var count3 = 0f
+        var count4 = 0f
+        var count5 = 0f
+        val listRatings : MutableList<Float> = mutableListOf()
+        val emptyRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f)
+        var ratings = db.collection("Feedback")
+            .whereEqualTo("id_Evento", eid)
+            .get()
+            .await()
+        if (ratings.isEmpty){return emptyRatings}
+        for(element in ratings){
+            acumulado += element.data?.get("rating").toString().toInt()
+            countTotal += 1
+            when(element.data?.get("rating").toString().toInt()) {
+                1 -> count1++
+                2 -> count2++
+                3 -> count3++
+                4 -> count4++
+                else -> {
+                    count5++
+                }
+            }
+        }
+        listRatings.add(acumulado/countTotal)
+        listRatings.add(countTotal)
+        listRatings.add(count1)
+        listRatings.add(count2)
+        listRatings.add(count3)
+        listRatings.add(count4)
+        listRatings.add(count5)
+        if (countTotal <= 0){return emptyRatings}
+        return listRatings
+    }
+
 }
