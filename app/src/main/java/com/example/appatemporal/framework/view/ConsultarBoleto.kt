@@ -54,7 +54,7 @@ class ConsultarBoleto : AppCompatActivity() {
         binding.ratingbar.visibility = android.view.View.INVISIBLE
 
 //        val idUser = getSharedPreferences("user", Context.MODE_PRIVATE).getString("userUid", "").toString()
-        val idUser = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
+        val idUser = "qHeVATI9gVVJ2thZaWNEPBsKaXH3"
         val idEvento = intent.getStringExtra("idEvento")
         val nombre = intent.getStringExtra("nombre")
         val fecha = intent.getStringExtra("fecha")
