@@ -81,6 +81,14 @@ class Repository(context: Context) {
         firestoreAPI.addFailure(title, description)
     }
 
+    suspend fun getTicketTypeSA(eid: String) : MutableMap<String, Pair<Int?, Int?>> {
+        return firestoreAPI.getTicketTypeSA(eid)
+    }
+
+    suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
+        return firestoreAPI.getRatingByEvent(eid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
