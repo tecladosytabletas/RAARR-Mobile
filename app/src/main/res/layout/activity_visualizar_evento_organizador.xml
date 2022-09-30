@@ -210,6 +210,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
                                 android:isIndicator="true"
+                                android:progressTint="@color/white"
+                                android:outlineSpotShadowColor="@color/white"
                                 android:numStars="5"
                                 android:rating="5"
                                 android:stepSize="0.01" />
@@ -276,7 +278,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count5TV"
@@ -324,7 +326,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count4TV"
@@ -372,7 +374,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count3TV"
@@ -420,7 +422,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count2TV"
@@ -468,7 +470,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count1TV"
@@ -516,7 +518,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count0TV"

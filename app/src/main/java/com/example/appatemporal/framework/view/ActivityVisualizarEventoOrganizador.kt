@@ -10,7 +10,6 @@ import com.example.appatemporal.R
 import com.example.appatemporal.databinding.ActivityVisualizarEventoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GraphicsEventDetailViewModel
-import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
