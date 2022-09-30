@@ -186,7 +186,7 @@ class FirestoreService {
         if (events.isEmpty){return 0f}
         for (document in events){
             var feedbacks : QuerySnapshot =
-                db.collection("Feedback")
+                db.collection("Rating")
                 .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
                 .get()
                 .await()
@@ -455,11 +455,12 @@ class FirestoreService {
     }
 
     suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
-        //[0]acumulado,[1]counTotal,[2]count1,[3]count2,[4]count3,[5]count4,[6]count5,[7]ratingProm
-        var listRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f)
-        val emptyRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f)
-        var ratings = db.collection("Feedback")
-            .whereEqualTo("id_Evento", eid)
+        //[0]acumulado,[1]counTotal,[2]count0,[3]count1,[4]count2,
+        // [5]count3,[6]count4, [7]count5, [8]ratingProm
+        var listRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f,0f)
+        var emptyRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f,0f)
+        var ratings = db.collection("Rating")
+            .whereEqualTo("id_evento", eid)
             .get()
             .await()
         if (ratings.isEmpty){return emptyRatings}
@@ -467,16 +468,17 @@ class FirestoreService {
             listRatings[0] = listRatings[0] + element.data?.get("rating").toString().toInt()
             listRatings[1] = listRatings[1] + 1
             when(element.data?.get("rating").toString().toInt()) {
-                1 -> listRatings[2] = listRatings[2] + 1
-                2 -> listRatings[3] = listRatings[3] + 1
-                3 -> listRatings[4] = listRatings[4] + 1
-                4 -> listRatings[5] = listRatings[5] + 1
+                0 -> listRatings[2] = listRatings[2] + 1
+                1 -> listRatings[3] = listRatings[3] + 1
+                2 -> listRatings[4] = listRatings[4] + 1
+                3 -> listRatings[5] = listRatings[5] + 1
+                4 -> listRatings[6] = listRatings[6] + 1
                 else -> {
-                    listRatings[6] = listRatings[6] + 1
+                    listRatings[7] = listRatings[7] + 1
                 }
             }
         }
-        listRatings[7] = listRatings[0]/listRatings[1]
+        listRatings[8] = listRatings[0]/listRatings[1]
         if (listRatings[1] <= 0){return emptyRatings}
         return listRatings
     }
