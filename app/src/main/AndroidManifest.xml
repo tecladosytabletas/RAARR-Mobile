@@ -70,10 +70,6 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.Favoritosespectador_activity"
@@ -128,6 +124,10 @@
             android:name=".framework.view.CheckIfLogged"
             android:exported="true">
             <!-- Aqui estaba el Intent Filter originalmente -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.ActivityVisualizarEventoOrganizador"

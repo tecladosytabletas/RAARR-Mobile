@@ -132,7 +132,7 @@ class OTPActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     binding.otpProgressBar.visibility = View.VISIBLE
-                    Toast.makeText(this,"Authenticate Succesfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Autenticación exitosa", Toast.LENGTH_SHORT).show()
 
                     val uid: String = auth.currentUser?.uid.toString()
 
@@ -167,7 +167,7 @@ class OTPActivity : AppCompatActivity() {
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
-                         Log.d("TAG","Incorrect SMS")
+                         Log.d("TAG","SMS Incorrecto")
                     }
                     // Update UI
                 }
