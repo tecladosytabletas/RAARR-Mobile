@@ -408,9 +408,10 @@ class FirestoreService {
     }
 
     /**
-     * Adds a document in ReporteFallas collection of Firestore
-     * @param title: String
-     * @param description: String
+     * Adds a document in Rating collection of Firestore
+     * @param idUser: String
+     * @param idEvent: String
+     * @param rate: Float
      */
 
    suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
@@ -419,7 +420,12 @@ class FirestoreService {
            .add(rating)
            .await()
    }
-
+    /**
+     * Get a document in Rating collection of Firestore
+     * @param idUser: String
+     * @param idEvent: String
+     * @return existence: Boolean
+     */
     suspend fun verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
         var existence: Boolean = false
         val query = db.collection("Rating")

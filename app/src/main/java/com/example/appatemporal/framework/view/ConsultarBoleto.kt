@@ -1,10 +1,8 @@
 package com.example.appatemporal.framework.view
 
-import android.app.Activity
-import android.content.Context
+
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -14,14 +12,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.example.appatemporal.R
-import com.example.appatemporal.data.GetTicketStateRequirement
 import com.example.appatemporal.databinding.ActivityBoletoEspectadorBinding
-import com.example.appatemporal.databinding.ActivityBoletoPorEventoBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.ConsultarBoletoViewModel
-import com.example.appatemporal.framework.viewModel.GetUserTicketViewModel
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 
@@ -47,10 +41,6 @@ class ConsultarBoleto : AppCompatActivity() {
             finish()
         }
 
-        binding.navbar.metricsIcon.setOnClickListener {
-            val intent = Intent(this, Dashboard::class.java)
-            startActivity(intent)
-        }
         binding.ratingbar.visibility = android.view.View.INVISIBLE
 
 //        val idUser = getSharedPreferences("user", Context.MODE_PRIVATE).getString("userUid", "").toString()
@@ -64,6 +54,19 @@ class ConsultarBoleto : AppCompatActivity() {
         val ciudad = intent.getStringExtra("ciudad")
         val estado = intent.getStringExtra("estado")
         val hashQr = intent.getStringExtra("hashQr")
+
+        binding.ivShareEvent.setOnClickListener {
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Checa este nuevo evento!! https://www.youtube.com/" + idEvento)
+            sendIntent.type = "text/plain"
+            startActivity(Intent.createChooser(sendIntent, "send to "))
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
 
         Log.d("id evento seleccionado", idEvento.toString())
 
