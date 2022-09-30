@@ -115,6 +115,12 @@ class Repository(context: Context) {
         count.start()
         count.await()
     }
+
+    //Filter Activities
+    suspend fun filterActivitiesByStatus(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByStatus(idProyecto, stringStatus)
+    suspend fun filterActivitiesByArea(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByArea(idProyecto, stringStatus)
+    suspend fun filterActivitiesByPriority(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByPriority(idProyecto, stringStatus)
+
     suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
