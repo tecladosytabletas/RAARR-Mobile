@@ -1,18 +1,17 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
-import com.example.appatemporal.domain.models.GetTicketModel
-import com.example.appatemporal.domain.models.ReportFailureModel
-import com.example.appatemporal.domain.models.UserModel
+import com.example.appatemporal.domain.models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
-import com.example.appatemporal.domain.models.TicketModel
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.lang.Boolean.parseBoolean
+import java.lang.Double.parseDouble
 import java.lang.Integer.parseInt
 import java.util.*
 
@@ -390,6 +389,62 @@ class FirestoreService {
 
         val result = Pair(countTarjeta, countEfectivo)
         return result
+    }
+    suspend fun getEvents(): List<EventModel>{
+        var events: MutableList<EventModel> = mutableListOf()
+        var event: QuerySnapshot = db.collection("Evento")
+            .get()
+            .await()
+        for (document in event) {
+            events.add(
+                EventModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    document.data?.get("descripcion").toString(),
+                    document.data?.get("ciudad").toString(),
+                    document.data?.get("estado").toString(),
+                    document.data?.get("ubicacion").toString(),
+                    document.data?.get("direccion").toString(),
+                    parseDouble(document.data?.get("longitud").toString()),
+                    parseDouble(document.data?.get("latitud").toString()),
+                    document.data?.get("imagen").toString(),
+                    document.data?.get("video").toString(),
+                    parseInt(document.data?.get("activo").toString()),
+
+                    )
+            )
+        }
+        return events
+    }
+
+    suspend fun getCategories(): List<CategoryModel>{
+        Log.d("Test1", "firestore")
+        var categories: MutableList<CategoryModel> = mutableListOf()
+        var category: QuerySnapshot = db.collection("Categoria")
+            .get()
+            .await()
+        for (document in category) {
+            categories.add(
+                CategoryModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    parseBoolean(document.data?.get("visibilidad").toString())
+                )
+            )
+        }
+        return categories
+    }
+
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String): List<String>{
+        var ids: MutableList<String> = mutableListOf()
+        var eventos: QuerySnapshot = db.collection("Evento_Categoria")
+            .whereEqualTo("id_categoria_fk", idCategoria)
+            .get()
+            .await()
+        for (document in eventos) {
+            ids.add(document.data?.get("id_evento_fk").toString())
+        }
+        return ids
     }
 
 
