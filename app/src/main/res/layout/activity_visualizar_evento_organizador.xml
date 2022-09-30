@@ -216,7 +216,7 @@
                                         android:layout_marginTop="6dp"
                                         android:text="4 de 5"
                                         android:textColor="@color/grayBtn"
-                                        android:textSize="16dp">
+                                        android:textSize="24dp">
 
                                     </TextView>
 
@@ -228,9 +228,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginVertical="4dp"
                                     android:layout_marginStart="16dp"
+                                    android:layout_marginBottom="8dp"
                                     android:text="35 calificaciones"
                                     android:textColor="@color/grayBtn"
-                                    android:textSize="12sp">
+                                    android:textSize="16sp">
 
                                 </TextView>
 
@@ -238,6 +239,7 @@
                                     android:id="@+id/second_ratingview1"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
                                     android:orientation="horizontal">
 
                                     <ImageView
@@ -288,6 +290,7 @@
                                     android:id="@+id/second_ratingview3"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
                                     android:orientation="horizontal">
 
                                     <ImageView
@@ -336,6 +339,7 @@
                                     android:id="@+id/second_ratingview2"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
                                     android:orientation="horizontal">
 
                                     <ImageView
@@ -384,6 +388,7 @@
                                     android:id="@+id/second_ratingview4"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
                                     android:orientation="horizontal">
 
                                     <ImageView
@@ -432,6 +437,7 @@
                                     android:id="@+id/second_ratingview5"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
                                     android:orientation="horizontal">
 
                                     <ImageView
@@ -480,6 +486,7 @@
                                     android:id="@+id/second_ratingview0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="16dp"
                                     android:orientation="horizontal">
 
                                     <ImageView
@@ -550,14 +557,6 @@
                     </com.google.android.material.button.MaterialButton>
 
                 </RelativeLayout>
-
-
-
-
-
-
-
-
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
