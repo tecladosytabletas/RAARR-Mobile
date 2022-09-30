@@ -109,6 +109,4 @@ dependencies {
     //Efecto Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
-    // Carousel
-    implementation 'com.synnapps:carouselview:0.1.5'
 }
