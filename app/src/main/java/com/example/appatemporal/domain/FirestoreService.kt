@@ -1,12 +1,9 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
-import com.example.appatemporal.domain.models.GetTicketModel
-import com.example.appatemporal.domain.models.ReportFailureModel
-import com.example.appatemporal.domain.models.UserModel
+import com.example.appatemporal.domain.models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
-import com.example.appatemporal.domain.models.TicketModel
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -116,7 +113,7 @@ class FirestoreService {
                 funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
                 evento.documents[0].data?.get("lugar").toString(), evento.documents[0].data?.get("direccion").toString(),
                 evento.documents[0].data?.get("ciudad").toString(), evento.documents[0].data?.get("estado").toString(),
-                boleto.data?.get("hash_QR").toString())
+                boleto.data?.get("hash_qr").toString())
 
             result.add(ticket)
 
@@ -392,5 +389,47 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get a state in Boleto collection of Firestore
+     * @param hashQr: String
+     * @param id_Event: String
+     * @return verifyS: Boolean
+     */
+    suspend fun getState(hashQr:String, id_Event:String):Boolean{
+        var verifyS:Boolean
+        var stateT:QuerySnapshot = db.collection("Boleto")
+            .whereEqualTo("hash_qr", hashQr)
+            .get()
+            .await()
 
+        verifyS = stateT.documents[0].data?.get("activo") as Boolean
+        return  verifyS
+    }
+    /**
+     * Adds a document in ReporteFallas collection of Firestore
+     * @param title: String
+     * @param description: String
+     */
+
+   suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
+       val rating = RatingModel(idUser, idEvent, rate, Date())
+       db.collection("Rating")
+           .add(rating)
+           .await()
+   }
+
+    suspend fun verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
+        var existence: Boolean = false
+        val query = db.collection("Rating")
+            .whereEqualTo("id_evento_fk", idEvent)
+            .whereEqualTo("id_usuario_fk", idUser)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+
+        Log.d("Existence of rating", existence.toString())
+        return existence
+    }
 }

@@ -81,6 +81,17 @@ class Repository(context: Context) {
         firestoreAPI.addFailure(title, description)
     }
 
+    suspend fun getState(hash_Qr:String,id_Event:String): Boolean{
+        return firestoreAPI.getState(hash_Qr,id_Event)
+    }
+
+    suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
+        firestoreAPI.addRating(idUser, idEvent, rate)
+    }
+    suspend fun  verifyRatingExistence(idUser: String, idEvent: String) : Boolean{
+        return firestoreAPI.verifyRatingExistence(idUser,idEvent)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
