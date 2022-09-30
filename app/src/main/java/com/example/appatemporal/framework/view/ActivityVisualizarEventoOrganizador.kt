@@ -70,22 +70,17 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         val ourSet = PieDataSet(ourPieEntry, "")
         val data = PieData(ourSet)
         // De aqui para abajo es formato
-
         val pieShades: ArrayList<Int> = ArrayList()
         pieShades.add(Color.parseColor("#FFBB86FC"))
         pieShades.add(Color.parseColor("#FE810E"))
-
         ourSet.colors = pieShades
         ourPieChart.data = data
         ourPieChart.invalidate()
-
         data.setValueTextColor(Color.DKGRAY)
         data.setValueTextSize(20f)
-
         ourPieChart.getLegend().setTextColor(Color.DKGRAY)
         ourPieChart.getDescription().setTextColor(Color.DKGRAY)
         ourPieChart.setEntryLabelColor(Color.DKGRAY)
-
         ourPieChart.description.isEnabled = false
         ourPieChart.setDrawEntryLabels(false)
     }
