@@ -441,6 +441,9 @@ class FirestoreService {
         if (!query.isEmpty) {
             existence = true
         }
+        Log.d("Existence of rating", existence.toString())
+        return existence
+    }
         
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
         Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
@@ -523,9 +526,5 @@ class FirestoreService {
         listRatings[8] = listRatings[0]/listRatings[1]
         if (listRatings[1] <= 0){return emptyRatings}
         return listRatings
-    }
-
-        Log.d("Existence of rating", existence.toString())
-        return existence
     }
 }
