@@ -90,6 +90,13 @@ class Repository(context: Context) {
     }
     suspend fun  verifyRatingExistence(idUser: String, idEvent: String) : Boolean{
         return firestoreAPI.verifyRatingExistence(idUser,idEvent)
+        
+    suspend fun getTicketTypeSA(eid: String) : MutableMap<String, Pair<Int?, Int?>> {
+        return firestoreAPI.getTicketTypeSA(eid)
+    }
+
+    suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
+        return firestoreAPI.getRatingByEvent(eid)
     }
 
     // Local database
