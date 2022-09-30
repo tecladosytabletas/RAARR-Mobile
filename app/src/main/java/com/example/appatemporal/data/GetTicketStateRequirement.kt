@@ -4,7 +4,7 @@ import com.example.appatemporal.domain.Repository
 
 class GetTicketStateRequirement {
 
-    suspend operator fun invoke(hash_Qr:String, id_Event:String,repository: Repository): Boolean{
-        return repository.getState(hash_Qr,id_Event)
+    suspend operator fun invoke(hash_Qr:String,repository: Repository): Boolean{
+        return repository.getState(hash_Qr)
     }
 }

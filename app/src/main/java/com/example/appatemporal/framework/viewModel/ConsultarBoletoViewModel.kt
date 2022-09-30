@@ -19,9 +19,9 @@ class ConsultarBoletoViewModel:ViewModel() {
     val ticketState = MutableLiveData<Boolean>()
     val rateState = MutableLiveData<Boolean>()
 
-    fun getStateTicket(hash_Qr:String, id_Event:String, repository: Repository){
+    fun getStateTicket(hash_Qr:String, idUser:String, repository: Repository){
         viewModelScope.launch {
-            val stateT = getTicketStateRequirement(hash_Qr,id_Event,repository)
+            val stateT = getTicketStateRequirement(hash_Qr, repository)
             ticketState.postValue(stateT)
 
         }

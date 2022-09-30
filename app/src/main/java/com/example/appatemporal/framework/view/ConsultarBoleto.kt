@@ -54,7 +54,7 @@ class ConsultarBoleto : AppCompatActivity() {
         binding.ratingbar.visibility = android.view.View.INVISIBLE
 
 //        val idUser = getSharedPreferences("user", Context.MODE_PRIVATE).getString("userUid", "").toString()
-        val idUser = "qHeVATI9gVVJ2thZaWNEPBsKaXH3"
+        val idUser = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
         val idEvento = intent.getStringExtra("idEvento")
         val nombre = intent.getStringExtra("nombre")
         val fecha = intent.getStringExtra("fecha")
@@ -76,7 +76,7 @@ class ConsultarBoleto : AppCompatActivity() {
                 binding.ratingbar.visibility = android.view.View.INVISIBLE
 
             } else {
-                consultarBoletoViewModel.getStateTicket(hashQr.toString(),idEvento.toString(),repository)
+                consultarBoletoViewModel.getStateTicket(hashQr.toString(),idUser,repository)
                 consultarBoletoViewModel.ticketState.observe(this, Observer {
                     Log.d("DatAvIEW", it.toString())
                     if (it == false){

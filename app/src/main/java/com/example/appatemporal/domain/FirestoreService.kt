@@ -95,7 +95,7 @@ class FirestoreService {
 
         var boletos : QuerySnapshot =
             db.collection("Boleto")
-                .whereEqualTo("id_Usuario",uid)
+                .whereEqualTo("id_usuario_fk",uid)
                 .get()
                 .await()
         for (boleto in boletos){
@@ -395,16 +395,18 @@ class FirestoreService {
      * @param id_Event: String
      * @return verifyS: Boolean
      */
-    suspend fun getState(hashQr:String, id_Event:String):Boolean{
-        var verifyS:Boolean
+    suspend fun getState(hashQr:String):Boolean{
+        var verifyS = false
+
         var stateT:QuerySnapshot = db.collection("Boleto")
             .whereEqualTo("hash_qr", hashQr)
             .get()
             .await()
-
         verifyS = stateT.documents[0].data?.get("activo") as Boolean
+        Log.d("conditionTicket", verifyS.toString())
         return  verifyS
     }
+
     /**
      * Adds a document in ReporteFallas collection of Firestore
      * @param title: String

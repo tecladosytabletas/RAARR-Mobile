@@ -81,8 +81,8 @@ class Repository(context: Context) {
         firestoreAPI.addFailure(title, description)
     }
 
-    suspend fun getState(hash_Qr:String,id_Event:String): Boolean{
-        return firestoreAPI.getState(hash_Qr,id_Event)
+    suspend fun getState(hash_Qr:String): Boolean{
+        return firestoreAPI.getState(hash_Qr)
     }
 
     suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
