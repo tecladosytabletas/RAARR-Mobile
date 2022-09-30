@@ -112,4 +112,5 @@ class ConsultarBoleto : AppCompatActivity() {
         TARJETA_CODIGO_QR.setImageBitmap(BITMAP)
 
     }
+    //Esto es un comentario para que pueda commitear
 }
