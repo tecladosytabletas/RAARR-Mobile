@@ -66,10 +66,13 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         //Barra de 1 estrella
         val ourRatingCount1 = binding.count1PB
         val ourRating1 = binding.count1TV
+        //Barra de 0 estrellas
+        val ourRatingCount0 = binding.count0PB
+        val ourRating0 = binding.count0TV
         //Creación de listas de los elementos con binding
-        val ourRatingCountList = mutableListOf(ourRatingCount1,
+        val ourRatingCountList = mutableListOf(ourRatingCount0,ourRatingCount1,
             ourRatingCount2,ourRatingCount3,ourRatingCount4,ourRatingCount5)
-        val ourRatingList = mutableListOf(ourRating1, ourRating2,
+        val ourRatingList = mutableListOf(ourRating0, ourRating1, ourRating2,
             ourRating3, ourRating4,ourRating5)
         //Declaración del repositorio
         repository = Repository(this)
@@ -80,7 +83,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             ourRatingValue.text = "${it[7]} de 5"
             ourRatingCount.text =  "${it[1].toInt()} calificaciones"
             //Incorporar información a progress bar varias
-            for (i in 0..4) {
+            for (i in 0..5) {
                 if(it[i+2]>0){
                     ourRatingCountList[i].progress = ((it[i+2]*100)/it[1]).toInt()
                     ourRatingList[i].text = "${it[i+2].toInt()} votos"
