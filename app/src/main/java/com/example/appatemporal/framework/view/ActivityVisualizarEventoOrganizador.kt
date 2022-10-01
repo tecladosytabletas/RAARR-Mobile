@@ -61,6 +61,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
     }
 
     fun populateTSAPieChart(ventasTotal:Int,asistenciasTotal:Int){
+        /*
         val ourPieChart = binding.tsaPieChart
         // Aqui se reciben los datos en teoria
         val ourPieEntry = ArrayList<PieEntry>()
@@ -83,9 +84,11 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         ourPieChart.setEntryLabelColor(Color.DKGRAY)
         ourPieChart.description.isEnabled = false
         ourPieChart.setDrawEntryLabels(false)
+
+         */
     }
 
-    fun populateRating(eid:String){
+    fun populateRating(eid:String){/*
         //Rating general del evento
         val ourRatingBar = binding.ratingStar
         val ourRatingValue = binding.ratingAvg
@@ -131,7 +134,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
                     ourRatingList[i].text = "0 votos"
                 }
             }
-        })
+        })*/
     }
 
 }
