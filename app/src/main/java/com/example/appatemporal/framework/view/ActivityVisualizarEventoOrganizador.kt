@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,9 @@ import com.example.appatemporal.R
 import com.example.appatemporal.databinding.ActivityVisualizarEventoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GraphicsEventDetailViewModel
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 
 class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
@@ -41,9 +45,44 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //Creación de usuario temporal y llamado a funciones
+        //Creación de usuario temporal
         val tempEventId : String = "DM"
+        repository = Repository(this)
+        //Llamado a funciones
+        var ventasTotal : Int = 0
+        var asistenciasTotal : Int = 0
+        graphicsEventDetailViewModel.getTicketsSA(tempEventId, repository)
+        graphicsEventDetailViewModel.eventTicketsSAEvent.observe(this, Observer {
+            ventasTotal = it.first
+            asistenciasTotal = it.second
+            populateTSAPieChart(ventasTotal, asistenciasTotal)
+        })
         populateRating(tempEventId)
+    }
+
+    fun populateTSAPieChart(ventasTotal:Int,asistenciasTotal:Int){
+        val ourPieChart = binding.tsaPieChart
+        // Aqui se reciben los datos en teoria
+        val ourPieEntry = ArrayList<PieEntry>()
+        var noAssist = ventasTotal - asistenciasTotal
+        ourPieEntry.add(PieEntry(noAssist.toFloat(), "No Asistieron"))
+        ourPieEntry.add(PieEntry(asistenciasTotal.toFloat(), "Asistieron"))
+        val ourSet = PieDataSet(ourPieEntry, "")
+        val data = PieData(ourSet)
+        // De aqui para abajo es formato
+        val pieShades: ArrayList<Int> = ArrayList()
+        pieShades.add(Color.parseColor("#FFBB86FC"))
+        pieShades.add(Color.parseColor("#FE810E"))
+        ourSet.colors = pieShades
+        ourPieChart.data = data
+        ourPieChart.invalidate()
+        data.setValueTextColor(Color.DKGRAY)
+        data.setValueTextSize(20f)
+        ourPieChart.getLegend().setTextColor(Color.DKGRAY)
+        ourPieChart.getDescription().setTextColor(Color.DKGRAY)
+        ourPieChart.setEntryLabelColor(Color.DKGRAY)
+        ourPieChart.description.isEnabled = false
+        ourPieChart.setDrawEntryLabels(false)
     }
 
     fun populateRating(eid:String){

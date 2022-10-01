@@ -161,13 +161,24 @@
                     app:cardCornerRadius="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Pie Chart"
-                        android:textSize="24sp">
+                        android:id="@+id/LeyendaTSAPieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Asistentes esperados vs. Asistentes reales"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
 
-                    </TextView>
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/tsaPieChart"
+                        android:layout_width="fill_parent"
+                        android:layout_marginTop="30dp"
+                        android:layout_height="fill_parent">
+
+                    </com.github.mikephil.charting.charts.PieChart>
 
                 </androidx.cardview.widget.CardView>
 
@@ -199,6 +210,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
                                 android:isIndicator="true"
+                                android:progressTint="@color/white"
+                                android:outlineSpotShadowColor="@color/white"
                                 android:numStars="5"
                                 android:rating="5"
                                 android:stepSize="0.01" />
@@ -265,7 +278,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count5TV"
@@ -313,7 +326,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count4TV"
@@ -361,7 +374,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count3TV"
@@ -409,7 +422,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count2TV"
@@ -457,7 +470,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count1TV"
@@ -505,7 +518,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="2dp"
                                 android:progress="25"
-                                android:progressTint="@color/ratingBarEvent" />
+                                android:progressTint="@color/white" />
 
                             <TextView
                                 android:id="@+id/count0TV"
