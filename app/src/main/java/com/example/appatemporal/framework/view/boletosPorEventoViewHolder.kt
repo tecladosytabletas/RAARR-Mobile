@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.databinding.ActivityCardBoletoPorEventoBinding
