@@ -97,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
+                        android:id="@+id/ivShareEvent"
                         android:layout_width="61dp"
                         android:layout_height="61dp"
                         android:src="@drawable/ic_baseline_share_24">
@@ -113,6 +114,9 @@
         </androidx.cardview.widget.CardView>
 
         <RatingBar
+            android:id="@+id/ratingbar"
+            android:stepSize="1"
+            android:numStars="5"
             android:layout_width="235dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
