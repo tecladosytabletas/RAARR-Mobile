@@ -34,6 +34,10 @@ class DeleteActivity : AppCompatActivity(){
         binding = AddActivitiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        val repository = Repository(this)
+        var myExtras :Bundle? = intent.extras
+        var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         // get reference to the autocomplete text view
         val autocompleteTV2 = findViewById<AutoCompleteTextView>(R.id.spinnerFilterToFilter)
 
@@ -55,6 +59,7 @@ class DeleteActivity : AppCompatActivity(){
                     // set adapter to the autocomplete tv to the arrayAdapter
                     autocompleteTV2.setAdapter(arrayAdapter2)
 
+
                 }
                 else if (binding.spinnerFilterMain.getText().toString()=="Estatus"){
                     // set adapter to the autocomplete tv to the arrayAdapter
@@ -64,8 +69,22 @@ class DeleteActivity : AppCompatActivity(){
                 else if (binding.spinnerFilterMain.getText().toString()=="Prioridad"){
                     // set adapter to the autocomplete tv to the arrayAdapter
                     autocompleteTV2.setAdapter(arrayAdapter4)
+                    var prioridad = binding.spinnerFilterToFilter.getText().toString()
+                    var tipo = binding.spinnerFilterMain.getText().toString()
+
+                    binding.filterButton.setOnClickListener{
+                        Log.d("hola",prioridad)
+                        Log.d("hola", tipo)
+                        filterRecyclerView(repository,idProyecto, prioridad, tipo)
+                    }
+
+
+
+
                 }
             }
+
+
 
             override fun beforeTextChanged(s: CharSequence, start: Int,
                                            count: Int, after: Int) {}
@@ -73,9 +92,6 @@ class DeleteActivity : AppCompatActivity(){
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {}
         })
-        val repository = Repository(this)
-        var myExtras :Bundle? = intent.extras
-        var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         initRecyclerView(repository, idProyecto)
         binding.newTaskButton.setOnClickListener {
             val intent = Intent(this, AddNewActivityForm::class.java)
@@ -121,4 +137,17 @@ class DeleteActivity : AppCompatActivity(){
             binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
         })
     }
+    private fun filterRecyclerView( repository: Repository,id: Int, prioridad: String, tipo:String) {
+        if(tipo == "Prioridad"){
+            viewModel.getAllActivitiesPrioridad(id,prioridad, repository)
+
+        }
+
+        viewModel.activities.observe(this, Observer { activityList ->
+
+            binding.todoRv.layoutManager = LinearLayoutManager(this)
+            binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
+        })
+    }
+
 }

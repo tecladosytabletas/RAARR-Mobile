@@ -38,4 +38,10 @@ class DeleteActivityViewModel : ViewModel(){
             activities.setValue(list)
         }
     }
+    fun getAllActivitiesPrioridad(id:Int, prioridad: String, repository: Repository) {
+        viewModelScope.launch {
+            val list = requirement.filterActivitiesByPriority(id,prioridad, repository)
+            activities.setValue(list)
+        }
+    }
 }
