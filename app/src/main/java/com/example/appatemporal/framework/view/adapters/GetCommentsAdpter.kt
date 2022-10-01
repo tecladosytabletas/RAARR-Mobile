@@ -14,7 +14,8 @@ class GetCommentsAdapter(val listaComentarios :List<CommentModel>) : RecyclerVie
     }
 
     override fun onBindViewHolder(holder: GetCommentsViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val item = listaComentarios[position]
+        holder.render(item)
     }
 
     override fun getItemCount(): Int = listaComentarios.size
