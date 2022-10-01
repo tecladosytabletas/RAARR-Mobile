@@ -10,6 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import org.w3c.dom.Comment
 import java.lang.Integer.parseInt
 import java.util.*
 import kotlin.collections.ArrayList
@@ -526,5 +527,12 @@ class FirestoreService {
         listRatings[8] = listRatings[0]/listRatings[1]
         if (listRatings[1] <= 0){return emptyRatings}
         return listRatings
+    }
+
+    suspend fun addComment(idUser: String,idEvent: String,comment: String){
+        var comment = CommentModel(idUser,idEvent,comment,Date())
+        db.collection("Comentario")
+            .add(comment)
+            .await()
     }
 }

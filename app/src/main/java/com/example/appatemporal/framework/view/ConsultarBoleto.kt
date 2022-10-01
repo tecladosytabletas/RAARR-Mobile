@@ -63,9 +63,17 @@ class ConsultarBoleto : AppCompatActivity() {
             startActivity(Intent.createChooser(sendIntent, "send to "))
         }
 
+
         binding.navbar.metricsIcon.setOnClickListener {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
+        }
+
+        binding.sendIcon.setOnClickListener{
+            val etContent = binding.etComment.text.toString()
+            consultarBoletoViewModel.addComment(idUser,idEvento.toString(),etContent,repository)
+            Toast.makeText(this, "Tu Commentario fue Registrado exitosamente!", Toast.LENGTH_SHORT).show()
+            binding.etComment.getText().clear();
         }
 
         Log.d("id evento seleccionado", idEvento.toString())

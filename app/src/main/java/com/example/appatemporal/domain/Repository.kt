@@ -100,6 +100,10 @@ class Repository(context: Context) {
         return firestoreAPI.getRatingByEvent(eid)
     }
 
+    suspend fun addComment(idUser: String,idEvent: String,comment: String){
+        return firestoreAPI.addComment(idUser,idEvent,comment)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
