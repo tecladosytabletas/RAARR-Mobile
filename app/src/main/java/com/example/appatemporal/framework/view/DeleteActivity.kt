@@ -34,6 +34,8 @@ class DeleteActivity : AppCompatActivity(){
         binding = AddActivitiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var secondTipo = ""
+        var tipo = ""
 
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
@@ -59,6 +61,32 @@ class DeleteActivity : AppCompatActivity(){
                     // set adapter to the autocomplete tv to the arrayAdapter
                     autocompleteTV2.setAdapter(arrayAdapter2)
 
+                    binding.spinnerFilterToFilter.addTextChangedListener(object : TextWatcher {
+                        override fun afterTextChanged(s: Editable) {
+                            if (binding.spinnerFilterToFilter.getText().toString()=="Negocios"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                            }
+                            else if (binding.spinnerFilterToFilter.getText().toString()=="Personales"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                            }
+                            else if (binding.spinnerFilterToFilter.getText().toString()=="Compras"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                            }
+                            else if (binding.spinnerFilterToFilter.getText().toString()=="Mercancias"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                            }
+                        }
+
+                        override fun beforeTextChanged(s: CharSequence, start: Int,
+                                                       count: Int, after: Int) {}
+
+                        override fun onTextChanged(s: CharSequence, start: Int,
+                                                   before: Int, count: Int) {}
+                    })
 
                 }
                 else if (binding.spinnerFilterMain.getText().toString()=="Estatus"){
@@ -72,11 +100,11 @@ class DeleteActivity : AppCompatActivity(){
                     var prioridad = binding.spinnerFilterToFilter.getText().toString()
                     var tipo = binding.spinnerFilterMain.getText().toString()
 
-                    binding.filterButton.setOnClickListener{
-                        Log.d("hola",prioridad)
-                        Log.d("hola", tipo)
-                        filterRecyclerView(repository,idProyecto, prioridad, tipo)
-                    }
+                    //binding.filterButton.setOnClickListener{
+                   //     Log.d("hola",prioridad)
+                   //     Log.d("hola", tipo)
+                   //     filterRecyclerView(repository,idProyecto, prioridad, tipo)
+                    //}
 
 
 
@@ -92,7 +120,10 @@ class DeleteActivity : AppCompatActivity(){
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {}
         })
-        initRecyclerView(repository, idProyecto)
+        binding.filterButton.setOnClickListener{
+            initRecyclerView(repository, idProyecto, secondTipo, tipo)
+        }
+        initRecyclerView(repository, idProyecto, secondTipo, tipo)
         binding.newTaskButton.setOnClickListener {
             val intent = Intent(this, AddNewActivityForm::class.java)
             with(intent){
@@ -130,24 +161,29 @@ class DeleteActivity : AppCompatActivity(){
     }
 
 
-    private fun initRecyclerView( repository: Repository,id: Int) {
-        viewModel.getAllActivitiesid(id,repository)
-        viewModel.activities.observe(this, Observer { activityList ->
-            binding.todoRv.layoutManager = LinearLayoutManager(this)
-            binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
-        })
-    }
-    private fun filterRecyclerView( repository: Repository,id: Int, prioridad: String, tipo:String) {
-        if(tipo == "Prioridad"){
-            viewModel.getAllActivitiesPrioridad(id,prioridad, repository)
-
+    private fun initRecyclerView( repository: Repository,id: Int, SecondTipo: String, tipo:String) {
+        if (tipo == "Area"){
+            viewModel.getAllActivitiesArea(id,SecondTipo, repository)
         }
-
+        else{
+            viewModel.getAllActivitiesid(id,repository)
+        }
         viewModel.activities.observe(this, Observer { activityList ->
-
             binding.todoRv.layoutManager = LinearLayoutManager(this)
             binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
         })
     }
+    //private fun filterRecyclerView( repository: Repository,id: Int, prioridad: String, tipo:String) {
+    //    if(tipo == "Prioridad"){
+    //        viewModel.getAllActivitiesPrioridad(id,prioridad, repository)
+    //
+    //    }
+
+    //    viewModel.activities.observe(this, Observer { activityList ->
+
+     //       binding.todoRv.layoutManager = LinearLayoutManager(this)
+      //      binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
+    //    })
+    //}
 
 }
