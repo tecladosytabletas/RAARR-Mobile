@@ -16,7 +16,7 @@ class EventosByCategoriasViewModel: ViewModel() {
     val eventsIds = MutableLiveData<List<String>>()
     val categoryId = MutableLiveData<String>()
     val eventsByCategory = MutableLiveData<List<EventModel>>()
-    fun getEventsByCategory(category: String, repository: Repository, categoryName:String) {
+    fun getEventsByCategory(repository: Repository, categoryName:String) {
         viewModelScope.launch {
             events.setValue(requirement.getEvents(repository))
             categoryId.setValue(requirement.getCategoryIdByName(repository, categoryName))
