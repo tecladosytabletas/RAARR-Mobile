@@ -93,6 +93,10 @@
         <activity
             android:name=".framework.view.ConsultarBoleto"
             android:exported="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         <activity
             android:name=".framework.view.DeleteCosto"
             android:exported="true" />
@@ -124,10 +128,7 @@
             android:name=".framework.view.CheckIfLogged"
             android:exported="true">
             <!-- Aqui estaba el Intent Filter originalmente -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".framework.view.ActivityVisualizarEventoOrganizador"
