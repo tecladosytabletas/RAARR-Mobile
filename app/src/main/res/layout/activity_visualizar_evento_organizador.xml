@@ -37,7 +37,7 @@
                     <RelativeLayout
                         android:id="@+id/Tarjeta_VEE"
                         android:layout_width="match_parent"
-                        android:layout_height="600px"
+                        android:layout_height="700px"
                         android:background="@drawable/djbackground"
                         android:orientation="horizontal">
 
@@ -119,6 +119,18 @@
                             android:textColor="@color/grayBtn"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/CiudadVEE">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_baseline_comment_24"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginBottom="8dp"
+                                />
+                        </LinearLayout>
 
                     </RelativeLayout>
 
@@ -535,26 +547,19 @@
 
                         </androidx.cardview.widget.CardView>
 
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginLeft="30dp"
+                            android:text="Regresar"
+                            android:textColor="@color/grayBtn"
+                            />
+
 
                     </LinearLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/Graphs_Layout"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="30dp"
-                        android:drawableStart="@drawable/link"
-                        android:fontFamily="@font/roboto"
-                        android:text="Compra tu Boleto Aquí"
-                        android:textColor="@color/yellow"
-                        android:textSize="20sp"
-                        app:cornerRadius="8dp">
 
-                    </com.google.android.material.button.MaterialButton>
 
                 </RelativeLayout>
 
