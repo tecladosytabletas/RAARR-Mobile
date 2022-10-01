@@ -447,5 +447,13 @@ class FirestoreService {
         return ids
     }
 
+    suspend fun getCategoryIdByName(name: String): String{
+        var category: QuerySnapshot = db.collection("Categoria")
+            .whereEqualTo("nombre", name)
+            .get()
+            .await()
+        return category.documents[0].id
+    }
+
 
 }

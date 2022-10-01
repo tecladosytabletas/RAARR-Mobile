@@ -173,5 +173,6 @@ class Repository(context: Context) {
 
     suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
-
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
+    suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
 }
