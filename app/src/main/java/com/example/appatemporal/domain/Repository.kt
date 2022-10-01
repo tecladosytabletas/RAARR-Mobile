@@ -5,7 +5,6 @@ import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
 import com.example.appatemporal.domain.models.GetTicketModel
-import kotlin.math.cos
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
@@ -115,6 +114,13 @@ class Repository(context: Context) {
         count.start()
         count.await()
     }
+    fun countAllActivities(id_a: Int): Int = runBlocking {
+        val count = async {
+            actividadDao.countAllActivities(id_a)
+        }
+        count.start()
+        count.await()
+    }
     suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
@@ -148,7 +154,9 @@ class Repository(context: Context) {
     suspend fun updateProyecto(proyecto: Proyecto) = proyectoDao.update(proyecto)
     suspend fun updatePresupuesto(presupuestoN:Double, id: Int) =proyectoDao.updatePresupuesto(presupuestoN,id)
     suspend fun updateMeta(metaN:Double, id: Int) =proyectoDao.updateMeta(metaN,id)
+    suspend fun updateEstatusCompletado(estatusN:Boolean, id: Int) =proyectoDao.updateEstatusCompletado(estatusN,id)
     suspend fun updateModifyProyect(name: String, date: String,time: String, id: Int) =proyectoDao.updateModify(name,date,time,id)
+    suspend fun filterProjectsByStatus(stringStatus:Boolean) = proyectoDao.FilterProjectsByStatus(stringStatus)
 
 
     suspend fun insertCosto(costo: Costo) = costoDao.insert(costo)

@@ -39,14 +39,29 @@
         android:gravity="center"
         android:id="@+id/titleProyectosOrganizador"
         />
-
+    <TextView
+        android:id="@+id/tvCompletedProject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradent_horizontal"
+        android:ems="22"
+        app:layout_constraintVertical_bias="0.04"
+        android:fontFamily="@font/inter"
+        android:padding="16dp"
+        android:text="Proyectos Completados"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleProyectosOrganizador" />
     <TextView
         android:id="@+id/tvNewProject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/gradent_horizontal"
         android:ems="22"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintVertical_bias="0.21"
         android:fontFamily="@font/inter"
         android:padding="16dp"
         android:text="Nuevo Proyecto"
@@ -68,12 +83,11 @@
         app:layout_constraintLeft_toLeftOf="@+id/tvNewProject"
         app:layout_constraintHorizontal_bias="0.95"
         />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewProjects"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        app:layout_constraintVertical_bias="0.15"
+        android:layout_height="200dp"
+        app:layout_constraintVertical_bias="0.2"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivProjectImage"

@@ -22,7 +22,14 @@ class ProyectoOrganizador : AppCompatActivity() {
         binding = ProyectosOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
-
+        binding.tvCompletedProject.setOnClickListener{
+            viewModel.getAllProjectsCompleted(true,repository)
+            viewModel.projects.observe(this, Observer { projectList ->
+                Log.d("Prueba", projectList.toString())
+                binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
+            })
+        }
         viewModel.getProjects(repository)
         viewModel.projects.observe(this, Observer { projectList ->
             Log.d("Prueba", projectList.toString())

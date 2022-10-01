@@ -59,7 +59,7 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
             val date = binding.dateEdt.text.toString()
             val tsLong = System.currentTimeMillis() / 1000
             val ts: String = tsLong.toString()
-            val project: Proyecto = Proyecto(0, 1, name, date,0.0,0.0, 0.0,ts)
+            val project: Proyecto = Proyecto(0, 1, name, date,0.0,0.0, 0.0,false,ts)
 
             lifecycleScope.launch{
                 viewModel.addNewProject(project, repository)
