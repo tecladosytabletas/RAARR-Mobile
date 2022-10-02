@@ -101,8 +101,33 @@ class DeleteActivity : AppCompatActivity(){
                 else if (binding.spinnerFilterMain.getText().toString()=="Prioridad"){
                     // set adapter to the autocomplete tv to the arrayAdapter
                     autocompleteTV2.setAdapter(arrayAdapter4)
-                    var prioridad = binding.spinnerFilterToFilter.getText().toString()
-                    var tipo = binding.spinnerFilterMain.getText().toString()
+
+                    binding.spinnerFilterToFilter.addTextChangedListener(object : TextWatcher {
+                        override fun afterTextChanged(s: Editable) {
+                            if (binding.spinnerFilterToFilter.getText().toString()=="Alta"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
+                            }
+                            else if (binding.spinnerFilterToFilter.getText().toString()=="Media"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
+                            }
+                            else if (binding.spinnerFilterToFilter.getText().toString()=="Baja"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
+                            }
+
+                        }
+
+                        override fun beforeTextChanged(s: CharSequence, start: Int,
+                                                       count: Int, after: Int) {}
+
+                        override fun onTextChanged(s: CharSequence, start: Int,
+                                                   before: Int, count: Int) {}
+                    })
 
                     //binding.filterButton.setOnClickListener{
                    //     Log.d("hola",prioridad)
@@ -164,6 +189,12 @@ class DeleteActivity : AppCompatActivity(){
     private fun initRecyclerView( repository: Repository,id: Int, SecondTipo: String, tipo:String) {
         if (tipo == "Area"){
             viewModel.getAllActivitiesArea(id,SecondTipo, repository)
+        }
+        else{
+            viewModel.getAllActivitiesid(id,repository)
+        }
+        if (tipo == "Prioridad"){
+            viewModel.getAllActivitiesPrioridad(id,SecondTipo, repository)
         }
         else{
             viewModel.getAllActivitiesid(id,repository)
