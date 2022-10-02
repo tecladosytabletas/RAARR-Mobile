@@ -527,4 +527,36 @@ class FirestoreService {
         if (listRatings[1] <= 0){return emptyRatings}
         return listRatings
     }
+
+    suspend fun getEventTicketsSA(eid : String) : Pair<Int, Int> {
+        var ventasCount : Int = 0
+        var asistenciasCount : Int = 0
+        val errorHandler: Pair<Int,Int> = Pair(0,0)
+        var funciones : QuerySnapshot =
+            db.collection("Funcion")
+                .whereEqualTo("id_Evento",eid)
+                .get()
+                .await()
+        if (funciones.isEmpty){return errorHandler}
+        for (document in funciones){
+            var boletosAuxVentas : QuerySnapshot =
+                db.collection("Boleto")
+                    .whereEqualTo("id_Funcion", document.id)
+                    .get()
+                    .await()
+            ventasCount += boletosAuxVentas.count()
+        }
+        for (document in funciones){
+            var boletosAuxAsistencias : QuerySnapshot =
+                db.collection("Boleto")
+                    .whereEqualTo("id_Funcion", document.id)
+                    .whereEqualTo("activo", false)
+                    .get()
+                    .await()
+            //if (boletosAuxAsistencias.isEmpty){return errorHandler}
+            asistenciasCount += boletosAuxAsistencias.count()
+        }
+        val result = Pair(ventasCount, asistenciasCount)
+        return result
+    }
 }

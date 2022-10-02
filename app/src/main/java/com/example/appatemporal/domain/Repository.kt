@@ -100,6 +100,10 @@ class Repository(context: Context) {
         return firestoreAPI.getRatingByEvent(eid)
     }
 
+    suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
+        return firestoreAPI.getEventTicketsSA(eid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
