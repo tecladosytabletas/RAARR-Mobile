@@ -66,18 +66,22 @@ class DeleteActivity : AppCompatActivity(){
                             if (binding.spinnerFilterToFilter.getText().toString()=="Negocios"){
                                 secondTipo  = binding.spinnerFilterToFilter.getText().toString()
                                 tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
                             }
                             else if (binding.spinnerFilterToFilter.getText().toString()=="Personales"){
                                 secondTipo  = binding.spinnerFilterToFilter.getText().toString()
                                 tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
                             }
                             else if (binding.spinnerFilterToFilter.getText().toString()=="Compras"){
                                 secondTipo  = binding.spinnerFilterToFilter.getText().toString()
                                 tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
                             }
                             else if (binding.spinnerFilterToFilter.getText().toString()=="Mercancias"){
                                 secondTipo  = binding.spinnerFilterToFilter.getText().toString()
                                 tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
                             }
                         }
 
@@ -112,17 +116,13 @@ class DeleteActivity : AppCompatActivity(){
                 }
             }
 
-
-
             override fun beforeTextChanged(s: CharSequence, start: Int,
                                            count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {}
         })
-        binding.filterButton.setOnClickListener{
-            initRecyclerView(repository, idProyecto, secondTipo, tipo)
-        }
+
         initRecyclerView(repository, idProyecto, secondTipo, tipo)
         binding.newTaskButton.setOnClickListener {
             val intent = Intent(this, AddNewActivityForm::class.java)
@@ -173,17 +173,5 @@ class DeleteActivity : AppCompatActivity(){
             binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
         })
     }
-    //private fun filterRecyclerView( repository: Repository,id: Int, prioridad: String, tipo:String) {
-    //    if(tipo == "Prioridad"){
-    //        viewModel.getAllActivitiesPrioridad(id,prioridad, repository)
-    //
-    //    }
-
-    //    viewModel.activities.observe(this, Observer { activityList ->
-
-     //       binding.todoRv.layoutManager = LinearLayoutManager(this)
-      //      binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
-    //    })
-    //}
 
 }
