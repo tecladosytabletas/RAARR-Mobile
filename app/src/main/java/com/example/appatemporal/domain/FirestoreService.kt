@@ -1,12 +1,9 @@
 package com.example.appatemporal.domain
 
 import android.util.Log
-import com.example.appatemporal.domain.models.GetTicketModel
-import com.example.appatemporal.domain.models.ReportFailureModel
-import com.example.appatemporal.domain.models.UserModel
+import com.example.appatemporal.domain.models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
-import com.example.appatemporal.domain.models.TicketModel
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -15,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.lang.Integer.parseInt
 import java.util.*
+import kotlin.collections.ArrayList
 
 class FirestoreService {
     private val db = Firebase.firestore
@@ -98,7 +96,7 @@ class FirestoreService {
 
         var boletos : QuerySnapshot =
             db.collection("Boleto")
-                .whereEqualTo("id_Usuario",uid)
+                .whereEqualTo("id_usuario_fk",uid)
                 .get()
                 .await()
         for (boleto in boletos){
@@ -116,7 +114,7 @@ class FirestoreService {
                 funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
                 evento.documents[0].data?.get("lugar").toString(), evento.documents[0].data?.get("direccion").toString(),
                 evento.documents[0].data?.get("ciudad").toString(), evento.documents[0].data?.get("estado").toString(),
-                boleto.data?.get("hash_QR").toString())
+                boleto.data?.get("hash_qr").toString())
 
             result.add(ticket)
 
@@ -179,18 +177,20 @@ class FirestoreService {
                 .whereEqualTo("id_Usuario", uid)
                 .get()
                 .await()
+        if (events.isEmpty){return 0f}
         for (document in events){
             var feedbacks : QuerySnapshot =
-                db.collection("Feedback")
+                db.collection("Rating")
                 .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
                 .get()
                 .await()
+            if (feedbacks.isEmpty){return 0f}
             for (document in feedbacks){
                 acumulado += document.data?.get("rating").toString().toInt()
                 count += 1
             }
         }
-        if (count <= 0) return 0f
+        if (count <= 0){return 0f}
         return (acumulado/count).toFloat()
     }
 
@@ -203,31 +203,32 @@ class FirestoreService {
                 .whereEqualTo("id_Usuario", uid)
                 .get()
                 .await()
+        if (events.isEmpty){return 0}
         for (document in events) {
             var funciones: QuerySnapshot =
                 db.collection("Funcion")
                     .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
                     .get()
                     .await()
+            if (funciones.isEmpty){return 0}
             for (document in funciones) {
                 boletos =
                     db.collection("Boleto")
                         .whereEqualTo("id_Funcion", document.id)
                         .get()
                         .await()
-                //Log.d("LOG boletos", boletos.count().toString())
+                if (boletos.isEmpty){return 0}
                 tiposBoleto =
                     db.collection("Evento_Tipo_Boleto")
                         .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
                         .get()
                         .await()
+                if (tiposBoleto.isEmpty){return 0}
                 for (tipoBoleto in tiposBoleto) {
                     for (document in boletos) {
                         if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
-                            Log.d("IF de los boletos", tipoBoleto.data?.get("precio").toString())
                             ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
                         }
-                        //Log.d("LOG for boletos", document.id.toString())
                     }
                 }
             }
@@ -351,7 +352,8 @@ class FirestoreService {
             Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
             for (tipoBoleto in tiposBoleto) {
                 for (document in boletos) {
-                    if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
+                    if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto") &&
+                            tipoBoleto.data?.get("id_Evento") == element.data?.get("id_Evento")) {
                         Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
                         ganancias += tipoBoleto.data?.get("precio").toString().toInt()
                     }
@@ -392,5 +394,169 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get a state in Boleto collection of Firestore
+     * @param hashQr: String
+     * @param id_Event: String
+     * @return verifyS: Boolean
+     */
+    suspend fun getState(hashQr:String):Boolean{
+        var verifyS = false
 
+        var stateT:QuerySnapshot = db.collection("Boleto")
+            .whereEqualTo("hash_qr", hashQr)
+            .get()
+            .await()
+        verifyS = stateT.documents[0].data?.get("activo") as Boolean
+        Log.d("conditionTicket", verifyS.toString())
+        return  verifyS
+    }
+
+    /**
+     * Adds a document in Rating collection of Firestore
+     * @param idUser: String
+     * @param idEvent: String
+     * @param rate: Float
+     */
+
+   suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
+       val rating = RatingModel(idUser, idEvent, rate, Date())
+       db.collection("Rating")
+           .add(rating)
+           .await()
+   }
+    /**
+     * Get a document in Rating collection of Firestore
+     * @param idUser: String
+     * @param idEvent: String
+     * @return existence: Boolean
+     */
+    suspend fun verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
+        var existence: Boolean = false
+        val query = db.collection("Rating")
+            .whereEqualTo("id_evento_fk", idEvent)
+            .whereEqualTo("id_usuario_fk", idUser)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+        Log.d("Existence of rating", existence.toString())
+        return existence
+    }
+        
+    suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
+        Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
+        var boletos: QuerySnapshot
+        var diccAsistencias = mutableMapOf<String, Int?>()
+        var diccVentas = mutableMapOf<String, Int?>()
+        var diccTotales = mutableMapOf<String, Pair<Int?, Int?>>()
+
+        var funciones: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_Evento", eid)
+            .get()
+            .await()
+        Log.d("getTicketTypeSA-Funciones", funciones.count().toString())
+
+        for (element in funciones) {
+            boletos = db.collection("Boleto")
+                .whereEqualTo("id_Funcion", element.id)
+                .get()
+                .await()
+            Log.d("getTicketTypeSA-Boletos", boletos.count().toString())
+
+            for(boleto in boletos){
+                if(boleto.data?.get("id_Tipo_Boleto").toString() !in diccAsistencias){
+                    var countVal = 0
+                    diccAsistencias.put(boleto.data?.get("id_Tipo_Boleto").toString(), countVal)
+                    diccVentas.put(boleto.data?.get("id_Tipo_Boleto").toString(), countVal)
+                }
+
+                if(boleto.data?.get("activo").toString() == "false"){
+                    diccAsistencias.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                    diccVentas.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                } else {
+                    diccVentas.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                }
+            }
+
+            var tiposBoleto: QuerySnapshot = db.collection("Tipo_Boleto")
+                .get()
+                .await()
+            Log.d("getTicketTypeSA-tiposBoleto", tiposBoleto.count().toString())
+
+            for ((k, v) in diccVentas) {
+                for (tipoBoleto in tiposBoleto) {
+                    if(tipoBoleto.id == k) {
+                        var countVal: Pair<Int?, Int?> = Pair(v, diccAsistencias.get(k))
+                        diccTotales.put(tipoBoleto.data?.get("nombre_Tipo_Boleto").toString(), countVal)
+                    }
+                }
+            }
+
+        }
+        Log.d("getTicketTypeSA-diccTotales", diccTotales.toString())
+        return diccTotales
+    }
+
+    suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
+        //[0]acumulado,[1]counTotal,[2]count0,[3]count1,[4]count2,
+        // [5]count3,[6]count4, [7]count5, [8]ratingProm
+        var listRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f,0f)
+        var emptyRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f,0f)
+        var ratings = db.collection("Rating")
+            .whereEqualTo("id_evento", eid)
+            .get()
+            .await()
+        if (ratings.isEmpty){return emptyRatings}
+        for(element in ratings){
+            listRatings[0] = listRatings[0] + element.data?.get("rating").toString().toInt()
+            listRatings[1] = listRatings[1] + 1
+            when(element.data?.get("rating").toString().toInt()) {
+                0 -> listRatings[2] = listRatings[2] + 1
+                1 -> listRatings[3] = listRatings[3] + 1
+                2 -> listRatings[4] = listRatings[4] + 1
+                3 -> listRatings[5] = listRatings[5] + 1
+                4 -> listRatings[6] = listRatings[6] + 1
+                else -> {
+                    listRatings[7] = listRatings[7] + 1
+                }
+            }
+        }
+        listRatings[8] = listRatings[0]/listRatings[1]
+        if (listRatings[1] <= 0){return emptyRatings}
+        return listRatings
+    }
+
+    suspend fun getEventTicketsSA(eid : String) : Pair<Int, Int> {
+        var ventasCount : Int = 0
+        var asistenciasCount : Int = 0
+        val errorHandler: Pair<Int,Int> = Pair(0,0)
+        var funciones : QuerySnapshot =
+            db.collection("Funcion")
+                .whereEqualTo("id_Evento",eid)
+                .get()
+                .await()
+        if (funciones.isEmpty){return errorHandler}
+        for (document in funciones){
+            var boletosAuxVentas : QuerySnapshot =
+                db.collection("Boleto")
+                    .whereEqualTo("id_Funcion", document.id)
+                    .get()
+                    .await()
+            ventasCount += boletosAuxVentas.count()
+        }
+        for (document in funciones){
+            var boletosAuxAsistencias : QuerySnapshot =
+                db.collection("Boleto")
+                    .whereEqualTo("id_Funcion", document.id)
+                    .whereEqualTo("activo", false)
+                    .get()
+                    .await()
+            //if (boletosAuxAsistencias.isEmpty){return errorHandler}
+            asistenciasCount += boletosAuxAsistencias.count()
+        }
+        val result = Pair(ventasCount, asistenciasCount)
+        return result
+    }
 }
