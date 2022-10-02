@@ -101,13 +101,17 @@ class Repository(context: Context) {
         return firestoreAPI.getRatingByEvent(eid)
     }
 
-    suspend fun addComment(idUser: String,idEvent: String,comment: String){
+    suspend fun addComment(idUser: String, idEvent: String, comment: String) {
         return firestoreAPI.addComment(idUser,idEvent,comment)
     }
 
     suspend fun getComments(idEvento: String) : QuerySnapshot {
         return firestoreAPI.getComments(idEvento)
+    }
 
+
+    suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
+        return firestoreAPI.getEventTicketsSA(eid)
     }
 
     // Local database
