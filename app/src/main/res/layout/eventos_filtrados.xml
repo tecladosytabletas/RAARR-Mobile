@@ -23,7 +23,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginBottom="80dp"/>
     <include
-        layout = "@layout/navbar"
+        layout = "@layout/navbar_espectador"
         android:id="@+id/navbar"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
