@@ -445,7 +445,7 @@ class FirestoreService {
         Log.d("Existence of rating", existence.toString())
         return existence
     }
-        
+
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
         Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
         var boletos: QuerySnapshot
@@ -529,11 +529,13 @@ class FirestoreService {
         return listRatings
     }
 
+
     suspend fun addComment(idUser: String,idEvent: String,comment: String){
         var comment = CommentModel(idUser,idEvent,comment,Date())
         db.collection("Comentario")
             .add(comment)
             .await()
+    }
 
     suspend fun getComments(idEvent: String) : QuerySnapshot {
         val comments =
@@ -542,5 +544,37 @@ class FirestoreService {
                 .get()
                 .await()
         return comments
+    }
+
+    suspend fun getEventTicketsSA(eid : String) : Pair<Int, Int> {
+        var ventasCount : Int = 0
+        var asistenciasCount : Int = 0
+        val errorHandler: Pair<Int,Int> = Pair(0,0)
+        var funciones : QuerySnapshot =
+            db.collection("Funcion")
+                .whereEqualTo("id_Evento",eid)
+                .get()
+                .await()
+        if (funciones.isEmpty){return errorHandler}
+        for (document in funciones){
+            var boletosAuxVentas : QuerySnapshot =
+                db.collection("Boleto")
+                    .whereEqualTo("id_Funcion", document.id)
+                    .get()
+                    .await()
+            ventasCount += boletosAuxVentas.count()
+        }
+        for (document in funciones){
+            var boletosAuxAsistencias : QuerySnapshot =
+                db.collection("Boleto")
+                    .whereEqualTo("id_Funcion", document.id)
+                    .whereEqualTo("activo", false)
+                    .get()
+                    .await()
+            //if (boletosAuxAsistencias.isEmpty){return errorHandler}
+            asistenciasCount += boletosAuxAsistencias.count()
+        }
+        val result = Pair(ventasCount, asistenciasCount)
+        return result
     }
 }
