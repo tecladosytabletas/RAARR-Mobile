@@ -6,5 +6,5 @@ data class CommentModel (
     val id_usuario_fk:String,
     val id_evento_fk: String,
     val comentario: String,
-    val fecha_cracion: Date
+    val fecha_creacion: Date
     )
