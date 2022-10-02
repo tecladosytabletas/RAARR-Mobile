@@ -1,6 +1,8 @@
 package com.example.appatemporal.domain
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.appatemporal.domain.models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
@@ -13,6 +15,9 @@ import kotlinx.coroutines.tasks.await
 import java.lang.Boolean.parseBoolean
 import java.lang.Double.parseDouble
 import java.lang.Integer.parseInt
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class FirestoreService {
@@ -400,16 +405,18 @@ class FirestoreService {
                 EventModel(
                     document.id,
                     document.data?.get("nombre").toString(),
+                    document.data?.get("fecha").toString(),
                     document.data?.get("descripcion").toString(),
                     document.data?.get("ciudad").toString(),
                     document.data?.get("estado").toString(),
                     document.data?.get("ubicacion").toString(),
                     document.data?.get("direccion").toString(),
-                    parseDouble(document.data?.get("longitud").toString()),
-                    parseDouble(document.data?.get("latitud").toString()),
+                    document.data?.get("longitud").toString(),
+                    document.data?.get("latitud").toString(),
                     document.data?.get("imagen").toString(),
                     document.data?.get("video").toString(),
-                    parseInt(document.data?.get("activo").toString()),
+                    document.data?.get("activo").toString(),
+                    document.data?.get("aprobado").toString(),
 
                     )
             )

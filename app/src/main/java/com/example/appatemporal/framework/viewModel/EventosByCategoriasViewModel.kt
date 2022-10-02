@@ -11,20 +11,17 @@ import kotlinx.coroutines.launch
 
 class EventosByCategoriasViewModel: ViewModel() {
     private var requirement = EventosByCategoriasRequirement()
-
-    val events = MutableLiveData<List<EventModel>>()
-    val eventsIds = MutableLiveData<List<String>>()
-    val categoryId = MutableLiveData<String>()
     val eventsByCategory = MutableLiveData<List<EventModel>>()
     fun getEventsByCategory(repository: Repository, categoryName:String) {
         viewModelScope.launch {
-            events.setValue(requirement.getEvents(repository))
-            categoryId.setValue(requirement.getCategoryIdByName(repository, categoryName))
-            eventsIds.setValue(requirement.getIdsOfEventosWithidCategoria(categoryId.value!!, repository))
-            val finalEvents: List<EventModel> = listOf()
-            for(event in events.value!!){
-                if(event.id in eventsIds.value!!){
-                    finalEvents.plus(event)
+
+            val events = requirement.getEvents(repository)
+            val categoryId = requirement.getCategoryIdByName(repository, categoryName)
+            val eventsIds = requirement.getIdsOfEventosWithidCategoria(categoryId, repository)
+            val finalEvents: MutableList<EventModel> = mutableListOf()
+            for(event in events){
+                if(event.id in eventsIds){
+                    finalEvents.add(event)
                 }
             }
             eventsByCategory.setValue(finalEvents)

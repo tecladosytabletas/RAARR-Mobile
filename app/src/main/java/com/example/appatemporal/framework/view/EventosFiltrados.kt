@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -22,9 +23,9 @@ class EventosFiltrados: AppCompatActivity() {
         val repository = Repository(this)
         viewModel.getEventsByCategory(repository, categoria_nombre.toString())
         viewModel.eventsByCategory.observe(this, Observer{ eventList ->
+            Log.d("EventosFiltrados", "Eventos: $eventList")
             binding.RecyclerView.layoutManager = LinearLayoutManager(this)
             binding.RecyclerView.adapter = EventosFiltradosAdapter(eventList)
-
         })
 
 

@@ -11,7 +11,7 @@ class EventosFiltradosAdapter(private val  eventsByCategory: List<EventModel>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventosFiltradosViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return EventosFiltradosViewHolder(layoutInflater.inflate(R.layout.categorias_eventos_item, parent, false))
+        return EventosFiltradosViewHolder(layoutInflater.inflate(R.layout.activity_homepage_tarjetas_eventos_grande, parent, false))
     }
 
     override fun getItemCount(): Int {
