@@ -10,6 +10,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
 
@@ -98,6 +99,10 @@ class Repository(context: Context) {
 
     suspend fun getRatingByEvent(eid: String): MutableList<Float> {
         return firestoreAPI.getRatingByEvent(eid)
+    }
+
+    suspend fun getComments(idEvento: String) : QuerySnapshot {
+        return firestoreAPI.getComments(idEvento)
     }
 
     // Local database
