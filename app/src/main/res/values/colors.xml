@@ -24,11 +24,8 @@
         <item name="purple_events" type="color">#7587ff</item>
         <item name="purplelight_events" type="color">#A8B3FF</item>
         <item name="gray_events" type="color">#C6C6C6</item>
-        <item name = "red2" type="color">#FF3A3A</item>
         <item name = "yellow3" type="color">#FFCA28</item>
         <item name = "orange2" type="color">#FE810E</item>
-        <item name = "blue2" type="color">#3A71FF</item>
-        <item name = "green4" type="color">#61FF17</item>
         <item name = "grey3" type="color">#D2DDE5</item>
     </array>
 
