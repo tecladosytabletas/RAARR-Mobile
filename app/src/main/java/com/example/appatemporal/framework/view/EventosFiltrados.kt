@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -18,6 +19,17 @@ class EventosFiltrados: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = EventosFiltradosBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.navbar.homeIcon.setOnClickListener{
+            finish()
+        }
+        binding.navbar.eventsIcon.setOnClickListener{
+            val intent = Intent(this, CategoriasEventos::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener{
+            finish()
+        }
         var myExtras :Bundle? = intent.extras
         var categoria_nombre: String? = myExtras?.getString("categoria_nombre")
         val repository = Repository(this)

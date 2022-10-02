@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,12 +20,25 @@ class CategoriasEventos: AppCompatActivity() {
         binding = CategoriasEventosBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
+
+        binding.navbar.homeIcon.setOnClickListener{
+            finish()
+        }
+        binding.navbar.eventsIcon.setOnClickListener{
+            val intent = Intent(this, CategoriasEventos::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener{
+            finish()
+        }
         viewModel.getCategories(repository)
         viewModel.categories.observe(this, Observer{ categoryList ->
             binding.RecyclerView.layoutManager = LinearLayoutManager(this)
             binding.RecyclerView.adapter = CategoriasEventosAdapter(categoryList)
 
         })
+
 
 
     }
