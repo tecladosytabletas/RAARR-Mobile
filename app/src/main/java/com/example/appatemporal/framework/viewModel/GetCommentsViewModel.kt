@@ -26,7 +26,6 @@ class GetCommentsViewModel :ViewModel() {
                                                 document.data.get("comentario").toString(), auxDate.toDate())
                 auxList.add(commentAux)
             }
-            Log.d("Comentarios Log", auxList.toString())
             commentList.postValue(auxList)
         }
     }

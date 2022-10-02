@@ -534,7 +534,6 @@ class FirestoreService {
                 .whereEqualTo("id_evento_fk", idEvent)
                 .get()
                 .await()
-        Log.d("Comentarios Log", comments.documents.toString())
         return comments
     }
 }

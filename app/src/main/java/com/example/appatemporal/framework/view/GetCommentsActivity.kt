@@ -25,7 +25,6 @@ class GetCommentsActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         val idEvento = "12hEWP8xQQgQGjCyuWon"
-        Log.d("Log", idEvento)
 
         getCommentsViewModel.getComments(idEvento, repository)
 
