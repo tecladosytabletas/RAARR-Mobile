@@ -73,13 +73,13 @@ class DetailedMetrics : AppCompatActivity(){
         setEventName(tempEventId)
         setTotalProfit(tempEventId)
 
-        var ventasTarjeta : Int = 0
-        var ventasEfectivo : Int = 0
+        var dataTbyPM : MutableList<Pair<String,Int?>> = mutableListOf()
         detailedMetricsViewModel.getPMbyTickets(tempEventId,repository)
         detailedMetricsViewModel.countPM.observe(this, Observer{
-            ventasTarjeta = it.first
-            ventasEfectivo = it.second
-            setBCPMbyEvent(ventasTarjeta, ventasEfectivo)
+            for(element in it){
+                dataTbyPM.add(Pair(element.key,element.value))
+                setBCPMbyEvent(dataTbyPM)
+            }
         })
 
         var dataTTSA : MutableList<Triple<String,Int?,Int?>> = mutableListOf()
@@ -109,29 +109,43 @@ class DetailedMetrics : AppCompatActivity(){
         })
     }
 
-    private fun setBCPMbyEvent(tarjeta : Int, efectivo : Int){
+    private fun setBCPMbyEvent(dataList : MutableList<Pair<String,Int?>>){
         //declare values of the chart
-        val barEntries = ArrayList<BarEntry>()
-        barEntries.add(BarEntry(1f, tarjeta.toFloat()))
-        barEntries.add(BarEntry(2f, efectivo.toFloat()))
+        //dataset - boletos por metodo de pago
+        val dataSet: ArrayList<BarEntry> = ArrayList()
+        var i = 0
+        for (entry in dataList) {
+            var value = dataList[i].second!!.toFloat()
+            dataSet.add(BarEntry(i.toFloat(), value))
+            i++
+        }
         //bardata set
-        val bardataSet = BarDataSet(barEntries,"Metodos de pago")
+        val bardataSet = BarDataSet(dataSet,"Metodos de pago")
         bardataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
         val data = BarData(bardataSet)
         //pass the data to the BarChar
         ourPMBarChart.data = data
         //declare the XAxis variable
         val xAxis: XAxis = ourPMBarChart.xAxis
-
         //set the labels on the chart
-        val xAxisLabels = listOf("")
+        val xAxisLabels: ArrayList<String> = ArrayList()
+        var k = 0
+        for (entry in dataList) {
+            xAxisLabels.add(dataList[k].first)
+            k++
+        }
         ourPMBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
-
+        //decorative elements of the chart
+        xAxis.setCenterAxisLabels(true)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setGranularity(1f)
+        ourPMBarChart.setDragEnabled(false)
+        ourPMBarChart.setScaleEnabled(false)
+        ourPMBarChart.setVisibleXRangeMaximum(3f)
         //decorative elements of the chart
         ourPMBarChart.axisLeft.setDrawGridLines(false)
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
-        ourPMBarChart.setScaleEnabled(false)
         ourPMBarChart.legend.isEnabled = false
         ourPMBarChart.description.isEnabled = false
         ourPMBarChart.animateY(1000)

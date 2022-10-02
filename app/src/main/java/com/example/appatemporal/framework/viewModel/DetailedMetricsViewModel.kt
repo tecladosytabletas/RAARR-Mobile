@@ -12,12 +12,12 @@ import kotlinx.coroutines.launch
 
 class DetailedMetricsViewModel : ViewModel() {
 
-    val countPM = MutableLiveData<Pair<Int, Int>>()
+    val countPM = MutableLiveData<MutableMap<String, Int?>>()
     private var getPMbyTicketsRequirement = GetPMbyTicketsRequirement()
     fun getPMbyTickets(eid: String, repository: Repository) {
         viewModelScope.launch {
-            val event_name = getPMbyTicketsRequirement(eid, repository)
-            countPM.postValue(event_name)
+            val PMbyTickets = getPMbyTicketsRequirement(eid, repository)
+            countPM.postValue(PMbyTickets)
         }
     }
 

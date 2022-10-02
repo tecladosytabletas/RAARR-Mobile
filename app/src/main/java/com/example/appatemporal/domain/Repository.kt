@@ -73,7 +73,7 @@ class Repository(context: Context) {
         return firestoreAPI.generalProfitsEvent(eid)
     }
 
-    suspend fun getTicketsbyPM(eid: String) : Pair<Int, Int>{
+    suspend fun getTicketsbyPM(eid: String) : MutableMap<String, Int?>{
         return firestoreAPI.getTicketsbyPM(eid)
     }
 
