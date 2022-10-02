@@ -22,7 +22,7 @@ class CategoriasEventosViewHolder(view: View): RecyclerView.ViewHolder(view) {
             val randomColor = colors[Random().nextInt(colors.size)]
 
             val shape = GradientDrawable()
-            shape.cornerRadius = 18F
+            shape.cornerRadius = 38F
             shape.setColor(randomColor)
             tvCategoria.background = shape
         }
