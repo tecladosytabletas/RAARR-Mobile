@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
 import com.example.appatemporal.domain.models.CommentModel
 
-class GetCommentsAdapter(val listaComentarios :List<CommentModel>) : RecyclerView.Adapter <GetCommentsViewHolder>() {
+class GetCommentsAdapter(private val listaComentarios: MutableList<CommentModel>) : RecyclerView.Adapter<GetCommentsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GetCommentsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

@@ -527,4 +527,14 @@ class FirestoreService {
         if (listRatings[1] <= 0){return emptyRatings}
         return listRatings
     }
+
+    suspend fun getComments(idEvent: String) : QuerySnapshot {
+        val comments =
+            db.collection("Comentario")
+                .whereEqualTo("id_evento_fk", idEvent)
+                .get()
+                .await()
+        Log.d("Comentarios Log", comments.documents.toString())
+        return comments
+    }
 }

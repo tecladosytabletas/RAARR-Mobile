@@ -4,37 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
 >
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/startMargin"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/endMargin"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85"/>
 
     <TextView
         app:layout_constraintVertical_bias="0"
-        android:id="@+id/Comentario"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:id="@+id/comentario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/grey_shape"
         android:hint="Describe el asunto"
         android:padding="10dp"
         tools:text="Comentario de prueba"
-        app:layout_constraintStart_toStartOf="@+id/startMargin"
-        app:layout_constraintEnd_toEndOf="@id/endMargin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/dark_grey"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

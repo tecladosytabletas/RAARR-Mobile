@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".framework.view.ConsultarBoleto"
+    tools:context=".framework.view.GetCommentsActivity"
     android:background="@color/background">
 
     <include android:id="@+id/header"
@@ -17,9 +17,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
+    <TextView
+        android:id="@+id/tvFAQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="FAQ Organizador"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/abel"
+        android:textSize="30sp"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintVertical_bias="0.05"/>
 
 
-        <include
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerComment"
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/navbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvFAQ"
+/>
+
+    <include
             android:id="@+id/navbar" layout="@layout/navbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,12 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerComment"
-        android:layout_width="409dp"
-        android:layout_height="569dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="81dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
