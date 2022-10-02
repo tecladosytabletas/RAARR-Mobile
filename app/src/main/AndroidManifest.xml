@@ -129,11 +129,13 @@
             android:name=".framework.view.CheckIfLogged"
             android:exported="true">
             <!-- Aqui estaba el Intent Filter originalmente -->
-
-
         </activity>
         <activity
             android:name=".framework.view.ActivityVisualizarEventoOrganizador"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.GetCommentsActivity"
             android:exported="true">
         </activity>
         <meta-data

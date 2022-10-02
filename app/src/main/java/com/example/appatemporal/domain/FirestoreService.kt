@@ -534,5 +534,13 @@ class FirestoreService {
         db.collection("Comentario")
             .add(comment)
             .await()
+
+    suspend fun getComments(idEvent: String) : QuerySnapshot {
+        val comments =
+            db.collection("Comentario")
+                .whereEqualTo("id_evento_fk", idEvent)
+                .get()
+                .await()
+        return comments
     }
 }
