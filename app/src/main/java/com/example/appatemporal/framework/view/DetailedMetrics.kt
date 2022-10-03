@@ -3,16 +3,13 @@ package com.example.appatemporal.framework.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.appatemporal.R
 import com.example.appatemporal.databinding.DetailedMetricsBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.DetailedMetricsViewModel
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
@@ -24,13 +21,7 @@ import kotlin.collections.ArrayList
 class DetailedMetrics : AppCompatActivity(){
 
     private lateinit var binding : DetailedMetricsBinding
-    private lateinit var ourDashTitle : TextView
-    private lateinit var ourIngresosTotales : TextView
-    private lateinit var ourPMBarChart: BarChart
-    private lateinit var ourTTSABarChart: BarChart
-
     private val detailedMetricsViewModel : DetailedMetricsViewModel by viewModels()
-
     private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,16 +50,12 @@ class DetailedMetrics : AppCompatActivity(){
             startActivity(intent)
         }
 
-        ourDashTitle = findViewById(R.id.dashTitle)
-        ourIngresosTotales = findViewById(R.id.profitsEvent)
-        ourPMBarChart = findViewById(R.id.PMLinechart)
-        ourTTSABarChart = findViewById(R.id.TTASLinechart)
-
         repository = Repository(this)
 
         val tempEventId : String = "DM"
 
         setEventName(tempEventId)
+
         setTotalProfit(tempEventId)
 
         var dataTbyPM : MutableList<Pair<String,Int?>> = mutableListOf()
@@ -100,6 +87,7 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setEventName(eid:String) {
+        val ourDashTitle = binding.dashTitle
         repository = Repository(this)
         detailedMetricsViewModel.getEventName(eid,repository)
         detailedMetricsViewModel.eventName.observe(this, Observer{
@@ -108,6 +96,7 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setTotalProfit(eid:String) {
+        val ourIngresosTotales = binding.profitsEvent
         repository = Repository(this)
         detailedMetricsViewModel.getEventProfit(eid,repository)
         detailedMetricsViewModel.eventProfit.observe(this, Observer{
@@ -117,6 +106,7 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setBCPMbyEvent(dataList : MutableList<Pair<String,Int?>>){
+        val ourPMBarChart = binding.PMLinechart
         //declare values of the chart
         //dataset - boletos por metodo de pago
         val dataSet: ArrayList<BarEntry> = ArrayList()
@@ -160,6 +150,7 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setTTSABarChart(dataList : MutableList<Triple<String,Int?,Int?>>){
+        val ourTTSABarChart = binding.TTASLinechart
         //declare values of the chart
         //dataset 1 - ventas totales
         val entriesVTotales: ArrayList<BarEntry> = ArrayList()
