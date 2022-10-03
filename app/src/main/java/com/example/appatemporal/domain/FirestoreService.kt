@@ -364,33 +364,48 @@ class FirestoreService {
         return ganancias
     }
 
-    suspend fun getTicketsbyPM(eid:String): Pair<Int,Int> {
+    suspend fun getTicketsbyPM(eid:String): MutableMap<String, Int?> {
 
-        var boletos: QuerySnapshot
-        var countTarjeta : Int = 0
-        var countEfectivo : Int = 0
+        var diccPM = mutableMapOf<String, Int?>()
+        var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
 
         var funciones: QuerySnapshot = db.collection("Funcion")
             .whereEqualTo("id_Evento", eid)
             .get()
             .await()
         Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        if (funciones.isEmpty){diccPM.put("No hay datos", 0); return diccPM}
+
         for(element in funciones){
-            boletos = db.collection("Boleto")
+            var boletos : QuerySnapshot = db.collection("Boleto")
                 .whereEqualTo("id_Funcion", element.id)
                 .get()
                 .await()
+            if (boletos.isEmpty){diccPM.put("No hay datos", 0); return diccPM}
+
             for(boleto in boletos){
-                if(boleto.data?.get("id_Metodo_Pago").toString() == "JsCPG2YuCgqYyZUypktB"){
-                    countTarjeta++
+                if(boleto.data?.get("id_Metodo_Pago").toString() !in diccPM){
+                    diccPM.put(boleto.data?.get("id_Metodo_Pago").toString(), 0)
                 }
-                else {
-                    countEfectivo++
+                diccPM.computeIfPresent(boleto.data?.get("id_Metodo_Pago").toString()) { _, v -> v + 1}
+            }
+        }
+        var metodos : QuerySnapshot =
+            db.collection("Metodo_Pago")
+                .get()
+                .await()
+        if (metodos.isEmpty){diccPM.put("No hay datos en Metodos", 0); return diccPM}
+
+        var result = mutableMapOf<String, Int?>()
+        for (element in diccPM){
+            for (metodo in metodos){
+                if (element.key == metodo.id){
+                    result.put(metodo.data?.get("metodo").toString(),diccPM.get(element.key))
                 }
             }
         }
-
-        val result = Pair(countTarjeta, countEfectivo)
+        Log.d("Dentro de getTicketsbyPM",result.toString())
+        if (result.isEmpty()){return errorHandler}
         return result
     }
 
@@ -444,7 +459,7 @@ class FirestoreService {
         Log.d("Existence of rating", existence.toString())
         return existence
     }
-        
+
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
         Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
         var boletos: QuerySnapshot
