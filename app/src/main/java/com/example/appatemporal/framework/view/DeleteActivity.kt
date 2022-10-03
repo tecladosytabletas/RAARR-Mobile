@@ -97,7 +97,39 @@ class DeleteActivity : AppCompatActivity(){
                     // set adapter to the autocomplete tv to the arrayAdapter
                     autocompleteTV2.setAdapter(arrayAdapter3)
 
+                    binding.spinnerFilterToFilter.addTextChangedListener(object : TextWatcher {
+                        override fun afterTextChanged(s: Editable) {
+                            if (binding.spinnerFilterToFilter.getText().toString()=="En Proceso"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
+                            }
+                            else if (binding.spinnerFilterToFilter.getText().toString()=="No Completado"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
+                            }
+                            else if (binding.spinnerFilterToFilter.getText().toString()=="Completado"){
+                                secondTipo  = binding.spinnerFilterToFilter.getText().toString()
+                                tipo = binding.spinnerFilterMain.getText().toString()
+                                initRecyclerView(repository, idProyecto, secondTipo, tipo)
+                            }
+                        }
+                        override fun beforeTextChanged(s: CharSequence, start: Int,
+                                                       count: Int, after: Int) {}
+
+                        override fun onTextChanged(s: CharSequence, start: Int,
+                                                   before: Int, count: Int) {}
+                    })
+
+                    //binding.filterButton.setOnClickListener{
+                    //     Log.d("hola",prioridad)
+                    //     Log.d("hola", tipo)
+                    //     filterRecyclerView(repository,idProyecto, prioridad, tipo)
+                    //}
+
                 }
+
                 else if (binding.spinnerFilterMain.getText().toString()=="Prioridad"){
                     // set adapter to the autocomplete tv to the arrayAdapter
                     autocompleteTV2.setAdapter(arrayAdapter4)
@@ -190,7 +222,10 @@ class DeleteActivity : AppCompatActivity(){
         if (tipo == "Area"){
             viewModel.getAllActivitiesArea(id,SecondTipo, repository)
         }
-        if (tipo == "Prioridad"){
+        else if (tipo == "Estatus"){
+            viewModel.getAllActivitiesEstatus(id,SecondTipo, repository)
+        }
+        else if (tipo == "Prioridad"){
             viewModel.getAllActivitiesPrioridad(id,SecondTipo, repository)
         }
         else{
