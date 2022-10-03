@@ -229,11 +229,11 @@
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
-                    <com.github.mikephil.charting.charts.RadarChart
-                        android:id="@+id/RPMRadarChart"
+                    <com.github.mikephil.charting.charts.HorizontalBarChart
+                        android:id="@+id/RPMHorizontalBarChart"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent">
-                    </com.github.mikephil.charting.charts.RadarChart>
+                    </com.github.mikephil.charting.charts.HorizontalBarChart>
 
                 </LinearLayout>
 

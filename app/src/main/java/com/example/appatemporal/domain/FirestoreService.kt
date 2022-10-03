@@ -623,7 +623,7 @@ class FirestoreService {
         for (element in diccPM){
             for (metodo in metodos){
                 if (element.key == metodo.id){
-                    result.put(metodo.data?.get("nombre").toString(),diccPM.get(element.key))
+                    result.put(metodo.data?.get("metodo").toString(),diccPM.get(element.key))
                 }
             }
         }

@@ -218,22 +218,36 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setRevenueByPM(dataList : MutableList<Pair<String,Int?>>){
-        val ourRPMRadarChart = binding.RPMRadarChart
+        val ourRPMHorizontalBarChart = binding.RPMHorizontalBarChart
         //declare values of the chart
         //dataset - ventas por metodo de pago
-        val dataSet: ArrayList<RadarEntry> = ArrayList()
+        val dataSet: ArrayList<BarEntry> = ArrayList()
         var i = 0
         for (entry in dataList) {
             var value = dataList[i].second!!.toFloat()
-            dataSet.add(RadarEntry(i.toFloat(), value))
+            dataSet.add(BarEntry(i.toFloat(), value))
             i++
         }
         //bardata set
-        val radardataSet = RadarDataSet(dataSet,"Metodos de pago")
+        val radardataSet = BarDataSet(dataSet,"Metodos de pago")
         radardataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
-        val data = RadarData(radardataSet)
+        val data = BarData(radardataSet)
         //pass the data to the BarChar
-        ourRPMRadarChart.data = data
+        ourRPMHorizontalBarChart.data = data
+        ourRPMHorizontalBarChart.invalidate()
+        //set the labels on the chart
+        val xAxisLabels: ArrayList<String> = ArrayList()
+        var k = 0
+        for (entry in dataList) {
+            xAxisLabels.add(dataList[k].first)
+            k++
+        }
+        ourRPMHorizontalBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+        //set decorative elements
+        //ourRPMHorizontalBarChart.getXAxis().setEnabled(false);
+        ourRPMHorizontalBarChart.legend.isEnabled = false
+        ourRPMHorizontalBarChart.description.isEnabled = false
+        ourRPMHorizontalBarChart.animateX(1000)
     }
 
 }
