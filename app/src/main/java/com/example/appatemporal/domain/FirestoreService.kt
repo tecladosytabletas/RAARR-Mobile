@@ -577,6 +577,7 @@ class FirestoreService {
 
     suspend fun getRevenuebyPM(eid:String): MutableMap<String, Int?> {
         var diccPM = mutableMapOf<String, Int?>()
+        var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
 
         var funciones: QuerySnapshot = db.collection("Funcion")
             .whereEqualTo("id_Evento", eid)
@@ -600,12 +601,12 @@ class FirestoreService {
 
             for (boleto in boletos){
                 for (tipoBoleto in tiposboleto){
-                    if (boleto.data?.get("id_tipo_boleto").toString() ==
-                        tipoBoleto.data?.get("id_tipo_boleto").toString()){
-                        if (boleto.data?.get("id_metodo_pago").toString() !in diccPM){
-                            diccPM.put(boleto.data?.get("id_metodo_pago").toString(), 0)
+                    if (boleto.data?.get("id_Tipo_Boleto").toString() ==
+                        tipoBoleto.data?.get("id_Tipo_Boleto").toString()){
+                        if (boleto.data?.get("id_Metodo_Pago").toString() !in diccPM){
+                            diccPM.put(boleto.data?.get("id_Metodo_Pago").toString(), 0)
                         }
-                        diccPM.computeIfPresent(boleto.data?.get("id_metodo_pago").toString())
+                        diccPM.computeIfPresent(boleto.data?.get("id_Metodo_Pago").toString())
                         { _, v -> v + tipoBoleto.data?.get("precio").toString().toInt()}
                     }
                 }
@@ -627,6 +628,8 @@ class FirestoreService {
             }
         }
 
+        Log.d("Dentro de getRevenuebyPM",result.toString())
+        if (result.isEmpty()){return errorHandler}
         return result
     }
 

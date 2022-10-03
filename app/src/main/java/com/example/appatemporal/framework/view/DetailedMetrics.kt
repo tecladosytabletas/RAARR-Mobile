@@ -14,9 +14,7 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.DetailedMetricsViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.NumberFormat
@@ -96,6 +94,7 @@ class DetailedMetrics : AppCompatActivity(){
         detailedMetricsViewModel.revenueByPM.observe(this, Observer{
             for(element in it){
                 revenuePM.add(Pair(element.key,element.value))
+                setRevenueByPM(revenuePM)
             }
         })
     }
@@ -225,6 +224,25 @@ class DetailedMetrics : AppCompatActivity(){
         //xAxis.setGranularityEnabled(true)
         //ourTTSABarChart.setVisibleXRange(1f,1f)
         ourTTSABarChart.invalidate()
+    }
+
+    private fun setRevenueByPM(dataList : MutableList<Pair<String,Int?>>){
+        val ourRPMRadarChart = binding.RPMRadarChart
+        //declare values of the chart
+        //dataset - ventas por metodo de pago
+        val dataSet: ArrayList<RadarEntry> = ArrayList()
+        var i = 0
+        for (entry in dataList) {
+            var value = dataList[i].second!!.toFloat()
+            dataSet.add(RadarEntry(i.toFloat(), value))
+            i++
+        }
+        //bardata set
+        val radardataSet = RadarDataSet(dataSet,"Metodos de pago")
+        radardataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        val data = RadarData(radardataSet)
+        //pass the data to the BarChar
+        ourRPMRadarChart.data = data
     }
 
 }
