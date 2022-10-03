@@ -90,6 +90,14 @@ class DetailedMetrics : AppCompatActivity(){
                 setTTSABarChart(dataTTSA)
             }
         })
+
+        var revenuePM : MutableList<Pair<String,Int?>> = mutableListOf()
+        detailedMetricsViewModel.getRevenuePM(tempEventId,repository)
+        detailedMetricsViewModel.revenueByPM.observe(this, Observer{
+            for(element in it){
+                revenuePM.add(Pair(element.key,element.value))
+            }
+        })
     }
 
     private fun setEventName(eid:String) {

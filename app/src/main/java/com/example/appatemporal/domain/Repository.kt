@@ -104,6 +104,10 @@ class Repository(context: Context) {
         return firestoreAPI.getEventTicketsSA(eid)
     }
 
+    suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
+        return firestoreAPI.getRevenuebyPM(eid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
