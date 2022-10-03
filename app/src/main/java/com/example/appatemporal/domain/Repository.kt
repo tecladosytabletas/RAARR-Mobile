@@ -202,5 +202,11 @@ class Repository(context: Context) {
 
 
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
-    suspend fun getUserLocalDB(userUid: String): Usuario = usuarioDao.getUserLocalDB(userUid)
+    suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
+
+    suspend fun getEvents() = firestoreAPI.getEvents()
+    suspend fun getCategories() = firestoreAPI.getCategories()
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
+    suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
+
 }

@@ -70,6 +70,15 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".framework.view.CategoriasEventos"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.EventosFiltrados"
+            android:exported="true">
         </activity>
         <activity
             android:name=".framework.view.Favoritosespectador_activity"
