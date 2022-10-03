@@ -190,9 +190,6 @@ class DeleteActivity : AppCompatActivity(){
         if (tipo == "Area"){
             viewModel.getAllActivitiesArea(id,SecondTipo, repository)
         }
-        else{
-            viewModel.getAllActivitiesid(id,repository)
-        }
         if (tipo == "Prioridad"){
             viewModel.getAllActivitiesPrioridad(id,SecondTipo, repository)
         }
