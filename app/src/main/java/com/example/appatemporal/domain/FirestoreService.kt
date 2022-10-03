@@ -10,6 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import org.w3c.dom.Comment
 import java.lang.Integer.parseInt
 import java.util.*
 import kotlin.collections.ArrayList
@@ -444,7 +445,7 @@ class FirestoreService {
         Log.d("Existence of rating", existence.toString())
         return existence
     }
-        
+
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
         Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
         var boletos: QuerySnapshot
@@ -526,6 +527,23 @@ class FirestoreService {
         listRatings[8] = listRatings[0]/listRatings[1]
         if (listRatings[1] <= 0){return emptyRatings}
         return listRatings
+    }
+
+
+    suspend fun addComment(idUser: String,idEvent: String,comment: String){
+        var comment = CommentModel(idUser,idEvent,comment,Date())
+        db.collection("Comentario")
+            .add(comment)
+            .await()
+    }
+
+    suspend fun getComments(idEvent: String) : QuerySnapshot {
+        val comments =
+            db.collection("Comentario")
+                .whereEqualTo("id_evento_fk", idEvent)
+                .get()
+                .await()
+        return comments
     }
 
     suspend fun getEventTicketsSA(eid : String) : Pair<Int, Int> {
