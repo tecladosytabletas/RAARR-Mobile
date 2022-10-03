@@ -81,6 +81,29 @@ class Repository(context: Context) {
         firestoreAPI.addFailure(title, description)
     }
 
+    suspend fun getState(hash_Qr:String): Boolean{
+        return firestoreAPI.getState(hash_Qr)
+    }
+
+    suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
+        firestoreAPI.addRating(idUser, idEvent, rate)
+    }
+    suspend fun  verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
+        return firestoreAPI.verifyRatingExistence(idUser, idEvent)
+    }
+
+    suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
+        return firestoreAPI.getTicketTypeSA(eid)
+    }
+
+    suspend fun getRatingByEvent(eid: String): MutableList<Float> {
+        return firestoreAPI.getRatingByEvent(eid)
+    }
+
+    suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
+        return firestoreAPI.getEventTicketsSA(eid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
@@ -94,7 +117,9 @@ class Repository(context: Context) {
 
 
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
-    suspend fun insertAllActividades(actividades: List<Actividad>) = actividadDao.insertAll(actividades)
+    suspend fun insertAllActividades(actividades: List<Actividad>) =
+        actividadDao.insertAll(actividades)
+
     suspend fun getAllActividades() = actividadDao.getAll()
     suspend fun getActividadById(id: Int) = actividadDao.getById(id)
     suspend fun getAllActividadById(id: Int) = actividadDao.getAllActivityId(id)
@@ -115,7 +140,14 @@ class Repository(context: Context) {
         count.start()
         count.await()
     }
-    suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
+
+    suspend fun updateActividad(
+        nombre: String,
+        estatus: String,
+        area: String,
+        prioridad: String,
+        id: Int
+    ) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
     suspend fun insertAllAreas(areas: List<Area>) = areaDao.insertAll(areas)
@@ -146,26 +178,27 @@ class Repository(context: Context) {
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
     suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
     suspend fun updateProyecto(proyecto: Proyecto) = proyectoDao.update(proyecto)
-    suspend fun updatePresupuesto(presupuestoN:Double, id: Int) =proyectoDao.updatePresupuesto(presupuestoN,id)
-    suspend fun updateMeta(metaN:Double, id: Int) =proyectoDao.updateMeta(metaN,id)
-    suspend fun updateModifyProyect(name: String, date: String,time: String, id: Int) =proyectoDao.updateModify(name,date,time,id)
+    suspend fun updatePresupuesto(presupuestoN: Double, id: Int) =
+        proyectoDao.updatePresupuesto(presupuestoN, id)
+
+    suspend fun updateMeta(metaN: Double, id: Int) = proyectoDao.updateMeta(metaN, id)
+    suspend fun updateModifyProyect(name: String, date: String, time: String, id: Int) =
+        proyectoDao.updateModify(name, date, time, id)
 
 
     suspend fun insertCosto(costo: Costo) = costoDao.insert(costo)
     suspend fun insertAllCostos(costos: List<Costo>) = costoDao.insertAll(costos)
-    suspend fun getAllCostos(id:Int) = costoDao.getAll(id)
+    suspend fun getAllCostos(id: Int) = costoDao.getAll(id)
     suspend fun getCostoById(id: Int) = costoDao.getById(id)
     suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
     suspend fun deleteAllCostos() = costoDao.deleteAll()
     suspend fun updateCosto(costo: Costo) = costoDao.update(costo)
 
 
-    suspend fun getUserTickets(uid: String) : MutableList<GetTicketModel> {
-        Log.d("LOG Repositorio",firestoreAPI.getUserTickets(uid).toString())
+    suspend fun getUserTickets(uid: String): MutableList<GetTicketModel> {
+        Log.d("LOG Repositorio", firestoreAPI.getUserTickets(uid).toString())
         return firestoreAPI.getUserTickets(uid)
     }
-
-
 
 
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
@@ -175,4 +208,5 @@ class Repository(context: Context) {
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
     suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
+
 }
