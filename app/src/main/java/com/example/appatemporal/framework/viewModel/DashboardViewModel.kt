@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.appatemporal.data.GetEventCountRequirement
 import com.example.appatemporal.data.GetRatingRequirement
 import com.example.appatemporal.data.GetRevenueRequirement
-import com.example.appatemporal.data.network.GetVentasCountRequirement
+import com.example.appatemporal.data.GetVentasCountRequirement
 import com.example.appatemporal.domain.Repository
 import kotlinx.coroutines.launch
 
