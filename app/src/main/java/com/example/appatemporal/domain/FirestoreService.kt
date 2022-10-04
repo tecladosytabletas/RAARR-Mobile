@@ -127,10 +127,10 @@ class FirestoreService {
 
             result.add(ticket)
 
-            Log.d("LOG ticket information from API",ticket.toString())
+            //Log.d("LOG ticket information from API",ticket.toString())
 
         }
-        Log.d("listofEventsTickets query", result.toString())
+
         //Log.d("LOG aqui",result.isEmpty().toString())
         return result
     }
@@ -538,7 +538,7 @@ class FirestoreService {
         if (!query.isEmpty) {
             existence = true
         }
-        Log.d("Existence of rating", existence.toString())
+        //Log.d("Existence of rating", existence.toString())
         return existence
     }
 
@@ -552,7 +552,7 @@ class FirestoreService {
         if (!query.isEmpty) {
             existence = true
         }
-        Log.d("Existence of comment", existence.toString())
+        //Log.d("Existence of comment", existence.toString())
         return existence
     }
 
