@@ -244,6 +244,18 @@ class FirestoreService {
         return ventaTotal
     }
 
+    suspend fun verifyTicketExistence(resulted: String) : Boolean {
+        var existence: Boolean = false
+        var query = db.collection("Boleto")
+            .whereEqualTo("hash_QR", resulted)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+        return existence
+    }
+
     suspend fun updateTicketValue(resulted: String): Boolean {
         var result: String = resulted
 

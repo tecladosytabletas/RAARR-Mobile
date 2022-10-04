@@ -114,6 +114,10 @@ class Repository(context: Context) {
         return firestoreAPI.getEventTicketsSA(eid)
     }
 
+    suspend fun verifyTicketExistence(result: String) : Boolean {
+        return firestoreAPI.verifyTicketExistence(result)
+    }
+
     suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
