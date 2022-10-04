@@ -64,10 +64,10 @@ class RegisterQRView : AppCompatActivity() {
             if (result.contents == null) {
                 Toast.makeText(this, "No se encontró un valor.", Toast.LENGTH_SHORT).show()
             } else {
-                scanQRViewModel.verifyTicketExistence(result.contents, repository) {
-                    if (it) {
-                        scanQRViewModel.updateTicketValue(result.contents, repository) {
-                            if(it){
+                scanQRViewModel.verifyTicketExistence(result.contents, repository) { existence ->
+                    if (existence) {
+                        scanQRViewModel.updateTicketValue(result.contents, repository) { status ->
+                            if(status){
                                 Toast.makeText(this,"Boleto válido escaneado EXITÓSAMENTE",Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(this,"Boleto YA USADO",Toast.LENGTH_SHORT).show()
