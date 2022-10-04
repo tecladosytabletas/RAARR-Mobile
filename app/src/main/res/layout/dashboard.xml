@@ -53,64 +53,16 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto"
                 android:text="Métricas"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="32sp" />
+                android:textSize="36sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:gravity="right"
-                android:orientation="horizontal">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="16dp"
+                android:layout_weight="0.2"></Space>
 
-                <TextView
-                    android:id="@+id/filterMonth"
-                    android:layout_width="100dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/gradent_horizontal"
-                    android:fontFamily="@font/roboto"
-                    android:gravity="center"
-                    android:text="Este mes"
-                    android:textAlignment="center"
-                    android:textColor="@color/white" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0.5dp"
-                    android:layout_weight="0.2"></Space>
-
-                <TextView
-                    android:id="@+id/filterYear"
-                    android:layout_width="100dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/gradent_horizontal"
-                    android:fontFamily="@font/roboto"
-                    android:gravity="center"
-                    android:text="Este año"
-                    android:textAlignment="center"
-                    android:textColor="@color/white" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0.5dp"
-                    android:layout_weight="0.2"></Space>
-
-                <TextView
-                    android:id="@+id/filterAll"
-                    android:layout_width="100dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/gradent_horizontal"
-                    android:fontFamily="@font/roboto"
-                    android:gravity="center"
-                    android:text="Todos"
-                    android:textAlignment="center"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/mainCard"
@@ -139,9 +91,10 @@
                         android:fontFamily="@font/roboto"
                         android:gravity="center"
                         android:text="$4000.00"
+                        android:textColor="@color/black"
                         android:textAlignment="center"
-                        android:textSize="50sp"
-                        android:textStyle="italic" />
+                        android:textStyle="bold"
+                        android:textSize="50sp"/>
 
                     <TextView
                         android:id="@+id/eventCountTotal"
@@ -149,6 +102,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:text="En x eventos"
+                        android:textColor="@color/black"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:textSize="20sp" />
@@ -178,10 +132,25 @@
                     android:background="@color/lightGray"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/LeyendaPieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Asistentes esperados vs. Asistentes reales"
+                        android:textAlignment="center"
+                        android:singleLine="false"
+                        android:textColor="@color/black"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/dashPieChart"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="5dp">
 
                     </com.github.mikephil.charting.charts.PieChart>
 
@@ -219,6 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:isIndicator="true"
+                        android:progressTint="@color/black"
                         android:numStars="5"
                         android:rating="0"
                         android:stepSize="0.001" />
@@ -231,8 +201,9 @@
                         android:text="Rating promedio de x"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:textStyle="italic" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
