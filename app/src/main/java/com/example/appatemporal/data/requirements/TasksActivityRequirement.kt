@@ -22,4 +22,16 @@ class TasksActivityRequirement {
     suspend fun getAllActivitiesId(id: Int,repository: Repository): List<Actividad> {
         return repository.getAllActividadById(id)
     }
+
+    suspend fun filterActivitiesByStatus(idProyecto:Int, stringStatus:String ,repository: Repository): List<Actividad> {
+        return repository.filterActivitiesByStatus(idProyecto, stringStatus)
+    }
+
+    suspend fun filterActivitiesByArea(idProyecto:Int, stringStatus:String ,repository: Repository): List<Actividad> {
+        return repository.filterActivitiesByArea(idProyecto, stringStatus)
+    }
+
+    suspend fun filterActivitiesByPriority(idProyecto:Int, stringStatus:String ,repository: Repository): List<Actividad> {
+        return repository.filterActivitiesByPriority(idProyecto, stringStatus)
+    }
 }
