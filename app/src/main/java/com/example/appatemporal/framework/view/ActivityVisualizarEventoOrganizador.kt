@@ -13,6 +13,7 @@ import com.example.appatemporal.framework.viewModel.GraphicsEventDetailViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 
 class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
@@ -75,6 +76,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         pieShades.add(Color.parseColor("#FE810E"))
         ourSet.colors = pieShades
         ourPieChart.data = data
+        ourPieChart.data.setValueFormatter(DefaultValueFormatter(0))
         ourPieChart.invalidate()
         data.setValueTextColor(Color.DKGRAY)
         data.setValueTextSize(20f)
