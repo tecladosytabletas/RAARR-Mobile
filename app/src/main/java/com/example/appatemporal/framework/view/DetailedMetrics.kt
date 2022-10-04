@@ -155,9 +155,12 @@ class DetailedMetrics : AppCompatActivity(){
 
     private fun setTTSABarChart(dataList : MutableList<Triple<String,Int?,Int?>>){
         val ourTTSABarChart = binding.TTASLinechart
-        //declare values of the chart
-        //dataset 1 - ventas totales
-        val entriesVTotales: ArrayList<BarEntry> = ArrayList()
+        //Declaramos los datos de la grafica
+
+        //Creamos el arreglo para el set 1
+
+        //PRUEBA DE POBLAR CON FUNCIONES
+        /*val entriesVTotales: ArrayList<BarEntry> = ArrayList()
         var i = 0
         for (entry in dataList) {
             var value = dataList[i].second!!.toFloat()
@@ -165,7 +168,8 @@ class DetailedMetrics : AppCompatActivity(){
             entriesVTotales.add(BarEntry(i.toFloat(), value))
             i++
         }
-        //dataset 2 - asistencias totales
+
+        //Creamos el arreglo para el set 2
         val entriesVAsistencias: ArrayList<BarEntry> = ArrayList()
         var j = 0
         for (entry in dataList) {
@@ -174,23 +178,32 @@ class DetailedMetrics : AppCompatActivity(){
             j++
         }
         Log.d("Dataset2",entriesVAsistencias.toString())
-        //bardata set
-        val bardataSet1 = BarDataSet(entriesVTotales,"Ventas totales")
+         */
+
+        //Creacion de dataSets
+        val bardataSet1 = BarDataSet(getTTSAset1(dataList),"Ventas totales")
         bardataSet1.setColors(resources.getColor(R.color.Red))
-        val bardataSet2 = BarDataSet(entriesVAsistencias,"Asistencias totales")
+
+        val bardataSet2 = BarDataSet(getTTSAset2(dataList),"Asistencias totales")
         bardataSet2.setColors(resources.getColor(R.color.purple_200))
+
         val data = BarData(bardataSet1,bardataSet2)
         //pass the data to the BarChar
         ourTTSABarChart.data = data
         //declare the XAxis variable
         val xAxis: XAxis = ourTTSABarChart.xAxis
         //set the labels on the chart
-        val xAxisLabels: ArrayList<String> = ArrayList()
+
+        ourTTSABarChart.xAxis.valueFormatter = IndexAxisValueFormatter(getTTSAlabels(dataList))
+
+        //PRUEBA CON FUNCION
+        /*val xAxisLabels: ArrayList<String> = ArrayList()
         var k = 0
         for (entry in dataList) {
             xAxisLabels.add(dataList[k].first)
             k++
         }
+        */
 
         xAxis.setCenterAxisLabels(true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -214,7 +227,7 @@ class DetailedMetrics : AppCompatActivity(){
 
         ourTTSABarChart.isAutoScaleMinMaxEnabled = true
         // Valores para la escala del eje X
-        xAxis.setLabelCount(k, true)
+        //xAxis.setLabelCount(k, true)
         //decorative elements of the chart
         ourTTSABarChart.axisLeft.setDrawGridLines(false)
         xAxis.setDrawGridLines(false)
@@ -223,11 +236,43 @@ class DetailedMetrics : AppCompatActivity(){
         ourTTSABarChart.description.isEnabled = false
         ourTTSABarChart.animateY(1000)
 
-        Log.d("TTSA labels - a",xAxisLabels.toString())
-        ourTTSABarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+        //Log.d("TTSA labels - a",xAxisLabels.toString())
 
         ourTTSABarChart.invalidate()
-        Log.d("TTSA labels - d",xAxisLabels.toString())
+        //Log.d("TTSA labels - d",xAxisLabels.toString())
+    }
+
+    private fun getTTSAset1(dataList : MutableList<Triple<String,Int?,Int?>>): ArrayList<BarEntry>{
+        val entriesVT: ArrayList<BarEntry> = ArrayList()
+        var i = 0
+        for (entry in dataList) {
+            var value = dataList[i].second!!.toFloat()
+            Log.d("Dentro de la grafica 1",value.toString())
+            entriesVT.add(BarEntry(i.toFloat(), value))
+            i++
+        }
+        return entriesVT
+    }
+
+    private fun getTTSAset2(dataList : MutableList<Triple<String,Int?,Int?>>): ArrayList<BarEntry>{
+        val entriesVA: ArrayList<BarEntry> = ArrayList()
+        var j = 0
+        for (entry in dataList) {
+            var value = dataList[j].third!!.toFloat()
+            entriesVA.add(BarEntry(j.toFloat(), value))
+            j++
+        }
+        return entriesVA
+    }
+
+    private fun getTTSAlabels(dataList : MutableList<Triple<String,Int?,Int?>>): ArrayList<String>{
+        val xAxisLabels: ArrayList<String> = ArrayList()
+        var k = 0
+        for (entry in dataList) {
+            xAxisLabels.add(dataList[k].first)
+            k++
+        }
+        return xAxisLabels
     }
 
     private fun setRevenueByPM(dataList : MutableList<Pair<String,Int?>>){
