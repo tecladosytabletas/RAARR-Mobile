@@ -42,6 +42,7 @@ class ConsultarBoleto : AppCompatActivity() {
         }
 
         binding.ratingbar.visibility = android.view.View.INVISIBLE
+        binding.sendBtn.visibility = android.view.View.GONE
 
 //        val idUser = getSharedPreferences("user", Context.MODE_PRIVATE).getString("userUid", "").toString()
         val idUser = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
@@ -85,22 +86,23 @@ class ConsultarBoleto : AppCompatActivity() {
             if (it) {
                 Log.d("LogExistence rating", it.toString())
                 binding.ratingbar.visibility = android.view.View.INVISIBLE
-
+                binding.sendBtn.visibility = android.view.View.GONE
             } else {
                 consultarBoletoViewModel.getStateTicket(hashQr.toString(),idUser,repository)
                 consultarBoletoViewModel.ticketState.observe(this, Observer {
-                    Log.d("DatAvIEW", it.toString())
+                    Log.d("TicketState", it.toString())
                     if (it == false){
                         binding.ratingbar.visibility = android.view.View.VISIBLE
-                        binding.ratingbar.setOnRatingBarChangeListener { ratingBar, fl, b ->
-                            Log.d("rating bar Log", fl.toString())
-                            consultarBoletoViewModel.addRating(idUser, idEvento.toString(), fl, repository)
+                        binding.sendBtn.visibility = android.view.View.VISIBLE
+                        binding.sendBtn.setOnClickListener {
+                            Log.d("rating Log", binding.ratingbar.rating.toString())
+                            consultarBoletoViewModel.addRating(idUser, idEvento.toString(), binding.ratingbar.rating, repository)
                             Toast.makeText(this, "El evento ha sido calificado", Toast.LENGTH_SHORT).show()
                             Handler(Looper.myLooper()!!).postDelayed(Runnable{
                                 binding.ratingbar.visibility = android.view.View.INVISIBLE
+                                binding.sendBtn.visibility = android.view.View.GONE
                             },1000)
                         }
-
                     }
                 })
             }

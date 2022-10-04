@@ -33,10 +33,6 @@
         <activity
             android:name=".framework.view.RegisterSale"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.ContactInfo"
@@ -77,6 +73,10 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.CategoriasEventos"
