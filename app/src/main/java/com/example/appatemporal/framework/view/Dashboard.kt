@@ -14,6 +14,9 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Dashboard : AppCompatActivity(){
     private lateinit var binding : DashboardBinding
@@ -75,7 +78,8 @@ class Dashboard : AppCompatActivity(){
         })
         dashboardViewModel.getRevenue(uid, repository)
         dashboardViewModel.revenue.observe(this, Observer{
-            ourRevenue.text = "$ ${it} MXN"
+            val profit: String = NumberFormat.getNumberInstance(Locale.US).format(500000)
+            ourRevenue.text = "$${profit} MXN"
         })
     }
 
