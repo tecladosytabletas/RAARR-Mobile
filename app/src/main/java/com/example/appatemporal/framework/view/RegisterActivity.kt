@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.data.localdatabase.entities.Usuario
@@ -98,8 +97,6 @@ class RegisterActivity : AppCompatActivity() {
 
                 val intent = Intent(this, Main::class.java)
                 startActivity(intent)
-            }else{
-                Toast.makeText(this,"Faltan llenar campos", Toast.LENGTH_SHORT).show()
             }
         }
     }
