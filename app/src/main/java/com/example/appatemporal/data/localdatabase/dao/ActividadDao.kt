@@ -45,6 +45,10 @@ interface ActividadDao {
     @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id_pro AND estatus = :stringStatus")
     suspend fun FilterActivityByStatus (id_pro: Int, stringStatus: String): List<Actividad>
 
+    //Count all activities
+    @Query("SELECT COUNT(*) FROM actividad_table WHERE id_proyecto = :id_a")
+    suspend fun countAllActivities(id_a: Int): Int
+
     //Filter activities by area
     @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id_pro AND area = :stringArea")
     suspend fun FilterActivityByArea (id_pro: Int, stringArea: String): List<Actividad>

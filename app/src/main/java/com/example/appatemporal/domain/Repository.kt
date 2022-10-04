@@ -155,6 +155,14 @@ class Repository(context: Context) {
         count.start()
         count.await()
     }
+
+    fun countAllActivities(id_a: Int): Int = runBlocking {
+        val count = async {
+            actividadDao.countAllActivities(id_a)
+        }
+        count.start()
+        count.await()
+    }
     //Filter Activities
     suspend fun filterActivitiesByStatus(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByStatus(idProyecto, stringStatus)
     suspend fun filterActivitiesByArea(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByArea(idProyecto, stringStatus)
@@ -194,6 +202,8 @@ class Repository(context: Context) {
         proyectoDao.updatePresupuesto(presupuestoN, id)
 
     suspend fun updateMeta(metaN: Double, id: Int) = proyectoDao.updateMeta(metaN, id)
+    suspend fun updateEstatusCompletado(estatusN: Boolean, id: Int) = proyectoDao.updateEstatusCompletado(estatusN, id)
+    suspend fun filterProjectsByStatus(stringStatus:Boolean) = proyectoDao.FilterProjectsByStatus(stringStatus)
     suspend fun updateModifyProyect(name: String, date: String, time: String, id: Int) =
         proyectoDao.updateModify(name, date, time, id)
 

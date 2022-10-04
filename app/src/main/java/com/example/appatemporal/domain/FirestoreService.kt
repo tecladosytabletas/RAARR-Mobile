@@ -419,7 +419,7 @@ class FirestoreService {
                     document.data?.get("direccion").toString(),
                     document.data?.get("longitud").toString(),
                     document.data?.get("latitud").toString(),
-                    document.data?.get("imagen").toString(),
+                    document.data?.get("foto_portada").toString(),
                     document.data?.get("video").toString(),
                     document.data?.get("activo").toString(),
                     document.data?.get("aprobado").toString(),
