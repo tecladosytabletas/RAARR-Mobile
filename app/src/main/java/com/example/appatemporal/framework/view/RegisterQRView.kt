@@ -68,13 +68,13 @@ class RegisterQRView : AppCompatActivity() {
                     if (it) {
                         scanQRViewModel.updateTicketValue(result.contents, repository) {
                             if(it){
-                                Toast.makeText(this,"Boleto valido escaneado EXITOSAMENTE",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,"Boleto válido escaneado EXITÓSAMENTE",Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(this,"Boleto YA USADO",Toast.LENGTH_SHORT).show()
                             }
                         }
                     } else {
-                        Toast.makeText(this,"Boleto INVALIDO",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Boleto INVÁLIDO",Toast.LENGTH_SHORT).show()
                     }
                 }
             }
