@@ -10,6 +10,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
 
@@ -100,11 +101,26 @@ class Repository(context: Context) {
         return firestoreAPI.getRatingByEvent(eid)
     }
 
+    suspend fun addComment(idUser: String, idEvent: String, comment: String) {
+        return firestoreAPI.addComment(idUser,idEvent,comment)
+    }
+
+    suspend fun getComments(idEvento: String) : QuerySnapshot {
+        return firestoreAPI.getComments(idEvento)
+    }
+
+
     suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
         return firestoreAPI.getEventTicketsSA(eid)
     }
 
+    suspend fun getEvents() = firestoreAPI.getEvents()
+    suspend fun getCategories() = firestoreAPI.getCategories()
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
+    suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
+
     // Local database
+
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
@@ -204,9 +220,6 @@ class Repository(context: Context) {
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
     suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
 
-    suspend fun getEvents() = firestoreAPI.getEvents()
-    suspend fun getCategories() = firestoreAPI.getCategories()
-    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
-    suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
+
 
 }

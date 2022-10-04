@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.appatemporal.data.AddRatingRequirement
 import com.example.appatemporal.data.GetTicketStateRequirement
 import com.example.appatemporal.data.VerifyRatingExistanceRequirement
+import com.example.appatemporal.data.addCommentRequirement
 import com.example.appatemporal.domain.Repository
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,7 @@ class ConsultarBoletoViewModel:ViewModel() {
     private  val getTicketStateRequirement = GetTicketStateRequirement()
     private val addRatingRequirement = AddRatingRequirement()
     private val verifyRatingExistanceRequirement = VerifyRatingExistanceRequirement()
+    private val addCommentRequirement = addCommentRequirement()
 
     val ticketState = MutableLiveData<Boolean>()
     val rateState = MutableLiveData<Boolean>()
@@ -38,7 +40,10 @@ class ConsultarBoletoViewModel:ViewModel() {
             val rState = verifyRatingExistanceRequirement(idUser,idEvent,repository)
             rateState.postValue(rState)
         }
-
-
+    }
+    fun addComment(idUser: String,idEvent: String,comment: String, repository: Repository){
+        viewModelScope.launch{
+            addCommentRequirement(idUser,idEvent,comment,repository)
+        }
     }
 }
