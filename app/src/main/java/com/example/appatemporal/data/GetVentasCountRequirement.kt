@@ -1,4 +1,4 @@
-package com.example.appatemporal.data.network
+package com.example.appatemporal.data
 
 import com.example.appatemporal.domain.Repository
 
