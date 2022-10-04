@@ -101,6 +101,7 @@ class RegisterActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Faltan llenar campos", Toast.LENGTH_SHORT).show()
             }
+//Comentario para pushear
         }
     }
 }
