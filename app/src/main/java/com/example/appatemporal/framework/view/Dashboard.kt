@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -49,6 +50,9 @@ class Dashboard : AppCompatActivity(){
             startActivity(intent)
         }
 
+        val uid = getSharedPreferences("user", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
+        //Usuario temporal de pruebas, eliminar posteriormente
         val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
         repository = Repository(this)
 
