@@ -3,20 +3,15 @@ package com.example.appatemporal.framework.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.appatemporal.R
 import com.example.appatemporal.databinding.DetailedMetricsBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.DetailedMetricsViewModel
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.NumberFormat
@@ -26,13 +21,7 @@ import kotlin.collections.ArrayList
 class DetailedMetrics : AppCompatActivity(){
 
     private lateinit var binding : DetailedMetricsBinding
-    private lateinit var ourDashTitle : TextView
-    private lateinit var ourIngresosTotales : TextView
-    private lateinit var ourPMBarChart: BarChart
-    private lateinit var ourTTSABarChart: BarChart
-
     private val detailedMetricsViewModel : DetailedMetricsViewModel by viewModels()
-
     private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,16 +50,12 @@ class DetailedMetrics : AppCompatActivity(){
             startActivity(intent)
         }
 
-        ourDashTitle = findViewById(R.id.dashTitle)
-        ourIngresosTotales = findViewById(R.id.profitsEvent)
-        ourPMBarChart = findViewById(R.id.PMLinechart)
-        ourTTSABarChart = findViewById(R.id.TTASLinechart)
-
         repository = Repository(this)
 
         val tempEventId : String = "DM"
 
         setEventName(tempEventId)
+
         setTotalProfit(tempEventId)
 
         var dataTbyPM : MutableList<Pair<String,Int?>> = mutableListOf()
@@ -90,9 +75,19 @@ class DetailedMetrics : AppCompatActivity(){
                 setTTSABarChart(dataTTSA)
             }
         })
+
+        var revenuePM : MutableList<Pair<String,Int?>> = mutableListOf()
+        detailedMetricsViewModel.getRevenuePM(tempEventId,repository)
+        detailedMetricsViewModel.revenueByPM.observe(this, Observer{
+            for(element in it){
+                revenuePM.add(Pair(element.key,element.value))
+                setRevenueByPM(revenuePM)
+            }
+        })
     }
 
     private fun setEventName(eid:String) {
+        val ourDashTitle = binding.dashTitle
         repository = Repository(this)
         detailedMetricsViewModel.getEventName(eid,repository)
         detailedMetricsViewModel.eventName.observe(this, Observer{
@@ -101,6 +96,7 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setTotalProfit(eid:String) {
+        val ourIngresosTotales = binding.profitsEvent
         repository = Repository(this)
         detailedMetricsViewModel.getEventProfit(eid,repository)
         detailedMetricsViewModel.eventProfit.observe(this, Observer{
@@ -110,6 +106,7 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setBCPMbyEvent(dataList : MutableList<Pair<String,Int?>>){
+        val ourPMBarChart = binding.PMLinechart
         //declare values of the chart
         //dataset - boletos por metodo de pago
         val dataSet: ArrayList<BarEntry> = ArrayList()
@@ -153,6 +150,7 @@ class DetailedMetrics : AppCompatActivity(){
     }
 
     private fun setTTSABarChart(dataList : MutableList<Triple<String,Int?,Int?>>){
+        val ourTTSABarChart = binding.TTASLinechart
         //declare values of the chart
         //dataset 1 - ventas totales
         val entriesVTotales: ArrayList<BarEntry> = ArrayList()
@@ -217,6 +215,39 @@ class DetailedMetrics : AppCompatActivity(){
         //xAxis.setGranularityEnabled(true)
         //ourTTSABarChart.setVisibleXRange(1f,1f)
         ourTTSABarChart.invalidate()
+    }
+
+    private fun setRevenueByPM(dataList : MutableList<Pair<String,Int?>>){
+        val ourRPMHorizontalBarChart = binding.RPMHorizontalBarChart
+        //declare values of the chart
+        //dataset - ventas por metodo de pago
+        val dataSet: ArrayList<BarEntry> = ArrayList()
+        var i = 0
+        for (entry in dataList) {
+            var value = dataList[i].second!!.toFloat()
+            dataSet.add(BarEntry(i.toFloat(), value))
+            i++
+        }
+        //bardata set
+        val radardataSet = BarDataSet(dataSet,"Metodos de pago")
+        radardataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        val data = BarData(radardataSet)
+        //pass the data to the BarChar
+        ourRPMHorizontalBarChart.data = data
+        ourRPMHorizontalBarChart.invalidate()
+        //set the labels on the chart
+        val xAxisLabels: ArrayList<String> = ArrayList()
+        var k = 0
+        for (entry in dataList) {
+            xAxisLabels.add(dataList[k].first)
+            k++
+        }
+        ourRPMHorizontalBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+        //set decorative elements
+        //ourRPMHorizontalBarChart.getXAxis().setEnabled(false);
+        ourRPMHorizontalBarChart.legend.isEnabled = false
+        ourRPMHorizontalBarChart.description.isEnabled = false
+        ourRPMHorizontalBarChart.animateX(1000)
     }
 
 }

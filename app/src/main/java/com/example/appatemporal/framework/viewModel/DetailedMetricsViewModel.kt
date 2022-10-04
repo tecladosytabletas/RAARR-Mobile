@@ -3,10 +3,7 @@ package com.example.appatemporal.framework.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.appatemporal.data.GetEventNameRequirement
-import com.example.appatemporal.data.GetPMbyTicketsRequirement
-import com.example.appatemporal.data.GetProfitsEvent
-import com.example.appatemporal.data.GetTypeSATickets
+import com.example.appatemporal.data.*
 import com.example.appatemporal.domain.Repository
 import kotlinx.coroutines.launch
 
@@ -45,6 +42,15 @@ class DetailedMetricsViewModel : ViewModel() {
         viewModelScope.launch {
             val events_TicketsTypeSA = getTypeSATickets(eid, repository)
             eventsTicketsTypeSA.postValue(events_TicketsTypeSA)
+        }
+    }
+
+    val revenueByPM = MutableLiveData<MutableMap<String, Int?>>()
+    private var getRevenuebyPM = GetRevenuebyPM()
+    fun getRevenuePM(eid: String, repository: Repository) {
+        viewModelScope.launch {
+            val eventRevenueByPM = getRevenuebyPM(eid, repository)
+            revenueByPM.postValue(eventRevenueByPM)
         }
     }
 
