@@ -78,7 +78,7 @@ class Repository(context: Context) {
         return firestoreAPI.generalProfitsEvent(eid)
     }
 
-    suspend fun getTicketsbyPM(eid: String) : Pair<Int, Int>{
+    suspend fun getTicketsbyPM(eid: String) : MutableMap<String, Int?>{
         return firestoreAPI.getTicketsbyPM(eid)
     }
 
@@ -126,6 +126,10 @@ class Repository(context: Context) {
         return firestoreAPI.verifyTicketExistence(result)
     }
 
+    suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
+        return firestoreAPI.getRevenuebyPM(eid)
+    }
+    
     suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
