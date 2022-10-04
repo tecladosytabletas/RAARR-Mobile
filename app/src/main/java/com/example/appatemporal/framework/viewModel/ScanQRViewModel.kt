@@ -12,7 +12,6 @@ import com.example.appatemporal.domain.Repository
 import kotlinx.coroutines.launch
 
 class ScanQRViewModel : ViewModel() {
-    //val qrcode = MutableLiveData<Boolean>()
     private val updateTicketValueRequirement = UpdateTicketValueRequirement()
     private val verifyTicketExistenceRequirement = VerifyTicketExistenceRequirement()
 
