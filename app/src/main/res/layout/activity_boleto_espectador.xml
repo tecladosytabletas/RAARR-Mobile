@@ -131,7 +131,19 @@
                 android:numStars="5"
                 android:progressTint="@color/yellow"
                 android:secondaryProgressTint="@color/yellow"
-                android:stepSize="1"></RatingBar>
+
+                android:stepSize="1"/>
+            <Button
+                android:id="@+id/sendBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enviar"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/purple"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                />
+
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
