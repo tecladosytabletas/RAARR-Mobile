@@ -114,7 +114,13 @@ class Repository(context: Context) {
         return firestoreAPI.getEventTicketsSA(eid)
     }
 
+    suspend fun getEvents() = firestoreAPI.getEvents()
+    suspend fun getCategories() = firestoreAPI.getCategories()
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
+    suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
+
     // Local database
+
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
@@ -151,13 +157,12 @@ class Repository(context: Context) {
         count.await()
     }
 
-    suspend fun updateActividad(
-        nombre: String,
-        estatus: String,
-        area: String,
-        prioridad: String,
-        id: Int
-    ) = actividadDao.update(nombre, estatus, area, prioridad, id)
+    //Filter Activities
+    suspend fun filterActivitiesByStatus(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByStatus(idProyecto, stringStatus)
+    suspend fun filterActivitiesByArea(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByArea(idProyecto, stringStatus)
+    suspend fun filterActivitiesByPriority(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByPriority(idProyecto, stringStatus)
+
+    suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
     suspend fun insertAllAreas(areas: List<Area>) = areaDao.insertAll(areas)
@@ -212,5 +217,8 @@ class Repository(context: Context) {
 
 
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
-    suspend fun getUserLocalDB(userUid: String): Usuario = usuarioDao.getUserLocalDB(userUid)
+    suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
+
+
+
 }

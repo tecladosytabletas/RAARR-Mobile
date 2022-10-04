@@ -70,6 +70,14 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.CategoriasEventos"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".framework.view.EventosFiltrados"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
