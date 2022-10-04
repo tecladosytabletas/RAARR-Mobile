@@ -113,21 +113,24 @@ class FirestoreService {
                     .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_Funcion"))
                     .get()
                     .await()
-            var evento : QuerySnapshot =
+            var evento : DocumentSnapshot =
                 db.collection("Evento")
-                    .whereEqualTo(FieldPath.documentId(),funciones.documents[0].data?.get("id_Evento"))
+                    .document(funciones.documents[0].data?.get("id_Evento").toString())
                     .get()
                     .await()
-            var ticket = GetTicketModel(evento.documents[0].id, evento.documents[0].data?.get("nombre_Evento").toString(),
+            Log.d("EventLog", evento.data.toString())
+            var ticket = GetTicketModel(evento.id, evento.data?.get("nombre_Evento").toString(),
                 funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
-                evento.documents[0].data?.get("lugar").toString(), evento.documents[0].data?.get("direccion").toString(),
-                evento.documents[0].data?.get("ciudad").toString(), evento.documents[0].data?.get("estado").toString(),
+                evento.data?.get("lugar").toString(), evento.data?.get("direccion").toString(),
+                evento.data?.get("ciudad").toString(), evento.data?.get("estado").toString(),
                 boleto.data?.get("hash_qr").toString())
 
             result.add(ticket)
 
-            //Log.d("LOG ticket",ticket.toString())
+            //Log.d("LOG ticket information from API",ticket.toString())
+
         }
+
         //Log.d("LOG aqui",result.isEmpty().toString())
         return result
     }
@@ -244,6 +247,18 @@ class FirestoreService {
         return ventaTotal
     }
 
+    suspend fun verifyTicketExistence(resulted: String) : Boolean {
+        var existence: Boolean = false
+        var query = db.collection("Boleto")
+            .whereEqualTo("hash_QR", resulted)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+        return existence
+    }
+
     suspend fun updateTicketValue(resulted: String): Boolean {
         var result: String = resulted
 
@@ -310,6 +325,14 @@ class FirestoreService {
             .document()
             .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
             .await()
+    }
+
+    suspend fun getMetodoPagoId(metodoPago: String) : QuerySnapshot {
+        val query = db.collection("Metodo_Pago")
+            .whereEqualTo("metodo", metodoPago)
+            .get()
+            .await()
+        return query
     }
 
     /**
@@ -530,7 +553,21 @@ class FirestoreService {
         if (!query.isEmpty) {
             existence = true
         }
-        Log.d("Existence of rating", existence.toString())
+        //Log.d("Existence of rating", existence.toString())
+        return existence
+    }
+
+    suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
+        var existence: Boolean = false
+        val query = db.collection("Comentario")
+            .whereEqualTo("id_evento_fk", idEvent)
+            .whereEqualTo("id_usuario_fk", idUser)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+        //Log.d("Existence of comment", existence.toString())
         return existence
     }
 

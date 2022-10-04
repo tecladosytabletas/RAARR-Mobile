@@ -66,6 +66,10 @@ class Repository(context: Context) {
         return firestoreAPI.RegisterSale(idFuncion,id_Metodo_Pago,id_Tipo_Boleto)
     }
 
+    suspend fun getMetodoPagoUid(metodoPago: String) : QuerySnapshot {
+        return  firestoreAPI.getMetodoPagoId(metodoPago)
+    }
+
     suspend fun getEventName(eid: String) : String{
         return firestoreAPI.getEventName(eid)
     }
@@ -89,7 +93,7 @@ class Repository(context: Context) {
     suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
         firestoreAPI.addRating(idUser, idEvent, rate)
     }
-    suspend fun  verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
+    suspend fun verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
         return firestoreAPI.verifyRatingExistence(idUser, idEvent)
     }
 
@@ -105,6 +109,10 @@ class Repository(context: Context) {
         return firestoreAPI.addComment(idUser,idEvent,comment)
     }
 
+    suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
+        return firestoreAPI.verifyCommentExistence(idUser, idEvent)
+    }
+
     suspend fun getComments(idEvento: String) : QuerySnapshot {
         return firestoreAPI.getComments(idEvento)
     }
@@ -112,6 +120,10 @@ class Repository(context: Context) {
 
     suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
         return firestoreAPI.getEventTicketsSA(eid)
+    }
+
+    suspend fun verifyTicketExistence(result: String) : Boolean {
+        return firestoreAPI.verifyTicketExistence(result)
     }
 
     suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
