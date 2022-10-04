@@ -20,14 +20,14 @@
         android:backgroundTintMode="src_atop"
         />
 
-    <ImageView
-        android:id="@+id/ivProjectImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_alignEnd="@+id/tvProjectActivity"
-        android:src="@drawable/change_white" />
+<!--    <ImageView-->
+<!--        android:id="@+id/ivProjectImage"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_alignEnd="@+id/tvProjectActivity"-->
+<!--        android:src="@drawable/change_white" />-->
 
 
 </RelativeLayout>

@@ -15,6 +15,7 @@
         android:layout_height="80dp"
         app:layout_constraintTop_toTopOf="parent"/>
 
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:id="@+id/FilterMainLayout"
@@ -99,6 +100,7 @@
         tools:itemCount="3"
         tools:listitem="@layout/item_todo" />
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newTaskButton"
         android:layout_width="wrap_content"
@@ -117,6 +119,7 @@
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/todoRv" />
+
 
     <include
         android:id="@+id/navbar"
