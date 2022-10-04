@@ -40,7 +40,7 @@ interface ActividadDao {
     //Count activities by status
     @Query("SELECT COUNT(*) FROM actividad_table WHERE id_proyecto = :id_a AND estatus = :stringStatus")
     suspend fun countDoneActivities(id_a: Int, stringStatus: String): Int
-
+    
     //Filter activities by status
     @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id_pro AND estatus = :stringStatus")
     suspend fun FilterActivityByStatus (id_pro: Int, stringStatus: String): List<Actividad>
