@@ -45,7 +45,13 @@
             tools:replace="screenOrientation" />
         <activity
             android:name=".framework.view.RegisterQRView"
-            android:exported="true" />
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".framework.view.SelectedEventView"
             android:exported="false" />
@@ -78,10 +84,6 @@
         <activity
             android:name=".framework.view.EventosFiltrados"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.Favoritosespectador_activity"
