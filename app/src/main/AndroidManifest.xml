@@ -32,7 +32,12 @@
             android:exported="true" />
         <activity
             android:name=".framework.view.RegisterSale"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".framework.view.ContactInfo"
             android:exported="true" />
@@ -47,10 +52,6 @@
             android:name=".framework.view.RegisterQRView"
             android:exported="true"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.SelectedEventView"

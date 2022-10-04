@@ -66,6 +66,10 @@ class Repository(context: Context) {
         return firestoreAPI.RegisterSale(idFuncion,id_Metodo_Pago,id_Tipo_Boleto)
     }
 
+    suspend fun getMetodoPagoUid(metodoPago: String) : QuerySnapshot {
+        return  firestoreAPI.getMetodoPagoId(metodoPago)
+    }
+
     suspend fun getEventName(eid: String) : String{
         return firestoreAPI.getEventName(eid)
     }

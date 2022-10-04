@@ -324,6 +324,14 @@ class FirestoreService {
             .await()
     }
 
+    suspend fun getMetodoPagoId(metodoPago: String) : QuerySnapshot {
+        val query = db.collection("Metodo_Pago")
+            .whereEqualTo("metodo", metodoPago)
+            .get()
+            .await()
+        return query
+    }
+
     /**
      * Adds a document in ReporteFallas collection of Firestore
      * @param title: String
