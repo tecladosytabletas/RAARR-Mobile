@@ -113,15 +113,16 @@ class FirestoreService {
                     .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_Funcion"))
                     .get()
                     .await()
-            var evento : QuerySnapshot =
+            var evento : DocumentSnapshot =
                 db.collection("Evento")
-                    .whereEqualTo(FieldPath.documentId(),funciones.documents[0].data?.get("id_Evento"))
+                    .document(funciones.documents[0].data?.get("id_Evento").toString())
                     .get()
                     .await()
-            var ticket = GetTicketModel(evento.documents[0].id, evento.documents[0].data?.get("nombre_Evento").toString(),
+            Log.d("EventLog", evento.data.toString())
+            var ticket = GetTicketModel(evento.id, evento.data?.get("nombre_Evento").toString(),
                 funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
-                evento.documents[0].data?.get("lugar").toString(), evento.documents[0].data?.get("direccion").toString(),
-                evento.documents[0].data?.get("ciudad").toString(), evento.documents[0].data?.get("estado").toString(),
+                evento.data?.get("lugar").toString(), evento.data?.get("direccion").toString(),
+                evento.data?.get("ciudad").toString(), evento.data?.get("estado").toString(),
                 boleto.data?.get("hash_qr").toString())
 
             result.add(ticket)
@@ -322,6 +323,14 @@ class FirestoreService {
             .document()
             .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
             .await()
+    }
+
+    suspend fun getMetodoPagoId(metodoPago: String) : QuerySnapshot {
+        val query = db.collection("Metodo_Pago")
+            .whereEqualTo("metodo", metodoPago)
+            .get()
+            .await()
+        return query
     }
 
     /**
