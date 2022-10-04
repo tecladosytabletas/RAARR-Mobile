@@ -72,14 +72,14 @@ class Dashboard : AppCompatActivity(){
         val ourRevenue = binding.eventRevenue
         val ourEventCount = binding.eventCountTotal
         repository = Repository(this)
+        dashboardViewModel.getRevenue(uid, repository)
+        dashboardViewModel.revenue.observe(this, Observer{
+            val profit: String = NumberFormat.getNumberInstance(Locale.US).format(it)
+            ourRevenue.text = "$${profit} MXN"
+        })
         dashboardViewModel.countEvent(uid, repository)
         dashboardViewModel.count.observe(this, Observer{
             ourEventCount.text = "En ${it} eventos"
-        })
-        dashboardViewModel.getRevenue(uid, repository)
-        dashboardViewModel.revenue.observe(this, Observer{
-            val profit: String = NumberFormat.getNumberInstance(Locale.US).format(500000)
-            ourRevenue.text = "$${profit} MXN"
         })
     }
 
@@ -88,8 +88,8 @@ class Dashboard : AppCompatActivity(){
         val ourPieChart = binding.dashPieChart
         val ourPieEntry = ArrayList<PieEntry>()
         var noAssist = ventasTotal - asistenciasTotal
-        ourPieEntry.add(PieEntry(noAssist.toFloat(), "No Asistieron"))
-        ourPieEntry.add(PieEntry(asistenciasTotal.toFloat(), "Asistieron"))
+        ourPieEntry.add(PieEntry(noAssist.toFloat(), "Asistentes esperados"))
+        ourPieEntry.add(PieEntry(asistenciasTotal.toFloat(), "Asistentes reales"))
         val ourSet = PieDataSet(ourPieEntry, "")
         val data = PieData(ourSet)
         //formato de la pie chart
