@@ -1,10 +1,12 @@
 package com.example.appatemporal.framework.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.appatemporal.data.GetCurrentTicketsFunRequirement
 import com.example.appatemporal.data.GetDropDownNamesRequirement
+import com.example.appatemporal.data.GetMetodoPagoUidRequirement
 import com.example.appatemporal.data.RegisterSaleRequirement
 import com.example.appatemporal.domain.Repository
 import kotlinx.coroutines.launch
@@ -12,7 +14,8 @@ import kotlinx.coroutines.launch
 class RegisterSaleViewModel : ViewModel() {
     private val getDropDownNamesRequirement = GetDropDownNamesRequirement()
     private val getCurrentTicketsFunRequirement = GetCurrentTicketsFunRequirement()
-    private val RegisterSaleRequirement = RegisterSaleRequirement()
+    private val registerSaleRequirement = RegisterSaleRequirement()
+    private val getMetodoPagoUidRequirement = GetMetodoPagoUidRequirement()
 
     val dropdownList = MutableLiveData<ArrayList<Triple<String, Int, String>>>()
     val ticketAvailability = MutableLiveData<Pair<Int, Int>>()
@@ -41,9 +44,18 @@ class RegisterSaleViewModel : ViewModel() {
             }
         }
     }
+
+    fun getMetodoPagoUid(metodoPago: String, repository: Repository, result: (String) -> Unit) {
+        viewModelScope.launch {
+            val queryResult = getMetodoPagoUidRequirement(metodoPago, repository)
+            var metodoPagoUid: String = queryResult.documents[0].id
+            result(metodoPagoUid)
+        }
+    }
+
    fun RegisterSale(idFuncion: String,id_Metodo_Pago:String, id_Tipo_Boleto :String, repository: Repository){
         viewModelScope.launch{
-            RegisterSaleRequirement(idFuncion,id_Metodo_Pago,id_Tipo_Boleto, repository)
+            registerSaleRequirement(idFuncion,id_Metodo_Pago,id_Tipo_Boleto, repository)
         }
     }
 
