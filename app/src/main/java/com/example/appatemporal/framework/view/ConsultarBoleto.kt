@@ -18,6 +18,8 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.ConsultarBoletoViewModel
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import kotlinx.android.synthetic.main.activity_boleto_espectador.*
+import kotlinx.android.synthetic.main.activity_contact_info.view.*
 
 class ConsultarBoleto : AppCompatActivity() {
     private lateinit var binding: ActivityBoletoEspectadorBinding
@@ -43,6 +45,9 @@ class ConsultarBoleto : AppCompatActivity() {
 
         binding.ratingbar.visibility = android.view.View.INVISIBLE
         binding.sendBtn.visibility = android.view.View.GONE
+        binding.etComment.visibility = android.view.View.GONE
+        binding.sendIcon.visibility = android.view.View.GONE
+        binding.commentLabel.visibility = android.view.View.INVISIBLE
 
 //        val idUser = getSharedPreferences("user", Context.MODE_PRIVATE).getString("userUid", "").toString()
         val idUser = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
@@ -55,6 +60,10 @@ class ConsultarBoleto : AppCompatActivity() {
         val ciudad = intent.getStringExtra("ciudad")
         val estado = intent.getStringExtra("estado")
         val hashQr = intent.getStringExtra("hashQr")
+
+        Log.d("id evento seleccionado", idEvento.toString())
+
+        Log.d("hashqrValue Log", hashQr.toString())
 
         binding.ivShareEvent.setOnClickListener {
             val sendIntent = Intent()
@@ -70,18 +79,42 @@ class ConsultarBoleto : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.sendIcon.setOnClickListener{
-            val etContent = binding.etComment.text.toString()
-            consultarBoletoViewModel.addComment(idUser,idEvento.toString(),etContent,repository)
-            Toast.makeText(this, "Tu Commentario fue Registrado exitosamente!", Toast.LENGTH_SHORT).show()
-            binding.etComment.getText().clear();
-        }
+        consultarBoletoViewModel.verifyComment(idUser, idEvento.toString(), repository)
+        consultarBoletoViewModel.commentState.observe(this, Observer { commentExistence ->
+            if (commentExistence) {
+                binding.etComment.visibility = android.view.View.GONE
+                binding.sendIcon.visibility = android.view.View.GONE
+                binding.commentLabel.visibility = android.view.View.INVISIBLE
+            } else {
+                consultarBoletoViewModel.getStateTicket(hashQr.toString(),idUser,repository)
+                consultarBoletoViewModel.ticketState.observe(this, Observer {
+                      if (it == false) {
+                          binding.etComment.visibility = android.view.View.VISIBLE
+                          binding.sendIcon.visibility = android.view.View.VISIBLE
+                          binding.commentLabel.visibility = android.view.View.VISIBLE
+                          binding.sendIcon.setOnClickListener {
+                              if (!etComment.text.isNullOrEmpty()) {
+                                  val etContent = binding.etComment.text.toString()
+                                  consultarBoletoViewModel.addComment(idUser,idEvento.toString(),etContent,repository)
+                                  Toast.makeText(this, "Tu comentario fue registrado exitosamente!", Toast.LENGTH_SHORT).show()
+                                  binding.etComment.getText().clear();
+                                  Handler(Looper.myLooper()!!).postDelayed(Runnable{
+                                      binding.etComment.visibility = android.view.View.GONE
+                                      binding.sendIcon.visibility = android.view.View.GONE
+                                      binding.commentLabel.visibility = android.view.View.INVISIBLE
 
-        Log.d("id evento seleccionado", idEvento.toString())
+                                  },1000)
+                              } else {
+                                  Toast.makeText(this, "Por favor llena el campo", Toast.LENGTH_SHORT).show()
+                              }
+                          }
+                      }
+                })
+            }
+        })
 
-        Log.d("hashqrValue Log", hashQr.toString())
 
-        consultarBoletoViewModel.VerifyRate(idUser, idEvento.toString(), repository)
+        consultarBoletoViewModel.verifyRate(idUser, idEvento.toString(), repository)
         consultarBoletoViewModel.rateState.observe(this, Observer {
             if (it) {
                 Log.d("LogExistence rating", it.toString())
@@ -107,11 +140,6 @@ class ConsultarBoleto : AppCompatActivity() {
                 })
             }
         })
-
-//sdgsdfgsd
-//
-
-
 
         binding.NombreEventoBoleto.text = nombre
         binding.FechaEvento.text = fecha

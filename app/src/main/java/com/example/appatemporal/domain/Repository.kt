@@ -93,7 +93,7 @@ class Repository(context: Context) {
     suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
         firestoreAPI.addRating(idUser, idEvent, rate)
     }
-    suspend fun  verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
+    suspend fun verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
         return firestoreAPI.verifyRatingExistence(idUser, idEvent)
     }
 
@@ -107,6 +107,10 @@ class Repository(context: Context) {
 
     suspend fun addComment(idUser: String, idEvent: String, comment: String) {
         return firestoreAPI.addComment(idUser,idEvent,comment)
+    }
+
+    suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
+        return firestoreAPI.verifyCommentExistence(idUser, idEvent)
     }
 
     suspend fun getComments(idEvento: String) : QuerySnapshot {
