@@ -1,6 +1,7 @@
 package com.example.appatemporal.data.requirements
 
 import com.example.appatemporal.data.localdatabase.entities.Actividad
+import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.domain.Repository
 
 class TasksActivityRequirement {
@@ -33,5 +34,23 @@ class TasksActivityRequirement {
 
     suspend fun filterActivitiesByPriority(idProyecto:Int, stringStatus:String ,repository: Repository): List<Actividad> {
         return repository.filterActivitiesByPriority(idProyecto, stringStatus)
+    }
+
+    //Things for filter completed projects
+
+    fun countDoneActivities(repository: Repository, id_a: Int, stringStatus: String): Int{
+        return repository.countDoneActivities(id_a, stringStatus)
+    }
+
+    fun countAllActivities(repository: Repository, id_a: Int): Int{
+        return repository.countAllActivities(id_a)
+    }
+
+    suspend fun getProyectoById(id: Int, repository: Repository): Proyecto {
+        return repository.getProyectoById(id)
+    }
+
+    suspend fun updateEstatusCompletado(estatusNew: Boolean, id: Int, repository: Repository){
+        repository.updateEstatusCompletado(estatusNew,id)
     }
 }

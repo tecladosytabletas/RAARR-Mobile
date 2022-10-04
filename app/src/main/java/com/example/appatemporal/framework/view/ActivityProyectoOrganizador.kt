@@ -34,16 +34,8 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
         var presupuesto:Double = (myExtras?.getDouble("presupuesto_proyecto")?:-1) as Double
         var meta:Double = (myExtras?.getDouble("meta_proyecto")?:-1) as Double
 
-        val repository = Repository(this)
-        val doneActivities = myExtras?.getInt("doneActivities")
-        val totalActivities = myExtras?.getInt("allActivities")
 
-        if (doneActivities == totalActivities && doneActivities !=0 && totalActivities !=0){
-            viewModel.updateEstatusCompletado(true, idProyecto, repository)
-        }
-        else{
-            viewModel.updateEstatusCompletado(false, idProyecto, repository)
-        }
+
         binding.navbar.homeIcon.setOnClickListener {
             finish()
         }
