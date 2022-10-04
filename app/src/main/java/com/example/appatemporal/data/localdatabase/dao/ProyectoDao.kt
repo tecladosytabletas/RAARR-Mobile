@@ -1,7 +1,6 @@
 package com.example.appatemporal.data.localdatabase.dao
 
 import androidx.room.*
-import com.example.appatemporal.data.localdatabase.entities.Actividad
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 
 @Dao
