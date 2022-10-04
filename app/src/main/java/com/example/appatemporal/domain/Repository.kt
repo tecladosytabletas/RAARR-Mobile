@@ -10,6 +10,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 class Repository(context: Context) {
 
@@ -100,6 +101,15 @@ class Repository(context: Context) {
         return firestoreAPI.getRatingByEvent(eid)
     }
 
+    suspend fun addComment(idUser: String, idEvent: String, comment: String) {
+        return firestoreAPI.addComment(idUser,idEvent,comment)
+    }
+
+    suspend fun getComments(idEvento: String) : QuerySnapshot {
+        return firestoreAPI.getComments(idEvento)
+    }
+
+
     suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
         return firestoreAPI.getEventTicketsSA(eid)
     }
@@ -107,8 +117,14 @@ class Repository(context: Context) {
     suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
         return firestoreAPI.getRevenuebyPM(eid)
     }
+    
+    suspend fun getEvents() = firestoreAPI.getEvents()
+    suspend fun getCategories() = firestoreAPI.getCategories()
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
+    suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
 
     // Local database
+
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
@@ -145,13 +161,12 @@ class Repository(context: Context) {
         count.await()
     }
 
-    suspend fun updateActividad(
-        nombre: String,
-        estatus: String,
-        area: String,
-        prioridad: String,
-        id: Int
-    ) = actividadDao.update(nombre, estatus, area, prioridad, id)
+    //Filter Activities
+    suspend fun filterActivitiesByStatus(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByStatus(idProyecto, stringStatus)
+    suspend fun filterActivitiesByArea(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByArea(idProyecto, stringStatus)
+    suspend fun filterActivitiesByPriority(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByPriority(idProyecto, stringStatus)
+
+    suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
     suspend fun insertAllAreas(areas: List<Area>) = areaDao.insertAll(areas)
@@ -206,5 +221,8 @@ class Repository(context: Context) {
 
 
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
-    suspend fun getUserLocalDB(userUid: String): Usuario = usuarioDao.getUserLocalDB(userUid)
+    suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
+
+
+
 }

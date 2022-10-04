@@ -1,6 +1,8 @@
 package com.example.appatemporal.domain
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.appatemporal.domain.models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
@@ -10,7 +12,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.lang.Boolean.parseBoolean
+import java.lang.Double.parseDouble
+import org.w3c.dom.Comment
 import java.lang.Integer.parseInt
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -408,6 +416,72 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
+    suspend fun getEvents(): List<EventModel>{
+        var events: MutableList<EventModel> = mutableListOf()
+        var event: QuerySnapshot = db.collection("Evento")
+            .get()
+            .await()
+        for (document in event) {
+            events.add(
+                EventModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    document.data?.get("fecha").toString(),
+                    document.data?.get("descripcion").toString(),
+                    document.data?.get("ciudad").toString(),
+                    document.data?.get("estado").toString(),
+                    document.data?.get("ubicacion").toString(),
+                    document.data?.get("direccion").toString(),
+                    document.data?.get("longitud").toString(),
+                    document.data?.get("latitud").toString(),
+                    document.data?.get("imagen").toString(),
+                    document.data?.get("video").toString(),
+                    document.data?.get("activo").toString(),
+                    document.data?.get("aprobado").toString(),
+
+                    )
+            )
+        }
+        return events
+    }
+
+    suspend fun getCategories(): List<CategoryModel>{
+        Log.d("Test1", "firestore")
+        var categories: MutableList<CategoryModel> = mutableListOf()
+        var category: QuerySnapshot = db.collection("Categoria")
+            .get()
+            .await()
+        for (document in category) {
+            categories.add(
+                CategoryModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    parseBoolean(document.data?.get("visibilidad").toString())
+                )
+            )
+        }
+        return categories
+    }
+
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String): List<String>{
+        var ids: MutableList<String> = mutableListOf()
+        var eventos: QuerySnapshot = db.collection("Evento_Categoria")
+            .whereEqualTo("id_categoria_fk", idCategoria)
+            .get()
+            .await()
+        for (document in eventos) {
+            ids.add(document.data?.get("id_evento_fk").toString())
+        }
+        return ids
+    }
+
+    suspend fun getCategoryIdByName(name: String): String{
+        var category: QuerySnapshot = db.collection("Categoria")
+            .whereEqualTo("nombre", name)
+            .get()
+            .await()
+        return category.documents[0].id
+    }
 
     /**
      * Get a state in Boleto collection of Firestore
@@ -543,6 +617,23 @@ class FirestoreService {
         return listRatings
     }
 
+
+    suspend fun addComment(idUser: String,idEvent: String,comment: String){
+        var comment = CommentModel(idUser,idEvent,comment,Date())
+        db.collection("Comentario")
+            .add(comment)
+            .await()
+    }
+
+    suspend fun getComments(idEvent: String) : QuerySnapshot {
+        val comments =
+            db.collection("Comentario")
+                .whereEqualTo("id_evento_fk", idEvent)
+                .get()
+                .await()
+        return comments
+    }
+
     suspend fun getEventTicketsSA(eid : String) : Pair<Int, Int> {
         var ventasCount : Int = 0
         var asistenciasCount : Int = 0
@@ -632,5 +723,5 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
-
 }
+
