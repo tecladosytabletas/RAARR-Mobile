@@ -148,6 +148,7 @@ class DetailedMetrics : AppCompatActivity(){
 
         //ourPMBarChart.axisLeft.axisMaximum = bardataSet.xMax
         ourPMBarChart.axisLeft.axisMinimum = 0f
+        ourPMBarChart.axisRight.axisMinimum = 0f
 
         ourPMBarChart.setDragEnabled(false)
         ourPMBarChart.setScaleEnabled(false)
