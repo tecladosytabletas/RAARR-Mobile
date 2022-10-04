@@ -27,6 +27,7 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import kotlinx.android.synthetic.main.dashboard.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -140,6 +141,7 @@ class Dashboard : AppCompatActivity(){
 
         ourSet.colors = pieShades
         ourPieChart.data = data
+        ourPieChart.data.setValueFormatter(DefaultValueFormatter(0))
         ourPieChart.invalidate()
 
         data.setValueTextColor(Color.DKGRAY)

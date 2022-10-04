@@ -11,7 +11,9 @@ import com.example.appatemporal.databinding.DetailedMetricsBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.DetailedMetricsViewModel
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.NumberFormat
@@ -132,9 +134,11 @@ class DetailedMetrics : AppCompatActivity(){
             k++
         }
         ourPMBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+        // Formato de los datos
+        bardataSet.valueFormatter = DefaultValueFormatter(0)
         //decorative elements of the chart
         xAxis.setCenterAxisLabels(true)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.position = XAxis.XAxisPosition.TOP
         xAxis.setGranularity(1f)
         ourPMBarChart.setDragEnabled(false)
         ourPMBarChart.setScaleEnabled(false)
@@ -192,19 +196,24 @@ class DetailedMetrics : AppCompatActivity(){
 
         xAxis.setCenterAxisLabels(true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setGranularityEnabled(true)
         xAxis.setGranularity(1f)
-        //xAxis.setGranularityEnabled(false)
 
         ourTTSABarChart.setDragEnabled(false)
         ourTTSABarChart.setScaleEnabled(false)
-        ourTTSABarChart.setVisibleXRangeMaximum(3f)
+
         val barSpace = 0.1f
         val groupSpace = 0.01f
         data.barWidth = 0.15f
-
         ourTTSABarChart.xAxis.axisMinimum = 0f
         ourTTSABarChart.groupBars(0f, groupSpace, barSpace)
 
+        // Formato de los datos
+        bardataSet1.valueFormatter = DefaultValueFormatter(0)
+        bardataSet2.valueFormatter = DefaultValueFormatter(0)
+        ourTTSABarChart.isAutoScaleMinMaxEnabled = true
+        // Valores para la escala del eje X
+        xAxis.setLabelCount(i, true)
         //decorative elements of the chart
         ourTTSABarChart.axisLeft.setDrawGridLines(false)
         xAxis.setDrawGridLines(false)
@@ -212,8 +221,6 @@ class DetailedMetrics : AppCompatActivity(){
         ourTTSABarChart.legend.isEnabled = false
         ourTTSABarChart.description.isEnabled = false
         ourTTSABarChart.animateY(1000)
-        //xAxis.setGranularityEnabled(true)
-        //ourTTSABarChart.setVisibleXRange(1f,1f)
         ourTTSABarChart.invalidate()
     }
 
