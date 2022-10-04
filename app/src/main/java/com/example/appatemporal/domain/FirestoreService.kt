@@ -127,8 +127,10 @@ class FirestoreService {
 
             result.add(ticket)
 
-            //Log.d("LOG ticket",ticket.toString())
+            Log.d("LOG ticket information from API",ticket.toString())
+
         }
+        Log.d("listofEventsTickets query", result.toString())
         //Log.d("LOG aqui",result.isEmpty().toString())
         return result
     }
@@ -537,6 +539,20 @@ class FirestoreService {
             existence = true
         }
         Log.d("Existence of rating", existence.toString())
+        return existence
+    }
+
+    suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
+        var existence: Boolean = false
+        val query = db.collection("Comentario")
+            .whereEqualTo("id_evento_fk", idEvent)
+            .whereEqualTo("id_usuario_fk", idUser)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+        Log.d("Existence of comment", existence.toString())
         return existence
     }
 
