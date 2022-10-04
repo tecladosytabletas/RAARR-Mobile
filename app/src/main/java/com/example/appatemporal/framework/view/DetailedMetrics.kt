@@ -65,8 +65,8 @@ class DetailedMetrics : AppCompatActivity(){
         detailedMetricsViewModel.countPM.observe(this, Observer{
             for(element in it){
                 dataTbyPM.add(Pair(element.key,element.value))
-                setBCPMbyEvent(dataTbyPM)
             }
+            setBCPMbyEvent(dataTbyPM)
         })
 
         var dataTTSA : MutableList<Triple<String,Int?,Int?>> = mutableListOf()
@@ -74,8 +74,8 @@ class DetailedMetrics : AppCompatActivity(){
         detailedMetricsViewModel.eventsTicketsTypeSA.observe(this, Observer{
             for(element in it){
                 dataTTSA.add(Triple(element.key,element.value.first,element.value.second))
-                setTTSABarChart(dataTTSA)
             }
+            setTTSABarChart(dataTTSA)
         })
 
         var revenuePM : MutableList<Pair<String,Int?>> = mutableListOf()
@@ -83,8 +83,8 @@ class DetailedMetrics : AppCompatActivity(){
         detailedMetricsViewModel.revenueByPM.observe(this, Observer{
             for(element in it){
                 revenuePM.add(Pair(element.key,element.value))
-                setRevenueByPM(revenuePM)
             }
+            setRevenueByPM(revenuePM)
         })
     }
 
@@ -170,7 +170,6 @@ class DetailedMetrics : AppCompatActivity(){
         var j = 0
         for (entry in dataList) {
             var value = dataList[j].third!!.toFloat()
-            Log.d("Dentro de la grafica 2",value.toString())
             entriesVAsistencias.add(BarEntry(j.toFloat(), value))
             j++
         }
@@ -192,7 +191,6 @@ class DetailedMetrics : AppCompatActivity(){
             xAxisLabels.add(dataList[k].first)
             k++
         }
-        ourTTSABarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
 
         xAxis.setCenterAxisLabels(true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -211,9 +209,12 @@ class DetailedMetrics : AppCompatActivity(){
         // Formato de los datos
         bardataSet1.valueFormatter = DefaultValueFormatter(0)
         bardataSet2.valueFormatter = DefaultValueFormatter(0)
+
+        //xAxis.setValueFormatter(IndexAxisValueFormatter(xAxisLabels))
+
         ourTTSABarChart.isAutoScaleMinMaxEnabled = true
         // Valores para la escala del eje X
-        xAxis.setLabelCount(i, true)
+        xAxis.setLabelCount(k, true)
         //decorative elements of the chart
         ourTTSABarChart.axisLeft.setDrawGridLines(false)
         xAxis.setDrawGridLines(false)
@@ -221,7 +222,12 @@ class DetailedMetrics : AppCompatActivity(){
         ourTTSABarChart.legend.isEnabled = false
         ourTTSABarChart.description.isEnabled = false
         ourTTSABarChart.animateY(1000)
+
+        Log.d("TTSA labels - a",xAxisLabels.toString())
+        ourTTSABarChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+
         ourTTSABarChart.invalidate()
+        Log.d("TTSA labels - d",xAxisLabels.toString())
     }
 
     private fun setRevenueByPM(dataList : MutableList<Pair<String,Int?>>){
