@@ -595,9 +595,24 @@ class FirestoreService {
                 val arrayDate: List<String> = eventDate.split("/")
                 Log.d("ArrayDateLog", arrayDate.toString())
                 if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
-                    var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
-                        event.data?.get("ubicacion").toString(),function.data?.get("hora_inicio").toString(),
-                        event.data?.get("foto_portada").toString())
+                    var evento = EventsInMonth(
+                        event.id,
+                        event.data?.get("nombre").toString(),
+                        event.data?.get("ubicacion").toString(),
+                        function.data?.get("hora_inicio").toString(),
+                        event.data?.get("foto_portada").toString(),
+                        //extra properties
+                        event.data?.get("descripcion").toString(),
+                        event.data?.get("cuidad").toString(),
+                        event.data?.get("estado").toString(),
+                        event.data?.get("direccion").toString(),
+                        event.data?.get("longitud").toString(),
+                        event.data?.get("latitud").toString(),
+                        event.data?.get("video").toString(),
+                        event.data?.get("activo").toString(),
+                        event.data?.get("aprobado").toString(),
+                        function.data?.get("fecha_funcion").toString(),
+                    )
                     result.add(evento)
                 }
             }
