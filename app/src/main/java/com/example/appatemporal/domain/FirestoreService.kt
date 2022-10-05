@@ -603,7 +603,7 @@ class FirestoreService {
                         event.data?.get("foto_portada").toString(),
                         //extra properties
                         event.data?.get("descripcion").toString(),
-                        event.data?.get("cuidad").toString(),
+                        event.data?.get("ciudad").toString(),
                         event.data?.get("estado").toString(),
                         event.data?.get("direccion").toString(),
                         event.data?.get("longitud").toString(),

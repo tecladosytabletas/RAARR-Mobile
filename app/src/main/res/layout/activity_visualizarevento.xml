@@ -50,7 +50,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/Nombre_ArtistaVEE"
+                        android:id="@+id/NombreEvento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -62,10 +62,9 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/FechaVEE"
+                        android:id="@+id/Ubicacion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/Nombre_ArtistaVEE"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
@@ -76,26 +75,11 @@
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/LugarVEE"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/FechaVEE"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:text="Auditorio Josefa"
-                        android:textColor="@color/grayBtn"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/DirecionVEE"
+                        android:id="@+id/DireccionVEE"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/LugarVEE"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
@@ -103,14 +87,13 @@
                         android:gravity="center"
                         android:text="Av. 5 de Febrero #398"
                         android:textColor="@color/grayBtn"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/CiudadVEE"
+                        android:id="@+id/CiudadEstadoVEE"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/DirecionVEE"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="8dp"

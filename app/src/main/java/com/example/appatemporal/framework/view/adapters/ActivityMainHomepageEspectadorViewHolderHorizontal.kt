@@ -26,7 +26,7 @@ class ActivityMainHomepageEspectadorViewHolderHorizontal(view: View) : RecyclerV
             var idEvent : String = eventsInMonth.idEvent
             var nombre : String = eventsInMonth.nombreEvento
             var direccion : String = eventsInMonth.direccion
-            var estado :String = eventsInMonth.ciudad+", "+eventsInMonth.estado
+            var estado :String = eventsInMonth.ciudad + ", " + eventsInMonth.estado
             var lugar : String = eventsInMonth.lugarEvento
             var foto_portada : String = eventsInMonth.urlImagen
 
@@ -34,7 +34,7 @@ class ActivityMainHomepageEspectadorViewHolderHorizontal(view: View) : RecyclerV
 
             eventoIndividual.putExtra("idEvent", idEvent)
             eventoIndividual.putExtra("nombre", nombre)
-            eventoIndividual.putExtra("lugar", direccion)
+            eventoIndividual.putExtra("direccion", direccion)
             eventoIndividual.putExtra("estado", estado)
             eventoIndividual.putExtra("ubicacion", lugar)
             eventoIndividual.putExtra("foto_portada", foto_portada)

@@ -31,11 +31,18 @@ class ActivityMainHomepageEspectadorViewHolderVertical(view: View) : RecyclerVie
             var ubicacion :String = eventModel.ubicacion
             var foto_portada : String = eventModel.foto_portada
 
+            /*var idEvent : String = eventsInMonth.idEvent
+            var nombre : String = eventsInMonth.nombreEvento
+            var direccion : String = eventsInMonth.direccion
+            var estado :String = eventsInMonth.ciudad+", "+eventsInMonth.estado
+            var lugar : String = eventsInMonth.lugarEvento
+            var foto_portada : String = eventsInMonth.urlImagen*/
+
             val eventoIndividual =  Intent(itemView.context, ActivityVisualizarEventoEspectador::class.java)
 
             eventoIndividual.putExtra("idEvent", idEvent)
             eventoIndividual.putExtra("nombre", nombre)
-            eventoIndividual.putExtra("lugar", direccion)
+            eventoIndividual.putExtra("direccion", direccion)
             eventoIndividual.putExtra("estado", estado)
             eventoIndividual.putExtra("ubicacion", ubicacion)
             eventoIndividual.putExtra("foto_portada", foto_portada)

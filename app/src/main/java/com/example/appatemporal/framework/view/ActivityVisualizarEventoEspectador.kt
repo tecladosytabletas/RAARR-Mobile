@@ -38,16 +38,20 @@ class ActivityVisualizarEventoEspectador : AppCompatActivity() {
 
         val idEvent = intent.getStringExtra("idEvent")
         val nombre = intent.getStringExtra("nombre")
-        val lugar = intent.getStringExtra("lugar")
+        val direccion = intent.getStringExtra("direccion")
+        val estado = intent.getStringExtra("estado")
+        val ubicacion = intent.getStringExtra("ubicacion")
         val foto_portada = intent.getStringExtra("foto_portada")
 
-        binding.NombreArtistaVEE.text = nombre
-        binding.FechaVEE.text = lugar
+        binding.NombreEvento.text = nombre
+        binding.DireccionVEE.text = direccion
+        binding.Ubicacion.text = ubicacion
+        binding.CiudadEstadoVEE.text = estado
 
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
         binding.buttonComprar.setOnClickListener{
-            val url = "http://www.youtube.com"
+            val url = "http://www.atemporal.art"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
