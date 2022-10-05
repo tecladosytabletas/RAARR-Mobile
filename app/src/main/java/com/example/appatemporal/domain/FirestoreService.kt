@@ -643,27 +643,29 @@ class FirestoreService {
             .get()
             .await()
         Log.d("getEventsUserOrg-uid",uid)
+        Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
 
         for(element in event_user){
             var event = db.collection("Evento")
-                .document(element.data?.get("id_evento_fk").toString())
+                //.document(element.data?.get("id_evento_fk").toString())
+                .whereEqualTo(FieldPath.documentId(),element.data?.get("id_evento_fk").toString())
                 .get()
                 .await()
             Log.d("getEventsUserOrg-Event", event.toString())
             var evento = EventModel(
-                event.id,
-                event.data?.get("nombre").toString(),
-                event.data?.get("descripcion").toString(),
-                event.data?.get("ciudad").toString(),
-                event.data?.get("estado").toString(),
-                event.data?.get("ubicacion").toString(),
-                event.data?.get("direccion").toString(),
-                event.data?.get("longitud").toString(),
-                event.data?.get("latitud").toString(),
-                event.data?.get("foto_portada").toString(),
-                event.data?.get("video").toString(),
-                event.data?.get("activo").toString(),
-                event.data?.get("aprobado").toString()
+                event.documents[0].id,
+                event.documents[0].data?.get("nombre").toString(),
+                event.documents[0].data?.get("descripcion").toString(),
+                event.documents[0].data?.get("ciudad").toString(),
+                event.documents[0].data?.get("estado").toString(),
+                event.documents[0].data?.get("ubicacion").toString(),
+                event.documents[0].data?.get("direccion").toString(),
+                event.documents[0].data?.get("longitud").toString(),
+                event.documents[0].data?.get("latitud").toString(),
+                event.documents[0].data?.get("foto_portada").toString(),
+                event.documents[0].data?.get("video").toString(),
+                event.documents[0].data?.get("activo").toString(),
+                event.documents[0].data?.get("aprobado").toString()
             )
             result.add(evento)
         }
