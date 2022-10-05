@@ -20,7 +20,7 @@ class ActivityMainHomepageEspectadorViewHolderHorizontal(view: View) : RecyclerV
         binding.lugar.text = eventsInMonth.horaInicioEvento
         Picasso.get().load(eventsInMonth.urlImagen).into(binding.imagenSmallCard)
 
-        var cardEventBtn = binding.btnConsultar
+        var cardEventBtn = binding.cardBtnChica
 
         cardEventBtn.setOnClickListener {
             var idEvent : String = eventsInMonth.idEvent
