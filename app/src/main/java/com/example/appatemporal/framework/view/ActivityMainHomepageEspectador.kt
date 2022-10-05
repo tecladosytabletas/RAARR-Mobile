@@ -2,35 +2,33 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.databinding.ActivityMainHomepageEspectadorBinding
-import com.example.appatemporal.databinding.ActivityMainHomepageOrganizadorBinding
 import com.example.appatemporal.domain.Repository
-import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageEspectadorAdapter
+import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageEspectadorAdapterHorizontal
 import com.example.appatemporal.framework.viewModel.GetEventsInMonthViewModel
-import com.example.appatemporal.framework.viewModel.GetUserTicketViewModel
-import java.time.LocalTime
 import java.util.*
 
 class ActivityMainHomepageEspectador : AppCompatActivity() {
     private lateinit var binding: ActivityMainHomepageEspectadorBinding
+    val getEventsInMonthViewModel : GetEventsInMonthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val getEventsInMonthViewModel : GetEventsInMonthViewModel by viewModels()
-        val repository = Repository(this)
         super.onCreate(savedInstanceState)
         binding = ActivityMainHomepageEspectadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val repository = Repository(this)
 
         val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
         val dia = getDay()
         val month = getMonth()
 
-        initRecyclerView(getEventsInMonthViewModel, dia, month, repository)
+        initRecyclerViewHorizontal(getEventsInMonthViewModel, dia, month, repository)
+        initRecyclerViewVertical(getEventsInMonthViewModel, dia, month, repository)
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()
@@ -67,12 +65,25 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
     }
 
 
-    private fun initRecyclerView(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int, repository: Repository){
+    private fun initRecyclerViewHorizontal(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int, repository: Repository){
         getEventsInMonthViewModel.getEventsMonth(day, month, repository)
-        // Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(userIdTemp, repository).toString())
-        getEventsInMonthViewModel.eventsMonth.observe(this, Observer {
-            binding.HorizontalView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
-            binding.HorizontalView.adapter = ActivityMainHomepageEspectadorAdapter(it)
+        //Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(day, month, repository).toString())
+        getEventsInMonthViewModel.eventsMonth.observe(this, Observer { eventsList ->
+            val linearLayout = LinearLayoutManager(this)
+            linearLayout.orientation=LinearLayoutManager.HORIZONTAL
+            binding.HorizontalEspectadorView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
+            binding.HorizontalEspectadorView.adapter = ActivityMainHomepageEspectadorAdapterHorizontal(eventsList)
+        })
+    }
+
+    private fun initRecyclerViewVertical(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int, repository: Repository){
+        getEventsInMonthViewModel.getEventsMonth(day, month, repository)
+        //Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(day, month, repository).toString())
+        getEventsInMonthViewModel.eventsMonth.observe(this, Observer { eventsList ->
+            val linearLayout = LinearLayoutManager(this)
+            linearLayout.orientation=LinearLayoutManager.VERTICAL
+            binding.VerticalView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
+            binding.VerticalView.adapter = ActivityMainHomepageEspectadorAdapterHorizontal(eventsList)
         })
     }
 }

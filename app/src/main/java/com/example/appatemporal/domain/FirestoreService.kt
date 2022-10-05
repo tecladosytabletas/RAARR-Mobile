@@ -594,7 +594,7 @@ class FirestoreService {
             var i = 1
             for(element in meses){
                 if(element == arrayDate[2].uppercase()){
-                    if(i==month && arrayDate[0].toInt() == day){
+                    if(i==month && arrayDate[0].toInt() >= day){
                         var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
                             event.data?.get("ubicacion").toString(),event.data?.get("descripcion").toString())
                         result.add(evento)
@@ -603,6 +603,7 @@ class FirestoreService {
                 i++
             }
         }
+        Log.d("LogResult", result.toString())
         return result
     }
 
