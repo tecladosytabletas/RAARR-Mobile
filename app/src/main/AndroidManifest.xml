@@ -88,7 +88,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".framework.view.EventosFiltrados"
+            android:name=".framework.view.ProyectoOrganizador"
             android:exported="true">
         </activity>
         <activity
@@ -107,7 +107,7 @@
             android:name=".framework.view.PresupuestoAndMeta"
             android:exported="true" />
         <activity
-            android:name=".framework.view.ProyectoOrganizador"
+            android:name=".framework.view.EventosFiltrados"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

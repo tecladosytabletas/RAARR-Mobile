@@ -7,10 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.DatePicker
-import android.widget.EditText
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -242,6 +239,9 @@ class DeleteActivity : AppCompatActivity(){
             viewModel.getAllActivitiesid(id,repository)
         }
         viewModel.activities.observe(this, Observer { activityList ->
+            if (activityList.isEmpty()){
+                Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_SHORT).show()
+            }
             binding.todoRv.layoutManager = LinearLayoutManager(this)
             binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
         })
