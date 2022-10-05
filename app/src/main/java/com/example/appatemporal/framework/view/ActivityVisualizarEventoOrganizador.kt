@@ -24,6 +24,18 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visualizar_evento_organizador)
 
+        /* eventoIndividual.putExtra("idEvent", idEvent)
+            eventoIndividual.putExtra("nombre", nombre)
+            eventoIndividual.putExtra("direccion", direccion)
+            eventoIndividual.putExtra("estado", estado)
+            eventoIndividual.putExtra("ubicacion", ubicacion)
+            eventoIndividual.putExtra("foto_portada", foto_portada) */
+
+        binding.NombreEvento.text = intent.getStringExtra("nombre")
+        binding.Ubicacion.text = intent.getStringExtra("ubicacion")
+        binding.Direccion.text = intent.getStringExtra("direccion")
+        binding.CiudadEstado.text = intent.getStringExtra("estado")
+
         binding = ActivityVisualizarEventoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,6 +57,15 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnMoregraphics.setOnClickListener {
+            var idEvent : String = intent.getStringExtra("idEvent").toString()
+
+            val eventoIndividual =  Intent(this, DetailedMetrics::class.java)
+
+            eventoIndividual.putExtra("idEvent", idEvent)
+            this.startActivity(eventoIndividual)
+        }
+
         //Creación de usuario temporal
         val tempEventId : String = "DM"
         repository = Repository(this)
@@ -59,6 +80,8 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         })
         populateRating(tempEventId)
     }
+
+
 
     fun populateTSAPieChart(ventasTotal:Int,asistenciasTotal:Int){
         /*
