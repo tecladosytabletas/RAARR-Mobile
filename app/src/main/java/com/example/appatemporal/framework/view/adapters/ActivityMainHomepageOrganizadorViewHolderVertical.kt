@@ -20,6 +20,13 @@ class ActivityMainHomepageOrganizadorViewHolderVertical(view: View) : RecyclerVi
         binding.Direccion.text = eventModel.direccion
         Picasso.get().load(eventModel.foto_portada).into(binding.imageCard)
 
+        var idEvent : String = eventModel.id
+        var nombre : String = eventModel.nombre
+        var direccion : String = eventModel.direccion
+        var estado :String = eventModel.ciudad + ", " + eventModel.estado
+        var ubicacion : String = eventModel.ubicacion
+        var foto_portada : String = eventModel.foto_portada
+
         var cardEventBtn = binding.cardEvent
 
         cardEventBtn.setOnClickListener {
@@ -28,6 +35,13 @@ class ActivityMainHomepageOrganizadorViewHolderVertical(view: View) : RecyclerVi
             val eventoIndividual =  Intent(itemView.context, ActivityVisualizarEventoOrganizador::class.java)
 
             eventoIndividual.putExtra("idEvent", idEvent)
+            eventoIndividual.putExtra("nombre", nombre)
+            eventoIndividual.putExtra("direccion", direccion)
+            eventoIndividual.putExtra("estado", estado)
+            eventoIndividual.putExtra("ubicacion", ubicacion)
+            eventoIndividual.putExtra("foto_portada", foto_portada)
+
+            itemView.context.startActivity(eventoIndividual)
         }
     }
 

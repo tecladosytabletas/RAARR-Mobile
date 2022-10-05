@@ -42,97 +42,92 @@
                         android:background="@drawable/djbackground"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#80000000">
 
-                        </ImageView>
-
-                        <TextView
-                            android:id="@+id/Nombre_ArtistaVEE"
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center"
-                            android:text="Ludovico Einaudi"
-                            android:textColor="@color/yellow"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/FechaVEE"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/Nombre_ArtistaVEE"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="15dp"
-                            android:gravity="center"
-                            android:text="Miércoles 14 de noviembre"
-                            android:textColor="@color/grayBtn"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            <ImageView
+                                android:id="@+id/Imagen_VEE"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/djbackground">
+                            </ImageView>
 
-                        <TextView
-                            android:id="@+id/LugarVEE"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/FechaVEE"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:gravity="center"
-                            android:text="Auditorio Josefa"
-                            android:textColor="@color/grayBtn"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#80000000"/>
 
-                        <TextView
-                            android:id="@+id/DirecionVEE"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/LugarVEE"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:gravity="center"
-                            android:text="Av. 5 de Febrero #398"
-                            android:textColor="@color/grayBtn"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/CiudadVEE"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/DirecionVEE"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center"
-                            android:text="Querétaro, Qro"
-                            android:textColor="@color/grayBtn"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/NombreEvento"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center"
+                                    android:text="Ludovico Einaudi"
+                                    android:textColor="@color/yellow"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/CiudadVEE">
+                                <TextView
+                                    android:id="@+id/Ubicacion"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:gravity="center"
+                                    android:text="Miércoles 14 de noviembre"
+                                    android:textColor="@color/grayBtn"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+
+                                <TextView
+                                    android:id="@+id/DireccionVEE"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:gravity="center"
+                                    android:text="Av. 5 de Febrero #398"
+                                    android:textColor="@color/grayBtn"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/CiudadEstadoVEE"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:gravity="center"
+                                    android:text="Querétaro, Qro"
+                                    android:textColor="@color/grayBtn"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_comment_24"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginBottom="8dp"
-                                />
-                        </LinearLayout>
+                                android:src="@drawable/comment"
+                                android:layout_gravity="bottom"
+                                android:padding="16dp"/>
+
+                        </androidx.cardview.widget.CardView>
 
                     </RelativeLayout>
 

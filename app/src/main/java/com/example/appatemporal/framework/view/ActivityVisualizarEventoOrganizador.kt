@@ -13,6 +13,7 @@ import com.example.appatemporal.framework.viewModel.GraphicsEventDetailViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.squareup.picasso.Picasso
 
 class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
@@ -23,6 +24,13 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visualizar_evento_organizador)
+
+        /* eventoIndividual.putExtra("idEvent", idEvent)
+            eventoIndividual.putExtra("nombre", nombre)
+            eventoIndividual.putExtra("direccion", direccion)
+            eventoIndividual.putExtra("estado", estado)
+            eventoIndividual.putExtra("ubicacion", ubicacion)
+            eventoIndividual.putExtra("foto_portada", foto_portada) */
 
         binding = ActivityVisualizarEventoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,6 +53,22 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.NombreEvento.text = intent.getStringExtra("nombre")
+        binding.Ubicacion.text = intent.getStringExtra("ubicacion")
+        binding.DireccionVEE.text = intent.getStringExtra("direccion")
+        binding.CiudadEstadoVEE.text = intent.getStringExtra("estado")
+
+        Picasso.get().load(intent.getStringExtra("foto_portada")).into(binding.ImagenVEE)
+
+        binding.btnMoregraphics.setOnClickListener {
+            var idEvent : String = intent.getStringExtra("idEvent").toString()
+
+            val eventoIndividual =  Intent(this, DetailedMetrics::class.java)
+
+            eventoIndividual.putExtra("idEvent", idEvent)
+            this.startActivity(eventoIndividual)
+        }
+
         //Creación de usuario temporal
         val tempEventId : String = "DM"
         repository = Repository(this)
@@ -59,6 +83,8 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         })
         populateRating(tempEventId)
     }
+
+
 
     fun populateTSAPieChart(ventasTotal:Int,asistenciasTotal:Int){
         /*
