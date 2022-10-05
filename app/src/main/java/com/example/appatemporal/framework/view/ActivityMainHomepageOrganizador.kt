@@ -2,7 +2,6 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -11,10 +10,7 @@ import com.example.appatemporal.databinding.ActivityMainHomepageOrganizadorBindi
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageOrganizadorAdapterHorizontal
 import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageOrganizadorAdapterVertical
-import com.example.appatemporal.framework.view.adapters.boletosPorEventoAdapter
-import com.example.appatemporal.framework.viewModel.GetEventsInMonthViewModel
 import com.example.appatemporal.framework.viewModel.GetEventsUserOrg
-import com.example.appatemporal.framework.viewModel.GetUserTicketViewModel
 
 class ActivityMainHomepageOrganizador : AppCompatActivity() {
     private lateinit var binding: ActivityMainHomepageOrganizadorBinding
@@ -26,7 +22,7 @@ class ActivityMainHomepageOrganizador : AppCompatActivity() {
         binding = ActivityMainHomepageOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
+        val userIdTemp = "qVzK32OHDYOUtK1YsQbh"
 
         initRecyclerViewHorizontal(getEventsUserOrg, userIdTemp, repository)
         initRecyclerViewVertical(getEventsUserOrg, repository)
@@ -68,8 +64,8 @@ class ActivityMainHomepageOrganizador : AppCompatActivity() {
         getEventsUserOrg.allEvents.observe(this, Observer { eventList ->
             val linearLayout = LinearLayoutManager(this)
             linearLayout.orientation=LinearLayoutManager.VERTICAL
-            binding.HorizontalOrgView.layoutManager = linearLayout // Le da el layout que usará el RV.
-            binding.HorizontalOrgView.adapter = ActivityMainHomepageOrganizadorAdapterVertical(eventList)
+            binding.VerticalOrgView.layoutManager = linearLayout // Le da el layout que usará el RV.
+            binding.VerticalOrgView.adapter = ActivityMainHomepageOrganizadorAdapterVertical(eventList)
         })
     }
 
