@@ -47,9 +47,6 @@ class ProyectoOrganizadorViewModel: ViewModel() {
         return requirement.countAllActivities(repository, id_a)
     }
 
-    suspend fun inserEstatus(repository: Repository, estatus: Estatus) {
-        requirement.insertEstatus(estatus, repository)
-    }
     fun updateEstatusCompletado(estatusNew: Boolean, id: Int, repository: Repository){
         viewModelScope.launch {
             requirement.updateEstatusCompletado(estatusNew, id, repository)

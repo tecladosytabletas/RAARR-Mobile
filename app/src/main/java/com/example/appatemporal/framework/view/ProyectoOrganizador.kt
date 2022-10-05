@@ -30,6 +30,13 @@ class ProyectoOrganizador : AppCompatActivity() {
                 binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
             })
         }
+        binding.tvNoCompletedProject.setOnClickListener{
+            viewModel.getAllProjectsCompleted(false,repository)
+            viewModel.projects.observe(this, Observer { projectList ->
+                binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
+            })
+        }
         viewModel.getProjects(repository)
         viewModel.projects.observe(this, Observer { projectList ->
             Log.d("Prueba", projectList.toString())
