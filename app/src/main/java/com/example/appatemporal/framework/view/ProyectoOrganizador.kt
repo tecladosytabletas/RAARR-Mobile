@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,7 +23,25 @@ class ProyectoOrganizador : AppCompatActivity() {
         binding = ProyectosOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
-
+        binding.tvCompletedProject.setOnClickListener{
+            binding.tvCompletedProject.getBackground().setAlpha(70);
+            binding.tvNoCompletedProject.getBackground().setAlpha(255);
+            viewModel.getAllProjectsCompleted(true,repository)
+            viewModel.projects.observe(this, Observer { projectList ->
+                Log.d("Prueba", projectList.toString())
+                binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
+            })
+        }
+        binding.tvNoCompletedProject.setOnClickListener{
+            binding.tvNoCompletedProject.getBackground().setAlpha(70);
+            binding.tvCompletedProject.getBackground().setAlpha(255);
+            viewModel.getAllProjectsCompleted(false,repository)
+            viewModel.projects.observe(this, Observer { projectList ->
+                binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
+            })
+        }
         viewModel.getProjects(repository)
         viewModel.projects.observe(this, Observer { projectList ->
             Log.d("Prueba", projectList.toString())

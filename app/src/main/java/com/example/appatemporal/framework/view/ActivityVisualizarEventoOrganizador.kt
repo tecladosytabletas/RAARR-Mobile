@@ -13,6 +13,7 @@ import com.example.appatemporal.framework.viewModel.GraphicsEventDetailViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 
 class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
@@ -61,7 +62,6 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
     }
 
     fun populateTSAPieChart(ventasTotal:Int,asistenciasTotal:Int){
-        /*
         val ourPieChart = binding.tsaPieChart
         // Aqui se reciben los datos en teoria
         val ourPieEntry = ArrayList<PieEntry>()
@@ -76,6 +76,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         pieShades.add(Color.parseColor("#FE810E"))
         ourSet.colors = pieShades
         ourPieChart.data = data
+        ourPieChart.data.setValueFormatter(DefaultValueFormatter(0))
         ourPieChart.invalidate()
         data.setValueTextColor(Color.DKGRAY)
         data.setValueTextSize(20f)
@@ -84,11 +85,9 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         ourPieChart.setEntryLabelColor(Color.DKGRAY)
         ourPieChart.description.isEnabled = false
         ourPieChart.setDrawEntryLabels(false)
-
-         */
     }
 
-    fun populateRating(eid:String){/*
+    fun populateRating(eid:String){
         //Rating general del evento
         val ourRatingBar = binding.ratingStar
         val ourRatingValue = binding.ratingAvg
@@ -123,7 +122,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         graphicsEventDetailViewModel.ratingExt.observe(this, Observer{
             ourRatingBar.rating = it[7]
             ourRatingValue.text = "${it[7]} de 5"
-            ourRatingCount.text =  "${it[1].toInt()} calificaciones"
+            ourRatingCount.text =  "en ${it[1].toInt()} calificaciones"
             //Incorporar información a progress bar varias
             for (i in 0..5) {
                 if(it[i+2]>0){
@@ -134,7 +133,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
                     ourRatingList[i].text = "0 votos"
                 }
             }
-        })*/
+        })
     }
 
 }

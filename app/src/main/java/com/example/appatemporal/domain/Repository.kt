@@ -5,7 +5,6 @@ import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
 import com.example.appatemporal.domain.models.GetTicketModel
-import kotlin.math.cos
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import com.example.appatemporal.domain.models.UserModel
@@ -66,6 +65,10 @@ class Repository(context: Context) {
         return firestoreAPI.RegisterSale(idFuncion,id_Metodo_Pago,id_Tipo_Boleto)
     }
 
+    suspend fun getMetodoPagoUid(metodoPago: String) : QuerySnapshot {
+        return  firestoreAPI.getMetodoPagoId(metodoPago)
+    }
+
     suspend fun getEventName(eid: String) : String{
         return firestoreAPI.getEventName(eid)
     }
@@ -74,7 +77,7 @@ class Repository(context: Context) {
         return firestoreAPI.generalProfitsEvent(eid)
     }
 
-    suspend fun getTicketsbyPM(eid: String) : Pair<Int, Int>{
+    suspend fun getTicketsbyPM(eid: String) : MutableMap<String, Int?>{
         return firestoreAPI.getTicketsbyPM(eid)
     }
 
@@ -89,7 +92,7 @@ class Repository(context: Context) {
     suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
         firestoreAPI.addRating(idUser, idEvent, rate)
     }
-    suspend fun  verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
+    suspend fun verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
         return firestoreAPI.verifyRatingExistence(idUser, idEvent)
     }
 
@@ -105,6 +108,10 @@ class Repository(context: Context) {
         return firestoreAPI.addComment(idUser,idEvent,comment)
     }
 
+    suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
+        return firestoreAPI.verifyCommentExistence(idUser, idEvent)
+    }
+
     suspend fun getComments(idEvento: String) : QuerySnapshot {
         return firestoreAPI.getComments(idEvento)
     }
@@ -114,6 +121,14 @@ class Repository(context: Context) {
         return firestoreAPI.getEventTicketsSA(eid)
     }
 
+    suspend fun verifyTicketExistence(result: String) : Boolean {
+        return firestoreAPI.verifyTicketExistence(result)
+    }
+
+    suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
+        return firestoreAPI.getRevenuebyPM(eid)
+    }
+    
     suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
@@ -157,11 +172,17 @@ class Repository(context: Context) {
         count.await()
     }
 
+    fun countAllActivities(id_a: Int): Int = runBlocking {
+        val count = async {
+            actividadDao.countAllActivities(id_a)
+        }
+        count.start()
+        count.await()
+    }
     //Filter Activities
     suspend fun filterActivitiesByStatus(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByStatus(idProyecto, stringStatus)
     suspend fun filterActivitiesByArea(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByArea(idProyecto, stringStatus)
     suspend fun filterActivitiesByPriority(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByPriority(idProyecto, stringStatus)
-
     suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
     suspend fun insertArea(area: Area) = areaDao.insert(area)
@@ -197,6 +218,8 @@ class Repository(context: Context) {
         proyectoDao.updatePresupuesto(presupuestoN, id)
 
     suspend fun updateMeta(metaN: Double, id: Int) = proyectoDao.updateMeta(metaN, id)
+    suspend fun updateEstatusCompletado(estatusN: Boolean, id: Int) = proyectoDao.updateEstatusCompletado(estatusN, id)
+    suspend fun filterProjectsByStatus(stringStatus:Boolean) = proyectoDao.FilterProjectsByStatus(stringStatus)
     suspend fun updateModifyProyect(name: String, date: String, time: String, id: Int) =
         proyectoDao.updateModify(name, date, time, id)
 
