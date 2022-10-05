@@ -8,7 +8,7 @@ class VerticalViewHolderFavoritosEspectador(view: View): RecyclerView.ViewHolder
     private val binding = ActivityHomepageTarjetaEventosGrandeEspectadorBinding.bind(view)
         fun bind(item: TarjetaGrande_favoritosespectador){
             binding.Lugar.text = item.fecha
-            binding.Descripcion.text = item.descripcion
+            //binding.Descripcion.text = item.descripcion
             binding.Nombre.text=item.nombre
 
     }

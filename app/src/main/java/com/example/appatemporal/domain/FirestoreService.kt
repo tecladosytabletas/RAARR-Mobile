@@ -580,8 +580,6 @@ class FirestoreService {
 
     suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
         var result : MutableList<EventsInMonth> = arrayListOf()
-        val meses: List<String> = mutableListOf("ENERO","FEBRERO","MARZO","ABRIL","MAYO",
-            "JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE")
         var events = db.collection("Evento")
             .whereEqualTo("activo",1)
             .whereEqualTo("aprobado",1)
@@ -596,17 +594,11 @@ class FirestoreService {
                 var eventDate = function.data?.get("fecha_funcion").toString()
                 val arrayDate: List<String> = eventDate.split("/")
                 Log.d("ArrayDateLog", arrayDate.toString())
-                var i = 1
-                for(element in meses){
-                    if(element == arrayDate[1].uppercase()){
-                        if(i==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
-                            var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
-                                event.data?.get("ubicacion").toString(),function.data?.get("hora_inicio").toString(),
-                                event.data?.get("foto_portada").toString())
-                            result.add(evento)
-                        }
-                    }
-                    i++
+                if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
+                    var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
+                        event.data?.get("ubicacion").toString(),function.data?.get("hora_inicio").toString(),
+                        event.data?.get("foto_portada").toString())
+                    result.add(evento)
                 }
             }
         }
