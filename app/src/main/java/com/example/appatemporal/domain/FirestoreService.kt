@@ -635,4 +635,16 @@ class FirestoreService {
         return events
     }
 
+    suspend fun getEventsUserOrg(): MutableList<EventModel>{
+        var events: MutableList<EventModel> = mutableListOf()
+        var event: QuerySnapshot = db.collection("Evento")
+            .whereEqualTo("activo",1)
+            .whereEqualTo("aprobado",1)
+            .get()
+            .await()
+
+
+        return events
+    }
+
 }
