@@ -18,9 +18,9 @@ class GetEventsInMonthViewModel : ViewModel()  {
     private var requirement = GetAllEvents()
     val allEvents = MutableLiveData<List<EventModel>>()
 
-    fun getEventsMonth(eD: Int, eM: Int, repository: Repository) {
+    fun getEventsMonth(eD: Int, eM: Int, eY: Int , repository: Repository) {
         viewModelScope.launch {
-            val eventsInMonth = getEventsInMonth(eD,eM,repository)
+            val eventsInMonth = getEventsInMonth(eD,eM, eY,repository)
             eventsMonth.postValue(eventsInMonth)
         }
     }
