@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.databinding.ActivityHomepageTarjetaEventosChicaEspectadorBinding
 import com.example.appatemporal.databinding.ActivityHomepageTarjetaEventosGrandeEspectadorBinding
 import com.example.appatemporal.domain.models.EventsInMonth
+import com.example.appatemporal.framework.view.ActivityVisualizarEventoEspectador
 import com.example.appatemporal.framework.view.ActivityVisualizarEventoOrganizador
 import com.squareup.picasso.Picasso
 import com.example.appatemporal.framework.view.ConsultarBoleto
@@ -19,14 +20,22 @@ class ActivityMainHomepageEspectadorViewHolderHorizontal(view: View) : RecyclerV
         binding.lugar.text = eventsInMonth.horaInicioEvento
         Picasso.get().load(eventsInMonth.urlImagen).into(binding.imagenSmallCard)
 
-        var cardEventBtn = binding.imagenSmallCard
+        var cardEventBtn = binding.btnConsultar
 
         cardEventBtn.setOnClickListener {
             var idEvent : String = eventsInMonth.idEvent
+            var nombre : String = eventsInMonth.nombreEvento
+            var lugar : String = eventsInMonth.lugarEvento
+            var foto_portada : String = eventsInMonth.urlImagen
 
-            val eventoIndividual =  Intent(itemView.context, ActivityVisualizarEventoOrganizador::class.java)
+            val eventoIndividual =  Intent(itemView.context, ActivityVisualizarEventoEspectador::class.java)
 
             eventoIndividual.putExtra("idEvent", idEvent)
+            eventoIndividual.putExtra("nombre", nombre)
+            eventoIndividual.putExtra("lugar", lugar)
+            eventoIndividual.putExtra("foto_portada", foto_portada)
+
+            itemView.context.startActivity(eventoIndividual)
         }
     }
 
