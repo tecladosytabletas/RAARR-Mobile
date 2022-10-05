@@ -9,7 +9,7 @@ class Vertical_ViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = ActivityHomepageTarjetaEventosGrandeEspectadorBinding.bind(view)
         fun bind(item: TarjetaGrande_espectador){
             binding.Lugar.text = item.fecha
-            binding.Descripcion.text = item.descripcion
+            //binding.Descripcion.text = item.descripcion
             binding.Nombre.text=item.nombre
 
     }

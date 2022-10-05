@@ -16,8 +16,8 @@ class ActivityMainHomepageEspectadorViewHolderVertical(view: View) : RecyclerVie
     fun render(eventsInMonth: EventsInMonth){
         binding.Nombre.text = eventsInMonth.nombreEvento
         binding.Lugar.text = eventsInMonth.lugarEvento
-        binding.Direccion.text = eventsInMonth.descEvento
-        Picasso.get().load(eventsInMonth.imagen).into(binding.imageCard)
+        binding.Direccion.text = eventsInMonth.horaInicioEvento
+        Picasso.get().load(eventsInMonth.urlImagen).into(binding.imageCard)
 
         var cardEventBtn = binding.cardEvent
 
