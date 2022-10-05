@@ -98,6 +98,7 @@ class RegisterActivity : AppCompatActivity() {
                 val intent = Intent(this, Main::class.java)
                 startActivity(intent)
             }
+//Comentario para pushear
         }
     }
 }

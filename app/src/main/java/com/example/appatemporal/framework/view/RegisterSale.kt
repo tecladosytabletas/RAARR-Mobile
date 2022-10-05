@@ -55,7 +55,7 @@ class RegisterSale : AppCompatActivity() {
         idEvent = "ih83lF54LmwoNdFuopeB"
         idFuncion = "qIdvPoINxUTuvPWt8UiB"
 
-        registerSaleViewModel.getDropdownNames("ih83lF54LmwoNdFuopeB", Repository(this))
+        registerSaleViewModel.getDropdownNames(idEvent, Repository(this))
         registerSaleViewModel.dropdownList.observe(this, Observer {
             Log.d("dropdown list log", it.toString())
             val ticketTypeString = arrayListOf<String>()
@@ -63,15 +63,15 @@ class RegisterSale : AppCompatActivity() {
                 ticketTypeString.add("${name.first}: $${name.second}")
                 ticketType.add("${name.third}")
             }
-            val mArrayAdapter2 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ticketTypeString)
-            mArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item)
+            val mArrayAdapter2 = ArrayAdapter<String>(this, R.layout.simple_spinner_dropdown_item, ticketTypeString)
+            mArrayAdapter2.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             mSpinner2.adapter = mArrayAdapter2
         })
 
         val payment = arrayListOf<String>("Efectivo", "Tarjeta")
 
-        val mArrayAdapter3 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, payment)
-        mArrayAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        val mArrayAdapter3 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, payment)
+        mArrayAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         mSpinner3.adapter = mArrayAdapter3
 
@@ -85,24 +85,25 @@ class RegisterSale : AppCompatActivity() {
                         binding.btnRegisterSale.isEnabled = true
                         // Hacer Lógica de boton set on click listener para registrar venta
                         binding.btnRegisterSale.setOnClickListener{
-                            registerSaleViewModel.RegisterSale(idFuncion,"JsCPG2YuCgqYyZUypktB", ticketType[p2], Repository(activityContext))
-                            Toast.makeText(activityContext, "Venta registrada exitósamente", Toast.LENGTH_SHORT).show()
-                            registerSaleViewModel.getTicketAvailability(ticketType[p2], idEvent, idFuncion, Repository(activityContext))
-                            registerSaleViewModel.ticketAvailability.observe(activityContext, Observer {
-                                if (it.first < it.second) {
-                                    binding.btnRegisterSale.setBackgroundColor(Color.BLUE)
-                                    binding.btnRegisterSale.isEnabled = true
-                                } else {
-                                    binding.btnRegisterSale.isEnabled = false
-                                    binding.btnRegisterSale.setBackgroundColor(Color.RED)
+                            registerSaleViewModel.getMetodoPagoUid(binding.spinner3.selectedItem.toString(), Repository(activityContext)) { uid ->
+                                registerSaleViewModel.RegisterSale(idFuncion,uid, ticketType[p2], Repository(activityContext))
+                                Toast.makeText(activityContext, "Venta registrada exitósamente", Toast.LENGTH_SHORT).show()
+                                registerSaleViewModel.getTicketAvailability(ticketType[p2], idEvent, idFuncion, Repository(activityContext))
+                                registerSaleViewModel.ticketAvailability.observe(activityContext, Observer {
+                                    if (it.first < it.second) {
+                                        binding.btnRegisterSale.setBackgroundColor(Color.BLUE)
+                                        binding.btnRegisterSale.isEnabled = true
+                                    } else {
+                                        binding.btnRegisterSale.isEnabled = false
+                                        binding.btnRegisterSale.setBackgroundColor(Color.RED)
 
-                                }
-                            })
+                                    }
+                                })
+                            }
                         }
                     } else {
                         binding.btnRegisterSale.isEnabled = false
                         binding.btnRegisterSale.setBackgroundColor(Color.RED)
-
                     }
                 })
             }
