@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
+import com.example.appatemporal.domain.models.EventsInMonth
 import com.example.appatemporal.domain.models.GetTicketModel
 import kotlin.math.cos
 import kotlinx.coroutines.async
@@ -109,9 +110,12 @@ class Repository(context: Context) {
         return firestoreAPI.getComments(idEvento)
     }
 
-
     suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
         return firestoreAPI.getEventTicketsSA(eid)
+    }
+
+    suspend fun getEventsActualMonth(eD:Int,eM:Int) : MutableList<EventsInMonth> {
+        return firestoreAPI.getEventsActualMonth(eD,eM)
     }
 
     // Local database

@@ -577,4 +577,32 @@ class FirestoreService {
         val result = Pair(ventasCount, asistenciasCount)
         return result
     }
+
+    suspend fun getEventsActualMonth(day:Int,month:Int) : MutableList<EventsInMonth> {
+        var result : MutableList<EventsInMonth> = arrayListOf()
+        val meses: List<String> = mutableListOf("ENERO","FEBRERO","MARZO","ABRIL","MAYO",
+            "JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE")
+        var events = db.collection("Evento")
+            .whereEqualTo("activo",1)
+            .whereEqualTo("aprobado",1)
+            .get()
+            .await()
+        for(event in events){
+            var eventDate = event.data?.get("fecha").toString()
+            val arrayDate: List<String> = eventDate.split(" ")
+            var i = 1
+            for(element in meses){
+                if(element == arrayDate[2].uppercase()){
+                    if(i==month && arrayDate[0].toInt() == day){
+                        var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
+                            event.data?.get("ubicacion").toString(),event.data?.get("descripcion").toString())
+                        result.add(evento)
+                    }
+                }
+                i++
+            }
+        }
+        return result
+    }
+
 }
