@@ -9,6 +9,7 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
 import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.R
 import com.example.appatemporal.data.localdatabase.entities.Objetivo
@@ -60,15 +61,11 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
             val date = binding.dateEdt.text.toString()
             val tsLong = System.currentTimeMillis() / 1000
             val ts: String = tsLong.toString()
-            if (name.isEmpty() || date.isEmpty()){
+            if (name.isEmpty() || date.isEmpty()) {
                 Toast.makeText(this, "Faltan campos por rellenar", Toast.LENGTH_SHORT).show()
-            val project: Proyecto = Proyecto(0, 1, name, date,0.0,0.0, 0.0,false,ts)
-
-            lifecycleScope.launch{
-                viewModel.addNewProject(project, repository)
             }
             else {
-                val project: Proyecto = Proyecto(0, 1, name, date,0.0,0.0, 0.0,ts)
+                val project: Proyecto = Proyecto(0, 1, name, date,0.0,0.0, 0.0,false, ts)
 
                 lifecycleScope.launch{
                     viewModel.addNewProject(project, repository)

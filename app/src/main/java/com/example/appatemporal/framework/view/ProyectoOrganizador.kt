@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -37,13 +38,17 @@ class ProyectoOrganizador : AppCompatActivity() {
             binding.tvNoCompletedProject.getBackground().setAlpha(70);
             binding.tvCompletedProject.getBackground().setAlpha(255);
             viewModel.getAllProjectsCompleted(false,repository)
-            viewModel.projects.observe(this, Observer { projectList ->
+            viewModel.projects.observe(this, Observer { projectList1 ->
+                Log.d("Prueba", projectList1.toString())
                 binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
-                binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
+                binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList1, viewModel)
             })
         }
         viewModel.getProjects(repository)
         viewModel.projects.observe(this, Observer { projectList ->
+            if (projectList.isEmpty()) {
+                Toast.makeText(this, "no se encontraron resultados", Toast.LENGTH_SHORT).show()
+            }
             Log.d("Prueba", projectList.toString())
             binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
             binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
