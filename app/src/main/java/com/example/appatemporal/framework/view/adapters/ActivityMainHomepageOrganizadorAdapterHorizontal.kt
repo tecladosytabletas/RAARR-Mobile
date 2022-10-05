@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
+import com.example.appatemporal.domain.models.EventModel
 import com.example.appatemporal.domain.models.EventsInMonth
 
-class ActivityMainHomepageOrganizadorAdapterHorizontal(private val list: MutableList<EventsInMonth>) : RecyclerView.Adapter<ActivityMainHomepageOrganizadorViewHolderHorizontal>() {
+class ActivityMainHomepageOrganizadorAdapterHorizontal(private val list: MutableList<EventModel>) : RecyclerView.Adapter<ActivityMainHomepageOrganizadorViewHolderHorizontal>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityMainHomepageOrganizadorViewHolderHorizontal {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ActivityMainHomepageOrganizadorViewHolderHorizontal(layoutInflater.inflate(R.layout.activity_homepage_tarjeta_eventos_chica_espectador, parent, false))

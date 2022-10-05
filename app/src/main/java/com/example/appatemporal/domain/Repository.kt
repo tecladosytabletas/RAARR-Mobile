@@ -122,6 +122,11 @@ class Repository(context: Context) {
     suspend fun getEvents() : MutableList<EventModel> {
         return firestoreAPI.getEvents()
     }
+
+    suspend fun getEventsUserOrg(uid:String) : MutableList<EventModel> {
+        return firestoreAPI.getEventsUserOrg(uid)
+    }
+
     // Local database
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
     val areaDao = LocalDatabase.getInstance(context).areaDao
