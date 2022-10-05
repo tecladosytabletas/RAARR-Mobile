@@ -13,6 +13,7 @@ import com.example.appatemporal.framework.viewModel.GraphicsEventDetailViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.squareup.picasso.Picasso
 
 class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
@@ -30,11 +31,6 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             eventoIndividual.putExtra("estado", estado)
             eventoIndividual.putExtra("ubicacion", ubicacion)
             eventoIndividual.putExtra("foto_portada", foto_portada) */
-
-        binding.NombreEvento.text = intent.getStringExtra("nombre")
-        binding.Ubicacion.text = intent.getStringExtra("ubicacion")
-        binding.Direccion.text = intent.getStringExtra("direccion")
-        binding.CiudadEstado.text = intent.getStringExtra("estado")
 
         binding = ActivityVisualizarEventoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -56,6 +52,13 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
+
+        binding.NombreEvento.text = intent.getStringExtra("nombre")
+        binding.Ubicacion.text = intent.getStringExtra("ubicacion")
+        binding.DireccionVEE.text = intent.getStringExtra("direccion")
+        binding.CiudadEstadoVEE.text = intent.getStringExtra("estado")
+
+        Picasso.get().load(intent.getStringExtra("foto_portada")).into(binding.ImagenVEE)
 
         binding.btnMoregraphics.setOnClickListener {
             var idEvent : String = intent.getStringExtra("idEvent").toString()

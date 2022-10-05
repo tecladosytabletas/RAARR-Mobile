@@ -21,17 +21,15 @@ class ActivityMainHomepageOrganizadorViewHolderHorizontal(view: View) : Recycler
         binding.lugar.text = eventModel.direccion
         Picasso.get().load(eventModel.foto_portada).into(binding.imagenSmallCard)
 
-        var idEvent : String = eventModel.id
-        var nombre : String = eventModel.nombre
-        var direccion : String = eventModel.direccion
-        var estado :String = eventModel.ciudad + ", " + eventModel.estado
-        var ubicacion : String = eventModel.ubicacion
-        var foto_portada : String = eventModel.foto_portada
-
         var cardEventBtn = binding.cardBtnChica
 
         cardEventBtn.setOnClickListener {
             var idEvent : String = eventModel.id
+            var nombre : String = eventModel.nombre
+            var direccion : String = eventModel.direccion
+            var estado :String = eventModel.ciudad + ", " + eventModel.estado
+            var ubicacion : String = eventModel.ubicacion
+            var foto_portada : String = eventModel.foto_portada
 
             val eventoIndividual =  Intent(itemView.context, ActivityVisualizarEventoOrganizador::class.java)
 
