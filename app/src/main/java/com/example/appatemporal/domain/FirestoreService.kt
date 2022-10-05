@@ -590,6 +590,7 @@ class FirestoreService {
         for(event in events){
             var eventDate = event.data?.get("fecha").toString()
             val arrayDate: List<String> = eventDate.split(" ")
+            Log.d("ArrayDateLog", arrayDate.toString())
             var i = 1
             for(element in meses){
                 if(element == arrayDate[2].uppercase()){

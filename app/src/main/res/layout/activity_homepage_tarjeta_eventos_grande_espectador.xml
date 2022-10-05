@@ -16,6 +16,7 @@
     </ImageView>
 
     <LinearLayout
+        android:id="@+id/cardEvent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -50,11 +51,11 @@
                 >
             </TextView>
             <TextView
-                android:id="@+id/Fecha"
+                android:id="@+id/Lugar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Nombre"
-                android:text="Fecha"
+                android:text="Lugar"
                 android:textColor="@color/yellow"
                 android:textSize="16dp"
                 >

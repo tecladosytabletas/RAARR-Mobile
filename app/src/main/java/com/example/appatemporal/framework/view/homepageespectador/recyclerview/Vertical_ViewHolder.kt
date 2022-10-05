@@ -8,7 +8,7 @@ import com.example.appatemporal.framework.view.homepageespectador.TarjetaGrande_
 class Vertical_ViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = ActivityHomepageTarjetaEventosGrandeEspectadorBinding.bind(view)
         fun bind(item: TarjetaGrande_espectador){
-            binding.Fecha.text = item.fecha
+            binding.Lugar.text = item.fecha
             binding.Descripcion.text = item.descripcion
             binding.Nombre.text=item.nombre
 
