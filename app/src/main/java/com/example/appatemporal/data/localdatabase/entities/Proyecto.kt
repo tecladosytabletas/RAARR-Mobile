@@ -14,5 +14,6 @@ data class Proyecto(
     @ColumnInfo(name = "ganancia") val ganancia: Double,
     @ColumnInfo(name = "presupuesto") val presupuesto: Double,
     @ColumnInfo(name = "meta") val meta: Double,
+    @ColumnInfo(name = "estatus_completado") val estatus_completado: Boolean,
     @ColumnInfo(name = "created_at") val created_at: String
 )

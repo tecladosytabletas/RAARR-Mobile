@@ -86,7 +86,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todoRv"
         android:layout_width="401dp"
-        android:layout_height="376dp"
+        android:layout_height="300dp"
         android:layout_below="@+id/header"
         android:layout_marginStart="23dp"
         android:layout_marginEnd="16dp"

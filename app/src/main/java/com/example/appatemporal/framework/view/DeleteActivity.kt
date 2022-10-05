@@ -7,10 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.DatePicker
-import android.widget.EditText
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -40,6 +37,16 @@ class DeleteActivity : AppCompatActivity(){
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
+
+        val doneActivities =  viewModel.countDoneActivities(repository, idProyecto, "Completado")
+        val totalActivities = viewModel.countAllActivities(repository, idProyecto)
+
+        if (doneActivities == totalActivities && doneActivities !=0 && totalActivities !=0){
+            viewModel.updateEstatusCompletado(true, idProyecto, repository)
+        }
+        else{
+            viewModel.updateEstatusCompletado(false, idProyecto, repository)
+        }
         // get reference to the autocomplete text view
         val autocompleteTV2 = findViewById<AutoCompleteTextView>(R.id.spinnerFilterToFilter)
 
@@ -232,6 +239,9 @@ class DeleteActivity : AppCompatActivity(){
             viewModel.getAllActivitiesid(id,repository)
         }
         viewModel.activities.observe(this, Observer { activityList ->
+            if (activityList.isEmpty()){
+                Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_SHORT).show()
+            }
             binding.todoRv.layoutManager = LinearLayoutManager(this)
             binding.todoRv.adapter = ActividadAdapter(activityList, viewModel)
         })

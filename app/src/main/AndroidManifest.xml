@@ -67,10 +67,6 @@
         <activity
             android:name=".framework.view.Dashboard"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.AddNewProjectForm"
@@ -78,18 +74,18 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.CategoriasEventos"
             android:exported="true">
         </activity>
         <activity
-            android:name=".framework.view.EventosFiltrados"
+            android:name=".framework.view.ProyectoOrganizador"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.Favoritosespectador_activity"
@@ -107,7 +103,7 @@
             android:name=".framework.view.PresupuestoAndMeta"
             android:exported="true" />
         <activity
-            android:name=".framework.view.ProyectoOrganizador"
+            android:name=".framework.view.EventosFiltrados"
             android:exported="true">
         </activity>
         <activity
@@ -154,10 +150,7 @@
         <activity
             android:name=".framework.view.GetCommentsActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <meta-data
             android:name="preloaded_fonts"
