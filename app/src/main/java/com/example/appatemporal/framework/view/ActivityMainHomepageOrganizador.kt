@@ -9,9 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.databinding.ActivityMainHomepageOrganizadorBinding
 import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.view.adapters.boletosPorEventoAdapter
 import com.example.appatemporal.framework.viewModel.GetEventsInMonthViewModel
 import com.example.appatemporal.framework.viewModel.GetUserTicketViewModel
-import kotlinx.android.synthetic.main.activity_boleto_por_evento.*
 
 class ActivityMainHomepageOrganizador : AppCompatActivity() {
     private lateinit var binding: ActivityMainHomepageOrganizadorBinding
