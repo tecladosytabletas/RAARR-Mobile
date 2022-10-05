@@ -31,11 +31,12 @@
             android:orientation="horizontal"
             android:id="@+id/RVHorizontal"
             android:layout_below="@id/ORVHorizontal_1">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:id="@+id/HorizontalView">
+                android:id="@+id/HorizontalOrgView">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
@@ -61,7 +62,7 @@
             <androidx.recyclerview.widget.RecyclerView  
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/VerticalView"
+                android:id="@+id/VerticalOrgView"
                 android:layout_below="@+id/ORVVertical_1">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>

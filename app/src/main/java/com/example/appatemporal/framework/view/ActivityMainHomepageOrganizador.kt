@@ -24,7 +24,7 @@ class ActivityMainHomepageOrganizador : AppCompatActivity() {
         setContentView(binding.root)
 
         val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
-        // initRecyclerView(getEventsInMonthViewModel, userIdTemp, repository)
+        initRecyclerViewHorizontal(getEventsInMonthViewModel, userIdTemp, repository)
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()
@@ -46,12 +46,21 @@ class ActivityMainHomepageOrganizador : AppCompatActivity() {
 
     }
 
-    private fun initRecyclerView(getTicketViewModel: GetUserTicketViewModel, userIdTemp: String, repository: Repository){
+    private fun initRecyclerViewHorizontal(getTicketViewModel: GetUserTicketViewModel, userIdTemp: String, repository: Repository){
         getTicketViewModel.getUserTicket(userIdTemp, repository)
         Log.d("LOG Activity",getTicketViewModel.getUserTicket(userIdTemp, repository).toString())
         getTicketViewModel.ticket.observe(this, Observer {
-            binding.HorizontalView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
-            binding.HorizontalView.adapter = boletosPorEventoAdapter(it)
+            binding.HorizontalOrgView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
+            binding.HorizontalOrgView.adapter = boletosPorEventoAdapter(it)
+        })
+    }
+
+    private fun initRecyclerViewVertical(getTicketViewModel: GetUserTicketViewModel, userIdTemp: String, repository: Repository){
+        getTicketViewModel.getUserTicket(userIdTemp, repository)
+        Log.d("LOG Activity",getTicketViewModel.getUserTicket(userIdTemp, repository).toString())
+        getTicketViewModel.ticket.observe(this, Observer {
+            binding.HorizontalOrgView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
+            binding.HorizontalOrgView.adapter = boletosPorEventoAdapter(it)
         })
     }
 
