@@ -449,7 +449,6 @@ class FirestoreService {
                 EventModel(
                     document.id,
                     document.data?.get("nombre").toString(),
-                    document.data?.get("fecha").toString(),
                     document.data?.get("descripcion").toString(),
                     document.data?.get("ciudad").toString(),
                     document.data?.get("estado").toString(),
