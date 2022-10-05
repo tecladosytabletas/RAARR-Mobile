@@ -8,9 +8,14 @@
         android:layout_height="match_parent"
         android:background="@color/background">
 
+        <include
+            android:id="@+id/header"
+            layout = "@layout/header"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/header"
             android:text="Mis Eventos"
             android:textStyle="bold"
             android:textColor="@color/grayBtn"
@@ -26,10 +31,12 @@
             android:orientation="horizontal"
             android:id="@+id/RVHorizontal"
             android:layout_below="@id/ORVHorizontal_1">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/HorizontalView">
+                android:orientation="horizontal"
+                android:id="@+id/HorizontalOrgView">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
@@ -55,7 +62,7 @@
             <androidx.recyclerview.widget.RecyclerView  
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/VerticalView"
+                android:id="@+id/VerticalOrgView"
                 android:layout_below="@+id/ORVVertical_1">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
@@ -64,7 +71,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <include
+            android:id="@+id/navbar"
             layout="@layout/navbar" />
+
     </LinearLayout>
 
     </RelativeLayout>

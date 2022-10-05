@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".framework.view.VisualizarEventoActivity">
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +32,7 @@
                 android:text="Ludovico Einaudi"
                 android:textColor="@color/yellow"
                 android:textSize="24sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/FechaVEE"
@@ -45,7 +47,7 @@
                 android:text="Miércoles 14 de noviembre"
                 android:textColor="@color/grayBtn"
                 android:textSize="24sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/LugarVEE"
@@ -60,7 +62,7 @@
                 android:text="Auditorio Josefa"
                 android:textColor="@color/grayBtn"
                 android:textSize="16dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/DirecionVEE"
@@ -75,7 +77,7 @@
                 android:text="Av. 5 de Febrero #398"
                 android:textColor="@color/grayBtn"
                 android:textSize="16dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/CiudadVEE"
@@ -90,7 +92,7 @@
                 android:text="Querétaro, Qro"
                 android:textColor="@color/grayBtn"
                 android:textSize="16dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 
@@ -113,7 +115,7 @@
                 android:layout_height="40dp"
                 android:layout_toLeftOf="@+id/Estrella2_VEE"
                 android:gravity="center"
-                android:src="@drawable/estrella_vacia"></ImageView>
+                android:src="@drawable/estrella_vacia"/>
 
             <ImageView
                 android:id="@+id/Estrella2_VEE"
@@ -121,7 +123,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_toLeftOf="@+id/Estrella3_VEE"
-                android:src="@drawable/estrella_vacia"></ImageView>
+                android:src="@drawable/estrella_vacia"/>
 
             <ImageView
                 android:id="@+id/Estrella3_VEE"
@@ -129,7 +131,7 @@
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:src="@drawable/estrella_vacia"></ImageView>
+                android:src="@drawable/estrella_vacia"/>
 
             <ImageView
                 android:id="@+id/Estrella4_VEE"
@@ -137,7 +139,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_toEndOf="@+id/Estrella3_VEE"
-                android:src="@drawable/estrella_vacia"></ImageView>
+                android:src="@drawable/estrella_vacia"/>
 
             <ImageView
                 android:id="@+id/Estrella5_VEE"
@@ -145,7 +147,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_toEndOf="@+id/Estrella4_VEE"
-                android:src="@drawable/estrella_vacia"></ImageView>
+                android:src="@drawable/estrella_vacia"/>
 
         </RelativeLayout>
 
@@ -163,6 +165,8 @@
             android:text="Compra tu Boleto Aquí"
             android:textColor="@color/yellow"
             android:textSize="20sp"
-            app:cornerRadius="8dp"></com.google.android.material.button.MaterialButton>
+            app:cornerRadius="8dp" />
+
+
     </RelativeLayout>
 </LinearLayout>
