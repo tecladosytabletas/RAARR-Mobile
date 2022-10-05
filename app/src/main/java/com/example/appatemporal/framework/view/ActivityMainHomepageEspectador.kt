@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.databinding.ActivityMainHomepageEspectadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageEspectadorAdapterHorizontal
+import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageEspectadorAdapterVertical
 import com.example.appatemporal.framework.viewModel.GetEventsInMonthViewModel
 import java.util.*
 
@@ -30,7 +31,7 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         val year = getYear()
 
         initRecyclerViewHorizontal(getEventsInMonthViewModel, dia, month, year ,repository)
-        initRecyclerViewVertical(getEventsInMonthViewModel, dia, month, year, repository)
+        initRecyclerViewVertical(getEventsInMonthViewModel, repository)
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()
@@ -79,19 +80,19 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         getEventsInMonthViewModel.eventsMonth.observe(this, Observer { eventsList ->
             val linearLayout = LinearLayoutManager(this)
             linearLayout.orientation=LinearLayoutManager.HORIZONTAL
-            binding.HorizontalEspectadorView.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
+            binding.HorizontalEspectadorView.layoutManager = linearLayout // Le da el layout que usará el RV.
             binding.HorizontalEspectadorView.adapter = ActivityMainHomepageEspectadorAdapterHorizontal(eventsList)
         })
     }
 
-    private fun initRecyclerViewVertical(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int, year: Int, repository: Repository){
-        getEventsInMonthViewModel.getEventsMonth(day, month,year ,repository)
+    private fun initRecyclerViewVertical(getEventsInMonthViewModel: GetEventsInMonthViewModel, repository: Repository){
+        getEventsInMonthViewModel.getAllEvents(repository)
         //Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(day, month, year, repository).toString())
-        getEventsInMonthViewModel.eventsMonth.observe(this, Observer { eventsList ->
+        getEventsInMonthViewModel.allEvents.observe(this, Observer { eventsList ->
             val linearLayout = LinearLayoutManager(this)
-            linearLayout.orientation=LinearLayoutManager.HORIZONTAL
+            linearLayout.orientation=LinearLayoutManager.VERTICAL
             binding.VerticalView.layoutManager = linearLayout // Le da el layout que usará el RV.
-            binding.VerticalView.adapter = ActivityMainHomepageEspectadorAdapterHorizontal(eventsList)
+            binding.VerticalView.adapter = ActivityMainHomepageEspectadorAdapterVertical(eventsList)
         })
     }
 }

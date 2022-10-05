@@ -14,10 +14,6 @@ class GetEventsInMonthViewModel : ViewModel()  {
 
     val eventsMonth = MutableLiveData<MutableList<EventsInMonth>>()
     private var getEventsInMonth = GetEventsInMonth()
-
-    private var requirement = GetAllEvents()
-    val allEvents = MutableLiveData<List<EventModel>>()
-
     fun getEventsMonth(eD: Int, eM: Int, eY: Int , repository: Repository) {
         viewModelScope.launch {
             val eventsInMonth = getEventsInMonth(eD,eM, eY,repository)
@@ -25,10 +21,12 @@ class GetEventsInMonthViewModel : ViewModel()  {
         }
     }
 
+    val allEvents = MutableLiveData<MutableList<EventModel>>()
+    private var requirement = GetAllEvents()
     fun getAllEvents(repository: Repository){
         viewModelScope.launch {
-            val eventsInMonth = requirement.getAllEvents(repository)
-            allEvents.setValue(eventsInMonth)
+            val eventsGeneral = requirement.getAllEvents(repository)
+            allEvents.setValue(eventsGeneral)
         }
     }
 }
