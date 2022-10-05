@@ -635,15 +635,35 @@ class FirestoreService {
         return events
     }
 
-    suspend fun getEventsUserOrg(): MutableList<EventModel>{
+    suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
-        var event: QuerySnapshot = db.collection("Evento")
-            .whereEqualTo("activo",1)
-            .whereEqualTo("aprobado",1)
+        var event_user: QuerySnapshot = db.collection("Usuario_Evento")
+            .whereEqualTo("id_usuario_fk",uid)
             .get()
             .await()
-
-
+        for(element in event_user){
+            var event: DocumentSnapshot = db.collection("Evento")
+                .document(element.data?.get("id_evento_fk").toString())
+                .get()
+                .await()
+            events.add(
+                EventModel(
+                    event.id,
+                    event.data?.get("nombre").toString(),
+                    event.data?.get("descripcion").toString(),
+                    event.data?.get("ciudad").toString(),
+                    event.data?.get("estado").toString(),
+                    event.data?.get("ubicacion").toString(),
+                    event.data?.get("direccion").toString(),
+                    event.data?.get("longitud").toString(),
+                    event.data?.get("latitud").toString(),
+                    event.data?.get("foto_portada").toString(),
+                    event.data?.get("video").toString(),
+                    event.data?.get("activo").toString(),
+                    event.data?.get("aprobado").toString()
+                )
+            )
+        }
         return events
     }
 
