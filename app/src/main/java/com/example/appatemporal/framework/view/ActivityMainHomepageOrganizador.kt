@@ -24,7 +24,7 @@ class ActivityMainHomepageOrganizador : AppCompatActivity() {
         setContentView(binding.root)
 
         val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
-        initRecyclerViewHorizontal(getEventsInMonthViewModel, userIdTemp, repository)
+        //initRecyclerViewHorizontal(getEventsInMonthViewModel, userIdTemp, repository)
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()

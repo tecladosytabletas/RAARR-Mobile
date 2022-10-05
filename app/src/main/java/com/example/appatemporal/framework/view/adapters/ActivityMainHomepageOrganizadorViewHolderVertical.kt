@@ -16,8 +16,8 @@ class ActivityMainHomepageOrganizadorViewHolderVertical(view: View) : RecyclerVi
     fun render(eventsInMonth: EventsInMonth){
         binding.Nombre.text = eventsInMonth.nombreEvento
         binding.Lugar.text = eventsInMonth.lugarEvento
-        binding.Direccion.text = eventsInMonth.descEvento
-        Picasso.get().load(eventsInMonth.imagen).into(binding.imageCard)
+        //binding.Direccion.text = eventsInMonth.descEvento
+        //Picasso.get().load(eventsInMonth.imagen).into(binding.imageCard)
 
         var cardEventBtn = binding.cardEvent
 
