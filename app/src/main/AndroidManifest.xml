@@ -131,6 +131,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".framework.view.ActivityVisualizarEventoEspectador"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".framework.view.GetCommentsActivity"
             android:exported="true">
         </activity>
