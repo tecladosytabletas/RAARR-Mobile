@@ -2,6 +2,7 @@ package com.example.appatemporal.framework.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -26,9 +27,10 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
         val dia = getDay()
         val month = getMonth()
+        val year = getYear()
 
-        initRecyclerViewHorizontal(getEventsInMonthViewModel, dia, month, repository)
-        initRecyclerViewVertical(getEventsInMonthViewModel, dia, month, repository)
+        initRecyclerViewHorizontal(getEventsInMonthViewModel, dia, month, year ,repository)
+        initRecyclerViewVertical(getEventsInMonthViewModel, dia, month, year, repository)
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()
@@ -64,10 +66,16 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         return numberOfMonth
     }
 
+    fun getYear() : Int {
+        val cal = Calendar.getInstance()
+        val year =  cal[Calendar.YEAR]
+        //Log.d("pruebasAño-Actual",year.toString())
+        return year
+    }
 
-    private fun initRecyclerViewHorizontal(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int, repository: Repository){
-        getEventsInMonthViewModel.getEventsMonth(day, month, repository)
-        //Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(day, month, repository).toString())
+    private fun initRecyclerViewHorizontal(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int,year: Int, repository: Repository){
+        getEventsInMonthViewModel.getEventsMonth(day, month,year, repository)
+        //Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(day, month, year, repository).toString())
         getEventsInMonthViewModel.eventsMonth.observe(this, Observer { eventsList ->
             val linearLayout = LinearLayoutManager(this)
             linearLayout.orientation=LinearLayoutManager.HORIZONTAL
@@ -76,9 +84,9 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         })
     }
 
-    private fun initRecyclerViewVertical(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int, repository: Repository){
-        getEventsInMonthViewModel.getEventsMonth(day, month, repository)
-        //Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(day, month, repository).toString())
+    private fun initRecyclerViewVertical(getEventsInMonthViewModel: GetEventsInMonthViewModel, day: Int, month: Int, year: Int, repository: Repository){
+        getEventsInMonthViewModel.getEventsMonth(day, month,year ,repository)
+        //Log.d("LOG Activity",getEventsInMonthViewModel.getEventsMonth(day, month, year, repository).toString())
         getEventsInMonthViewModel.eventsMonth.observe(this, Observer { eventsList ->
             val linearLayout = LinearLayoutManager(this)
             linearLayout.orientation=LinearLayoutManager.VERTICAL

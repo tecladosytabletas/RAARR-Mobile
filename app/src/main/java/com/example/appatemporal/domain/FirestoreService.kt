@@ -578,7 +578,7 @@ class FirestoreService {
         return result
     }
 
-    suspend fun getEventsActualMonth(day:Int,month:Int) : MutableList<EventsInMonth> {
+    suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
         var result : MutableList<EventsInMonth> = arrayListOf()
         val meses: List<String> = mutableListOf("ENERO","FEBRERO","MARZO","ABRIL","MAYO",
             "JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE")
@@ -588,19 +588,26 @@ class FirestoreService {
             .get()
             .await()
         for(event in events){
-            var eventDate = event.data?.get("fecha").toString()
-            val arrayDate: List<String> = eventDate.split(" ")
-            Log.d("ArrayDateLog", arrayDate.toString())
-            var i = 1
-            for(element in meses){
-                if(element == arrayDate[2].uppercase()){
-                    if(i==month && arrayDate[0].toInt() >= day){
-                        var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
-                            event.data?.get("ubicacion").toString(),event.data?.get("descripcion").toString())
-                        result.add(evento)
+            var functions = db.collection("Funcion")
+                .whereEqualTo("id_evento_fk",event.id)
+                .get()
+                .await()
+            for(function in functions){
+                var eventDate = function.data?.get("fecha_funcion").toString()
+                val arrayDate: List<String> = eventDate.split("/")
+                Log.d("ArrayDateLog", arrayDate.toString())
+                var i = 1
+                for(element in meses){
+                    if(element == arrayDate[1].uppercase()){
+                        if(i==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
+                            var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
+                                event.data?.get("ubicacion").toString(),function.data?.get("hora_inicio").toString(),
+                                event.data?.get("foto_portada").toString())
+                            result.add(evento)
+                        }
                     }
+                    i++
                 }
-                i++
             }
         }
         Log.d("LogResult", result.toString())

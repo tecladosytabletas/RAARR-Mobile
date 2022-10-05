@@ -115,8 +115,8 @@ class Repository(context: Context) {
         return firestoreAPI.getEventTicketsSA(eid)
     }
 
-    suspend fun getEventsActualMonth(eD:Int,eM:Int) : MutableList<EventsInMonth> {
-        return firestoreAPI.getEventsActualMonth(eD,eM)
+    suspend fun getEventsActualMonth(eD:Int,eM:Int,eY:Int) : MutableList<EventsInMonth> {
+        return firestoreAPI.getEventsActualMonth(eD,eM,eY)
     }
 
     suspend fun getEvents() : MutableList<EventModel> {
