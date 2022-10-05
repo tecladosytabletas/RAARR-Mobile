@@ -54,6 +54,7 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
         }
 
 
+
         // Set click listener
         binding.button.setOnClickListener {
             // Get values from view

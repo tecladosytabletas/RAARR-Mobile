@@ -15,9 +15,9 @@ class EventosFiltradosViewHolder(view: View): RecyclerView.ViewHolder(view) {
     fun bind(evento: EventModel) {
 
         binding.nombreTarjetaGrande.text = evento.nombre
-        binding.fechaTarjetaGrande.text = evento.fecha
+        binding.fechaTarjetaGrande.text = evento.ubicacion
         binding.descripcionTarjetaGrande.text = evento.descripcion
-        Picasso.get().load(evento.imagen).into(binding.imageView)
+        Picasso.get().load(evento.foto_portada).into(binding.imageView)
 
     }
 
