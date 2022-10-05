@@ -606,4 +606,35 @@ class FirestoreService {
         return result
     }
 
+    suspend fun getEvents(): MutableList<EventModel>{
+        var events: MutableList<EventModel> = mutableListOf()
+        var event: QuerySnapshot = db.collection("Evento")
+            .whereEqualTo("activo",1)
+            .whereEqualTo("aprobado",1)
+            .get()
+            .await()
+        for (document in event) {
+            events.add(
+                EventModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    document.data?.get("fecha").toString(),
+                    document.data?.get("descripcion").toString(),
+                    document.data?.get("ciudad").toString(),
+                    document.data?.get("estado").toString(),
+                    document.data?.get("ubicacion").toString(),
+                    document.data?.get("direccion").toString(),
+                    document.data?.get("longitud").toString(),
+                    document.data?.get("latitud").toString(),
+                    document.data?.get("foto_portada").toString(),
+                    document.data?.get("video").toString(),
+                    document.data?.get("activo").toString(),
+                    document.data?.get("aprobado").toString(),
+
+                    )
+            )
+        }
+        return events
+    }
+
 }
