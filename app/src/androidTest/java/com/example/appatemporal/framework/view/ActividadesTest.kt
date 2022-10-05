@@ -16,20 +16,21 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.IsInstanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ProyectosTest {
+class ActividadesTest {
 
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(ProyectoOrganizador::class.java)
 
     @Test
-    fun proyectosTest() {
+    fun actividadesTest() {
         val materialTextView = onView(
             allOf(
                 withId(R.id.tvNewProject), withText("Nuevo Proyecto"),
@@ -107,90 +108,60 @@ class ProyectosTest {
         )
         materialButton2.perform(click())
 
-        val textView = onView(
+        val materialTextView2 = onView(
             allOf(
                 withId(R.id.tvProjectName), withText("Prueba"),
-                withParent(withParent(withId(R.id.recyclerViewProjects))),
-                isDisplayed()
-            )
-        )
-        textView.check(matches(withText("Prueba")))
-
-        val appCompatImageView = onView(
-            allOf(
-                withId(R.id.ivEditIcon),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.recyclerViewProjects),
                         0
                     ),
-                    1
+                    0
                 ),
                 isDisplayed()
             )
         )
-        appCompatImageView.perform(click())
+        materialTextView2.perform(click())
+
+        val linearLayout = onView(
+            allOf(
+                withId(R.id.bottom_activity),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.LinearLayout")),
+                        1
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        linearLayout.perform(click())
+
+        val floatingActionButton = onView(
+            allOf(
+                withId(R.id.newTaskButton),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.DeleteActivity),
+                        childAtPosition(
+                            withId(android.R.id.content),
+                            0
+                        )
+                    ),
+                    4
+                ),
+                isDisplayed()
+            )
+        )
+        floatingActionButton.perform(click())
 
         val appCompatEditText2 = onView(
             allOf(
-                withId(R.id.nameModifyProject), withText("Prueba"),
+                withId(R.id.nameActivity),
                 childAtPosition(
                     childAtPosition(
                         withId(android.R.id.content),
-                        0
-                    ),
-                    3
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatEditText2.perform(replaceText("Prueba Modificada"))
-
-        val appCompatEditText3 = onView(
-            allOf(
-                withId(R.id.nameModifyProject), withText("Prueba Modificada"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
-                    ),
-                    3
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatEditText3.perform(closeSoftKeyboard())
-
-        val materialButton3 = onView(
-            allOf(
-                withId(R.id.modifybutton), withText("Modify"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
-                    ),
-                    5
-                ),
-                isDisplayed()
-            )
-        )
-        materialButton3.perform(click())
-
-        val textView2 = onView(
-            allOf(
-                withId(R.id.tvProjectName), withText("Prueba Modificada"),
-                withParent(withParent(withId(R.id.recyclerViewProjects))),
-                isDisplayed()
-            )
-        )
-        textView2.check(matches(withText("Prueba Modificada")))
-
-        val appCompatImageView2 = onView(
-            allOf(
-                withId(R.id.deleteProjectButton),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.recyclerViewProjects),
                         0
                     ),
                     2
@@ -198,21 +169,136 @@ class ProyectosTest {
                 isDisplayed()
             )
         )
-        appCompatImageView2.perform(click())
+        appCompatEditText2.perform(replaceText("Nueva actividad"), closeSoftKeyboard())
+
+        val materialButton3 = onView(
+            allOf(
+                withId(R.id.saveBtn), withText("Agregar Tarea"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(android.R.id.content),
+                        0
+                    ),
+                    9
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton3.perform(click())
+
+        val textView = onView(
+            allOf(
+                withId(R.id.txtShowTitle), withText("Nueva actividad"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.RelativeLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        textView.check(matches(withText("Nueva actividad")))
+
+        val textView2 = onView(
+            allOf(
+                withId(R.id.txtShowPrioridad), withText("Baja"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.RelativeLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        textView2.check(matches(withText("Baja")))
+
+        val textView3 = onView(
+            allOf(
+                withId(R.id.txtShowArea), withText("Negocios"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.RelativeLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        textView3.check(matches(withText("Negocios")))
+
+        val textView4 = onView(
+            allOf(
+                withId(R.id.txtShowArea), withText("Negocios"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.RelativeLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        textView4.check(matches(withText("Negocios")))
+
+        val textView5 = onView(
+            allOf(
+                withId(R.id.txtShowEstatus), withText("En Proceso"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.RelativeLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        textView5.check(matches(withText("En Proceso")))
+
+        val appCompatImageView = onView(
+            allOf(
+                withId(R.id.ivEditIcon),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.RelativeLayout")),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatImageView.perform(click())
+
+        val appCompatEditText3 = onView(
+            allOf(
+                withId(R.id.nameModifedActivity), withText("Nueva actividad"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(android.R.id.content),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatEditText3.perform(replaceText("Nueva actividad modificada"))
+
+        val appCompatEditText4 = onView(
+            allOf(
+                withId(R.id.nameModifedActivity), withText("Nueva actividad modificada"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(android.R.id.content),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatEditText4.perform(closeSoftKeyboard())
 
         val materialButton4 = onView(
             allOf(
-                withId(android.R.id.button1), withText("Eliminar"),
+                withId(R.id.saveModifiedBtn), withText("Modificar Tarea"),
                 childAtPosition(
                     childAtPosition(
-                        withClassName(`is`("android.widget.ScrollView")),
+                        withId(android.R.id.content),
                         0
                     ),
-                    3
-                )
+                    9
+                ),
+                isDisplayed()
             )
         )
-        materialButton4.perform(scrollTo(), click())
+        materialButton4.perform(click())
+
+        val textView6 = onView(
+            allOf(
+                withId(R.id.txtShowTitle), withText("Nueva actividad modificada"),
+                withParent(withParent(IsInstanceOf.instanceOf(android.widget.RelativeLayout::class.java))),
+                isDisplayed()
+            )
+        )
+        textView6.check(matches(withText("Nueva actividad modificada")))
     }
 
     private fun childAtPosition(
