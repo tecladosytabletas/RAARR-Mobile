@@ -418,7 +418,7 @@
                             android:layout_marginStart="30dp"
                             android:layout_marginEnd="30dp"
                             android:layout_marginBottom="80dp"
-                            android:backgroundTint="@color/lblue_400"
+                            android:backgroundTint="@color/accentBlue"
                             android:text="Guardar" />
 
                         <Spinner
