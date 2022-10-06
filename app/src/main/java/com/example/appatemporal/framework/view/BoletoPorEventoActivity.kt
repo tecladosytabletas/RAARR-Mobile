@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,10 +8,9 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.appatemporal.R
 import com.example.appatemporal.databinding.ActivityBoletoPorEventoBinding
 import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.view.adapters.boletosPorEventoAdapter
 import com.example.appatemporal.framework.viewModel.GetUserTicketViewModel
 
 class BoletoPorEventoActivity : AppCompatActivity() {
@@ -24,8 +24,10 @@ class BoletoPorEventoActivity : AppCompatActivity() {
         binding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
         val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
-        initRecyclerView(getTicketViewModel, userIdTemp, repository)
+        initRecyclerView(getTicketViewModel, userUid, repository)
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()

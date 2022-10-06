@@ -1,25 +1,31 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.R
+import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.databinding.ActivityVisualizarEventoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.framework.viewModel.GetFunctionOrganizerViewModel
 import com.example.appatemporal.framework.viewModel.GraphicsEventDetailViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.squareup.picasso.Picasso
 
 class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
     private lateinit var binding : ActivityVisualizarEventoOrganizadorBinding
     private val graphicsEventDetailViewModel : GraphicsEventDetailViewModel by viewModels()
-    private lateinit var repository: Repository
+    private val getFunctionOrganizerViewModel : GetFunctionOrganizerViewModel by viewModels()
+    val repository = Repository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +52,76 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
+
+        val idUser = "qVzK32OHDYOUtK1YsQbh"
+        val idEvento = intent.getStringExtra("idEvento")
+        val nombre = intent.getStringExtra("nombre")
+        val descripcion = intent.getStringExtra("descripcion")
+        val lugar = intent.getStringExtra("ubicacion")
+        val direccion = intent.getStringExtra("direccion")
+        val ciudad = intent.getStringExtra("ciudad")
+        val estado = intent.getStringExtra("estado")
+        val foto_portada = intent.getStringExtra("foto_portada")
+
+        binding.NombreEvento.text = nombre
+        binding.Ubicacion.text = lugar
+        binding.DireccionVEE.text = direccion
+        binding.CiudadEstadoVEE.text = ciudad + ", " + estado
+        Picasso.get().load(foto_portada).into(binding.ImagenVEE)
+
+        binding.btnMoreGraphics.setOnClickListener {
+            var idEvent : String = idEvento.toString()
+
+            val intent = Intent(this, DetailedMetrics::class.java)
+
+            intent.putExtra("idEvent", idEvent)
+
+            startActivity(intent)
+        }
+
+        binding.addFunBtn.setOnClickListener{
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, CreateFunction::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
+        }
+        binding.addArtBtn.setOnClickListener{
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, AddArtist::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
+        }
+        binding.addCatBtn.setOnClickListener{
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, ActivityAddCategoria::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
+        }
+        binding.addTBBtn.setOnClickListener{
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, ActivityAddTB::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
+        }
+
+        initRecyclerView(getFunctionOrganizerViewModel, idEvento.toString(), repository)
+
         //Creación de usuario temporal
-        val tempEventId : String = "DM"
+        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
         repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0
@@ -60,6 +134,8 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         })
         populateRating(tempEventId)
     }
+
+
 
     fun populateTSAPieChart(ventasTotal:Int,asistenciasTotal:Int){
         val ourPieChart = binding.tsaPieChart
@@ -116,12 +192,12 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         val ourRatingList = mutableListOf(ourRating0, ourRating1, ourRating2,
             ourRating3, ourRating4,ourRating5)
         //Declaración del repositorio
-        repository = Repository(this)
+        //repository = Repository(this)
         //Llamada a la función y al observador para modificar elementos de Rating
         graphicsEventDetailViewModel.getExtEventRating(eid, repository)
         graphicsEventDetailViewModel.ratingExt.observe(this, Observer{
-            ourRatingBar.rating = it[7]
-            ourRatingValue.text = "${it[7]} de 5"
+            ourRatingBar.rating = it[8]
+            ourRatingValue.text = "${it[8]} de 5"
             ourRatingCount.text =  "en ${it[1].toInt()} calificaciones"
             //Incorporar información a progress bar varias
             for (i in 0..5) {
@@ -133,6 +209,15 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
                     ourRatingList[i].text = "0 votos"
                 }
             }
+        })
+    }
+    private fun initRecyclerView(getFunctionOrganizerViewModel: GetFunctionOrganizerViewModel, eventId: String, repository: Repository){
+        getFunctionOrganizerViewModel.getFunctionOrganizer(eventId, repository)
+
+        // Log.d("LOG Activity",getOrganizerEventViewModel.getOrganizerEvent(userIdTemp, repository).toString())
+        getFunctionOrganizerViewModel.funcion.observe(this, Observer {
+            binding.funcionesOrganizadorRV.layoutManager = LinearLayoutManager(this) // Le da el layout que usará el RV.
+            binding.funcionesOrganizadorRV.adapter = ActivityVisualizarEventoOrganizadorAdapter(it)
         })
     }
 
