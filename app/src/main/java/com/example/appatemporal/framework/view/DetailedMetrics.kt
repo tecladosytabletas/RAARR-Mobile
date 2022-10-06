@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -31,6 +32,9 @@ class DetailedMetrics : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_metrics)
 
+        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
+
         binding = DetailedMetricsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -55,7 +59,7 @@ class DetailedMetrics : AppCompatActivity(){
 
         repository = Repository(this)
 
-        val tempEventId : String = "DM"
+        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
 
         setEventName(tempEventId)
 

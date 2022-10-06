@@ -47,7 +47,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         }
 
         //Creación de usuario temporal
-        val tempEventId : String = "DM"
+        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
         repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0

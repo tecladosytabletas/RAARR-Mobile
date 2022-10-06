@@ -67,10 +67,6 @@
         <activity
             android:name=".framework.view.Dashboard"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.AddNewProjectForm"
@@ -78,10 +74,6 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.CategoriasEventos"
@@ -141,6 +133,10 @@
         <activity
             android:name=".framework.view.DetailedMetrics"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.CheckIfLogged"
@@ -154,10 +150,6 @@
         <activity
             android:name=".framework.view.GetCommentsActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <meta-data
             android:name="preloaded_fonts"
