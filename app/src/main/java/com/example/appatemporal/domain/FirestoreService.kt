@@ -684,14 +684,14 @@ class FirestoreService {
         val errorHandler: Pair<Int,Int> = Pair(0,0)
         var funciones : QuerySnapshot =
             db.collection("Funcion")
-                .whereEqualTo("id_Evento",eid)
+                .whereEqualTo("id_evento_fk",eid)
                 .get()
                 .await()
         if (funciones.isEmpty){return errorHandler}
         for (document in funciones){
             var boletosAuxVentas : QuerySnapshot =
                 db.collection("Boleto")
-                    .whereEqualTo("id_Funcion", document.id)
+                    .whereEqualTo("id_funcion_fk", document.id)
                     .get()
                     .await()
             ventasCount += boletosAuxVentas.count()
@@ -699,7 +699,7 @@ class FirestoreService {
         for (document in funciones){
             var boletosAuxAsistencias : QuerySnapshot =
                 db.collection("Boleto")
-                    .whereEqualTo("id_Funcion", document.id)
+                    .whereEqualTo("id_funcion_fk", document.id)
                     .whereEqualTo("activo", false)
                     .get()
                     .await()
