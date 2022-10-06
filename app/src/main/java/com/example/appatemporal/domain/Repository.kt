@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
-import com.example.appatemporal.domain.models.GetTicketModel
+import com.example.appatemporal.domain.models.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -116,9 +115,20 @@ class Repository(context: Context) {
         return firestoreAPI.getComments(idEvento)
     }
 
-
     suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
         return firestoreAPI.getEventTicketsSA(eid)
+    }
+
+    suspend fun getEventsActualMonth(eD:Int,eM:Int,eY:Int) : MutableList<EventsInMonth> {
+        return firestoreAPI.getEventsActualMonth(eD,eM,eY)
+    }
+
+    suspend fun getEvents() : MutableList<EventModel> {
+        return firestoreAPI.getEvents()
+    }
+
+    suspend fun getEventsUserOrg(uid:String) : MutableList<EventModel> {
+        return firestoreAPI.getEventsUserOrg(uid)
     }
 
     suspend fun verifyTicketExistence(result: String) : Boolean {
@@ -128,8 +138,8 @@ class Repository(context: Context) {
     suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
         return firestoreAPI.getRevenuebyPM(eid)
     }
-    
-    suspend fun getEvents() = firestoreAPI.getEvents()
+
+    // suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
     suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)
@@ -242,6 +252,52 @@ class Repository(context: Context) {
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
     suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
 
+
+
+    //CreateEvent
+
+
+
+    suspend fun addEvent2(event: CreateEventModel, artista: String, funcion: FunctionModel, userUid: String, boletos: EventoTipoBoletoModel, cid: String) {
+        firestoreAPI.addEvent2(event, artista, funcion, userUid, boletos, cid)
+    }
+    suspend fun addFunction(eid: String, fechaFuncion: String, HoraInicio:String, HoraFin:String){
+        firestoreAPI.addFunction(eid,fechaFuncion,HoraInicio,HoraFin)
+    }
+
+    suspend fun addEventoCategoria(eid: String, idCategoria: String){
+        firestoreAPI.addEventoCategoria(eid, idCategoria)
+    }
+
+    suspend fun AddEventoTipoBoleto(eid: String, tipoboleto: String, precio: Int, cantidad: Int){
+        firestoreAPI.addEventoTipoBoleto(eid, tipoboleto, precio, cantidad)
+    }
+
+    suspend fun addArtista(eid: String, nombre_artista: String){
+        firestoreAPI.addArtista(eid, nombre_artista)
+    }
+
+    suspend fun getCategoriaEvento():List<String>{
+        return firestoreAPI.getEventCategory()
+    }
+
+    suspend fun getCategoriaEventoFilter(eid:String):List<String>{
+        return firestoreAPI.getEventCategoryFilter(eid)
+    }
+
+    suspend fun getEventoTipoBoletoFiltered(eid:String):List<String>{
+        return firestoreAPI.getEventoTipoBoletoFiltered(eid)
+    }
+
+    //Obtener eventos organizador
+
+    suspend fun getOrganizerEvent(uid: String): MutableList<EventModel01> {
+        return firestoreAPI.getOrganizerEvents(uid)
+    }
+
+    suspend fun getFunctionOrganizer(eid: String): MutableList<FuncionModel> {
+        return firestoreAPI.getFunctionOrganizador(eid)
+    }
 
 
 }

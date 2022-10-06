@@ -3,6 +3,7 @@ package com.example.appatemporal.domain
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.example.appatemporal.data.constants.Constantes.Companion.idCategoria
 import com.example.appatemporal.domain.models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
@@ -11,6 +12,8 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.lang.Boolean.parseBoolean
 import java.lang.Double.parseDouble
@@ -441,7 +444,6 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
-
     suspend fun getEvents(): List<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
         var event: QuerySnapshot = db.collection("Evento")
@@ -468,7 +470,7 @@ class FirestoreService {
             )
         }
         return events
-    }
+    }*/
 
     suspend fun getCategories(): List<CategoryModel>{
         Log.d("Test1", "firestore")
@@ -709,6 +711,117 @@ class FirestoreService {
         return result
     }
 
+    suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
+        var result : MutableList<EventsInMonth> = arrayListOf()
+        var events = db.collection("Evento")
+            .whereEqualTo("activo",1)
+            .whereEqualTo("aprobado",1)
+            .get()
+            .await()
+        for(event in events){
+            var functions = db.collection("Funcion")
+                .whereEqualTo("id_evento_fk",event.id)
+                .get()
+                .await()
+            for(function in functions){
+                var eventDate = function.data?.get("fecha_funcion").toString()
+                val arrayDate: List<String> = eventDate.split("/")
+                Log.d("ArrayDateLog", arrayDate.toString())
+                if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
+                    var evento = EventsInMonth(
+                        event.id,
+                        event.data?.get("nombre").toString(),
+                        event.data?.get("ubicacion").toString(),
+                        function.data?.get("hora_inicio").toString(),
+                        event.data?.get("foto_portada").toString(),
+                        //extra properties
+                        event.data?.get("descripcion").toString(),
+                        event.data?.get("ciudad").toString(),
+                        event.data?.get("estado").toString(),
+                        event.data?.get("direccion").toString(),
+                        event.data?.get("longitud").toString(),
+                        event.data?.get("latitud").toString(),
+                        event.data?.get("video").toString(),
+                        event.data?.get("activo").toString(),
+                        event.data?.get("aprobado").toString(),
+                        function.data?.get("fecha_funcion").toString(),
+                    )
+                    result.add(evento)
+                }
+            }
+        }
+        Log.d("LogResult", result.toString())
+        return result
+    }
+
+    suspend fun getEvents() : MutableList<EventModel>{
+        var events: MutableList<EventModel> = mutableListOf()
+        var event: QuerySnapshot = db.collection("Evento")
+            .whereEqualTo("activo",1)
+            .whereEqualTo("aprobado",1)
+            .get()
+            .await()
+        for (document in event) {
+            events.add(
+                EventModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    document.data?.get("descripcion").toString(),
+                    document.data?.get("ciudad").toString(),
+                    document.data?.get("estado").toString(),
+                    document.data?.get("ubicacion").toString(),
+                    document.data?.get("direccion").toString(),
+                    document.data?.get("longitud").toString(),
+                    document.data?.get("latitud").toString(),
+                    document.data?.get("foto_portada").toString(),
+                    document.data?.get("video").toString(),
+                    document.data?.get("activo").toString(),
+                    document.data?.get("aprobado").toString()
+                )
+            )
+        }
+        return events
+    }
+
+    suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
+        var result: MutableList<EventModel> = mutableListOf()
+
+        var event_user = db.collection("Usuario_Evento")
+            .whereEqualTo("id_usuario_fk",uid)
+            .get()
+            .await()
+        Log.d("getEventsUserOrg-uid",uid)
+        Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
+
+        for(element in event_user){
+            var event = db.collection("Evento")
+                //.document(element.data?.get("id_evento_fk").toString())
+                .whereEqualTo(FieldPath.documentId(),element.data?.get("id_evento_fk").toString())
+                .get()
+                .await()
+            Log.d("getEventsUserOrg-Event", event.toString())
+            var evento = EventModel(
+                event.documents[0].id,
+                event.documents[0].data?.get("nombre").toString(),
+                event.documents[0].data?.get("descripcion").toString(),
+                event.documents[0].data?.get("ciudad").toString(),
+                event.documents[0].data?.get("estado").toString(),
+                event.documents[0].data?.get("ubicacion").toString(),
+                event.documents[0].data?.get("direccion").toString(),
+                event.documents[0].data?.get("longitud").toString(),
+                event.documents[0].data?.get("latitud").toString(),
+                event.documents[0].data?.get("foto_portada").toString(),
+                event.documents[0].data?.get("video").toString(),
+                event.documents[0].data?.get("activo").toString(),
+                event.documents[0].data?.get("aprobado").toString()
+            )
+            result.add(evento)
+        }
+        Log.d("getEventsUserOrg", result.toString())
+        return result
+    }
+
+
     suspend fun getRevenuebyPM(eid:String): MutableMap<String, Int?> {
         var diccPM = mutableMapOf<String, Int?>()
         var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
@@ -766,5 +879,282 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
+
+    //crearEventoQuery
+
+    suspend fun addEvent2(event: CreateEventModel, artista: String, funcion: FunctionModel, userUid: String, boletos: EventoTipoBoletoModel, cid: String) {
+        db.collection("Evento")
+            .add(event)
+            .addOnSuccessListener {
+                Log.d("Firestore Log = ", "Se agregó correctamente el evento " + it.id)
+                GlobalScope.launch {
+                    addArtista(it.id, artista)
+                    addFunction(it.id, funcion.fecha_fun, funcion.hora_inicio, funcion.hora_fin)
+                    addUsuarioEvento(it.id, userUid)
+                    addEventoTipoBoleto(it.id,boletos.id_Tipo_Boleto,boletos.precio,boletos.max_boleto)
+                    addEventoCategoria(it.id, cid)
+                }
+            }
+    }
+    suspend fun addEventoCategoria(eid: String, cn: String) {
+        val cid=getCategory(cn)
+        var data = hashMapOf(
+            "id_evento_fk" to eid,
+            "id_categoria_fk" to cid.documents[0].id
+        )
+        db.collection("Evento_Categoria")
+            .add(data)
+            .addOnSuccessListener {
+                Log.d(
+                    "Firestore Log = ",
+                    "Se agregó correctamente el evento por categoria:  " + idCategoria
+                )
+            }
+            .await()
+    }
+
+    suspend fun addArtista(eid: String, nombre_artista: String) {
+        var data = hashMapOf(
+            "id_evento_fk" to eid,
+            "nombre_artista" to nombre_artista
+        )
+
+        db.collection("Evento_Artista")
+            .add(data)
+            .addOnSuccessListener {
+                Log.d("Firestore Log = ", "Se agregó correctamente el artista:  " + nombre_artista)
+            }
+            .await()
+    }
+
+
+
+    suspend fun getEventCategory(): List<String> {
+        var dropdown :MutableList<String> = mutableListOf()
+        val categorias = db.collection("Categoria").get().await()
+        for(categoria in categorias){
+            var nombre = categoria.getField<String>("nombre").toString()
+            dropdown.add(nombre)
+        }
+        Log.d("categoria",dropdown[0])
+        return dropdown
+    }
+
+    suspend fun getCategory(nombre_categoria: String): QuerySnapshot {
+        return db.collection("Categoria")
+            .whereEqualTo("nombre", nombre_categoria)
+            .get()
+            .await()
+    }
+
+    suspend fun getallCategories(): MutableMap<String, String> {
+        var Hashmap_category: MutableMap<String, String> = HashMap<String, String> ()
+
+        var categorias= db.collection("Categoria")
+            .get()
+            .await()
+        for(categoria in categorias){
+            Hashmap_category.put(categoria.id, categoria.getField<String>("nombre").toString())
+        }
+        return Hashmap_category
+    }
+
+    suspend fun getEventCategoryFilteredList(eid: String): List<String> {
+        var list_categoriaevento :MutableList<String> = mutableListOf()
+        val categorias = db.collection("Evento_Categoria")
+            .whereEqualTo("id_evento_fk", eid)
+            .get()
+            .await()
+
+        for(categoria in categorias){
+            list_categoriaevento.add(categoria.getField<String>("id_categoria_fk").toString())
+        }
+        return list_categoriaevento
+    }
+
+    suspend fun getEventCategoryFilter(eid: String): List<String> {
+        var QS_categoria = getallCategories()
+        var list_categoriaevento = getEventCategoryFilteredList(eid)
+        var dropdown :MutableList<String> = mutableListOf()
+
+        for ((k, v) in QS_categoria){
+            if(k !in list_categoriaevento){
+                dropdown.add(v)
+            }
+        }
+
+        return dropdown
+    }
+
+    suspend fun getallTipoBoleto(): MutableMap<String, String> {
+        var Hashmap_tb: MutableMap<String, String> = HashMap<String, String>()
+        var tb = db.collection("Tipo_Boleto")
+            .get()
+            .await()
+        for(tbs in tb){
+            Hashmap_tb.put(tbs.id, tbs.getField<String>("nombre").toString())
+        }
+        return Hashmap_tb
+    }
+    suspend fun getEventTBFilteredList(eid: String): List<String> {
+        var list_tb_evento :MutableList<String> = mutableListOf()
+        val tb = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_evento_fk", eid)
+            .get()
+            .await()
+
+        for(tbs in tb){
+            list_tb_evento.add(tbs.getField<String>("id_tipo_boleto_fk").toString())
+        }
+        return list_tb_evento
+    }
+
+    suspend fun getEventoTipoBoletoFiltered(eid: String): List<String> {
+        var QS_tipoevento = getallTipoBoleto()
+        var list_tipoevento = getEventTBFilteredList(eid)
+        var dropdown :MutableList<String> = mutableListOf()
+        for ((k, v) in QS_tipoevento){
+            if(k !in list_tipoevento){
+                dropdown.add(v)
+            }
+        }
+        return dropdown
+    }
+
+    suspend fun addUsuarioEvento(eid: String, uid: String) {
+        var data = hashMapOf(
+            "id_usuario_fk" to uid,
+            "id_evento_fk" to eid
+        )
+        db.collection("Usuario_Evento")
+            .add(data)
+            .addOnSuccessListener {
+                Log.d(
+                    "Firestore Log = ",
+                    "Se agregó correctamente usuario por evento:  " + uid
+                )
+            }
+            .await()
+    }
+    suspend fun GetTipoBoleto(nombre_tb: String): QuerySnapshot {
+        return db.collection("Tipo_Boleto")
+            .whereEqualTo("nombre", nombre_tb)
+            .get()
+            .await()
+    }
+
+    suspend fun addEventoTipoBoleto(
+        eid: String,
+        tipoboleto: String,
+        precio: Int,
+        max_boletos: Int
+    ) {
+        var idtipoboleto=GetTipoBoleto(tipoboleto)
+        var data = hashMapOf(
+            "id_evento_fk" to eid,
+            "id_tipo_boleto_fk" to idtipoboleto.documents[0].id,
+            "precio" to precio,
+            "max_boletos" to max_boletos
+        )
+        db.collection("Evento_Tipo_Boleto")
+            .add(data)
+            .addOnSuccessListener {
+                Log.d(
+                    "Firestore Log = ",
+                    "Se agregó correctamente el tipo de boleto:   " + eid
+                )
+            }
+            .await()
+    }
+
+
+    suspend fun addFunction(
+        eid: String,
+        fechaFuncion: String,
+        HoraInicio: String,
+        HoraFin: String
+    ) {
+        var data = hashMapOf(
+            "id_evento_fk" to eid,
+            "fecha_funcion" to fechaFuncion,
+            "hora_incio" to HoraInicio,
+            "hora_fin" to HoraFin
+        )
+        db.collection("Funcion")
+            .add(data)
+            .addOnSuccessListener {
+                Log.d(
+                    "Firestore Log = ",
+                    "Se agregó correctamente la funcion:   " + fechaFuncion
+                )
+            }
+            .await()
+    }
+
+    //Obtener eventos organizador
+
+    suspend fun getOrganizerEvents(uid : String) : MutableList<EventModel01> {
+        var result : MutableList<EventModel01> = arrayListOf()
+        // Se buscan los eventos relacionados con el usuario que llega como parámetro.
+        var usuarioEventos : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_usuario_fk",uid)
+                .get()
+                .await()
+        Log.d("LOG UsuarioEvento",usuarioEventos.isEmpty().toString())
+        // De todos esos registros, se busca cada evento en la tabla de eventos
+        for (usuarioEvento in usuarioEventos){
+            var eventos : QuerySnapshot =
+                db.collection("Evento")
+                    .whereEqualTo(FieldPath.documentId(), usuarioEvento.data?.get("id_evento_fk"))
+                    .get()
+                    .await()
+            Log.d("LOG UsuarioEvento",eventos.isEmpty().toString())
+            for (evento in eventos){
+                var newEvent = EventModel01(
+                    evento.id,
+                    evento.data?.get("nombre").toString(),
+                    evento.data?.get("descripcion").toString(),
+                    evento.data?.get("ciudad").toString(),
+                    evento.data?.get("estado").toString(),
+                    evento.data?.get("ubicacion").toString(),
+                    evento.data?.get("direccion").toString(),
+                    evento.data?.get("longitud").toString(),
+                    evento.data?.get("latitud").toString(),
+                    evento.data?.get("foto_portada").toString(),
+                    evento.data?.get("video").toString(),
+                    evento.data?.get("activo").toString(),
+                    evento.data?.get("aprobado").toString()
+                )
+                result.add(newEvent)
+            }
+
+            Log.d("LOG Evento",result.toString())
+        }
+        Log.d("LOG Empty Event",result.isEmpty().toString())
+        return result
+    }
+
+    suspend fun getFunctionOrganizador(eid: String) : MutableList<FuncionModel>{
+        var result : MutableList<FuncionModel> = arrayListOf()
+
+        var funciones : QuerySnapshot =
+            db.collection("Funcion")
+                .whereEqualTo("id_evento_fk", eid)
+                .get()
+                .await()
+        for(funcion in funciones){
+            var newFuncion = FuncionModel(
+                funcion.data?.get("fecha_funcion").toString(),
+                funcion.data?.get("hora_inicio").toString(),
+                funcion.data?.get("hora_fin").toString()
+            )
+            result.add(newFuncion)
+        }
+        return result
+    }
+
+
+
 }
 

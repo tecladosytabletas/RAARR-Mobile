@@ -1,10 +1,11 @@
-package com.example.appatemporal.framework.view
+package com.example.appatemporal.framework.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
 import com.example.appatemporal.domain.models.GetTicketModel
+import com.example.appatemporal.framework.view.adapters.boletosPorEventoViewHolder
 
 class boletosPorEventoAdapter (private val list: MutableList<GetTicketModel>) : RecyclerView.Adapter<boletosPorEventoViewHolder>(){
 
