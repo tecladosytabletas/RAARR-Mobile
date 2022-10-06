@@ -24,7 +24,7 @@ class GetCommentsActivity: AppCompatActivity() {
         binding = ActivityGetcommentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val idEvento = "F7hTauIDlJLnK7MLWIJi"
+        val idEvento = "12hEWP8xQQgQGjCyuWon"
 
         getCommentsViewModel.getComments(idEvento, repository)
 

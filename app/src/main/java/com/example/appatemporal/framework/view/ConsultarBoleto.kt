@@ -31,8 +31,40 @@ class ConsultarBoleto : AppCompatActivity() {
         binding = ActivityBoletoEspectadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
+        // ----------------------------Navbar------------------------------------
+        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+
+        // Visibility
+        if (userRole != "Organizador") {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
+        }
+        if (userRole == "Ayudante") {
+            binding.navbar.eventsIcon.visibility = android.view.View.GONE
+            binding.navbar.eventsText.visibility = android.view.View.GONE
+        }
+
+        // Intents
         binding.navbar.homeIcon.setOnClickListener {
-            finish()
+            if(userRole == "Organizador"){
+                val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.navbar.eventsIcon.setOnClickListener {
+            if(userRole == "Organizador"){
+                val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            }
         }
 
         binding.navbar.budgetIcon.setOnClickListener {
@@ -41,7 +73,18 @@ class ConsultarBoleto : AppCompatActivity() {
         }
 
         binding.navbar.ticketsIcon.setOnClickListener {
-            finish()
+            if (userRole == "Espectador" || userRole == "Organizador") {
+                val intent = Intent(this, BoletoPorEventoActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
         }
 
         binding.ratingbar.visibility = android.view.View.INVISIBLE
@@ -64,6 +107,8 @@ class ConsultarBoleto : AppCompatActivity() {
         val estado = intent.getStringExtra("estado")
         val hashQr = intent.getStringExtra("hashQr")
 
+        Log.d("hashQR LOG", hashQr.toString())
+
         Log.d("id evento seleccionado", idEvento.toString())
 
         Log.d("hashqrValue Log", hashQr.toString())
@@ -76,11 +121,6 @@ class ConsultarBoleto : AppCompatActivity() {
             startActivity(Intent.createChooser(sendIntent, "send to "))
         }
 
-
-        binding.navbar.metricsIcon.setOnClickListener {
-            val intent = Intent(this, Dashboard::class.java)
-            startActivity(intent)
-        }
 
         consultarBoletoViewModel.verifyComment(userUid, idEvento.toString(), repository)
         consultarBoletoViewModel.commentState.observe(this, Observer { commentExistence ->

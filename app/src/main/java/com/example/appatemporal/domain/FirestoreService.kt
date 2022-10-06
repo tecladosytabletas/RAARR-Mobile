@@ -40,15 +40,15 @@ class FirestoreService {
 
     suspend fun addUserRole(uid: String, role: String) {
         val dbRole = db.collection("Rol")
-            .whereEqualTo("nombre_Rol", role)
+            .whereEqualTo("nombre", role)
             .get()
             .addOnSuccessListener {
                 Log.d("FirestoreLogs","Got Role Correctly: ${it.documents[0].id}")
             }.await()
 
         val userRole = hashMapOf(
-            "id_Usuario" to uid,
-            "id_Rol" to dbRole.documents[0].id
+            "id_usuario_fk" to uid,
+            "id_rol_fk" to dbRole.documents[0].id
         )
 
         db.collection("Usuario_Rol")
@@ -87,12 +87,12 @@ class FirestoreService {
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         var dbRole: QuerySnapshot =
             db.collection("Usuario_Rol")
-                .whereEqualTo("id_Usuario", uid)
+                .whereEqualTo("id_usuario_fk", uid)
                 .get()
                 .await()
         var userRole: DocumentSnapshot =
             db.collection("Rol")
-                .document(dbRole.documents[0].data?.get("id_Rol").toString())
+                .document(dbRole.documents[0].data?.get("id_rol_fk").toString())
                 .get()
                 .await()
         return userRole
@@ -113,18 +113,18 @@ class FirestoreService {
         for (boleto in boletos){
             var funciones : QuerySnapshot =
                 db.collection("Funcion")
-                    .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_Funcion"))
+                    .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_funcion_fk"))
                     .get()
                     .await()
             var evento : DocumentSnapshot =
                 db.collection("Evento")
-                    .document(funciones.documents[0].data?.get("id_Evento").toString())
+                    .document(funciones.documents[0].data?.get("id_evento_fk").toString())
                     .get()
                     .await()
             Log.d("EventLog", evento.data.toString())
-            var ticket = GetTicketModel(evento.id, evento.data?.get("nombre_Evento").toString(),
-                funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
-                evento.data?.get("lugar").toString(), evento.data?.get("direccion").toString(),
+            var ticket = GetTicketModel(evento.id, evento.data?.get("nombre").toString(),
+                funciones.documents[0].data?.get("fecha_funcion").toString(), funciones.documents[0].data?.get("hora_inicio").toString(),
+                evento.data?.get("ubicacion").toString(), evento.data?.get("direccion").toString(),
                 evento.data?.get("ciudad").toString(), evento.data?.get("estado").toString(),
                 boleto.data?.get("hash_qr").toString())
 
@@ -200,7 +200,7 @@ class FirestoreService {
                     .await()
             if (feedbacks.isEmpty){return 0f}
             for (document in feedbacks){
-                acumulado += document.data?.get("rating").toString().toInt()
+                acumulado += document.data?.get("rating").toString().toFloat()
                 count += 1
             }
         }
@@ -253,7 +253,7 @@ class FirestoreService {
     suspend fun verifyTicketExistence(resulted: String) : Boolean {
         var existence: Boolean = false
         var query = db.collection("Boleto")
-            .whereEqualTo("hash_QR", resulted)
+            .whereEqualTo("hash_qr", resulted)
             .get()
             .await()
         if (!query.isEmpty) {
@@ -270,7 +270,7 @@ class FirestoreService {
         var Queryresult: Boolean = true
 
         db.collection("Boleto")
-            .whereEqualTo("hash_QR", result)
+            .whereEqualTo("hash_qr", result)
             .get()
             .addOnSuccessListener {
                 for (document in it) {
@@ -444,33 +444,6 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
-    suspend fun getEvents(): List<EventModel>{
-        var events: MutableList<EventModel> = mutableListOf()
-        var event: QuerySnapshot = db.collection("Evento")
-            .get()
-            .await()
-        for (document in event) {
-            events.add(
-                EventModel(
-                    document.id,
-                    document.data?.get("nombre").toString(),
-                    document.data?.get("descripcion").toString(),
-                    document.data?.get("ciudad").toString(),
-                    document.data?.get("estado").toString(),
-                    document.data?.get("ubicacion").toString(),
-                    document.data?.get("direccion").toString(),
-                    document.data?.get("longitud").toString(),
-                    document.data?.get("latitud").toString(),
-                    document.data?.get("foto_portada").toString(),
-                    document.data?.get("video").toString(),
-                    document.data?.get("activo").toString(),
-                    document.data?.get("aprobado").toString(),
-
-                    )
-            )
-        }
-        return events
-    }*/
 
     suspend fun getCategories(): List<CategoryModel>{
         Log.d("Test1", "firestore")
@@ -644,14 +617,14 @@ class FirestoreService {
             .await()
         if (ratings.isEmpty){return emptyRatings}
         for(element in ratings){
-            listRatings[0] = listRatings[0] + element.data?.get("rating").toString().toInt()
+            listRatings[0] = listRatings[0] + element.data?.get("rating").toString().toFloat()
             listRatings[1] = listRatings[1] + 1
-            when(element.data?.get("rating").toString().toInt()) {
-                0 -> listRatings[2] = listRatings[2] + 1
-                1 -> listRatings[3] = listRatings[3] + 1
-                2 -> listRatings[4] = listRatings[4] + 1
-                3 -> listRatings[5] = listRatings[5] + 1
-                4 -> listRatings[6] = listRatings[6] + 1
+            when(element.data?.get("rating").toString().toFloat()) {
+                0f -> listRatings[2] = listRatings[2] + 1
+                1f -> listRatings[3] = listRatings[3] + 1
+                2f -> listRatings[4] = listRatings[4] + 1
+                3f -> listRatings[5] = listRatings[5] + 1
+                4f -> listRatings[6] = listRatings[6] + 1
                 else -> {
                     listRatings[7] = listRatings[7] + 1
                 }

@@ -11,9 +11,10 @@ data class CreateEventModel(
     val direccion: String,
     val longitud: String,
     val latitud: String,
-    val imagen: String,
+    val foto_portada: String,
     val video: String,
     val activo: Int,
+    val aprobado: Int,
     val divisa: String,
     val fecha_creado: String,
     val fecha_modificado: String

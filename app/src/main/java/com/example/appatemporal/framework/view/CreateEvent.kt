@@ -92,7 +92,7 @@ class CreateEvent :AppCompatActivity() {
                 val formattedDate: String = current.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
                 val fecha_Creado = formattedDate
                 val fecha_modificado = formattedDate
-                val evento = CreateEventModel(nombre.text.toString(), descripcion.text.toString(),ciudad.text.toString(),estado.text.toString(), ubicacion.text.toString(),direccion.text.toString(),longitud.text.toString(),latitud.text.toString(),foto.text.toString(),video.text.toString(),activo,divisa,fecha_Creado,fecha_modificado)
+                val evento = CreateEventModel(nombre.text.toString(), descripcion.text.toString(),ciudad.text.toString(),estado.text.toString(), ubicacion.text.toString(),direccion.text.toString(),longitud.text.toString(),latitud.text.toString(),foto.text.toString(),video.text.toString(),activo,0,divisa,fecha_Creado,fecha_modificado)
                 Log.d("El último ticket es:", evento.ciudad)
                 //val artista = findViewById<EditText>(R.id.Artista_Evento)
 
@@ -135,6 +135,8 @@ class CreateEvent :AppCompatActivity() {
 
                 if(cmp > 0){
                     viewModel.AddEvent(evento, repository, artista.text.toString(),funcion, userUid, boletos, categoria.getSelectedItem().toString())
+                    val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                    this.startActivity(submitBtn)
                 }
                 else{
                     Toast.makeText(applicationContext, "La fecha elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
@@ -145,8 +147,7 @@ class CreateEvent :AppCompatActivity() {
                 Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
             }
 
-            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-            this.startActivity(submitBtn)
+
 
         }
 
