@@ -13,7 +13,7 @@ class ProyectoOrganizadorViewModel: ViewModel() {
     private val requirement = ProyectoOrganizadorRequirement()
 
     val projects = MutableLiveData<List<Proyecto>>()
-
+    val project = MutableLiveData<Proyecto>()
     fun removeProject(proyecto: Proyecto, repository: Repository){
         viewModelScope.launch {
             requirement.deleteProject(proyecto, repository)
@@ -43,7 +43,21 @@ class ProyectoOrganizadorViewModel: ViewModel() {
         return requirement.countDoneActivities(repository, id_a, stringStatus)
     }
 
-    suspend fun inserEstatus(repository: Repository, estatus: Estatus) {
-        requirement.insertEstatus(estatus, repository)
+    fun countAllActivities(repository: Repository, id_a: Int): Int{
+        return requirement.countAllActivities(repository, id_a)
+    }
+
+    fun updateEstatusCompletado(estatusNew: Boolean, id: Int, repository: Repository){
+        viewModelScope.launch {
+            requirement.updateEstatusCompletado(estatusNew, id, repository)
+            val proyecto = requirement.getProyectoById(id, repository)
+            project.postValue(proyecto)
+        }
+    }
+    fun getAllProjectsCompleted(stringStatus: Boolean, repository: Repository) {
+        viewModelScope.launch {
+            val list = requirement.filterProjectsByStatus(stringStatus, repository)
+            projects.setValue(list)
+        }
     }
 }

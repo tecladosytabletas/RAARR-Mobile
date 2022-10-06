@@ -8,6 +8,7 @@
     android:layout_marginLeft="16dp">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient"
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre"
                 android:textColor="@color/grayBtn"
-                android:textSize="24dp"
+                android:textSize="16dp"
                 >
             </TextView>
             <TextView
@@ -56,7 +57,7 @@
                 android:layout_below="@id/nombreTarjetaGrande"
                 android:text="Fecha"
                 android:textColor="@color/yellow"
-                android:textSize="16dp"
+                android:textSize="11dp"
                 >
             </TextView>
             <TextView
@@ -66,7 +67,7 @@
                 android:layout_below="@id/fechaTarjetaGrande"
                 android:text="Descripcion"
                 android:textColor="@color/grayBtn"
-                android:textSize="16dp"
+                android:textSize="8dp"
                 >
             </TextView>
 

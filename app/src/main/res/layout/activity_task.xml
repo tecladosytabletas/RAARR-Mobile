@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="314dp"
         android:text="Nombre de la actividad"
         android:textColor="@color/white"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="244dp"
         android:text="Area de la actividad"
         android:textColor="@color/white"
@@ -86,15 +86,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="none"
-            android:text="@string/areaType1"
-            android:textSize="15dp"
             android:popupBackground="@color/white"
-            android:textColorHint="@color/white"
+            android:text="@string/areaType1"
             android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewActArea"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/textViewActArea" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -207,7 +206,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginStart="126dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="126dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/gradent_horizontal"

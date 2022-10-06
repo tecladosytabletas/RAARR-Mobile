@@ -43,7 +43,7 @@ class AddNewActivityForm : AppCompatActivity(){
 
 
         // get reference to the string array that we just created
-        val areaList = resources.getStringArray(R.array.prioridadList)
+        val areaList = resources.getStringArray(R.array.areaList)
         // create an array adapter and pass the required parameter
         // in our case pass the context, drop down layout , and array.
         val arrayAdapter1 = ArrayAdapter(this, R.layout.dropdown_menu, areaList)

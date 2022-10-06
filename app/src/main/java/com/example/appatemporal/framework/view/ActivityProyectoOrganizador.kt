@@ -34,6 +34,8 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
         var presupuesto:Double = (myExtras?.getDouble("presupuesto_proyecto")?:-1) as Double
         var meta:Double = (myExtras?.getDouble("meta_proyecto")?:-1) as Double
 
+
+
         binding.navbar.homeIcon.setOnClickListener {
             finish()
         }
