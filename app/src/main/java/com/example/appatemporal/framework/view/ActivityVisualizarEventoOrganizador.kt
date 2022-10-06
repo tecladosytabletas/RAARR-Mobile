@@ -34,8 +34,40 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         binding = ActivityVisualizarEventoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // ----------------------------Navbar------------------------------------
+        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+
+        // Visibility
+        if (userRole != "Organizador") {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
+        }
+        if (userRole == "Ayudante") {
+            binding.navbar.eventsIcon.visibility = android.view.View.GONE
+            binding.navbar.eventsText.visibility = android.view.View.GONE
+        }
+
+        // Intents
         binding.navbar.homeIcon.setOnClickListener {
-            finish()
+            if(userRole == "Organizador"){
+                val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.navbar.eventsIcon.setOnClickListener {
+            if(userRole == "Organizador"){
+                val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            }
         }
 
         binding.navbar.budgetIcon.setOnClickListener {
@@ -44,13 +76,20 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         }
 
         binding.navbar.ticketsIcon.setOnClickListener {
-            finish()
+            if (userRole == "Espectador" || userRole == "Organizador") {
+                val intent = Intent(this, BoletoPorEventoActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            }
         }
 
         binding.navbar.metricsIcon.setOnClickListener {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
+
 
         val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
@@ -118,11 +157,19 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             this.startActivity(crearProyectoForm)
         }
 
+        binding.btnComment.setOnClickListener{
+            var idEvent : String = idEvento.toString()
+            val intent = Intent(this, GetCommentsActivity::class.java)
+            intent.putExtra("idEvent", idEvent)
+            this.startActivity(intent)
+        }
+
+
         initRecyclerView(getFunctionOrganizerViewModel, idEvento.toString(), repository)
 
         //Creación de usuario temporal
         val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
-        repository = Repository(this)
+        val repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0

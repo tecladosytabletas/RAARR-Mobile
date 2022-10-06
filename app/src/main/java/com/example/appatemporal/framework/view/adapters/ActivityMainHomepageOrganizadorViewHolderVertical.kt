@@ -7,6 +7,7 @@ import com.example.appatemporal.databinding.ActivityHomepageTarjetaEventosChicaE
 import com.example.appatemporal.databinding.ActivityHomepageTarjetaEventosGrandeEspectadorBinding
 import com.example.appatemporal.domain.models.EventModel
 import com.example.appatemporal.domain.models.EventsInMonth
+import com.example.appatemporal.framework.view.ActivityVisualizarEventoEspectador
 import com.example.appatemporal.framework.view.ActivityVisualizarEventoOrganizador
 import com.example.appatemporal.framework.view.ConsultarBoleto
 import com.squareup.picasso.Picasso
@@ -30,9 +31,10 @@ class ActivityMainHomepageOrganizadorViewHolderVertical(view: View) : RecyclerVi
         var cardEventBtn = binding.cardEvent
 
         cardEventBtn.setOnClickListener {
-            var idEvent : String = eventModel.id
 
-            val eventoIndividual =  Intent(itemView.context, ActivityVisualizarEventoOrganizador::class.java)
+
+
+            val eventoIndividual =  Intent(itemView.context, ActivityVisualizarEventoEspectador::class.java)
 
             eventoIndividual.putExtra("idEvent", idEvent)
             eventoIndividual.putExtra("nombre", nombre)
@@ -42,6 +44,8 @@ class ActivityMainHomepageOrganizadorViewHolderVertical(view: View) : RecyclerVi
             eventoIndividual.putExtra("foto_portada", foto_portada)
 
             itemView.context.startActivity(eventoIndividual)
+
+
         }
     }
 

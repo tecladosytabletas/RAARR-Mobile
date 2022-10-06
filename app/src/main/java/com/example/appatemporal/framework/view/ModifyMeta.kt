@@ -29,7 +29,7 @@ class ModifyMeta(private val viewModel: PresupuestoOrganizadorViewModel) :Bottom
         val meta = data!!.get("meta").toString()
         val repository = Repository(requireContext())
         binding.descMeta.hint="Meta Actual: "+ meta
-
+        
         binding.saveButtonMeta.setOnClickListener {
             val meta = binding.descMeta.text.toString()
             if (meta.isEmpty()){

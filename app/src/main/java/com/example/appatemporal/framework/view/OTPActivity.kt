@@ -152,8 +152,13 @@ class OTPActivity : AppCompatActivity() {
                                 otpViewModel.addUserLocalDB(localDbUser, repository)
                                 userSharedPrefEdit.putString("rol", it.rol)
                                 userSharedPrefEdit.apply()
-                                val intent = Intent(this, SupportActivity::class.java)
-                                startActivity(intent)
+                                if(it.rol == "Organizador"){
+                                    val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
+                                    startActivity(intent)
+                                }else{
+                                    val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
+                                    startActivity(intent)
+                                }
 
                             })
                         } else {
