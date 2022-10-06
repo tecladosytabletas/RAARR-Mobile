@@ -164,7 +164,6 @@
         <activity
             android:name=".framework.view.AddArtist"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".framework.view.ActivityAddCategoria"

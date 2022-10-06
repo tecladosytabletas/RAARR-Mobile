@@ -141,7 +141,7 @@ class FirestoreService {
     suspend fun eventCount(uid: String) : Int {
         var events : QuerySnapshot =
             db.collection("Usuario_Evento")
-                .whereEqualTo("id_Usuario", uid)
+                .whereEqualTo("id_usuario_fk", uid)
                 .get()
                 .await()
         return events.count()
@@ -152,19 +152,19 @@ class FirestoreService {
         var asistenciasCount : Int = 0
         var ventas : QuerySnapshot =
             db.collection("Usuario_Evento")
-                .whereEqualTo("id_Usuario", uid)
+                .whereEqualTo("id_usuario_fk", uid)
                 .get()
                 .await()
         for (document in ventas){
             var funciones : QuerySnapshot =
                 db.collection("Funcion")
-                    .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
+                    .whereEqualTo("id_evento_fk",document.data?.get("id_evento_fk"))
                     .get()
                     .await()
             for (document in funciones){
                 var boletosAuxVentas : QuerySnapshot =
                     db.collection("Boleto")
-                        .whereEqualTo("id_Funcion", document.id)
+                        .whereEqualTo("id_funcion_fk", document.id)
                         .get()
                         .await()
                 ventasCount += boletosAuxVentas.count()
@@ -172,7 +172,7 @@ class FirestoreService {
             for (document in funciones){
                 var boletosAuxAsistencias : QuerySnapshot =
                     db.collection("Boleto")
-                        .whereEqualTo("id_Funcion", document.id)
+                        .whereEqualTo("id_funcion_fk", document.id)
                         .whereEqualTo("activo", false)
                         .get()
                         .await()
@@ -188,16 +188,16 @@ class FirestoreService {
         var count = 0f
         var events : QuerySnapshot =
             db.collection("Usuario_Evento")
-                .whereEqualTo("id_Usuario", uid)
+                .whereEqualTo("id_usuario_fk", uid)
                 .get()
                 .await()
         if (events.isEmpty){return 0f}
         for (document in events){
             var feedbacks : QuerySnapshot =
                 db.collection("Rating")
-                .whereEqualTo("id_Evento",document.data?.get("id_Evento"))
-                .get()
-                .await()
+                    .whereEqualTo("id_evento_fk",document.data?.get("id_evento_fk"))
+                    .get()
+                    .await()
             if (feedbacks.isEmpty){return 0f}
             for (document in feedbacks){
                 acumulado += document.data?.get("rating").toString().toInt()
@@ -214,33 +214,33 @@ class FirestoreService {
         var tiposBoleto: QuerySnapshot
         var events: QuerySnapshot =
             db.collection("Usuario_Evento")
-                .whereEqualTo("id_Usuario", uid)
+                .whereEqualTo("id_usuario_fk", uid)
                 .get()
                 .await()
         if (events.isEmpty){return 0}
         for (document in events) {
             var funciones: QuerySnapshot =
                 db.collection("Funcion")
-                    .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
+                    .whereEqualTo("id_evento_fk", document.data?.get("id_evento_fk"))
                     .get()
                     .await()
             if (funciones.isEmpty){return 0}
             for (document in funciones) {
                 boletos =
                     db.collection("Boleto")
-                        .whereEqualTo("id_Funcion", document.id)
+                        .whereEqualTo("id_funcion_fk", document.id)
                         .get()
                         .await()
                 if (boletos.isEmpty){return 0}
                 tiposBoleto =
                     db.collection("Evento_Tipo_Boleto")
-                        .whereEqualTo("id_Evento", document.data?.get("id_Evento"))
+                        .whereEqualTo("id_evento_fk", document.data?.get("id_evento_fk"))
                         .get()
                         .await()
                 if (tiposBoleto.isEmpty){return 0}
                 for (tipoBoleto in tiposBoleto) {
                     for (document in boletos) {
-                        if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto")) {
+                        if (document.data?.get("id_tipo_boleto_fk") == tipoBoleto.data?.get("id_tipo_boleto_fk")) {
                             ventaTotal += tipoBoleto.data?.get("precio").toString().toInt()
                         }
                     }
@@ -358,7 +358,7 @@ class FirestoreService {
                 .document(eid)
                 .get()
                 .await()
-        return event.data?.get("nombre_Evento").toString()
+        return event.data?.get("nombre").toString()
     }
 
     suspend fun generalProfitsEvent(eid:String) : Int {
@@ -368,26 +368,26 @@ class FirestoreService {
         var tiposBoleto: QuerySnapshot
 
         var funciones: QuerySnapshot = db.collection("Funcion")
-            .whereEqualTo("id_Evento", eid)
+            .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
         Log.d("generalProfitsEvent-Funciones", funciones.count().toString())
         for (element in funciones) {
             boletos = db.collection("Boleto")
-                    .whereEqualTo("id_Funcion", element.id)
-                    .get()
-                    .await()
+                .whereEqualTo("id_funcion_fk", element.id)
+                .get()
+                .await()
             Log.d("generalProfitsEvent-Boletos", boletos.count().toString())
             tiposBoleto =
                 db.collection("Evento_Tipo_Boleto")
-                    .whereEqualTo("id_Evento", element.data?.get("id_Evento"))
+                    .whereEqualTo("id_evento_fk", element.data?.get("id_evento_fk"))
                     .get()
                     .await()
             Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
             for (tipoBoleto in tiposBoleto) {
                 for (document in boletos) {
-                    if (document.data?.get("id_Tipo_Boleto") == tipoBoleto.data?.get("id_Tipo_Boleto") &&
-                            tipoBoleto.data?.get("id_Evento") == element.data?.get("id_Evento")) {
+                    if (document.data?.get("id_tipo_boleto_fk") == tipoBoleto.data?.get("id_tipo_boleto_fk") &&
+                        tipoBoleto.data?.get("id_evento_fk") == element.data?.get("id_evento_fk")) {
                         Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
                         ganancias += tipoBoleto.data?.get("precio").toString().toInt()
                     }
@@ -404,24 +404,26 @@ class FirestoreService {
         var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
 
         var funciones: QuerySnapshot = db.collection("Funcion")
-            .whereEqualTo("id_Evento", eid)
+            .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
         Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
-        if (funciones.isEmpty){diccPM.put("No hay datos", 0); return diccPM}
+        if (funciones.isEmpty){diccPM.put("No hay datos funciones", 0); return diccPM}
 
         for(element in funciones){
             var boletos : QuerySnapshot = db.collection("Boleto")
-                .whereEqualTo("id_Funcion", element.id)
+                .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
-            if (boletos.isEmpty){diccPM.put("No hay datos", 0); return diccPM}
+            //if (boletos.isEmpty){diccPM.put("No hay datos boletos", 0); return diccPM}
 
             for(boleto in boletos){
-                if(boleto.data?.get("id_Metodo_Pago").toString() !in diccPM){
-                    diccPM.put(boleto.data?.get("id_Metodo_Pago").toString(), 0)
+                if(boleto.data?.get("id_metodo_pago_fk").toString() !in diccPM){
+                    diccPM.put(boleto.data?.get("id_metodo_pago_fk").toString(), 0)
+                    Log.d("getTicketsbyPM ID METODO", boleto.data?.get("id_metodo_pago_fk").toString())
+                    Log.d("getTicketsbyPM DICC", diccPM.toString())
                 }
-                diccPM.computeIfPresent(boleto.data?.get("id_Metodo_Pago").toString()) { _, v -> v + 1}
+                diccPM.computeIfPresent(boleto.data?.get("id_metodo_pago_fk").toString()) { _, v -> v + 1}
             }
         }
         var metodos : QuerySnapshot =
@@ -434,7 +436,7 @@ class FirestoreService {
         for (element in diccPM){
             for (metodo in metodos){
                 if (element.key == metodo.id){
-                    result.put(metodo.data?.get("metodo").toString(),diccPM.get(element.key))
+                    result.put(metodo.data?.get("nombre").toString(),diccPM.get(element.key))
                 }
             }
         }
@@ -442,7 +444,7 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
-    /* suspend fun getEvents(): List<EventModel>{
+    suspend fun getEvents(): List<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
         var event: QuerySnapshot = db.collection("Evento")
             .get()
@@ -580,31 +582,35 @@ class FirestoreService {
         var diccVentas = mutableMapOf<String, Int?>()
         var diccTotales = mutableMapOf<String, Pair<Int?, Int?>>()
 
-        var funciones: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
-            .whereEqualTo("id_Evento", eid)
+        var funciones: QuerySnapshot = db.collection("Funcion")
+            .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
         Log.d("getTicketTypeSA-Funciones", funciones.count().toString())
 
+        for (element in funciones){
+            Log.d("CONTENIDO FUNCIONES", element.data?.get("id_funcion_fk").toString())
+        }
+
         for (element in funciones) {
             boletos = db.collection("Boleto")
-                .whereEqualTo("id_Funcion", element.id)
+                .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
             Log.d("getTicketTypeSA-Boletos", boletos.count().toString())
 
             for(boleto in boletos){
-                if(boleto.data?.get("id_Tipo_Boleto").toString() !in diccAsistencias){
+                if(boleto.data?.get("id_tipo_boleto_fk").toString() !in diccAsistencias){
                     var countVal = 0
-                    diccAsistencias.put(boleto.data?.get("id_Tipo_Boleto").toString(), countVal)
-                    diccVentas.put(boleto.data?.get("id_Tipo_Boleto").toString(), countVal)
+                    diccAsistencias.put(boleto.data?.get("id_tipo_boleto_fk").toString(), countVal)
+                    diccVentas.put(boleto.data?.get("id_tipo_boleto_fk").toString(), countVal)
                 }
 
                 if(boleto.data?.get("activo").toString() == "false"){
-                    diccAsistencias.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
-                    diccVentas.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                    diccAsistencias.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
+                    diccVentas.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
                 } else {
-                    diccVentas.computeIfPresent(boleto.data?.get("id_Tipo_Boleto").toString()) { _, v -> v + 1}
+                    diccVentas.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
                 }
             }
 
@@ -617,7 +623,7 @@ class FirestoreService {
                 for (tipoBoleto in tiposBoleto) {
                     if(tipoBoleto.id == k) {
                         var countVal: Pair<Int?, Int?> = Pair(v, diccAsistencias.get(k))
-                        diccTotales.put(tipoBoleto.data?.get("nombre_Tipo_Boleto").toString(), countVal)
+                        diccTotales.put(tipoBoleto.data?.get("nombre").toString(), countVal)
                     }
                 }
             }
@@ -633,7 +639,7 @@ class FirestoreService {
         var listRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f,0f)
         var emptyRatings = mutableListOf<Float>(0f,0f,0f,0f,0f,0f,0f,0f,0f)
         var ratings = db.collection("Rating")
-            .whereEqualTo("id_evento", eid)
+            .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
         if (ratings.isEmpty){return emptyRatings}
@@ -679,14 +685,14 @@ class FirestoreService {
         val errorHandler: Pair<Int,Int> = Pair(0,0)
         var funciones : QuerySnapshot =
             db.collection("Funcion")
-                .whereEqualTo("id_Evento",eid)
+                .whereEqualTo("id_evento_fk",eid)
                 .get()
                 .await()
         if (funciones.isEmpty){return errorHandler}
         for (document in funciones){
             var boletosAuxVentas : QuerySnapshot =
                 db.collection("Boleto")
-                    .whereEqualTo("id_Funcion", document.id)
+                    .whereEqualTo("id_funcion_fk", document.id)
                     .get()
                     .await()
             ventasCount += boletosAuxVentas.count()
@@ -694,7 +700,7 @@ class FirestoreService {
         for (document in funciones){
             var boletosAuxAsistencias : QuerySnapshot =
                 db.collection("Boleto")
-                    .whereEqualTo("id_Funcion", document.id)
+                    .whereEqualTo("id_funcion_fk", document.id)
                     .whereEqualTo("activo", false)
                     .get()
                     .await()
@@ -821,33 +827,33 @@ class FirestoreService {
         var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
 
         var funciones: QuerySnapshot = db.collection("Funcion")
-            .whereEqualTo("id_Evento", eid)
+            .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
         if (funciones.isEmpty){diccPM.put("No hay datos en Funcionces", 0); return diccPM}
 
         var tiposboleto: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
-            .whereEqualTo("id_Evento", eid)
+            .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
         if (tiposboleto.isEmpty){diccPM.put("No hay datos en Tipos de Boletos", 0); return diccPM}
 
         for(element in funciones){
             var boletos : QuerySnapshot = db.collection("Boleto")
-                .whereEqualTo("id_Funcion", element.id)
+                .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
             if (boletos.isEmpty){diccPM.put("No hay datos en Boletos", 0); return diccPM}
 
             for (boleto in boletos){
                 for (tipoBoleto in tiposboleto){
-                    if (boleto.data?.get("id_Tipo_Boleto").toString() ==
-                        tipoBoleto.data?.get("id_Tipo_Boleto").toString()){
-                        if (boleto.data?.get("id_Metodo_Pago").toString() !in diccPM){
-                            diccPM.put(boleto.data?.get("id_Metodo_Pago").toString(), 0)
+                    if (boleto.data?.get("id_tipo_boleto_fk").toString() ==
+                        tipoBoleto.data?.get("id_tipo_boleto_fk").toString()){
+                        if (boleto.data?.get("id_metodo_pago_fk").toString() !in diccPM){
+                            diccPM.put(boleto.data?.get("id_metodo_pago_fk").toString(), 0)
                         }
-                        diccPM.computeIfPresent(boleto.data?.get("id_Metodo_Pago").toString())
+                        diccPM.computeIfPresent(boleto.data?.get("id_metodo_pago_fk").toString())
                         { _, v -> v + tipoBoleto.data?.get("precio").toString().toInt()}
                     }
                 }
@@ -864,7 +870,7 @@ class FirestoreService {
         for (element in diccPM){
             for (metodo in metodos){
                 if (element.key == metodo.id){
-                    result.put(metodo.data?.get("metodo").toString(),diccPM.get(element.key))
+                    result.put(metodo.data?.get("nombre").toString(),diccPM.get(element.key))
                 }
             }
         }
