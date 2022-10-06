@@ -4,12 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
-import com.example.appatemporal.domain.models.EventModel
-import com.example.appatemporal.domain.models.EventsInMonth
-import com.example.appatemporal.domain.models.GetTicketModel
+import com.example.appatemporal.domain.models.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import com.example.appatemporal.domain.models.UserModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -255,6 +252,42 @@ class Repository(context: Context) {
     suspend fun addUserLocalDB(user: Usuario) = usuarioDao.insertUserLocalDB(user)
     suspend fun getUserLocalDB(userUid: String) : Usuario = usuarioDao.getUserLocalDB(userUid)
 
+
+
+    //CreateEvent
+
+
+
+    suspend fun addEvent2(event: CreateEventModel, artista: String, funcion: FunctionModel, userUid: String, boletos: EventoTipoBoletoModel, cid: String) {
+        firestoreAPI.addEvent2(event, artista, funcion, userUid, boletos, cid)
+    }
+    suspend fun addFunction(eid: String, fechaFuncion: String, HoraInicio:String, HoraFin:String){
+        firestoreAPI.addFunction(eid,fechaFuncion,HoraInicio,HoraFin)
+    }
+
+    suspend fun addEventoCategoria(eid: String, idCategoria: String){
+        firestoreAPI.addEventoCategoria(eid, idCategoria)
+    }
+
+    suspend fun AddEventoTipoBoleto(eid: String, tipoboleto: String, precio: Int, cantidad: Int){
+        firestoreAPI.addEventoTipoBoleto(eid, tipoboleto, precio, cantidad)
+    }
+
+    suspend fun addArtista(eid: String, nombre_artista: String){
+        firestoreAPI.addArtista(eid, nombre_artista)
+    }
+
+    suspend fun getCategoriaEvento():List<String>{
+        return firestoreAPI.getEventCategory()
+    }
+
+    suspend fun getCategoriaEventoFilter(eid:String):List<String>{
+        return firestoreAPI.getEventCategoryFilter(eid)
+    }
+
+    suspend fun getEventoTipoBoletoFiltered(eid:String):List<String>{
+        return firestoreAPI.getEventoTipoBoletoFiltered(eid)
+    }
 
 
 }

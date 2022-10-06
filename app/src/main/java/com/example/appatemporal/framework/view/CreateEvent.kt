@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.databinding.ActivityCrearEventoBinding
 import com.example.appatemporal.domain.Repository
+import com.example.appatemporal.domain.models.CreateEventModel
 import com.example.appatemporal.domain.models.EventModel
 import com.example.appatemporal.domain.models.EventoTipoBoletoModel
 import com.example.appatemporal.domain.models.FunctionModel
@@ -90,7 +91,7 @@ class CreateEvent :AppCompatActivity() {
                 val formattedDate: String = current.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
                 val fecha_Creado = formattedDate
                 val fecha_modificado = formattedDate
-                val evento = EventModel(nombre.text.toString(), descripcion.text.toString(),ciudad.text.toString(),estado.text.toString(), ubicacion.text.toString(),direccion.text.toString(),longitud.text.toString(),latitud.text.toString(),foto.text.toString(),video.text.toString(),activo,divisa,fecha_Creado,fecha_modificado)
+                val evento = CreateEventModel(nombre.text.toString(), descripcion.text.toString(),ciudad.text.toString(),estado.text.toString(), ubicacion.text.toString(),direccion.text.toString(),longitud.text.toString(),latitud.text.toString(),foto.text.toString(),video.text.toString(),activo,divisa,fecha_Creado,fecha_modificado)
                 Log.d("El último ticket es:", evento.ciudad)
                 //val artista = findViewById<EditText>(R.id.Artista_Evento)
 
