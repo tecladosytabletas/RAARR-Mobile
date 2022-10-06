@@ -65,6 +65,12 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
             if (name.isEmpty() || date.isEmpty()) {
                 Toast.makeText(this, "Faltan campos por rellenar", Toast.LENGTH_SHORT).show()
             }
+            else if (name.isEmpty()){
+                Toast.makeText(this, "No se especificó el nombre", Toast.LENGTH_SHORT).show()
+            }
+            else if (date.isEmpty()){
+                Toast.makeText(this, "No se especificó la fecha", Toast.LENGTH_SHORT).show()
+            }
             else {
                 val project: Proyecto = Proyecto(0, 1, name, date,0.0,0.0, 0.0,false, ts)
 
