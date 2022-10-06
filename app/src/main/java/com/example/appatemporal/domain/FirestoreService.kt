@@ -1085,7 +1085,68 @@ class FirestoreService {
             .await()
     }
 
+    //Obtener eventos organizador
 
+    suspend fun getOrganizerEvents(uid : String) : MutableList<EventModel01> {
+        var result : MutableList<EventModel01> = arrayListOf()
+        // Se buscan los eventos relacionados con el usuario que llega como parámetro.
+        var usuarioEventos : QuerySnapshot =
+            db.collection("Usuario_Evento")
+                .whereEqualTo("id_usuario_fk",uid)
+                .get()
+                .await()
+        Log.d("LOG UsuarioEvento",usuarioEventos.isEmpty().toString())
+        // De todos esos registros, se busca cada evento en la tabla de eventos
+        for (usuarioEvento in usuarioEventos){
+            var eventos : QuerySnapshot =
+                db.collection("Evento")
+                    .whereEqualTo(FieldPath.documentId(), usuarioEvento.data?.get("id_evento_fk"))
+                    .get()
+                    .await()
+            Log.d("LOG UsuarioEvento",eventos.isEmpty().toString())
+            for (evento in eventos){
+                var newEvent = EventModel01(
+                    evento.id,
+                    evento.data?.get("nombre").toString(),
+                    evento.data?.get("descripcion").toString(),
+                    evento.data?.get("ciudad").toString(),
+                    evento.data?.get("estado").toString(),
+                    evento.data?.get("ubicacion").toString(),
+                    evento.data?.get("direccion").toString(),
+                    evento.data?.get("longitud").toString(),
+                    evento.data?.get("latitud").toString(),
+                    evento.data?.get("foto_portada").toString(),
+                    evento.data?.get("video").toString(),
+                    evento.data?.get("activo").toString(),
+                    evento.data?.get("aprobado").toString()
+                )
+                result.add(newEvent)
+            }
+
+            Log.d("LOG Evento",result.toString())
+        }
+        Log.d("LOG Empty Event",result.isEmpty().toString())
+        return result
+    }
+
+    suspend fun getFunctionOrganizador(eid: String) : MutableList<FuncionModel>{
+        var result : MutableList<FuncionModel> = arrayListOf()
+
+        var funciones : QuerySnapshot =
+            db.collection("Funcion")
+                .whereEqualTo("id_evento_fk", eid)
+                .get()
+                .await()
+        for(funcion in funciones){
+            var newFuncion = FuncionModel(
+                funcion.data?.get("fecha_funcion").toString(),
+                funcion.data?.get("hora_inicio").toString(),
+                funcion.data?.get("hora_fin").toString()
+            )
+            result.add(newFuncion)
+        }
+        return result
+    }
 
 
 

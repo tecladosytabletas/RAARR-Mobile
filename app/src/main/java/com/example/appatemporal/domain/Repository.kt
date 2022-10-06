@@ -289,5 +289,15 @@ class Repository(context: Context) {
         return firestoreAPI.getEventoTipoBoletoFiltered(eid)
     }
 
+    //Obtener eventos organizador
+
+    suspend fun getOrganizerEvent(uid: String): MutableList<EventModel01> {
+        return firestoreAPI.getOrganizerEvents(uid)
+    }
+
+    suspend fun getFunctionOrganizer(eid: String): MutableList<FuncionModel> {
+        return firestoreAPI.getFunctionOrganizador(eid)
+    }
+
 
 }

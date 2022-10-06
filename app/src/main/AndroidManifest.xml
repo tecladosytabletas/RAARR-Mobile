@@ -154,11 +154,7 @@
         <activity
             android:name=".framework.view.CreateEvent"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            
         </activity>
         <activity
             android:name=".framework.view.CreateFunction"
@@ -188,7 +184,14 @@
         <activity
             android:name=".framework.view.ActivityMainHomepageEspectador"
             android:exported="true">
-
+        </activity>
+        <activity
+            android:name=".framework.view.ActivityMisEventosOrganizador"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <meta-data
             android:name="preloaded_fonts"
