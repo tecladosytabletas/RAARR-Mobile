@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +51,9 @@ class ConsultarBoleto : AppCompatActivity() {
         binding.commentLabel.visibility = android.view.View.INVISIBLE
 
 //        val idUser = getSharedPreferences("user", Context.MODE_PRIVATE).getString("userUid", "").toString()
-        val idUser = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
+        //val idUser = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
         val idEvento = intent.getStringExtra("idEvento")
         val nombre = intent.getStringExtra("nombre")
         val fecha = intent.getStringExtra("fecha")
@@ -79,14 +82,14 @@ class ConsultarBoleto : AppCompatActivity() {
             startActivity(intent)
         }
 
-        consultarBoletoViewModel.verifyComment(idUser, idEvento.toString(), repository)
+        consultarBoletoViewModel.verifyComment(userUid, idEvento.toString(), repository)
         consultarBoletoViewModel.commentState.observe(this, Observer { commentExistence ->
             if (commentExistence) {
                 binding.etComment.visibility = android.view.View.GONE
                 binding.sendIcon.visibility = android.view.View.GONE
                 binding.commentLabel.visibility = android.view.View.INVISIBLE
             } else {
-                consultarBoletoViewModel.getStateTicket(hashQr.toString(),idUser,repository)
+                consultarBoletoViewModel.getStateTicket(hashQr.toString(),userUid,repository)
                 consultarBoletoViewModel.ticketState.observe(this, Observer {
                       if (it == false) {
                           binding.etComment.visibility = android.view.View.VISIBLE
@@ -95,7 +98,7 @@ class ConsultarBoleto : AppCompatActivity() {
                           binding.sendIcon.setOnClickListener {
                               if (!etComment.text.isNullOrEmpty()) {
                                   val etContent = binding.etComment.text.toString()
-                                  consultarBoletoViewModel.addComment(idUser,idEvento.toString(),etContent,repository)
+                                  consultarBoletoViewModel.addComment(userUid,idEvento.toString(),etContent,repository)
                                   Toast.makeText(this, "Tu comentario fue registrado exitosamente!", Toast.LENGTH_SHORT).show()
                                   binding.etComment.getText().clear();
                                   Handler(Looper.myLooper()!!).postDelayed(Runnable{
@@ -114,14 +117,14 @@ class ConsultarBoleto : AppCompatActivity() {
         })
 
 
-        consultarBoletoViewModel.verifyRate(idUser, idEvento.toString(), repository)
+        consultarBoletoViewModel.verifyRate(userUid, idEvento.toString(), repository)
         consultarBoletoViewModel.rateState.observe(this, Observer {
             if (it) {
                 Log.d("LogExistence rating", it.toString())
                 binding.ratingbar.visibility = android.view.View.INVISIBLE
                 binding.sendBtn.visibility = android.view.View.GONE
             } else {
-                consultarBoletoViewModel.getStateTicket(hashQr.toString(),idUser,repository)
+                consultarBoletoViewModel.getStateTicket(hashQr.toString(),userUid,repository)
                 consultarBoletoViewModel.ticketState.observe(this, Observer {
                     Log.d("TicketState", it.toString())
                     if (it == false){
@@ -129,7 +132,7 @@ class ConsultarBoleto : AppCompatActivity() {
                         binding.sendBtn.visibility = android.view.View.VISIBLE
                         binding.sendBtn.setOnClickListener {
                             Log.d("rating Log", binding.ratingbar.rating.toString())
-                            consultarBoletoViewModel.addRating(idUser, idEvento.toString(), binding.ratingbar.rating, repository)
+                            consultarBoletoViewModel.addRating(userUid, idEvento.toString(), binding.ratingbar.rating, repository)
                             Toast.makeText(this, "El evento ha sido calificado", Toast.LENGTH_SHORT).show()
                             Handler(Looper.myLooper()!!).postDelayed(Runnable{
                                 binding.ratingbar.visibility = android.view.View.INVISIBLE

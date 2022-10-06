@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,8 +24,10 @@ class BoletoPorEventoActivity : AppCompatActivity() {
         binding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
         val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
-        initRecyclerView(getTicketViewModel, userIdTemp, repository)
+        initRecyclerView(getTicketViewModel, userUid, repository)
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()
