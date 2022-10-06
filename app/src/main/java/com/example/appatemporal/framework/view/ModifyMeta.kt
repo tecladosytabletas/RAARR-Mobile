@@ -31,10 +31,16 @@ class ModifyMeta(private val viewModel: PresupuestoOrganizadorViewModel) :Bottom
         binding.descMeta.hint="Meta Actual: "+ meta
 
         binding.saveButtonMeta.setOnClickListener {
-            val meta = binding.descMeta.text.toString().toDouble()
-            viewModel.updateMeta(meta, idP.toInt(), repository)
+            val meta = binding.descMeta.text.toString()
+            if (meta.isEmpty()){
 
-            saveAction()
+            }
+            else {
+                val meta = binding.descMeta.text.toString().toDouble()
+                viewModel.updateMeta(meta, idP.toInt(), repository)
+
+                saveAction()
+            }
         }
         
 
