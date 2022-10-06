@@ -47,7 +47,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         }
 
         //Creación de usuario temporal
-        val tempEventId : String = "DM"
+        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
         repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0
@@ -120,8 +120,8 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         //Llamada a la función y al observador para modificar elementos de Rating
         graphicsEventDetailViewModel.getExtEventRating(eid, repository)
         graphicsEventDetailViewModel.ratingExt.observe(this, Observer{
-            ourRatingBar.rating = it[7]
-            ourRatingValue.text = "${it[7]} de 5"
+            ourRatingBar.rating = it[8]
+            ourRatingValue.text = "${it[8]} de 5"
             ourRatingCount.text =  "en ${it[1].toInt()} calificaciones"
             //Incorporar información a progress bar varias
             for (i in 0..5) {
