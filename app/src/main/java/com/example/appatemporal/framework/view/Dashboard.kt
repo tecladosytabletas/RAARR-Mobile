@@ -29,6 +29,9 @@ class Dashboard : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
 
+        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
+
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -53,7 +56,7 @@ class Dashboard : AppCompatActivity(){
         val uid = getSharedPreferences("user", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
         //Usuario temporal de pruebas, eliminar posteriormente
-        val tempUserId : String = "HWRTS0ZBbnk8IffKtrNx"
+        val tempUserId : String = "qVzK32OHDYOUtK1YsQbh"
         repository = Repository(this)
 
         //Inicia llamado a funciones
@@ -82,8 +85,12 @@ class Dashboard : AppCompatActivity(){
             ourRevenue.text = "$${profit} MXN"
         })
         dashboardViewModel.countEvent(uid, repository)
-        dashboardViewModel.count.observe(this, Observer{
-            ourEventCount.text = "En ${it} eventos"
+        dashboardViewModel.count.observe(this, Observer {
+            if (it == 1){
+                ourEventCount.text = "En ${it} evento"
+            } else {
+                ourEventCount.text = "En ${it} eventos"
+            }
         })
     }
 
@@ -120,7 +127,7 @@ class Dashboard : AppCompatActivity(){
         dashboardViewModel.getRating(uid, repository)
         dashboardViewModel.rating.observe(this, Observer{
             ourRatingBar.rating = it
-            ourRatingValue.text = "Rating promedio de ${it}"
+            ourRatingValue.text = "Rating promedio: ${it}"
         })
     }
 }
