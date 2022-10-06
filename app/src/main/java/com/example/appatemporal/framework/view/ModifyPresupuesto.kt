@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.startActivity
@@ -33,11 +34,16 @@ class ModifyPresupuesto(private val viewModel: PresupuestoOrganizadorViewModel) 
 
 
             binding.saveButton.setOnClickListener {
-                val presupuesto = binding.descPresupuesto.text.toString().toDouble()
-                viewModel.updatePrespuesto(presupuesto, idP.toInt(), repository)
-                saveAction()
-            }
+                val presupuesto = binding.descPresupuesto.text.toString()
+                if (presupuesto.isEmpty()){
 
+                }
+                else {
+                    val presupuesto = binding.descPresupuesto.text.toString().toDouble()
+                    viewModel.updatePrespuesto(presupuesto, idP.toInt(), repository)
+                    saveAction()
+                }
+            }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

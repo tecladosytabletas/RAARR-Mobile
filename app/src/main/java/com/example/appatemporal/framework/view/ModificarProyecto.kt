@@ -5,11 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.*
 import com.example.appatemporal.R
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.DatePicker
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.appatemporal.data.localdatabase.entities.Estatus
@@ -48,14 +45,22 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
             val date = binding.dateEdt.text.toString()
             val tsLong = System.currentTimeMillis() / 1000
             val ts: String = tsLong.toString()
-            //val project: Proyecto = Proyecto(idproject, 1, name, date,0.0,0.0,ts)
+            if (name.isEmpty() || date.isEmpty()) {
+                Toast.makeText(this, "Faltan campos por llenar", Toast.LENGTH_SHORT).show()
+            }
+            else if (name.isEmpty()){
+                Toast.makeText(this, "No se especificó el nombre", Toast.LENGTH_SHORT).show()
+            }
+            else if (date.isEmpty()){
+                Toast.makeText(this, "No se especificó la fecha", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                viewModel.updateModify(name,date,ts,idproject, repository)
 
-            viewModel.updateModify(name,date,ts,idproject, repository)
-
-            // Go back to main activity
-            val intent = Intent(this, ProyectoOrganizador::class.java)
-            startActivity(intent)
-
+                // Go back to main activity
+                val intent = Intent(this, ProyectoOrganizador::class.java)
+                startActivity(intent)
+            }
         }
 
         binding.navbar.homeIcon.setOnClickListener {

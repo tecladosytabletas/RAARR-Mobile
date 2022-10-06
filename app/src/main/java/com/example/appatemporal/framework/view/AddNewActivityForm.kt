@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -74,18 +75,21 @@ class AddNewActivityForm : AppCompatActivity(){
             val area = binding.spinnerArea.text.toString()
             val estatus = binding.spinnerEstatus.text.toString()
             val prioridad = binding.spinnerPrioridad.text.toString()
-
-            val actividad: Actividad = Actividad(0, 1,name, area, estatus, prioridad,idproject)
-
-            viewModel.addNewActividad(actividad, repository)
-
-            // Go back to main activity
-            val intent = Intent(this, DeleteActivity::class.java)
-            with(intent){
-                putExtra("id_proyecto", idproject)
+            if (name.isBlank() || area.isBlank() || estatus.isBlank() || prioridad.isBlank()){
+                Toast.makeText(this, "Faltan campos por completar", Toast.LENGTH_SHORT).show()
             }
-            startActivity(intent)
+            else {
+                val actividad: Actividad = Actividad(0, 1,name, area, estatus, prioridad, idproject)
 
+                viewModel.addNewActividad(actividad, repository)
+
+                // Go back to main activity
+                val intent = Intent(this, DeleteActivity::class.java)
+                with(intent){
+                    putExtra("id_proyecto", idproject)
+                }
+                startActivity(intent)
+            }
         }
 
         binding.navbar.homeIcon.setOnClickListener {
