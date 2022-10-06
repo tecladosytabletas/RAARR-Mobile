@@ -206,18 +206,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginStart="126dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="126dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/gradent_horizontal"
-        android:text="Agregar Tarea"
+        android:text="Modificar Tarea"
         app:cornerRadius="25dp"
         app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PrioridadLayout"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <include
         layout="@layout/navbar"

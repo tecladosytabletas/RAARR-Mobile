@@ -5,7 +5,6 @@ import java.util.*
 data class EventModel (
     var id: String,
     var nombre: String,
-    var fecha : String,
     var descripcion: String,
     var ciudad: String,
     var estado: String,
@@ -13,8 +12,8 @@ data class EventModel (
     var direccion: String,
     var longitud: String,
     var latitud: String,
-    var imagen: String,
+    var foto_portada: String,
     var video: String,
     var activo: String,
-    var aprobado: String,
+    var aprobado: String
 )
