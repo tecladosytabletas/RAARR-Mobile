@@ -25,6 +25,13 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visualizar_evento_organizador)
 
+        /* eventoIndividual.putExtra("idEvent", idEvent)
+            eventoIndividual.putExtra("nombre", nombre)
+            eventoIndividual.putExtra("direccion", direccion)
+            eventoIndividual.putExtra("estado", estado)
+            eventoIndividual.putExtra("ubicacion", ubicacion)
+            eventoIndividual.putExtra("foto_portada", foto_portada) */
+
         binding = ActivityVisualizarEventoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -60,6 +67,8 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         })
         populateRating(tempEventId)
     }
+
+
 
     fun populateTSAPieChart(ventasTotal:Int,asistenciasTotal:Int){
         val ourPieChart = binding.tsaPieChart

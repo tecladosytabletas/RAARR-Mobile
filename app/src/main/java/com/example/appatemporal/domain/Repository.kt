@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.example.appatemporal.data.localdatabase.LocalDatabase
 import com.example.appatemporal.data.localdatabase.entities.*
+import com.example.appatemporal.domain.models.EventModel
+import com.example.appatemporal.domain.models.EventsInMonth
 import com.example.appatemporal.domain.models.GetTicketModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -116,9 +118,20 @@ class Repository(context: Context) {
         return firestoreAPI.getComments(idEvento)
     }
 
-
     suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
         return firestoreAPI.getEventTicketsSA(eid)
+    }
+
+    suspend fun getEventsActualMonth(eD:Int,eM:Int,eY:Int) : MutableList<EventsInMonth> {
+        return firestoreAPI.getEventsActualMonth(eD,eM,eY)
+    }
+
+    suspend fun getEvents() : MutableList<EventModel> {
+        return firestoreAPI.getEvents()
+    }
+
+    suspend fun getEventsUserOrg(uid:String) : MutableList<EventModel> {
+        return firestoreAPI.getEventsUserOrg(uid)
     }
 
     suspend fun verifyTicketExistence(result: String) : Boolean {
@@ -128,8 +141,8 @@ class Repository(context: Context) {
     suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
         return firestoreAPI.getRevenuebyPM(eid)
     }
-    
-    suspend fun getEvents() = firestoreAPI.getEvents()
+
+    // suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
     suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)

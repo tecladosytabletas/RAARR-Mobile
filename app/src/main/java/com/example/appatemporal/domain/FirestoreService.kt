@@ -439,7 +439,7 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
-    suspend fun getEvents(): List<EventModel>{
+    /* suspend fun getEvents(): List<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
         var event: QuerySnapshot = db.collection("Evento")
             .get()
@@ -465,7 +465,7 @@ class FirestoreService {
             )
         }
         return events
-    }
+    }*/
 
     suspend fun getCategories(): List<CategoryModel>{
         Log.d("Test1", "firestore")
@@ -701,6 +701,117 @@ class FirestoreService {
         val result = Pair(ventasCount, asistenciasCount)
         return result
     }
+
+    suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
+        var result : MutableList<EventsInMonth> = arrayListOf()
+        var events = db.collection("Evento")
+            .whereEqualTo("activo",1)
+            .whereEqualTo("aprobado",1)
+            .get()
+            .await()
+        for(event in events){
+            var functions = db.collection("Funcion")
+                .whereEqualTo("id_evento_fk",event.id)
+                .get()
+                .await()
+            for(function in functions){
+                var eventDate = function.data?.get("fecha_funcion").toString()
+                val arrayDate: List<String> = eventDate.split("/")
+                Log.d("ArrayDateLog", arrayDate.toString())
+                if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
+                    var evento = EventsInMonth(
+                        event.id,
+                        event.data?.get("nombre").toString(),
+                        event.data?.get("ubicacion").toString(),
+                        function.data?.get("hora_inicio").toString(),
+                        event.data?.get("foto_portada").toString(),
+                        //extra properties
+                        event.data?.get("descripcion").toString(),
+                        event.data?.get("ciudad").toString(),
+                        event.data?.get("estado").toString(),
+                        event.data?.get("direccion").toString(),
+                        event.data?.get("longitud").toString(),
+                        event.data?.get("latitud").toString(),
+                        event.data?.get("video").toString(),
+                        event.data?.get("activo").toString(),
+                        event.data?.get("aprobado").toString(),
+                        function.data?.get("fecha_funcion").toString(),
+                    )
+                    result.add(evento)
+                }
+            }
+        }
+        Log.d("LogResult", result.toString())
+        return result
+    }
+
+    suspend fun getEvents() : MutableList<EventModel>{
+        var events: MutableList<EventModel> = mutableListOf()
+        var event: QuerySnapshot = db.collection("Evento")
+            .whereEqualTo("activo",1)
+            .whereEqualTo("aprobado",1)
+            .get()
+            .await()
+        for (document in event) {
+            events.add(
+                EventModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    document.data?.get("descripcion").toString(),
+                    document.data?.get("ciudad").toString(),
+                    document.data?.get("estado").toString(),
+                    document.data?.get("ubicacion").toString(),
+                    document.data?.get("direccion").toString(),
+                    document.data?.get("longitud").toString(),
+                    document.data?.get("latitud").toString(),
+                    document.data?.get("foto_portada").toString(),
+                    document.data?.get("video").toString(),
+                    document.data?.get("activo").toString(),
+                    document.data?.get("aprobado").toString()
+                )
+            )
+        }
+        return events
+    }
+
+    suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
+        var result: MutableList<EventModel> = mutableListOf()
+
+        var event_user = db.collection("Usuario_Evento")
+            .whereEqualTo("id_usuario_fk",uid)
+            .get()
+            .await()
+        Log.d("getEventsUserOrg-uid",uid)
+        Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
+
+        for(element in event_user){
+            var event = db.collection("Evento")
+                //.document(element.data?.get("id_evento_fk").toString())
+                .whereEqualTo(FieldPath.documentId(),element.data?.get("id_evento_fk").toString())
+                .get()
+                .await()
+            Log.d("getEventsUserOrg-Event", event.toString())
+            var evento = EventModel(
+                event.documents[0].id,
+                event.documents[0].data?.get("nombre").toString(),
+                event.documents[0].data?.get("descripcion").toString(),
+                event.documents[0].data?.get("ciudad").toString(),
+                event.documents[0].data?.get("estado").toString(),
+                event.documents[0].data?.get("ubicacion").toString(),
+                event.documents[0].data?.get("direccion").toString(),
+                event.documents[0].data?.get("longitud").toString(),
+                event.documents[0].data?.get("latitud").toString(),
+                event.documents[0].data?.get("foto_portada").toString(),
+                event.documents[0].data?.get("video").toString(),
+                event.documents[0].data?.get("activo").toString(),
+                event.documents[0].data?.get("aprobado").toString()
+            )
+            result.add(evento)
+        }
+        Log.d("getEventsUserOrg", result.toString())
+        return result
+    }
+
 
     suspend fun getRevenuebyPM(eid:String): MutableMap<String, Int?> {
         var diccPM = mutableMapOf<String, Int?>()
