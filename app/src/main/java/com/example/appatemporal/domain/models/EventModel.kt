@@ -1,5 +1,7 @@
 package com.example.appatemporal.domain.models
 
+import java.util.*
+
 data class EventModel (
     var id: String,
     var nombre: String,

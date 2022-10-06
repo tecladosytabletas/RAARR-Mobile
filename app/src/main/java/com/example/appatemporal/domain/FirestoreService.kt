@@ -1,6 +1,8 @@
 package com.example.appatemporal.domain
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.appatemporal.domain.models.*
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
@@ -10,8 +12,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.lang.Boolean.parseBoolean
+import java.lang.Double.parseDouble
 import org.w3c.dom.Comment
 import java.lang.Integer.parseInt
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -106,21 +113,24 @@ class FirestoreService {
                     .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_Funcion"))
                     .get()
                     .await()
-            var evento : QuerySnapshot =
+            var evento : DocumentSnapshot =
                 db.collection("Evento")
-                    .whereEqualTo(FieldPath.documentId(),funciones.documents[0].data?.get("id_Evento"))
+                    .document(funciones.documents[0].data?.get("id_Evento").toString())
                     .get()
                     .await()
-            var ticket = GetTicketModel(evento.documents[0].id, evento.documents[0].data?.get("nombre_Evento").toString(),
+            Log.d("EventLog", evento.data.toString())
+            var ticket = GetTicketModel(evento.id, evento.data?.get("nombre_Evento").toString(),
                 funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
-                evento.documents[0].data?.get("lugar").toString(), evento.documents[0].data?.get("direccion").toString(),
-                evento.documents[0].data?.get("ciudad").toString(), evento.documents[0].data?.get("estado").toString(),
+                evento.data?.get("lugar").toString(), evento.data?.get("direccion").toString(),
+                evento.data?.get("ciudad").toString(), evento.data?.get("estado").toString(),
                 boleto.data?.get("hash_qr").toString())
 
             result.add(ticket)
 
-            //Log.d("LOG ticket",ticket.toString())
+            //Log.d("LOG ticket information from API",ticket.toString())
+
         }
+
         //Log.d("LOG aqui",result.isEmpty().toString())
         return result
     }
@@ -237,6 +247,18 @@ class FirestoreService {
         return ventaTotal
     }
 
+    suspend fun verifyTicketExistence(resulted: String) : Boolean {
+        var existence: Boolean = false
+        var query = db.collection("Boleto")
+            .whereEqualTo("hash_QR", resulted)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+        return existence
+    }
+
     suspend fun updateTicketValue(resulted: String): Boolean {
         var result: String = resulted
 
@@ -305,6 +327,14 @@ class FirestoreService {
             .await()
     }
 
+    suspend fun getMetodoPagoId(metodoPago: String) : QuerySnapshot {
+        val query = db.collection("Metodo_Pago")
+            .whereEqualTo("metodo", metodoPago)
+            .get()
+            .await()
+        return query
+    }
+
     /**
      * Adds a document in ReporteFallas collection of Firestore
      * @param title: String
@@ -365,34 +395,114 @@ class FirestoreService {
         return ganancias
     }
 
-    suspend fun getTicketsbyPM(eid:String): Pair<Int,Int> {
+    suspend fun getTicketsbyPM(eid:String): MutableMap<String, Int?> {
 
-        var boletos: QuerySnapshot
-        var countTarjeta : Int = 0
-        var countEfectivo : Int = 0
+        var diccPM = mutableMapOf<String, Int?>()
+        var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
 
         var funciones: QuerySnapshot = db.collection("Funcion")
             .whereEqualTo("id_Evento", eid)
             .get()
             .await()
         Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        if (funciones.isEmpty){diccPM.put("No hay datos", 0); return diccPM}
+
         for(element in funciones){
-            boletos = db.collection("Boleto")
+            var boletos : QuerySnapshot = db.collection("Boleto")
                 .whereEqualTo("id_Funcion", element.id)
                 .get()
                 .await()
+            if (boletos.isEmpty){diccPM.put("No hay datos", 0); return diccPM}
+
             for(boleto in boletos){
-                if(boleto.data?.get("id_Metodo_Pago").toString() == "JsCPG2YuCgqYyZUypktB"){
-                    countTarjeta++
+                if(boleto.data?.get("id_Metodo_Pago").toString() !in diccPM){
+                    diccPM.put(boleto.data?.get("id_Metodo_Pago").toString(), 0)
                 }
-                else {
-                    countEfectivo++
+                diccPM.computeIfPresent(boleto.data?.get("id_Metodo_Pago").toString()) { _, v -> v + 1}
+            }
+        }
+        var metodos : QuerySnapshot =
+            db.collection("Metodo_Pago")
+                .get()
+                .await()
+        if (metodos.isEmpty){diccPM.put("No hay datos en Metodos", 0); return diccPM}
+
+        var result = mutableMapOf<String, Int?>()
+        for (element in diccPM){
+            for (metodo in metodos){
+                if (element.key == metodo.id){
+                    result.put(metodo.data?.get("metodo").toString(),diccPM.get(element.key))
                 }
             }
         }
-
-        val result = Pair(countTarjeta, countEfectivo)
+        Log.d("Dentro de getTicketsbyPM",result.toString())
+        if (result.isEmpty()){return errorHandler}
         return result
+    }
+    suspend fun getEvents(): List<EventModel>{
+        var events: MutableList<EventModel> = mutableListOf()
+        var event: QuerySnapshot = db.collection("Evento")
+            .get()
+            .await()
+        for (document in event) {
+            events.add(
+                EventModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    document.data?.get("descripcion").toString(),
+                    document.data?.get("ciudad").toString(),
+                    document.data?.get("estado").toString(),
+                    document.data?.get("ubicacion").toString(),
+                    document.data?.get("direccion").toString(),
+                    document.data?.get("longitud").toString(),
+                    document.data?.get("latitud").toString(),
+                    document.data?.get("foto_portada").toString(),
+                    document.data?.get("video").toString(),
+                    document.data?.get("activo").toString(),
+                    document.data?.get("aprobado").toString(),
+
+                    )
+            )
+        }
+        return events
+    }
+
+    suspend fun getCategories(): List<CategoryModel>{
+        Log.d("Test1", "firestore")
+        var categories: MutableList<CategoryModel> = mutableListOf()
+        var category: QuerySnapshot = db.collection("Categoria")
+            .get()
+            .await()
+        for (document in category) {
+            categories.add(
+                CategoryModel(
+                    document.id,
+                    document.data?.get("nombre").toString(),
+                    parseBoolean(document.data?.get("visibilidad").toString())
+                )
+            )
+        }
+        return categories
+    }
+
+    suspend fun getIdsOfEventosWithidCategoria(idCategoria: String): List<String>{
+        var ids: MutableList<String> = mutableListOf()
+        var eventos: QuerySnapshot = db.collection("Evento_Categoria")
+            .whereEqualTo("id_categoria_fk", idCategoria)
+            .get()
+            .await()
+        for (document in eventos) {
+            ids.add(document.data?.get("id_evento_fk").toString())
+        }
+        return ids
+    }
+
+    suspend fun getCategoryIdByName(name: String): String{
+        var category: QuerySnapshot = db.collection("Categoria")
+            .whereEqualTo("nombre", name)
+            .get()
+            .await()
+        return category.documents[0].id
     }
 
     /**
@@ -442,7 +552,21 @@ class FirestoreService {
         if (!query.isEmpty) {
             existence = true
         }
-        Log.d("Existence of rating", existence.toString())
+        //Log.d("Existence of rating", existence.toString())
+        return existence
+    }
+
+    suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
+        var existence: Boolean = false
+        val query = db.collection("Comentario")
+            .whereEqualTo("id_evento_fk", idEvent)
+            .whereEqualTo("id_usuario_fk", idUser)
+            .get()
+            .await()
+        if (!query.isEmpty) {
+            existence = true
+        }
+        //Log.d("Existence of comment", existence.toString())
         return existence
     }
 
@@ -578,61 +702,62 @@ class FirestoreService {
         return result
     }
 
-    suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
-        var result : MutableList<EventsInMonth> = arrayListOf()
-        var events = db.collection("Evento")
-            .whereEqualTo("activo",1)
-            .whereEqualTo("aprobado",1)
+    suspend fun getRevenuebyPM(eid:String): MutableMap<String, Int?> {
+        var diccPM = mutableMapOf<String, Int?>()
+        var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
+
+        var funciones: QuerySnapshot = db.collection("Funcion")
+            .whereEqualTo("id_Evento", eid)
             .get()
             .await()
-        for(event in events){
-            var functions = db.collection("Funcion")
-                .whereEqualTo("id_evento_fk",event.id)
+        Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        if (funciones.isEmpty){diccPM.put("No hay datos en Funcionces", 0); return diccPM}
+
+        var tiposboleto: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
+            .whereEqualTo("id_Evento", eid)
+            .get()
+            .await()
+        if (tiposboleto.isEmpty){diccPM.put("No hay datos en Tipos de Boletos", 0); return diccPM}
+
+        for(element in funciones){
+            var boletos : QuerySnapshot = db.collection("Boleto")
+                .whereEqualTo("id_Funcion", element.id)
                 .get()
                 .await()
-            for(function in functions){
-                var eventDate = function.data?.get("fecha_funcion").toString()
-                val arrayDate: List<String> = eventDate.split("/")
-                Log.d("ArrayDateLog", arrayDate.toString())
-                if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
-                    var evento = EventsInMonth(event.id,event.data?.get("nombre").toString(),
-                        event.data?.get("ubicacion").toString(),function.data?.get("hora_inicio").toString(),
-                        event.data?.get("foto_portada").toString())
-                    result.add(evento)
+            if (boletos.isEmpty){diccPM.put("No hay datos en Boletos", 0); return diccPM}
+
+            for (boleto in boletos){
+                for (tipoBoleto in tiposboleto){
+                    if (boleto.data?.get("id_Tipo_Boleto").toString() ==
+                        tipoBoleto.data?.get("id_Tipo_Boleto").toString()){
+                        if (boleto.data?.get("id_Metodo_Pago").toString() !in diccPM){
+                            diccPM.put(boleto.data?.get("id_Metodo_Pago").toString(), 0)
+                        }
+                        diccPM.computeIfPresent(boleto.data?.get("id_Metodo_Pago").toString())
+                        { _, v -> v + tipoBoleto.data?.get("precio").toString().toInt()}
+                    }
                 }
             }
         }
-        Log.d("LogResult", result.toString())
+
+        var metodos : QuerySnapshot =
+            db.collection("Metodo_Pago")
+                .get()
+                .await()
+        if (metodos.isEmpty){diccPM.put("No hay datos en Metodos", 0); return diccPM}
+
+        var result = mutableMapOf<String, Int?>()
+        for (element in diccPM){
+            for (metodo in metodos){
+                if (element.key == metodo.id){
+                    result.put(metodo.data?.get("metodo").toString(),diccPM.get(element.key))
+                }
+            }
+        }
+
+        Log.d("Dentro de getRevenuebyPM",result.toString())
+        if (result.isEmpty()){return errorHandler}
         return result
     }
-
-    suspend fun getEvents(): MutableList<EventModel>{
-        var events: MutableList<EventModel> = mutableListOf()
-        var event: QuerySnapshot = db.collection("Evento")
-            .whereEqualTo("activo",1)
-            .whereEqualTo("aprobado",1)
-            .get()
-            .await()
-        for (document in event) {
-            events.add(
-                EventModel(
-                    document.id,
-                    document.data?.get("nombre").toString(),
-                    document.data?.get("descripcion").toString(),
-                    document.data?.get("ciudad").toString(),
-                    document.data?.get("estado").toString(),
-                    document.data?.get("ubicacion").toString(),
-                    document.data?.get("direccion").toString(),
-                    document.data?.get("longitud").toString(),
-                    document.data?.get("latitud").toString(),
-                    document.data?.get("foto_portada").toString(),
-                    document.data?.get("video").toString(),
-                    document.data?.get("activo").toString(),
-                    document.data?.get("aprobado").toString()
-                )
-            )
-        }
-        return events
-    }
-
 }
+

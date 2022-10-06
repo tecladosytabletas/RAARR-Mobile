@@ -33,6 +33,10 @@ interface ProyectoDao {
     @Update
     suspend fun update(proyecto: Proyecto)
 
+    //Filter completed projects
+    @Query("SELECT * FROM proyecto_table WHERE estatus_completado = :stringStatus")
+    suspend fun FilterProjectsByStatus (stringStatus: Boolean): List<Proyecto>
+
     // Update presupuesto
     @Query("UPDATE proyecto_table SET presupuesto=:presupuestoNew WHERE id_proyecto = :id")
     suspend fun updatePresupuesto(presupuestoNew: Double, id: Int)
@@ -40,6 +44,10 @@ interface ProyectoDao {
     // Update meta
     @Query("UPDATE proyecto_table SET meta=:metaNew WHERE id_proyecto = :id")
     suspend fun updateMeta(metaNew: Double, id: Int)
+
+    //Update estatus_completado
+    @Query("UPDATE proyecto_table SET estatus_completado=:estatusNew WHERE id_proyecto = :id")
+    suspend fun updateEstatusCompletado(estatusNew: Boolean, id: Int)
 
     @Query("UPDATE proyecto_table SET nombre_proyecto = :name, fecha_inicio = :date,created_at= :time WHERE id_proyecto =:id")
     suspend fun updateModify(name: String, date: String, time:String ,id: Int)

@@ -64,15 +64,19 @@ class RegisterQRView : AppCompatActivity() {
             if (result.contents == null) {
                 Toast.makeText(this, "No se encontró un valor.", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Boleto escaneado con éxito.", Toast.LENGTH_SHORT).show()
-                scanQRViewModel.updateTicketValue(result.contents, repository)
-                scanQRViewModel.qrcode.observe(this, Observer {
-                    if(it == true){
-                        Toast.makeText(this,"Boleto valido!",Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this,"Boleto ya fue Escaneado.",Toast.LENGTH_SHORT).show()
+                scanQRViewModel.verifyTicketExistence(result.contents, repository) { existence ->
+                    if (existence) {
+                        scanQRViewModel.updateTicketValue(result.contents, repository) { status ->
+                            if(status){
+                                Toast.makeText(this,"Boleto válido escaneado EXITÓSAMENTE",Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this,"Boleto YA USADO",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(this,"Boleto INVÁLIDO",Toast.LENGTH_SHORT).show()
                     }
-                })
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

@@ -44,4 +44,8 @@
     <string name="prioridadType2">Media</string>
     <string name="prioridadType3">Alta </string>
 
+    <string name="filterType1">Estatus</string>
+    <string name="filterType2">Area</string>
+    <string name="filterType3">Prioridad</string>
+
 </resources>
