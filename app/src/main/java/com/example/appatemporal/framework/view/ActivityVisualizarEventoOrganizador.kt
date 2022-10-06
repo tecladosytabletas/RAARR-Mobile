@@ -71,6 +71,16 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         binding.CiudadEstadoVEE.text = ciudad + ", " + estado
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
+        binding.btnMoreGraphics.setOnClickListener {
+            var idEvent : String = idEvento.toString()
+
+            val intent = Intent(this, DetailedMetrics::class.java)
+
+            intent.putExtra("idEvent", idEvent)
+
+            startActivity(intent)
+        }
+
         binding.addFunBtn.setOnClickListener{
             var idEvent : String = idEvento.toString()
 
