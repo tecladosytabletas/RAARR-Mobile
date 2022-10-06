@@ -167,7 +167,7 @@
 
         </activity>
         <activity
-            android:name=".framework.view.AcivityAddCategoria"
+            android:name=".framework.view.ActivityAddCategoria"
             android:exported="true">
 
         </activity>

@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.R
+import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.databinding.ActivityVisualizarEventoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetFunctionOrganizerViewModel
@@ -28,13 +30,6 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visualizar_evento_organizador)
-
-        /* eventoIndividual.putExtra("idEvent", idEvent)
-            eventoIndividual.putExtra("nombre", nombre)
-            eventoIndividual.putExtra("direccion", direccion)
-            eventoIndividual.putExtra("estado", estado)
-            eventoIndividual.putExtra("ubicacion", ubicacion)
-            eventoIndividual.putExtra("foto_portada", foto_portada) */
 
         binding = ActivityVisualizarEventoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -57,6 +52,9 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
+
         val idUser = "qVzK32OHDYOUtK1YsQbh"
         val idEvento = intent.getStringExtra("idEvento")
         val nombre = intent.getStringExtra("nombre")
@@ -74,20 +72,40 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
         binding.addFunBtn.setOnClickListener{
-            /*val intent = Intent(this, ) // TODO: Agregar clase que lleva a formulario de función
-            startActivity(intent)*/
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, CreateFunction::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
         }
         binding.addArtBtn.setOnClickListener{
-            /*val intent = Intent(this, ) // TODO: Agregar clase que lleva a formulario de función
-            startActivity(intent)*/
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, AddArtist::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
         }
         binding.addCatBtn.setOnClickListener{
-            /*val intent = Intent(this, ) // TODO: Agregar clase que lleva a formulario de función
-            startActivity(intent)*/
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, ActivityAddCategoria::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
         }
         binding.addTBBtn.setOnClickListener{
-            /*val intent = Intent(this, ) // TODO: Agregar clase que lleva a formulario de función
-            startActivity(intent)*/
+            var idEvent : String = idEvento.toString()
+
+            val crearProyectoForm =  Intent(this, ActivityAddTB::class.java)
+
+            crearProyectoForm.putExtra("idEvent", idEvent)
+
+            this.startActivity(crearProyectoForm)
         }
 
         initRecyclerView(getFunctionOrganizerViewModel, idEvento.toString(), repository)

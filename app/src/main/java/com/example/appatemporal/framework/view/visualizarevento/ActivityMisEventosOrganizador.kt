@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -24,12 +25,20 @@ class ActivityMisEventosOrganizador : AppCompatActivity() {
         binding = ActivityMisEventosOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userIdTemp = "qVzK32OHDYOUtK1YsQbh"
-        initRecyclerView(getOrganizerEventViewModel, userIdTemp, repository)
+
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+            .getString("userUid", "").toString()
+        //val userIdTemp = "qVzK32OHDYOUtK1YsQbh"
+        initRecyclerView(getOrganizerEventViewModel, userUid, repository)
 
         binding.addEventBtn.setOnClickListener{
-            /*val intent = Intent(this, ) // TODO: añadir la clase que llama al formulario de evento
-            startActivity(intent)*/
+            var userId : String = userUid
+
+            val crearProyectoForm =  Intent(this, CreateEvent::class.java)
+
+            crearProyectoForm.putExtra("userId", userId)
+
+            this.startActivity(crearProyectoForm)
         }
 
         binding.navbar.homeIcon.setOnClickListener {

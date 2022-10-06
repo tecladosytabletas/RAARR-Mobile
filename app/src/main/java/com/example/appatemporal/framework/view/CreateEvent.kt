@@ -3,6 +3,7 @@ package com.example.appatemporal.framework.view
 
 import android.R
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -143,6 +144,9 @@ class CreateEvent :AppCompatActivity() {
             else{
                 Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
             }
+
+            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+            this.startActivity(submitBtn)
 
         }
 

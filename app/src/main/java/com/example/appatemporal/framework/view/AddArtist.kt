@@ -1,5 +1,6 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -22,15 +23,21 @@ class AddArtist: AppCompatActivity() {
         val nombreArtista = binding.nuevoArtista
         val btn = binding.btnArtista
         setContentView(binding.root)
+
+        val idEvent = intent.getStringExtra("idEvent")
+
         btn.setOnClickListener{
             if(nombreArtista.text.toString().isNotEmpty()){
                 val repository = Repository(this)
-                val eid:String="T3boR1Xpror8LvHiBwNm"
+                val eid : String = idEvent.toString()
                 viewModel.AddArtista(eid,repository, nombreArtista.text.toString())
             }
             else{
                 Toast.makeText(applicationContext, "Llena el campo antes de continuar.", Toast.LENGTH_SHORT).show()
             }
+
+            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+            this.startActivity(submitBtn)
         }
     }
 }

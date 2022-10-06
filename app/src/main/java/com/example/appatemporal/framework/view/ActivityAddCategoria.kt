@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.R
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,7 @@ import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetCategoryFilterViewModel
 
-class AcivityAddCategoria : AppCompatActivity() {
+class ActivityAddCategoria : AppCompatActivity() {
     private val viewModel: GetCategoryFilterViewModel by viewModels()
     private lateinit var binding: ActivityAddCategoriaBinding
     @RequiresApi(Build.VERSION_CODES.O)
@@ -24,8 +25,9 @@ class AcivityAddCategoria : AppCompatActivity() {
         val categoria=binding.SpinnerCategoria
         setContentView(binding.root)
 
+        val idEvent = intent.getStringExtra("idEvent")
 
-        val eid = "Nbb94T1aTzqT4RiXfmWm"
+        val eid = idEvent.toString()
         val repository = Repository(this)
         viewModel.getCategoryFilter(eid, repository)
 
@@ -47,6 +49,9 @@ class AcivityAddCategoria : AppCompatActivity() {
             val AreaAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, allAreaNames)
             AreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             binding.SpinnerCategoria.adapter = AreaAdapter
+
+            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+            this.startActivity(submitBtn)
         }
 
     }

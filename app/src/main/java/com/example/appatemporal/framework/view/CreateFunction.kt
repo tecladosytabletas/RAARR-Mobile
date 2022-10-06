@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -34,6 +35,8 @@ class CreateFunction : AppCompatActivity() {
         val btn = binding.submitBtn
         setContentView(binding.root)
         val myExtras : Bundle? = intent.extras
+
+        val idEvent = intent.getStringExtra("idEvent")
 
         horaInicio.setIs24HourView(true);
         horaFin.setIs24HourView(true);
@@ -72,7 +75,7 @@ class CreateFunction : AppCompatActivity() {
             val formattedDateI: String = currentI.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             val firstDate: Date = sdf.parse(fecha)
             val secondDate: Date = sdf.parse(formattedDateI)
-            val eid="41RrBlaCdfqkMTDmMcT7"
+            val eid = idEvent.toString()
             val cmp = firstDate.compareTo(secondDate)
 
             if(cmp > 0){
@@ -81,6 +84,9 @@ class CreateFunction : AppCompatActivity() {
             else{
                 Toast.makeText(applicationContext, "La fecha elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
             }
+
+            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+            this.startActivity(submitBtn)
 
     }
 }

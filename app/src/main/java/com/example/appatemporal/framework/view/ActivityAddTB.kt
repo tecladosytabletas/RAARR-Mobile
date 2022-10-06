@@ -1,6 +1,7 @@
 package com.example.appatemporal.framework.view
 
 import android.R
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -27,7 +28,9 @@ class ActivityAddTB : AppCompatActivity() {
         val cantidad=binding.maxBoletos
         setContentView(binding.root)
 
-        val eid = "E7d0G1hSROlXm7aKQqwn"
+        val idEvent = intent.getStringExtra("idEvent")
+
+        val eid = idEvent.toString()
         val repository = Repository(this)
         viewModel.getTBFilter(eid, repository)
 
@@ -54,6 +57,9 @@ class ActivityAddTB : AppCompatActivity() {
             else{
                 Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
             }
+
+            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+            this.startActivity(submitBtn)
 
         }
 
