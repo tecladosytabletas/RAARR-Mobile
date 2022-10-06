@@ -40,15 +40,15 @@ class FirestoreService {
 
     suspend fun addUserRole(uid: String, role: String) {
         val dbRole = db.collection("Rol")
-            .whereEqualTo("nombre_Rol", role)
+            .whereEqualTo("nombre", role)
             .get()
             .addOnSuccessListener {
                 Log.d("FirestoreLogs","Got Role Correctly: ${it.documents[0].id}")
             }.await()
 
         val userRole = hashMapOf(
-            "id_Usuario" to uid,
-            "id_Rol" to dbRole.documents[0].id
+            "id_usuario_fk" to uid,
+            "id_rol_fk" to dbRole.documents[0].id
         )
 
         db.collection("Usuario_Rol")
@@ -87,12 +87,12 @@ class FirestoreService {
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         var dbRole: QuerySnapshot =
             db.collection("Usuario_Rol")
-                .whereEqualTo("id_Usuario", uid)
+                .whereEqualTo("id_usuario_fk", uid)
                 .get()
                 .await()
         var userRole: DocumentSnapshot =
             db.collection("Rol")
-                .document(dbRole.documents[0].data?.get("id_Rol").toString())
+                .document(dbRole.documents[0].data?.get("id_rol_fk").toString())
                 .get()
                 .await()
         return userRole
@@ -200,7 +200,7 @@ class FirestoreService {
                     .await()
             if (feedbacks.isEmpty){return 0f}
             for (document in feedbacks){
-                acumulado += document.data?.get("rating").toString().toInt()
+                acumulado += document.data?.get("rating").toString().toFloat()
                 count += 1
             }
         }
@@ -617,14 +617,14 @@ class FirestoreService {
             .await()
         if (ratings.isEmpty){return emptyRatings}
         for(element in ratings){
-            listRatings[0] = listRatings[0] + element.data?.get("rating").toString().toInt()
+            listRatings[0] = listRatings[0] + element.data?.get("rating").toString().toFloat()
             listRatings[1] = listRatings[1] + 1
-            when(element.data?.get("rating").toString().toInt()) {
-                0 -> listRatings[2] = listRatings[2] + 1
-                1 -> listRatings[3] = listRatings[3] + 1
-                2 -> listRatings[4] = listRatings[4] + 1
-                3 -> listRatings[5] = listRatings[5] + 1
-                4 -> listRatings[6] = listRatings[6] + 1
+            when(element.data?.get("rating").toString().toFloat()) {
+                0f -> listRatings[2] = listRatings[2] + 1
+                1f -> listRatings[3] = listRatings[3] + 1
+                2f -> listRatings[4] = listRatings[4] + 1
+                3f -> listRatings[5] = listRatings[5] + 1
+                4f -> listRatings[6] = listRatings[6] + 1
                 else -> {
                     listRatings[7] = listRatings[7] + 1
                 }

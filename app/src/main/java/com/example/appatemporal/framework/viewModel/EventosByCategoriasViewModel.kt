@@ -25,8 +25,6 @@ class EventosByCategoriasViewModel: ViewModel() {
                 }
             }
             eventsByCategory.setValue(finalEvents)
-
-
         }
     }
 

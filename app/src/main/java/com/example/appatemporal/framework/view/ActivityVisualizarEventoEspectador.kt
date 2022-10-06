@@ -1,9 +1,11 @@
 package com.example.appatemporal.framework.view
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.appatemporal.databinding.ActivityVisualizareventoBinding
 import com.example.appatemporal.domain.Repository
 import com.squareup.picasso.Picasso
@@ -16,10 +18,40 @@ class ActivityVisualizarEventoEspectador : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVisualizareventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // ----------------------------Navbar------------------------------------
+        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+        Log.d("rol", userRole)
+        // Visibility
+        if (userRole != "Organizador") {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
+        }
+        if (userRole == "Ayudante") {
+            binding.navbar.eventsIcon.visibility = android.view.View.GONE
+            binding.navbar.eventsText.visibility = android.view.View.GONE
+        }
 
-        //Implementación de la NavBar
+        // Intents
         binding.navbar.homeIcon.setOnClickListener {
-            finish()
+            if(userRole == "Organizador"){
+                val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.navbar.eventsIcon.setOnClickListener {
+            if(userRole == "Organizador"){
+                val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            }
         }
 
         binding.navbar.budgetIcon.setOnClickListener {
@@ -28,7 +60,13 @@ class ActivityVisualizarEventoEspectador : AppCompatActivity() {
         }
 
         binding.navbar.ticketsIcon.setOnClickListener {
-            finish()
+            if (userRole == "Espectador" || userRole == "Organizador") {
+                val intent = Intent(this, BoletoPorEventoActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            }
         }
 
         binding.navbar.metricsIcon.setOnClickListener {

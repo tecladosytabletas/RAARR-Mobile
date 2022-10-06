@@ -38,8 +38,8 @@ class OTPViewModel : ViewModel() {
         viewModelScope.launch {
             val userInfo = getUserDataRequirement(uid, repository).data
             val role = getUserRoleRequirement(uid, repository).data
-            val user = Usuario(uid, userInfo?.get("nombre_Usuario").toString(), userInfo?.get("apellidos_Usuario").toString(),
-                userInfo?.get("email").toString(), userInfo?.get("fecha_Nacimiento").toString(), userInfo?.get("genero").toString(), role?.get("nombre_Rol").toString())
+            val user = Usuario(uid, userInfo?.get("nombre").toString(), userInfo?.get("apellidos").toString(),
+                userInfo?.get("email").toString(), userInfo?.get("fecha_nacimiento").toString(), userInfo?.get("genero").toString(), role?.get("nombre").toString())
             userData.postValue(user)
         }
     }
