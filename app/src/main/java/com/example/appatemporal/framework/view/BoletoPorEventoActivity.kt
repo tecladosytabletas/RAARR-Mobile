@@ -24,9 +24,9 @@ class BoletoPorEventoActivity : AppCompatActivity() {
         binding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
-            .getString("userUid", "").toString()
-        val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
+        //val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+          //  .getString("userUid", "").toString()
+        val userUid = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
         initRecyclerView(getTicketViewModel, userUid, repository)
 
         binding.navbar.homeIcon.setOnClickListener {

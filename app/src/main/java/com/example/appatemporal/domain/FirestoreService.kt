@@ -113,18 +113,18 @@ class FirestoreService {
         for (boleto in boletos){
             var funciones : QuerySnapshot =
                 db.collection("Funcion")
-                    .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_Funcion"))
+                    .whereEqualTo(FieldPath.documentId(),boleto.data?.get("id_funcion_fk"))
                     .get()
                     .await()
             var evento : DocumentSnapshot =
                 db.collection("Evento")
-                    .document(funciones.documents[0].data?.get("id_Evento").toString())
+                    .document(funciones.documents[0].data?.get("id_evento_fk").toString())
                     .get()
                     .await()
             Log.d("EventLog", evento.data.toString())
-            var ticket = GetTicketModel(evento.id, evento.data?.get("nombre_Evento").toString(),
-                funciones.documents[0].data?.get("fecha").toString(), funciones.documents[0].data?.get("hora_Inicio").toString(),
-                evento.data?.get("lugar").toString(), evento.data?.get("direccion").toString(),
+            var ticket = GetTicketModel(evento.id, evento.data?.get("nombre").toString(),
+                funciones.documents[0].data?.get("fecha_funcion").toString(), funciones.documents[0].data?.get("hora_inicio").toString(),
+                evento.data?.get("ubicacion").toString(), evento.data?.get("direccion").toString(),
                 evento.data?.get("ciudad").toString(), evento.data?.get("estado").toString(),
                 boleto.data?.get("hash_qr").toString())
 
@@ -253,7 +253,7 @@ class FirestoreService {
     suspend fun verifyTicketExistence(resulted: String) : Boolean {
         var existence: Boolean = false
         var query = db.collection("Boleto")
-            .whereEqualTo("hash_QR", resulted)
+            .whereEqualTo("hash_qr", resulted)
             .get()
             .await()
         if (!query.isEmpty) {
@@ -270,7 +270,7 @@ class FirestoreService {
         var Queryresult: Boolean = true
 
         db.collection("Boleto")
-            .whereEqualTo("hash_QR", result)
+            .whereEqualTo("hash_qr", result)
             .get()
             .addOnSuccessListener {
                 for (document in it) {
@@ -444,33 +444,6 @@ class FirestoreService {
         if (result.isEmpty()){return errorHandler}
         return result
     }
-    suspend fun getEvents(): List<EventModel>{
-        var events: MutableList<EventModel> = mutableListOf()
-        var event: QuerySnapshot = db.collection("Evento")
-            .get()
-            .await()
-        for (document in event) {
-            events.add(
-                EventModel(
-                    document.id,
-                    document.data?.get("nombre").toString(),
-                    document.data?.get("descripcion").toString(),
-                    document.data?.get("ciudad").toString(),
-                    document.data?.get("estado").toString(),
-                    document.data?.get("ubicacion").toString(),
-                    document.data?.get("direccion").toString(),
-                    document.data?.get("longitud").toString(),
-                    document.data?.get("latitud").toString(),
-                    document.data?.get("foto_portada").toString(),
-                    document.data?.get("video").toString(),
-                    document.data?.get("activo").toString(),
-                    document.data?.get("aprobado").toString(),
-
-                    )
-            )
-        }
-        return events
-    }*/
 
     suspend fun getCategories(): List<CategoryModel>{
         Log.d("Test1", "firestore")

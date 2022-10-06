@@ -52,6 +52,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
 
@@ -118,11 +119,19 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             this.startActivity(crearProyectoForm)
         }
 
+        binding.btnComment.setOnClickListener{
+            var idEvent : String = idEvento.toString()
+            val intent = Intent(this, GetCommentsActivity::class.java)
+            intent.putExtra("idEvent", idEvent)
+            this.startActivity(intent)
+        }
+
+
         initRecyclerView(getFunctionOrganizerViewModel, idEvento.toString(), repository)
 
         //Creación de usuario temporal
         val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
-        repository = Repository(this)
+        val repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0
