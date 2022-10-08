@@ -58,13 +58,14 @@ class ActivityAddTB : AppCompatActivity() {
                         val AreaAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, allAreaNames)
                         AreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
                         binding.SpinnerTB.adapter = AreaAdapter
+                        val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                        this.startActivity(submitBtn)
                     }
                     else{
                         Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
                     }
 
-                    val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-                    this.startActivity(submitBtn)
+
                 }
             }
 

@@ -31,13 +31,13 @@ class AddArtist: AppCompatActivity() {
                 val repository = Repository(this)
                 val eid : String = idEvent.toString()
                 viewModel.AddArtista(eid,repository, nombreArtista.text.toString())
+                val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                this.startActivity(submitBtn)
             }
             else{
                 Toast.makeText(applicationContext, "Llena el campo antes de continuar.", Toast.LENGTH_SHORT).show()
             }
 
-            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-            this.startActivity(submitBtn)
         }
     }
 }
