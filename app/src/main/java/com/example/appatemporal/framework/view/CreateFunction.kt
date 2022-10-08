@@ -17,6 +17,7 @@ import com.example.appatemporal.framework.viewModel.AddNewEventViewModel
 import kotlinx.android.synthetic.main.activity_create_function.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -76,9 +77,15 @@ class CreateFunction : AppCompatActivity() {
             val firstDate: Date = sdf.parse(fecha)
             val secondDate: Date = sdf.parse(formattedDateI)
             val eid = idEvent.toString()
+            val strI = fecha+" "+hora_stringI
+            val strF = fecha+" "+hora_stringF
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            val dateTimeI = LocalDateTime.parse(strI, formatter)
+            val dateTimeF = LocalDateTime.parse(strF, formatter)
             val cmp = firstDate.compareTo(secondDate)
+            val tmp = dateTimeI.compareTo(dateTimeF)
 
-            if(cmp > 0){
+            if((cmp > 0)&&(tmp < 0)){
             viewModel.AddFunction(eid,repository,fecha,hora_stringI,hora_stringF)
         }
             else{

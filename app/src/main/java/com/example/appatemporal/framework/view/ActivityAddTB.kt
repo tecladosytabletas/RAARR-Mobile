@@ -29,24 +29,31 @@ class ActivityAddTB : AppCompatActivity() {
         setContentView(binding.root)
 
         val idEvent = intent.getStringExtra("idEvent")
-
+        var i=0
         val eid = idEvent.toString()
         val repository = Repository(this)
         viewModel.getTBFilter(eid, repository)
 
         viewModel.dropdownList.observe(this, androidx.lifecycle.Observer {
             Log.d("dropdown list log", it.toString())
-            val categoryString = arrayListOf<String>()
+            val TBString = arrayListOf<String>()
             for(name in it){
-                categoryString.add("${name}")
+                TBString.add("${name}")
             }
-            val myadapter = ArrayAdapter<String>(this, R.layout.simple_spinner_item,categoryString)
+            val myadapter = ArrayAdapter<String>(this, R.layout.simple_spinner_item,TBString)
             myadapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
             binding.SpinnerTB.adapter = myadapter
+            if(TBString.isEmpty()){
+                i=1
+            }
         })
-
-        btn.setOnClickListener {
-            if((cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())){
+        if(i==1){
+            Toast.makeText(applicationContext, "No existen categorías disponibles para tu evento.", Toast.LENGTH_SHORT).show()
+            btn.isClickable=false
+        }
+        else{
+            btn.setOnClickListener {
+                if((cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())){
                     viewModel.AddEventoTipoBoleto(eid,tb.getSelectedItem().toString(), precio.text.toString().toInt(), cantidad.text.toString().toInt(),repository)
                     var allAreaNames=arrayListOf<String>()
                     allAreaNames.clear()
@@ -54,14 +61,16 @@ class ActivityAddTB : AppCompatActivity() {
                     AreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
                     binding.SpinnerTB.adapter = AreaAdapter
                 }
-            else{
-                Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
+                else{
+                    Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
+                }
+
+                val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                this.startActivity(submitBtn)
+
             }
-
-            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-            this.startActivity(submitBtn)
-
         }
+
 
     }
 }

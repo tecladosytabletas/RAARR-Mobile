@@ -84,7 +84,7 @@ class CreateEvent :AppCompatActivity() {
         })
 
         submit.setOnClickListener {
-            if((nombre.text.toString().isNotEmpty())&&(descripcion.text.toString().isNotEmpty())&&(ciudad.text.toString().isNotEmpty())&&(estado.text.toString().isNotEmpty())&&(ubicacion.text.toString().isNotEmpty())&&(direccion.text.toString().isNotEmpty())&&(longitud.text.toString().isNotEmpty())&&(latitud.text.toString().isNotEmpty())&&(foto.text.toString().isNotEmpty())&&(video.text.toString().isNotEmpty())&&(cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())){
+            if((nombre.text.toString().isNotEmpty())&&(descripcion.text.toString().isNotEmpty())&&(ciudad.text.toString().isNotEmpty())&&(estado.text.toString().isNotEmpty())&&(ubicacion.text.toString().isNotEmpty())&&(direccion.text.toString().isNotEmpty())&&(longitud.text.toString().isNotEmpty())&&(latitud.text.toString().isNotEmpty())&&(foto.text.toString().isNotEmpty())&&(video.text.toString().isNotEmpty())&&(cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())&&(artista.text.toString().isNotEmpty())){
                 Log.d("El nombre del evento es ", "Kiubo" + nombre.text.toString())
                 val activo = 1
                 val divisa = "Pesos"
@@ -131,15 +131,21 @@ class CreateEvent :AppCompatActivity() {
                 val firstDate: Date = sdf.parse(fecha)
                 val secondDate: Date = sdf.parse(formattedDateI)
 
+                val strI = fecha+" "+hora_stringI
+                val strF = fecha+" "+hora_stringF
+                val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+                val dateTimeI = LocalDateTime.parse(strI, formatter)
+                val dateTimeF = LocalDateTime.parse(strF, formatter)
                 val cmp = firstDate.compareTo(secondDate)
+                val tmp = dateTimeI.compareTo(dateTimeF)
 
-                if(cmp > 0){
+                if((cmp > 0)&&(tmp < 0)){
                     viewModel.AddEvent(evento, repository, artista.text.toString(),funcion, userUid, boletos, categoria.getSelectedItem().toString())
                     val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
                     this.startActivity(submitBtn)
                 }
                 else{
-                    Toast.makeText(applicationContext, "La fecha elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "La fecha u hora elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
                 }
 
             }
