@@ -31,7 +31,6 @@ class ActivityAddCategoria : AppCompatActivity() {
         val eid = idEvent.toString()
         val repository = Repository(this)
         viewModel.getCategoryFilter(eid, repository)
-        var i=0
 
         viewModel.dropdownList.observe(this, androidx.lifecycle.Observer {
             Log.d("dropdown list log", it.toString())
@@ -42,27 +41,26 @@ class ActivityAddCategoria : AppCompatActivity() {
             val myadapter = ArrayAdapter<String>(this, R.layout.simple_spinner_item,categoryString)
             myadapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
             binding.SpinnerCategoria.adapter = myadapter
-            if(categoryString.isEmpty()){
-                i=1
-            }
         })
-        if(i==1){
-            Toast.makeText(applicationContext, "No existen categorías disponibles para tu evento.", Toast.LENGTH_SHORT).show()
-            btn.isClickable=false
-        }
-        else{
-            btn.setOnClickListener {
-                viewModel.addEventoCategoria(eid,categoria.getSelectedItem().toString(), repository)
-                var allAreaNames=arrayListOf<String>()
-                allAreaNames.clear()
-                val AreaAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, allAreaNames)
-                AreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-                binding.SpinnerCategoria.adapter = AreaAdapter
 
-                val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-                this.startActivity(submitBtn)
+            btn.setOnClickListener {
+                if(categoria.getCount()==0){
+                    Toast.makeText(applicationContext, "No existen categorías disponibles para tu evento.", Toast.LENGTH_SHORT).show()
+                    btn.isClickable=false
+                }
+                else{
+                    viewModel.addEventoCategoria(eid,categoria.getSelectedItem().toString(), repository)
+                    var allAreaNames=arrayListOf<String>()
+                    allAreaNames.clear()
+                    val AreaAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, allAreaNames)
+                    AreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+                    binding.SpinnerCategoria.adapter = AreaAdapter
+
+                    val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                    this.startActivity(submitBtn)
+                }
+
             }
-        }
 
 
     }

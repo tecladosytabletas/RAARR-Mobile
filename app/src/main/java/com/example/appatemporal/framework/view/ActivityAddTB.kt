@@ -14,6 +14,7 @@ import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.databinding.ActivityAddTipoBoletoBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetEventTBFilterViewModel
+import kotlinx.android.synthetic.main.activity_add_tipo_boleto.*
 
 class ActivityAddTB : AppCompatActivity() {
     private val viewModel: GetEventTBFilterViewModel by viewModels()
@@ -29,7 +30,6 @@ class ActivityAddTB : AppCompatActivity() {
         setContentView(binding.root)
 
         val idEvent = intent.getStringExtra("idEvent")
-        var i=0
         val eid = idEvent.toString()
         val repository = Repository(this)
         viewModel.getTBFilter(eid, repository)
@@ -43,33 +43,31 @@ class ActivityAddTB : AppCompatActivity() {
             val myadapter = ArrayAdapter<String>(this, R.layout.simple_spinner_item,TBString)
             myadapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
             binding.SpinnerTB.adapter = myadapter
-            if(TBString.isEmpty()){
-                i=1
-            }
         })
-        if(i==1){
-            Toast.makeText(applicationContext, "No existen categorías disponibles para tu evento.", Toast.LENGTH_SHORT).show()
-            btn.isClickable=false
-        }
-        else{
+
             btn.setOnClickListener {
-                if((cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())){
-                    viewModel.AddEventoTipoBoleto(eid,tb.getSelectedItem().toString(), precio.text.toString().toInt(), cantidad.text.toString().toInt(),repository)
-                    var allAreaNames=arrayListOf<String>()
-                    allAreaNames.clear()
-                    val AreaAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, allAreaNames)
-                    AreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-                    binding.SpinnerTB.adapter = AreaAdapter
+                if(SpinnerTB.getCount()==0){
+                    Toast.makeText(applicationContext, "No existen tipos de boleto disponibles para tu evento.", Toast.LENGTH_SHORT).show()
+                    btn.isClickable=false
                 }
                 else{
-                    Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
+                    if((cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())){
+                        viewModel.AddEventoTipoBoleto(eid,tb.getSelectedItem().toString(), precio.text.toString().toInt(), cantidad.text.toString().toInt(),repository)
+                        var allAreaNames=arrayListOf<String>()
+                        allAreaNames.clear()
+                        val AreaAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, allAreaNames)
+                        AreaAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+                        binding.SpinnerTB.adapter = AreaAdapter
+                    }
+                    else{
+                        Toast.makeText(applicationContext, "Llena todos los campos antes de continuar.", Toast.LENGTH_SHORT).show()
+                    }
+
+                    val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                    this.startActivity(submitBtn)
                 }
-
-                val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-                this.startActivity(submitBtn)
-
             }
-        }
+
 
 
     }
