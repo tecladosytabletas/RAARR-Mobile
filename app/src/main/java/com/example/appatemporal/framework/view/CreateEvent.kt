@@ -101,7 +101,6 @@ class CreateEvent :AppCompatActivity() {
                 val minuteI = horaInicio.minute
                 val hourF = horaFin.hour
                 val minuteF = horaFin.minute
-
                 val hoursI = if (hourI < 10) "0" + hourI else hourI
                 val minI = if (minuteI < 10) "0" + minuteI else minuteI
                 val hora_stringI="$hoursI:$minI"

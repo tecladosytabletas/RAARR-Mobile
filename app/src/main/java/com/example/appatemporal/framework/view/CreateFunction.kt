@@ -66,10 +66,15 @@ class CreateFunction : AppCompatActivity() {
             val hora_stringF="$hoursF:$minF"
 
             val year = datePickerF.year
-            var month = datePickerF.month
+            var monti = datePickerF.month
             val day = datePickerF.dayOfMonth
-            month = month + 1
-            val fecha="$day/$month/$year"
+            monti = monti + 1
+
+            val monthF = if (monti < 10) "0" + monti else monti
+            val dayF = if (day < 10) "0" + day else day
+
+
+            val fecha="$dayF/$monthF/$year"
 
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             val currentI = LocalDate.now()
