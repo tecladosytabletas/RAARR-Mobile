@@ -87,13 +87,12 @@ class CreateFunction : AppCompatActivity() {
 
             if((cmp > 0)&&(tmp < 0)){
             viewModel.AddFunction(eid,repository,fecha,hora_stringI,hora_stringF)
+                val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                this.startActivity(submitBtn)
         }
             else{
                 Toast.makeText(applicationContext, "La fecha elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
             }
-
-            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-            this.startActivity(submitBtn)
 
     }
 }
