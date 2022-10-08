@@ -52,12 +52,11 @@ class RegisterSale : AppCompatActivity() {
 
         repository = Repository(this)
 
-        idEvent = "ih83lF54LmwoNdFuopeB"
-        idFuncion = "qIdvPoINxUTuvPWt8UiB"
+        idEvent = "Nbb94T1aTzqT4RiXfmWm"
+        idFuncion = "ww0LP40KOfktWEE4fcDz"
 
         registerSaleViewModel.getDropdownNames(idEvent, Repository(this))
         registerSaleViewModel.dropdownList.observe(this, Observer {
-            Log.d("dropdown list log", it.toString())
             val ticketTypeString = arrayListOf<String>()
             for (name in it) {
                 ticketTypeString.add("${name.first}: $${name.second}")
@@ -79,7 +78,6 @@ class RegisterSale : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 registerSaleViewModel.getTicketAvailability(ticketType[p2], idEvent, idFuncion, Repository(activityContext))
                 registerSaleViewModel.ticketAvailability.observe(activityContext, Observer {
-                    //Log.d("SelectedDropdown", it.toString())
                     if (it.first < it.second) {
                         binding.btnRegisterSale.setBackgroundColor(Color.BLUE)
                         binding.btnRegisterSale.isEnabled = true
