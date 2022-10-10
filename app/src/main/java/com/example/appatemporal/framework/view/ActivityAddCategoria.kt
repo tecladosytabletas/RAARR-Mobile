@@ -14,6 +14,16 @@ import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetCategoryFilterViewModel
 
+/**
+ * This file is linked with activity_add_categoria.xml
+ * This file is in charge of controlling the logic behind the funtion bind a category with an event
+ *
+ * @see activity_add_categoria.xml
+ *
+ * @author Resendiz & Camalich
+ *
+ * */
+
 class ActivityAddCategoria : AppCompatActivity() {
     private val viewModel: GetCategoryFilterViewModel by viewModels()
     private lateinit var binding: ActivityAddCategoriaBinding

@@ -1149,6 +1149,7 @@ class FirestoreService {
             .await()
     }
 
+
     //Obtener eventos organizador
 
     suspend fun getOrganizerEvents(uid : String) : MutableList<EventModel01> {

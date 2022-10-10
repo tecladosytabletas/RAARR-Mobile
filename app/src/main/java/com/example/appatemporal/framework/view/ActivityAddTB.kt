@@ -16,6 +16,16 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetEventTBFilterViewModel
 import kotlinx.android.synthetic.main.activity_add_tipo_boleto.*
 
+/**
+ * This file is linked with activity_add_tipo_boleto.xml
+ * This file is in charge of controlling the logic behind the funtion add a type of ticket
+ *
+ * @see activity_add_tipo_boleto.xml
+ *
+ * @author Resendiz & Camalich
+ *
+ * */
+
 class ActivityAddTB : AppCompatActivity() {
     private val viewModel: GetEventTBFilterViewModel by viewModels()
     private lateinit var binding: ActivityAddTipoBoletoBinding
@@ -68,8 +78,5 @@ class ActivityAddTB : AppCompatActivity() {
 
                 }
             }
-
-
-
     }
 }

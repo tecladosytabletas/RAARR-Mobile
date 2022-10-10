@@ -20,7 +20,15 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-
+/**
+ * This file is linked with activity_create_function.xml
+ * This file is in charge of controlling the logic behind the funtion add a function to an event
+ *
+ * @see activity_create_function.xml
+ *
+ * @author Resendiz & Camalich
+ *
+ * */
 class CreateFunction : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateFunctionBinding

@@ -11,7 +11,15 @@ import com.example.appatemporal.databinding.ActivityAddArtistaBinding
 import com.example.appatemporal.databinding.ActivityCrearEventoBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.AddNewEventViewModel
-
+/**
+ * This file is linked with activity_add_artista.xml
+ * This file is in charge of controlling the logic behind the funtion add an artist
+ *
+ * @see activity_add_artista.xml
+ *
+ * @author Resendiz & Camalich
+ *
+ * */
 class AddArtist: AppCompatActivity() {
     private lateinit var binding: ActivityAddArtistaBinding
     private val viewModel: AddNewEventViewModel by viewModels()
