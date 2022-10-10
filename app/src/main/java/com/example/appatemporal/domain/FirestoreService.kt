@@ -290,17 +290,17 @@ class FirestoreService {
     suspend fun getTicketDropDown(idEvent: String) : List<Triple<String, Int, String>> {
         var dropDown : MutableList<Triple<String, Int, String>> = mutableListOf()
         val ticketInfo = db.collection("Evento_Tipo_Boleto")
-            .whereEqualTo("id_Evento", idEvent)
+            .whereEqualTo("id_evento_fk", idEvent)
             .get()
             .await()
         for (id in ticketInfo) {
-            var info = id.getField<String>("id_Tipo_Boleto").toString()
-            var precio = id.getField<Int>("precio") as Int
+            var info = id.getField<String>("id_tipo_boleto_fk").toString()
+            var precio = id.data.get("precio").toString().toInt()
             val name = db.collection("Tipo_Boleto")
                 .document(info)
                 .get()
                 .await()
-            dropDown.add(Triple(name.data?.get("nombre_Tipo_Boleto").toString(), precio, name.id))
+            dropDown.add(Triple(name.data?.get("nombre").toString(), precio, name.id))
         }
         return dropDown
     }
@@ -308,16 +308,16 @@ class FirestoreService {
     suspend fun currentTicketsFun(idEvent: String, idFuncion: String) : List<Triple<String, Int, Int>> {
         val maxCountEvent: MutableList<Triple<String, Int, Int>> = mutableListOf()
         val tipoEventoBoleto = db.collection("Evento_Tipo_Boleto")
-            .whereEqualTo("id_Evento", idEvent)
+            .whereEqualTo("id_evento_fk", idEvent)
             .get()
             .await()
         for (document in tipoEventoBoleto) {
             val boletosEventoTipo = db.collection("Boleto")
-                .whereEqualTo("id_Funcion", idFuncion)
-                .whereEqualTo("id_Tipo_Boleto", document.data.get("id_Tipo_Boleto"))
+                .whereEqualTo("id_funcion_fk", idFuncion)
+                .whereEqualTo("id_tipo_boleto_fk", document.data.get("id_tipo_boleto_fk"))
                 .get()
                 .await()
-            maxCountEvent.add(Triple(document.data?.get("id_Tipo_Boleto").toString(), boletosEventoTipo.documents.size, parseInt(document.data?.get("max_Boletos").toString())))
+            maxCountEvent.add(Triple(document.data?.get("id_tipo_boleto_fk").toString(), boletosEventoTipo.documents.size, parseInt(document.data?.get("max_boletos").toString())))
         }
         return maxCountEvent
     }
