@@ -74,11 +74,11 @@ class CreateFunction : AppCompatActivity() {
             val hora_stringF="$hoursF:$minF"
 
             val year = datePickerF.year
-            var monti = datePickerF.month
+            var montI = datePickerF.month
             val day = datePickerF.dayOfMonth
-            monti = monti + 1
+            montI = montI + 1
 
-            val monthF = if (monti < 10) "0" + monti else monti
+            val monthF = if (montI < 10) "0" + montI else montI
             val dayF = if (day < 10) "0" + day else day
 
 
