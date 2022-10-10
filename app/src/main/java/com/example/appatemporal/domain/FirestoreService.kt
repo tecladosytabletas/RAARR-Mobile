@@ -732,6 +732,14 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get the information of all the functions of any event(s) that are presented within the
+     * current date and the last day of the present month in the present year.
+     * @param day: Int
+     * @param month: Int
+     * @param year: Int
+     * @return result: MutableList<EventsInMonth>
+     **/
     suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
         var result : MutableList<EventsInMonth> = arrayListOf()
         var events = db.collection("Evento")
@@ -775,6 +783,10 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get the information of all the events that are active (activo==1) and approved (aprobado==1).
+     * @return result: MutableList<EventModel>
+     **/
     suspend fun getEvents() : MutableList<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
         var event: QuerySnapshot = db.collection("Evento")
@@ -804,6 +816,11 @@ class FirestoreService {
         return events
     }
 
+    /**
+     * Get the information of all the events where the user it's registered as the organizer.
+     * @param uid: String
+     * @return result: MutableList<EventsInMonth>
+     **/
     suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
         var result: MutableList<EventModel> = mutableListOf()
 
@@ -811,8 +828,8 @@ class FirestoreService {
             .whereEqualTo("id_usuario_fk",uid)
             .get()
             .await()
-        Log.d("getEventsUserOrg-uid",uid)
-        Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
+        //Log.d("getEventsUserOrg-uid",uid)
+        //Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
 
         for(element in event_user){
             var event = db.collection("Evento")
@@ -820,7 +837,7 @@ class FirestoreService {
                 .whereEqualTo(FieldPath.documentId(),element.data?.get("id_evento_fk").toString())
                 .get()
                 .await()
-            Log.d("getEventsUserOrg-Event", event.toString())
+            //Log.d("getEventsUserOrg-Event", event.toString())
             var evento = EventModel(
                 event.documents[0].id,
                 event.documents[0].data?.get("nombre").toString(),
@@ -838,11 +855,15 @@ class FirestoreService {
             )
             result.add(evento)
         }
-        Log.d("getEventsUserOrg", result.toString())
+        //Log.d("getEventsUserOrg", result.toString())
         return result
     }
 
-
+    /**
+     * Get the revenue by payment method in an event by it's id.
+     * @param eid: String
+     * @return result: MutableMap<String, Int?>
+     **/
     suspend fun getRevenuebyPM(eid:String): MutableMap<String, Int?> {
         var diccPM = mutableMapOf<String, Int?>()
         var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
@@ -851,7 +872,7 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
+        //Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
         if (funciones.isEmpty){diccPM.put("No hay datos en Funcionces", 0); return diccPM}
 
         var tiposboleto: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
@@ -896,7 +917,7 @@ class FirestoreService {
             }
         }
 
-        Log.d("Dentro de getRevenuebyPM",result.toString())
+        //Log.d("Dentro de getRevenuebyPM",result.toString())
         if (result.isEmpty()){return errorHandler}
         return result
     }
