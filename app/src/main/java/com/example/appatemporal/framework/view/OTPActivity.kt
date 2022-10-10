@@ -159,7 +159,6 @@ class OTPActivity : AppCompatActivity() {
                                     val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
                                     startActivity(intent)
                                 }
-
                             })
                         } else {
                             val intent = Intent(this, RegisterActivity::class.java)
