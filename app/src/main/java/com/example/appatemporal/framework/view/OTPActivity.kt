@@ -63,10 +63,8 @@ class OTPActivity : AppCompatActivity() {
         }
 
         binding.verifyOTPBtn.setOnClickListener {
-            //colect otp from all the edit text
             val typedOTP = binding.otpEditText1.text.toString() + binding.otpEditText2.text.toString() + binding.otpEditText3.text.toString() +
                     binding.otpEditText4.text.toString() + binding.otpEditText5.text.toString() + binding.otpEditText6.text.toString()
-            Log.d("typedOTP", typedOTP)
             if (typedOTP.isNotEmpty()){
                 if (typedOTP.length == 6){
                     val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
@@ -211,7 +209,7 @@ class OTPActivity : AppCompatActivity() {
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
-                         Log.d("TAG","SMS Incorrecto")
+                        Toast.makeText(this, "SMS Incorrecto", Toast.LENGTH_SHORT ).show()
                     }
                     // Update UI
                 }

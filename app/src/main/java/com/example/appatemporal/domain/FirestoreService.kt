@@ -55,7 +55,6 @@ class FirestoreService {
             .whereEqualTo("nombre", role)
             .get()
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Got Role Correctly: ${it.documents[0].id}")
             }.await()
 
         val userRole = hashMapOf(
@@ -66,7 +65,6 @@ class FirestoreService {
         db.collection("Usuario_Rol")
             .add(userRole)
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Added User wih Role Correctly")
             }
             .addOnFailureListener {
                 Log.d("FirestoreLogs","Added user failed, exception: $it")
