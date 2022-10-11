@@ -94,7 +94,6 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
 
-        val idUser = "qVzK32OHDYOUtK1YsQbh"
         val idEvento = intent.getStringExtra("idEvento")
         val nombre = intent.getStringExtra("nombre")
         val descripcion = intent.getStringExtra("descripcion")
@@ -117,7 +116,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
             intent.putExtra("idEvent", idEvent)
 
-            startActivity(intent)
+            this.startActivity(intent)
         }
 
         binding.addFunBtn.setOnClickListener{
@@ -167,19 +166,17 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
         initRecyclerView(getFunctionOrganizerViewModel, idEvento.toString(), repository)
 
-        //Creación de usuario temporal
-        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
         val repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0
-        graphicsEventDetailViewModel.getTicketsSA(tempEventId, repository)
+        graphicsEventDetailViewModel.getTicketsSA(idEvento.toString(), repository)
         graphicsEventDetailViewModel.eventTicketsSAEvent.observe(this, Observer {
             ventasTotal = it.first
             asistenciasTotal = it.second
             populateTSAPieChart(ventasTotal, asistenciasTotal)
         })
-        populateRating(tempEventId)
+        populateRating(idEvento.toString())
     }
 
 

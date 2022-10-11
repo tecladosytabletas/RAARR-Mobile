@@ -29,9 +29,6 @@ class Dashboard : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
 
-        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE)
-            .getString("userUid", "").toString()
-
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -93,24 +90,22 @@ class Dashboard : AppCompatActivity(){
 
         val uid = getSharedPreferences("user", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
-        //Usuario temporal de pruebas, eliminar posteriormente
-        val tempUserId : String = "qVzK32OHDYOUtK1YsQbh"
         repository = Repository(this)
 
         //Inicia llamado a funciones
         //Grafica1 - Ganancias totales y cantidad de eventos totales
-        populateEventCount(tempUserId)
+        populateEventCount(uid)
         //Grafica2 - Asistentes esperados totales vs. Asistentes reales totales
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0
-        dashboardViewModel.ventasEvent(tempUserId, repository)
+        dashboardViewModel.ventasEvent(uid, repository)
         dashboardViewModel.ventas.observe(this, Observer{
             ventasTotal = it.first
             asistenciasTotal = it.second
             populatePieChart(ventasTotal, asistenciasTotal)
         })
         //Grafica3 - Rating promedio de todos los eventos
-        populateRating(tempUserId)
+        populateRating(uid)
     }
 
     private fun populateEventCount(uid:String) {
