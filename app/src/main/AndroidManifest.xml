@@ -157,7 +157,7 @@
         <activity
             android:name=".framework.view.CreateEvent"
             android:exported="true">
-            
+
         </activity>
         <activity
             android:name=".framework.view.CreateFunction"

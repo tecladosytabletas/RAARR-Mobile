@@ -139,7 +139,7 @@ class Repository(context: Context) {
         return firestoreAPI.getRevenuebyPM(eid)
     }
 
-    // suspend fun getEvents() = firestoreAPI.getEvents()
+//    suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
     suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)

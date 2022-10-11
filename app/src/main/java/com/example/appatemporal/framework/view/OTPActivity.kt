@@ -168,7 +168,6 @@ class OTPActivity : AppCompatActivity() {
                     })
                 } else {
                     // Sign in failed, display a message and update the UI
-                    Toast.makeText(this,"Código incorrecto", Toast.LENGTH_SHORT).show()
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
