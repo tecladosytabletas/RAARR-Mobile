@@ -15,6 +15,9 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class PhoneActivity : AppCompatActivity() {
 
     private lateinit var sendOTPbtn: Button
@@ -24,6 +27,11 @@ class PhoneActivity : AppCompatActivity() {
     private lateinit var mProgressBar : ProgressBar
     private lateinit var binding: ActivityPhoneBinding
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,6 +65,9 @@ class PhoneActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initializes variables declared as lateinit on 'onCreate' function
+     */
     private fun init(){
         mProgressBar = binding.phoneProgressBar
         mProgressBar.visibility = View.INVISIBLE
@@ -67,10 +78,21 @@ class PhoneActivity : AppCompatActivity() {
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
+        /**
+         * Depending on the device used, it will verify the OTP
+         * credential by receiving the message
+         *
+         * @param credential: PhoneAuthCredential -> Credential sent by Firebase
+         */
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
             //signInWithPhoneAuthCredential(credential)
         }
-
+        /**
+         * Logs to console if verification failed due to
+         * invalid credentials or excessive amount of requests
+         *
+         * @param e: FirebaseException -> Exception returned by Firebase when verification fails
+         */
         override fun onVerificationFailed(e: FirebaseException) {
             if (e is FirebaseAuthInvalidCredentialsException) {
                 Log.d("TAG", "onVerificationFailed: ${e.toString()}")
@@ -79,6 +101,12 @@ class PhoneActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * Sends the SMS code to phone number
+         *
+         * @param verificationId: String -> The 6 digits of the SMS sent by Firebase Authentication
+         * @param token: PhoneAuthProvider.ForceResentingToken -> Token used by Firebase to send the OTP
+         */
         override fun onCodeSent(
             verificationId: String,
             token: PhoneAuthProvider.ForceResendingToken

@@ -28,6 +28,12 @@ import kotlin.collections.ArrayList
 class FirestoreService {
     private val db = Firebase.firestore
 
+    /**
+     * Adds user to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param user: UserModel -> Model to insert documents to Firestore
+     */
     suspend fun addUser(uid: String, user: UserModel) {
         db.collection("Usuario")
             .document(uid)
@@ -38,12 +44,17 @@ class FirestoreService {
             .await()
     }
 
+    /**
+     * Adds user's role and its relations to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param role: String -> Role selected by the user
+     */
     suspend fun addUserRole(uid: String, role: String) {
         val dbRole = db.collection("Rol")
             .whereEqualTo("nombre", role)
             .get()
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Got Role Correctly: ${it.documents[0].id}")
             }.await()
 
         val userRole = hashMapOf(
@@ -54,13 +65,18 @@ class FirestoreService {
         db.collection("Usuario_Rol")
             .add(userRole)
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Added User wih Role Correctly")
             }
             .addOnFailureListener {
                 Log.d("FirestoreLogs","Added user failed, exception: $it")
             }
     }
 
+    /**
+     * Verifies the user's existence
+     *
+     * @param uid: String -> User uid
+     * @return Boolean -> Existence of the user
+     */
     suspend fun verifyUser(uid: String) : Boolean {
         var userExists = false
         db.collection("Usuario")
@@ -75,6 +91,12 @@ class FirestoreService {
         return userExists
     }
 
+    /**
+     * Gets the user information
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUser(uid: String) : DocumentSnapshot {
         var userData: DocumentSnapshot =
             db.collection("Usuario")
@@ -84,6 +106,12 @@ class FirestoreService {
         return userData
     }
 
+    /**
+     * Gets the user's role
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         var dbRole: QuerySnapshot =
             db.collection("Usuario_Rol")
