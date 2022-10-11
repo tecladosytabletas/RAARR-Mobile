@@ -100,14 +100,13 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         val descripcion = intent.getStringExtra("descripcion")
         val lugar = intent.getStringExtra("ubicacion")
         val direccion = intent.getStringExtra("direccion")
-        val ciudad = intent.getStringExtra("ciudad")
-        val estado = intent.getStringExtra("estado")
+        val ciudad_estado = intent.getStringExtra("ciudad_estado")
         val foto_portada = intent.getStringExtra("foto_portada")
 
         binding.NombreEvento.text = nombre
         binding.Ubicacion.text = lugar
         binding.DireccionVEE.text = direccion
-        binding.CiudadEstadoVEE.text = ciudad + ", " + estado
+        binding.CiudadEstadoVEE.text = ciudad_estado
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
         binding.btnMoreGraphics.setOnClickListener {
