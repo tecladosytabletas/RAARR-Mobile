@@ -60,8 +60,9 @@ class DetailedMetrics : AppCompatActivity(){
         repository = Repository(this)
 
         val idEvento = intent.getStringExtra("idEvento")
+        Log.d("DetailedMetrics-Receptor",idEvento.toString())
 
-        setEventName(idEvento.toString())
+        setEventName(idEvento!!)
 
         setTotalProfit(idEvento.toString())
 

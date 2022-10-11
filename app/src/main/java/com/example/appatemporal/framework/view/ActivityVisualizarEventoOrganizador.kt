@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -94,7 +95,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
 
-        val idEvento = intent.getStringExtra("idEvento")
+        val idEvento = intent.getStringExtra("idEvent")
         val nombre = intent.getStringExtra("nombre")
         val descripcion = intent.getStringExtra("descripcion")
         val lugar = intent.getStringExtra("ubicacion")
@@ -115,8 +116,11 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             val intent = Intent(this, DetailedMetrics::class.java)
 
             intent.putExtra("idEvento", idEvent)
+            Log.d("DetailedMetrics-Emisor",idEvent)
 
             this.startActivity(intent)
+
+
         }
 
         binding.addFunBtn.setOnClickListener{
