@@ -25,6 +25,7 @@ class GetCommentsViewModel :ViewModel() {
                 var commentAux = CommentModel(document.data.get("id_usuario_fk").toString(), document.data.get("id_evento_fk").toString(),
                                                 document.data.get("comentario").toString(), auxDate.toDate())
                 auxList.add(commentAux)
+                Log.d("AuxList", auxList.toString())
             }
             commentList.postValue(auxList)
         }
