@@ -6,9 +6,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.databinding.ActivityComprobacionBinding
 
-
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class CheckIfLogged : AppCompatActivity() {
     private lateinit var binding: ActivityComprobacionBinding
+
+    /**
+     * Overrides function onCreate
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
