@@ -61,6 +61,12 @@ class FirestoreService {
             }
     }
 
+    /**
+     * Verifies the user's existence
+     *
+     * @param uid: String -> User uid
+     * @return Boolean -> Existence of the user
+     */
     suspend fun verifyUser(uid: String) : Boolean {
         var userExists = false
         db.collection("Usuario")
@@ -75,6 +81,12 @@ class FirestoreService {
         return userExists
     }
 
+    /**
+     * Gets the user information
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUser(uid: String) : DocumentSnapshot {
         var userData: DocumentSnapshot =
             db.collection("Usuario")
@@ -84,6 +96,12 @@ class FirestoreService {
         return userData
     }
 
+    /**
+     * Gets the user's role
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         var dbRole: QuerySnapshot =
             db.collection("Usuario_Rol")

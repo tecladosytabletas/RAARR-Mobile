@@ -10,6 +10,11 @@ import kotlinx.coroutines.runBlocking
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
+/**
+ * Class that works as a repository for the application
+ * following the Clean Architecture of MVVM
+ * @param context: Context -> Context of the activities
+ */
 class Repository(context: Context) {
 
     // Firestore
@@ -20,14 +25,32 @@ class Repository(context: Context) {
         firestoreAPI.addUserRole(uid, role)
     }
 
+    /**
+     * Asks Firestore Service to verify the existence of a user
+     *
+     * @param uid: String -> User uid
+     * @return Boolean -> Existence of the user
+     */
     suspend fun verifyUser(uid: String) : Boolean {
         return firestoreAPI.verifyUser(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the user information
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUser(uid: String) : DocumentSnapshot{
         return firestoreAPI.getUser(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the user role
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         return firestoreAPI.getUserRole(uid)
     }
