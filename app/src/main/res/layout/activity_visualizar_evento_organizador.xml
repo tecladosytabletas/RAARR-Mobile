@@ -837,10 +837,6 @@
                                 android:layout_weight="0.2"></Space>
 
 
-                            <Space
-                                android:layout_width="0dp"
-                                android:layout_height="90dp"
-                                android:layout_weight="0.2"></Space>
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>
