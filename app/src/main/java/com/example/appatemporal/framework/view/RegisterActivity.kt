@@ -15,6 +15,7 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.domain.models.UserModel
 import com.example.appatemporal.framework.viewModel.RegisterUserViewModel
 
+
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var repository: Repository
