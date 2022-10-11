@@ -3,7 +3,6 @@ package com.example.appatemporal.framework.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,12 +11,10 @@ import com.example.appatemporal.databinding.DetailedMetricsBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.DetailedMetricsViewModel
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import kotlinx.android.synthetic.main.detailed_metrics.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -60,7 +57,6 @@ class DetailedMetrics : AppCompatActivity(){
         repository = Repository(this)
 
         val idEvento = intent.getStringExtra("idEvento")
-        Log.d("DetailedMetrics-Receptor",idEvento.toString())
 
         setEventName(idEvento!!)
 
@@ -231,7 +227,6 @@ class DetailedMetrics : AppCompatActivity(){
         var i = 0
         for (entry in dataList) {
             var value = dataList[i].second!!.toFloat()
-            Log.d("Dentro de la grafica 1",value.toString())
             entriesVT.add(BarEntry(i.toFloat(), value))
             i++
         }
@@ -256,7 +251,6 @@ class DetailedMetrics : AppCompatActivity(){
             xAxisLabels.add(dataList[k].first)
             k++
         }
-        Log.d("Contenido en labels", xAxisLabels.toString())
         return xAxisLabels
     }
 

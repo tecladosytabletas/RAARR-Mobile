@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.R
-import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.databinding.ActivityVisualizarEventoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetFunctionOrganizerViewModel
@@ -115,10 +113,8 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
             val intent = Intent(this, DetailedMetrics::class.java)
 
             intent.putExtra("idEvento", idEvent)
-            Log.d("DetailedMetrics-Emisor",idEvent)
 
             this.startActivity(intent)
-
 
         }
 
