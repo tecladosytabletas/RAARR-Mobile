@@ -59,14 +59,14 @@ class DetailedMetrics : AppCompatActivity(){
 
         repository = Repository(this)
 
-        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
+        val idEvento = intent.getStringExtra("idEvento")
 
-        setEventName(tempEventId)
+        setEventName(idEvento.toString())
 
-        setTotalProfit(tempEventId)
+        setTotalProfit(idEvento.toString())
 
         var dataTbyPM : MutableList<Pair<String,Int?>> = mutableListOf()
-        detailedMetricsViewModel.getPMbyTickets(tempEventId,repository)
+        detailedMetricsViewModel.getPMbyTickets(idEvento.toString(),repository)
         detailedMetricsViewModel.countPM.observe(this, Observer{
             for(element in it){
                 dataTbyPM.add(Pair(element.key,element.value))
@@ -75,7 +75,7 @@ class DetailedMetrics : AppCompatActivity(){
         })
 
         var dataTTSA : MutableList<Triple<String,Int?,Int?>> = mutableListOf()
-        detailedMetricsViewModel.getTypeSA(tempEventId,repository)
+        detailedMetricsViewModel.getTypeSA(idEvento.toString(),repository)
         detailedMetricsViewModel.eventsTicketsTypeSA.observe(this, Observer{
             for(element in it){
                 dataTTSA.add(Triple(element.key,element.value.first,element.value.second))
@@ -84,7 +84,7 @@ class DetailedMetrics : AppCompatActivity(){
         })
 
         var revenuePM : MutableList<Pair<String,Int?>> = mutableListOf()
-        detailedMetricsViewModel.getRevenuePM(tempEventId,repository)
+        detailedMetricsViewModel.getRevenuePM(idEvento.toString(),repository)
         detailedMetricsViewModel.revenueByPM.observe(this, Observer{
             for(element in it){
                 revenuePM.add(Pair(element.key,element.value))

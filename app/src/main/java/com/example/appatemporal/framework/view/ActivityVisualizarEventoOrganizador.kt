@@ -114,7 +114,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
             val intent = Intent(this, DetailedMetrics::class.java)
 
-            intent.putExtra("idEvent", idEvent)
+            intent.putExtra("idEvento", idEvent)
 
             this.startActivity(intent)
         }
