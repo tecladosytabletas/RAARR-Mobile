@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.R
-import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.databinding.ActivityVisualizarEventoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetFunctionOrganizerViewModel
@@ -94,20 +93,18 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
 
-        val idUser = "qVzK32OHDYOUtK1YsQbh"
-        val idEvento = intent.getStringExtra("idEvento")
+        val idEvento = intent.getStringExtra("idEvent")
         val nombre = intent.getStringExtra("nombre")
         val descripcion = intent.getStringExtra("descripcion")
         val lugar = intent.getStringExtra("ubicacion")
         val direccion = intent.getStringExtra("direccion")
-        val ciudad = intent.getStringExtra("ciudad")
-        val estado = intent.getStringExtra("estado")
+        val ciudad_estado = intent.getStringExtra("ciudad_estado")
         val foto_portada = intent.getStringExtra("foto_portada")
 
         binding.NombreEvento.text = nombre
         binding.Ubicacion.text = lugar
         binding.DireccionVEE.text = direccion
-        binding.CiudadEstadoVEE.text = ciudad + ", " + estado
+        binding.CiudadEstadoVEE.text = ciudad_estado
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
         binding.btnMoreGraphics.setOnClickListener {
@@ -115,9 +112,10 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
             val intent = Intent(this, DetailedMetrics::class.java)
 
-            intent.putExtra("idEvent", idEvent)
+            intent.putExtra("idEvento", idEvent)
 
-            startActivity(intent)
+            this.startActivity(intent)
+
         }
 
         binding.addFunBtn.setOnClickListener{
@@ -167,19 +165,17 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
         initRecyclerView(getFunctionOrganizerViewModel, idEvento.toString(), repository)
 
-        //Creación de usuario temporal
-        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
         val repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0
-        graphicsEventDetailViewModel.getTicketsSA(tempEventId, repository)
+        graphicsEventDetailViewModel.getTicketsSA(idEvento.toString(), repository)
         graphicsEventDetailViewModel.eventTicketsSAEvent.observe(this, Observer {
             ventasTotal = it.first
             asistenciasTotal = it.second
             populateTSAPieChart(ventasTotal, asistenciasTotal)
         })
-        populateRating(tempEventId)
+        populateRating(idEvento.toString())
     }
 
 

@@ -27,7 +27,7 @@ class ActivityMainHomepageOrganizadorViewHolderHorizontal(view: View) : Recycler
             var idEvent : String = eventModel.id
             var nombre : String = eventModel.nombre
             var direccion : String = eventModel.direccion
-            var estado :String = eventModel.ciudad + ", " + eventModel.estado
+            var ciudad_estado :String = eventModel.ciudad + ", " + eventModel.estado
             var ubicacion : String = eventModel.ubicacion
             var foto_portada : String = eventModel.foto_portada
 
@@ -36,7 +36,7 @@ class ActivityMainHomepageOrganizadorViewHolderHorizontal(view: View) : Recycler
             eventoIndividual.putExtra("idEvent", idEvent)
             eventoIndividual.putExtra("nombre", nombre)
             eventoIndividual.putExtra("direccion", direccion)
-            eventoIndividual.putExtra("estado", estado)
+            eventoIndividual.putExtra("ciudad_estado", ciudad_estado)
             eventoIndividual.putExtra("ubicacion", ubicacion)
             eventoIndividual.putExtra("foto_portada", foto_portada)
 

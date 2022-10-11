@@ -3,7 +3,6 @@ package com.example.appatemporal.framework.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,12 +11,10 @@ import com.example.appatemporal.databinding.DetailedMetricsBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.DetailedMetricsViewModel
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import kotlinx.android.synthetic.main.detailed_metrics.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -59,14 +56,14 @@ class DetailedMetrics : AppCompatActivity(){
 
         repository = Repository(this)
 
-        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
+        val idEvento = intent.getStringExtra("idEvento")
 
-        setEventName(tempEventId)
+        setEventName(idEvento!!)
 
-        setTotalProfit(tempEventId)
+        setTotalProfit(idEvento.toString())
 
         var dataTbyPM : MutableList<Pair<String,Int?>> = mutableListOf()
-        detailedMetricsViewModel.getPMbyTickets(tempEventId,repository)
+        detailedMetricsViewModel.getPMbyTickets(idEvento.toString(),repository)
         detailedMetricsViewModel.countPM.observe(this, Observer{
             for(element in it){
                 dataTbyPM.add(Pair(element.key,element.value))
@@ -75,7 +72,7 @@ class DetailedMetrics : AppCompatActivity(){
         })
 
         var dataTTSA : MutableList<Triple<String,Int?,Int?>> = mutableListOf()
-        detailedMetricsViewModel.getTypeSA(tempEventId,repository)
+        detailedMetricsViewModel.getTypeSA(idEvento.toString(),repository)
         detailedMetricsViewModel.eventsTicketsTypeSA.observe(this, Observer{
             for(element in it){
                 dataTTSA.add(Triple(element.key,element.value.first,element.value.second))
@@ -84,7 +81,7 @@ class DetailedMetrics : AppCompatActivity(){
         })
 
         var revenuePM : MutableList<Pair<String,Int?>> = mutableListOf()
-        detailedMetricsViewModel.getRevenuePM(tempEventId,repository)
+        detailedMetricsViewModel.getRevenuePM(idEvento.toString(),repository)
         detailedMetricsViewModel.revenueByPM.observe(this, Observer{
             for(element in it){
                 revenuePM.add(Pair(element.key,element.value))
@@ -230,7 +227,6 @@ class DetailedMetrics : AppCompatActivity(){
         var i = 0
         for (entry in dataList) {
             var value = dataList[i].second!!.toFloat()
-            Log.d("Dentro de la grafica 1",value.toString())
             entriesVT.add(BarEntry(i.toFloat(), value))
             i++
         }
@@ -255,7 +251,6 @@ class DetailedMetrics : AppCompatActivity(){
             xAxisLabels.add(dataList[k].first)
             k++
         }
-        Log.d("Contenido en labels", xAxisLabels.toString())
         return xAxisLabels
     }
 
