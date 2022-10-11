@@ -28,6 +28,12 @@ import kotlin.collections.ArrayList
 class FirestoreService {
     private val db = Firebase.firestore
 
+    /**
+     * Adds user to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param user: UserModel -> Model to insert documents to Firestore
+     */
     suspend fun addUser(uid: String, user: UserModel) {
         db.collection("Usuario")
             .document(uid)
@@ -38,6 +44,12 @@ class FirestoreService {
             .await()
     }
 
+    /**
+     * Adds user's role and its relations to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param role: String -> Role selected by the user
+     */
     suspend fun addUserRole(uid: String, role: String) {
         val dbRole = db.collection("Rol")
             .whereEqualTo("nombre", role)

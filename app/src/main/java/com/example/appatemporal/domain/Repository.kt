@@ -20,6 +20,13 @@ class Repository(context: Context) {
     // Firestore
     private val firestoreAPI = FirestoreService()
 
+    /**
+     * Asks Firestore Service to add a user and his role
+     *
+     * @param uid: String -> User Uid
+     * @param user: UserModel -> Model to insert documents to Firestore
+     * @param role: String -> Role selected by the user
+     */
     suspend fun addUser(uid: String, user: UserModel, role: String) {
         firestoreAPI.addUser(uid, user)
         firestoreAPI.addUserRole(uid, role)
