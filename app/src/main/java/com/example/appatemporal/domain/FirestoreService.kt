@@ -373,15 +373,14 @@ class FirestoreService {
 
     /**
      * Adds a document in ReporteFallas collection of Firestore
-     * @param title: String
-     * @param description: String
+     * @param title: String -> tittle of report
+     * @param description: String -> description of the failure
      */
     suspend fun addFailure(title: String, description: String) {
         val failure = ReportFailureModel(title, description)
         db.collection("ReporteFallas")
             .add(failure)
             .addOnSuccessListener {
-                Log.d("Firestore Log Failure", "Success")
             }.await()
     }
 
@@ -548,7 +547,7 @@ class FirestoreService {
            .await()
    }
     /**
-     * Get a document in Rating collection of Firestore
+     * Get a document in Rating collection of Firestore to verify existence
      * @param idUser: String
      * @param idEvent: String
      * @return existence: Boolean
@@ -675,7 +674,11 @@ class FirestoreService {
             .add(comment)
             .await()
     }
-
+    /**
+     * Gets the comments from Comentario collection of Firestore
+     * @param idEvent: String -> Event's id
+     * @return comments: QuerySnapshot -> query result from Firebase
+     */
     suspend fun getComments(idEvent: String) : QuerySnapshot {
         val comments =
             db.collection("Comentario")
@@ -747,7 +750,11 @@ class FirestoreService {
                 var eventDate = function.data?.get("fecha_funcion").toString()
                 val arrayDate: List<String> = eventDate.split("/")
                 Log.d("ArrayDateLog", arrayDate.toString())
-                if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
+                if (arrayDate.size <= 1){
+                    Log.d("ArrayDateLog", arrayDate.toString())
+                    continue
+                }
+                if(arrayDate[1].toInt()== month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
                     var evento = EventsInMonth(
                         event.id,
                         event.data?.get("nombre").toString(),
@@ -768,6 +775,7 @@ class FirestoreService {
                     )
                     result.add(evento)
                 }
+
             }
         }
         Log.d("LogResult", result.toString())

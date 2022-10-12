@@ -48,9 +48,10 @@ class Main : AppCompatActivity() {
 
         binding.logoutTemp.setOnClickListener {
             auth.signOut()
-            val userUidSharedPref = getSharedPreferences("userUid", Context.MODE_PRIVATE)
-            var sharedPrefEdit = userUidSharedPref.edit()
+            val userSharedPref = getSharedPreferences("user", Context.MODE_PRIVATE)
+            var sharedPrefEdit = userSharedPref.edit()
             sharedPrefEdit.remove("userUid")
+            sharedPrefEdit.remove("rol")
             val intent = Intent(this, CheckIfLogged::class.java)
             startActivity(intent)
         }

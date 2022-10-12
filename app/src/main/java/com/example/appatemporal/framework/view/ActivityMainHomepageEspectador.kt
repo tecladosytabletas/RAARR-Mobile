@@ -36,7 +36,6 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
 
         val repository = Repository(this)
 
-        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
         val dia = getDay()
         val month = getMonth()
         val year = getYear()
@@ -45,17 +44,25 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         initRecyclerViewVertical(getEventsInMonthViewModel, repository)
 
         // ----------------------------Navbar------------------------------------
+        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+
+        Log.d("Rol", userRole)
 
         // Visibility
-        if (userRole != "Organizador") {
+        if (userRole == "Espectador" || userRole == "") {
             binding.navbar.budgetIcon.visibility = android.view.View.GONE
             binding.navbar.metricsIcon.visibility = android.view.View.GONE
             binding.navbar.budgetText.visibility = android.view.View.GONE
             binding.navbar.metricsText.visibility = android.view.View.GONE
-        }
-        if (userRole == "Ayudante") {
+        } else if (userRole == "Ayudante") {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
             binding.navbar.eventsIcon.visibility = android.view.View.GONE
             binding.navbar.eventsText.visibility = android.view.View.GONE
+            binding.navbar.homeIcon.visibility = android.view.View.GONE
+            binding.navbar.homeText.visibility = android.view.View.GONE
         }
 
         // Intents
@@ -63,18 +70,21 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
             if(userRole == "Organizador"){
                 val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            }else {
                 val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
                 startActivity(intent)
             }
         }
 
         binding.navbar.eventsIcon.setOnClickListener {
-            if(userRole == "Organizador"){
+            if(userRole == "Organizador") {
                 val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            } else if (userRole == "Espectador") {
                 val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -88,8 +98,11 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
             if (userRole == "Espectador" || userRole == "Organizador") {
                 val intent = Intent(this, BoletoPorEventoActivity::class.java)
                 startActivity(intent)
-            } else {
+            } else if (userRole == "Ayudante") {
                 val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -130,6 +143,7 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
             linearLayout.orientation=LinearLayoutManager.HORIZONTAL
             binding.HorizontalEspectadorView.layoutManager = linearLayout // Le da el layout que usará el RV.
             binding.HorizontalEspectadorView.adapter = ActivityMainHomepageEspectadorAdapterHorizontal(eventsList)
+
         })
     }
 
