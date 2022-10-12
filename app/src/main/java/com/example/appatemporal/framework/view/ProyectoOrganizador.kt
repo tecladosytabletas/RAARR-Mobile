@@ -18,13 +18,17 @@ import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
 import kotlinx.coroutines.launch
 
 class ProyectoOrganizador : AppCompatActivity() {
+    // Initialize the view model
     private val  viewModel : ProyectoOrganizadorViewModel by viewModels()
+    // Initialize the binding with the xml file
     private lateinit var binding: ProyectosOrganizadorBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ProyectosOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = Repository(this)
+
+        // Function used to display the projects that has the status of completed
         binding.tvCompletedProject.setOnClickListener{
             binding.tvCompletedProject.getBackground().setAlpha(70);
             binding.tvNoCompletedProject.getBackground().setAlpha(255);
@@ -35,6 +39,8 @@ class ProyectoOrganizador : AppCompatActivity() {
                 binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
             })
         }
+
+        // Function used to display the projects that has the status of pending
         binding.tvNoCompletedProject.setOnClickListener{
             binding.tvNoCompletedProject.getBackground().setAlpha(70);
             binding.tvCompletedProject.getBackground().setAlpha(255);
@@ -45,6 +51,8 @@ class ProyectoOrganizador : AppCompatActivity() {
                 binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList1, viewModel)
             })
         }
+
+        // Elements used to display all the projects that are stored in the database
         viewModel.getProjects(repository)
         viewModel.projects.observe(this, Observer { projectList ->
             if (projectList.isEmpty()) {
@@ -54,7 +62,8 @@ class ProyectoOrganizador : AppCompatActivity() {
             binding.recyclerViewProjects.layoutManager = LinearLayoutManager(this)
             binding.recyclerViewProjects.adapter = ProjectsAdapter(projectList, viewModel)
         })
-
+        // Function that will be initialized once the element ivEditIcon is clicked by the user
+        // The function inside it is an intent to the AddNewProjectForm view
         binding.tvNewProject.setOnClickListener {
             val intent = Intent(this, AddNewProjectForm::class.java)
             startActivity(intent)

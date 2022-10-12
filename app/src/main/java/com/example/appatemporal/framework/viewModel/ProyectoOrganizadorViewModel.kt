@@ -39,21 +39,29 @@ class ProyectoOrganizadorViewModel: ViewModel() {
     fun countPendingActivities(repository: Repository, id_a: Int, stringStatus: String): Int{
         return requirement.countPendingActivities(repository, id_a, stringStatus)
     }
+    /* Function that we use to count all the activities with a certain status attribute registered on a project
+    * @param repository - The context to access the resources assigned to the local database
+    * @param id - The id of the project the user selected
+    * @param stringStatus - The string that it will use to search in activities
+    * @return The number of activities the function found
+    */
     fun countDoneActivities(repository: Repository, id_a: Int, stringStatus: String): Int{
         return requirement.countDoneActivities(repository, id_a, stringStatus)
     }
-
+    /* Function that we use to count all the activities registered on a project
+    * @param repository - The context to access the resources assigned to the local database
+    * @param id - The id of the project the user selected
+    * @return The number of all the activities found in the local database
+    */
     fun countAllActivities(repository: Repository, id_a: Int): Int{
         return requirement.countAllActivities(repository, id_a)
     }
 
-    fun updateEstatusCompletado(estatusNew: Boolean, id: Int, repository: Repository){
-        viewModelScope.launch {
-            requirement.updateEstatusCompletado(estatusNew, id, repository)
-            val proyecto = requirement.getProyectoById(id, repository)
-            project.postValue(proyecto)
-        }
-    }
+    /*
+    * Function used to extract all the projects that has a specific status
+    * @param stringStatus - The boolean that will be used to search in the local database
+    * @param repository - The context to access the resources assigned to the local database
+    */
     fun getAllProjectsCompleted(stringStatus: Boolean, repository: Repository) {
         viewModelScope.launch {
             val list = requirement.filterProjectsByStatus(stringStatus, repository)
