@@ -6,13 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import com.example.appatemporal.R
-import com.example.appatemporal.data.localdatabase.entities.Objetivo
 import com.example.appatemporal.databinding.ActivityProyectoOrganizadorBinding
-import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
-import kotlinx.coroutines.launch
 
 class ActivityProyectoOrganizador: AppCompatActivity() {
     private val viewModel: ProyectoOrganizadorViewModel by viewModels()

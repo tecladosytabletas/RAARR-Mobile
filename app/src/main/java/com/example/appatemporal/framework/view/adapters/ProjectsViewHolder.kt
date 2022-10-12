@@ -4,19 +4,13 @@ package com.example.appatemporal.framework.view.adapters
 import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appatemporal.data.localdatabase.entities.Objetivo
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.databinding.ProyectosOrganizadorItemBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.ActivityProyectoOrganizador
 import com.example.appatemporal.framework.view.ModificarProyecto
-import com.example.appatemporal.framework.view.ProyectoOrganizador
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class ProjectsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
