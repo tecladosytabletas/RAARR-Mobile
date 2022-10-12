@@ -13,6 +13,16 @@ import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageOrga
 import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageOrganizadorAdapterVertical
 import com.example.appatemporal.framework.viewModel.GetEventsUserOrg
 
+/**
+ * This file is linked with activity_main_homepage_espectador.xml
+ * This file is in charge of displaying the events in different cards of Recycler Views
+ *
+ * @see activity_main_homepage_espectador.xml
+ *
+ * @author Andrés & Aldo
+ *
+ * */
+
 class ActivityMainHomepageOrganizador : AppCompatActivity() {
     private lateinit var binding: ActivityMainHomepageOrganizadorBinding
 
@@ -23,9 +33,9 @@ class ActivityMainHomepageOrganizador : AppCompatActivity() {
         binding = ActivityMainHomepageOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userIdTemp = "qVzK32OHDYOUtK1YsQbh"
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE).getString("userUid", "").toString()
 
-        initRecyclerViewHorizontal(getEventsUserOrg, userIdTemp, repository)
+        initRecyclerViewHorizontal(getEventsUserOrg, userUid, repository)
         initRecyclerViewVertical(getEventsUserOrg, repository)
 
         // ----------------------------Navbar------------------------------------

@@ -98,9 +98,14 @@ class FirestoreService {
         return userRole
     }
 
-    // Que evento le corresponde al boleto
-    // uid: userId, eid: eventId, fid: funcionId
-    // getUserTicket
+    /**
+     * Gets the tickets of a user from relations of Boleto, Funcion and Evento collections of Firestore
+     * @param uid: string
+     *
+     * @return MutableList of tickets object from GetTicketModel
+     *
+     *  @author Andrés
+     */
 
     suspend fun getUserTickets(uid : String) : MutableList<GetTicketModel> {
         var result : MutableList<GetTicketModel> = arrayListOf()
@@ -684,6 +689,20 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Gets the events of the month from Evento and Funcion collections of Firestore
+     * @param day: Int
+     * @param month: Int
+     * @param year: Int
+     *
+     * @see GetTipoBoleto
+     *
+     * @return MutableList of events object from EventModel
+     *
+     *  @author Andrés
+     */
+
+
     suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
         var result : MutableList<EventsInMonth> = arrayListOf()
         var events = db.collection("Evento")
@@ -727,6 +746,15 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Gets all the events of the app from Firestore
+     *
+     * @return MutableList of events object from EventModel
+     *
+     *  @author Andrés
+     */
+
+
     suspend fun getEvents() : MutableList<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
         var event: QuerySnapshot = db.collection("Evento")
@@ -755,6 +783,16 @@ class FirestoreService {
         }
         return events
     }
+
+    /**
+     * Gets the events from an organizer from Usuario_evento collection of Firestore
+     * @param uid: String
+     *
+     * @return MutableList of events object from EventModel
+     *
+     *  @author Andrés
+     */
+
 
     suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
         var result: MutableList<EventModel> = mutableListOf()
@@ -1150,7 +1188,16 @@ class FirestoreService {
     }
 
 
-    //Obtener eventos organizador
+    /**
+     * Gets the events from an organizer from Usuario_evento collection of Firestore
+     * @param uid: String
+     *
+     * @see GetTipoBoleto
+     *
+     * @return MutableList of events object from EventModel
+     *
+     *  @author Andrés
+     */
 
     suspend fun getOrganizerEvents(uid : String) : MutableList<EventModel01> {
         var result : MutableList<EventModel01> = arrayListOf()
@@ -1192,6 +1239,18 @@ class FirestoreService {
 
         return result
     }
+
+    /**
+     * Gets the function from an organizer from Usuario_evento collection of Firestore
+     * @param eid: String
+     *
+     * @see GetTipoBoleto
+     *
+     * @return MutableList of functions object from FuncionModel
+     *
+     *  @author Andrés
+     */
+
 
     suspend fun getFunctionOrganizador(eid: String) : MutableList<FuncionModel>{
         var result : MutableList<FuncionModel> = arrayListOf()
