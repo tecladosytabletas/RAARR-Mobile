@@ -110,6 +110,12 @@ class Repository(context: Context) {
         return firestoreAPI.getTicketsbyPM(eid)
     }
 
+    /**
+     * Asks Firestore Service to add a report of a failure
+     *
+     * @param title: String -> the report's tittle
+     * @param description -> the failure's description
+     */
     suspend fun addFailure(title: String, description: String) {
         firestoreAPI.addFailure(title, description)
     }
@@ -117,10 +123,22 @@ class Repository(context: Context) {
     suspend fun getState(hash_Qr:String): Boolean{
         return firestoreAPI.getState(hash_Qr)
     }
-
+    /**
+     * Asks Firestore Service to add a rate of an event in Firestore
+     *
+     * @param idUser: String -> the User's id
+     * @param idEvent: String -> the Event's id
+     */
     suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
         firestoreAPI.addRating(idUser, idEvent, rate)
     }
+    /**
+     * Asks Firestore Service to get a rate from Firebase and verify existance
+     *
+     * @param idUser: String -> the User's id
+     * @param idEvento: String -> the Event's id
+     * @return Boolean -> the result from verify the existance
+     */
     suspend fun verifyRatingExistence(idUser: String, idEvent: String) : Boolean {
         return firestoreAPI.verifyRatingExistence(idUser, idEvent)
     }
@@ -140,7 +158,12 @@ class Repository(context: Context) {
     suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
         return firestoreAPI.verifyCommentExistence(idUser, idEvent)
     }
-
+    /**
+     * Asks Firestore Service to get comments from an event from Firestore service
+     *
+     * @param idEvento: String -> the Event's id
+     * @return QuerySnapshot -> query result from Firestore
+     */
     suspend fun getComments(idEvento: String) : QuerySnapshot {
         return firestoreAPI.getComments(idEvento)
     }

@@ -9,11 +9,19 @@ import com.example.appatemporal.databinding.ActivityReportFailureBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.ReportFailureViewModel
 
-
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class ReportFailureActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReportFailureBinding
 
     private val reportFailureViewModel: ReportFailureViewModel by viewModels()
+
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportFailureBinding.inflate(layoutInflater)
