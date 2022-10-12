@@ -10,24 +10,54 @@ import kotlinx.coroutines.runBlocking
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
+/**
+ * Class that works as a repository for the application
+ * following the Clean Architecture of MVVM
+ * @param context: Context -> Context of the activities
+ */
 class Repository(context: Context) {
 
     // Firestore
     private val firestoreAPI = FirestoreService()
 
+    /**
+     * Asks Firestore Service to add a user and his role
+     *
+     * @param uid: String -> User Uid
+     * @param user: UserModel -> Model to insert documents to Firestore
+     * @param role: String -> Role selected by the user
+     */
     suspend fun addUser(uid: String, user: UserModel, role: String) {
         firestoreAPI.addUser(uid, user)
         firestoreAPI.addUserRole(uid, role)
     }
 
+    /**
+     * Asks Firestore Service to verify the existence of a user
+     *
+     * @param uid: String -> User uid
+     * @return Boolean -> Existence of the user
+     */
     suspend fun verifyUser(uid: String) : Boolean {
         return firestoreAPI.verifyUser(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the user information
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUser(uid: String) : DocumentSnapshot{
         return firestoreAPI.getUser(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the user role
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         return firestoreAPI.getUserRole(uid)
     }
@@ -139,7 +169,7 @@ class Repository(context: Context) {
         return firestoreAPI.getRevenuebyPM(eid)
     }
 
-    // suspend fun getEvents() = firestoreAPI.getEvents()
+//    suspend fun getEvents() = firestoreAPI.getEvents()
     suspend fun getCategories() = firestoreAPI.getCategories()
     suspend fun getIdsOfEventosWithidCategoria(idCategoria: String) = firestoreAPI.getIdsOfEventosWithidCategoria(idCategoria)
     suspend fun getCategoryIdByName(name: String) = firestoreAPI.getCategoryIdByName(name)

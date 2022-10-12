@@ -24,6 +24,9 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class OTPActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
@@ -33,6 +36,11 @@ class OTPActivity : AppCompatActivity() {
     private lateinit var phoneNumber: String
     private val otpViewModel: OTPViewModel by viewModels()
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
@@ -55,10 +63,8 @@ class OTPActivity : AppCompatActivity() {
         }
 
         binding.verifyOTPBtn.setOnClickListener {
-            //colect otp from all the edit text
             val typedOTP = binding.otpEditText1.text.toString() + binding.otpEditText2.text.toString() + binding.otpEditText3.text.toString() +
                     binding.otpEditText4.text.toString() + binding.otpEditText5.text.toString() + binding.otpEditText6.text.toString()
-            Log.d("typedOTP", typedOTP)
             if (typedOTP.isNotEmpty()){
                 if (typedOTP.length == 6){
                     val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
@@ -76,6 +82,9 @@ class OTPActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Sets the availability of the resend token function
+     */
     private fun resendOTPvVisibility(){
         binding.otpEditText1.setText("")
         binding.otpEditText2.setText("")
@@ -92,6 +101,9 @@ class OTPActivity : AppCompatActivity() {
         },60000)
     }
 
+    /**
+     * Resends the token to the phone number
+     */
     private fun resenderVerificationCode(){
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
@@ -104,10 +116,22 @@ class OTPActivity : AppCompatActivity() {
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
+        /**
+         * Depending on the device used, it will verify the OTP
+         * credential by receiving the message
+         *
+         * @param credential: PhoneAuthCredential -> Credential sent by Firebase
+         */
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
             //signInWithPhoneAuthCredential(credential)
         }
 
+        /**
+         * Logs to console if verification failed due to
+         * invalid credentials or excessive amount of requests
+         *
+         * @param e: FirebaseException -> Exception returned by Firebase when verification fails
+         */
         override fun onVerificationFailed(e: FirebaseException) {
             if (e is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request\
@@ -118,6 +142,12 @@ class OTPActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * Sends the SMS code to phone number
+         *
+         * @param verificationId: String -> The 6 digits of the SMS sent by Firebase Authentication
+         * @param token: PhoneAuthProvider.ForceResentingToken -> Token used by Firebase to send the OTP
+         */
         override fun onCodeSent(
             verificationId: String,
             token: PhoneAuthProvider.ForceResendingToken
@@ -127,6 +157,14 @@ class OTPActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Verifies the SMS entered by the user and authenticates the user
+     * if its correct. If it's an existing user it will send him to
+     * the main page according to role, on the other hand, it will
+     * send the user to a register form
+     *
+     * @param credential: PhoneAuthCredential -> credential sent by Firebase
+     */
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
@@ -168,17 +206,19 @@ class OTPActivity : AppCompatActivity() {
                     })
                 } else {
                     // Sign in failed, display a message and update the UI
-                    Toast.makeText(this,"Código incorrecto", Toast.LENGTH_SHORT).show()
                     Log.d("TAG","SignInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
-                         Log.d("TAG","SMS Incorrecto")
+                        Toast.makeText(this, "SMS Incorrecto", Toast.LENGTH_SHORT ).show()
                     }
                     // Update UI
                 }
             }
     }
 
+    /**
+     * Set text change listeners to edit texts for SMS verification code
+     */
     private fun addTextChangeListener(){
         binding.otpEditText1.addTextChangedListener(EditTextWatcher(binding.otpEditText1))
         binding.otpEditText2.addTextChangedListener(EditTextWatcher(binding.otpEditText2))
@@ -188,7 +228,11 @@ class OTPActivity : AppCompatActivity() {
         binding.otpEditText6.addTextChangedListener(EditTextWatcher(binding.otpEditText6))
     }
 
-
+    /**
+     * Gets changes in different instants of an edit text
+     *
+     * @param view: View -> reference to a view component
+     */
     inner class EditTextWatcher(private val view : View) : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -198,6 +242,11 @@ class OTPActivity : AppCompatActivity() {
 
         }
 
+        /**
+         * Changes focus of an edit text when after it is changed
+         *
+         * @param p0: Editable -> content of the edit text
+         */
         override fun afterTextChanged(p0: Editable?) {
             val text = p0.toString()
             when(view.id){
