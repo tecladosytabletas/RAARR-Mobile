@@ -147,14 +147,10 @@ class Repository(context: Context) {
     // Local database
 
     val actividadDao = LocalDatabase.getInstance(context).actividadDao
-    val areaDao = LocalDatabase.getInstance(context).areaDao
     val estatusDao = LocalDatabase.getInstance(context).estatusDao
-    val objetivoDao = LocalDatabase.getInstance(context).objetivoDao
     val costoDao = LocalDatabase.getInstance(context).costoDao
     val proyectoDao = LocalDatabase.getInstance(context).proyectoDao
     val usuarioDao = LocalDatabase.getInstance(context).usuarioDao
-    val privilegioDao = LocalDatabase.getInstance(context).privilegioDao
-    val rolDao = LocalDatabase.getInstance(context).rolDao
 
 
     suspend fun insertActividad(actividad: Actividad) = actividadDao.insert(actividad)
@@ -192,34 +188,16 @@ class Repository(context: Context) {
     suspend fun filterActivitiesByPriority(idProyecto:Int, stringStatus:String) = actividadDao.FilterActivityByPriority(idProyecto, stringStatus)
     suspend fun updateActividad(nombre:String, estatus:String, area:String, prioridad:String, id: Int) = actividadDao.update(nombre, estatus, area, prioridad, id)
 
-    suspend fun insertArea(area: Area) = areaDao.insert(area)
-    suspend fun insertAllAreas(areas: List<Area>) = areaDao.insertAll(areas)
-    suspend fun getAllAreas() = areaDao.getAll()
-    suspend fun getAreaById(id: Int) = areaDao.getById(id)
-    suspend fun deleteArea(area: Area) = areaDao.delete(area)
-    suspend fun deleteAllAreas() = areaDao.deleteAll()
 
     suspend fun insertEstatus(estatus: Estatus) = estatusDao.insert(estatus)
-    suspend fun insertAllEstatus(estatus: List<Estatus>) = estatusDao.insertAll(estatus)
-    suspend fun getAllEstatus() = estatusDao.getAll()
-    suspend fun getEstatusById(id: Int) = estatusDao.getById(id)
-    suspend fun deleteEstatus(estatus: Estatus) = estatusDao.delete(estatus)
-    suspend fun deleteAllEstatus() = estatusDao.deleteAll()
 
-    suspend fun insertObjetivo(objetivo: Objetivo) = objetivoDao.insert(objetivo)
-    suspend fun insertAllObjetivos(objetivos: List<Objetivo>) = objetivoDao.insertAll(objetivos)
-    suspend fun getAllObjetivos() = objetivoDao.getAll()
-    suspend fun getObjetivoById(id: Int) = objetivoDao.getById(id)
-    suspend fun deleteObjetivo(objetivo: Objetivo) = objetivoDao.delete(objetivo)
-    suspend fun deleteAllObjetivos() = objetivoDao.deleteAll()
+
 
 
     suspend fun insertProyecto(proyecto: Proyecto) = proyectoDao.insert(proyecto)
-    suspend fun insertAllProyectos(proyectos: List<Proyecto>) = proyectoDao.insertAll(proyectos)
     suspend fun getAllProyectos() = proyectoDao.getAll()
     suspend fun getProyectoById(id: Int) = proyectoDao.getById(id)
     suspend fun deleteProyecto(proyecto: Proyecto) = proyectoDao.delete(proyecto)
-    suspend fun deleteAllProyectos() = proyectoDao.deleteAll()
     suspend fun updateProyecto(proyecto: Proyecto) = proyectoDao.update(proyecto)
     suspend fun updatePresupuesto(presupuestoN: Double, id: Int) =
         proyectoDao.updatePresupuesto(presupuestoN, id)
@@ -232,11 +210,9 @@ class Repository(context: Context) {
 
 
     suspend fun insertCosto(costo: Costo) = costoDao.insert(costo)
-    suspend fun insertAllCostos(costos: List<Costo>) = costoDao.insertAll(costos)
     suspend fun getAllCostos(id: Int) = costoDao.getAll(id)
     suspend fun getCostoById(id: Int) = costoDao.getById(id)
     suspend fun deleteCosto(costo: Costo) = costoDao.delete(costo)
-    suspend fun deleteAllCostos() = costoDao.deleteAll()
     suspend fun updateCosto(costo: Costo) = costoDao.update(costo)
 
 

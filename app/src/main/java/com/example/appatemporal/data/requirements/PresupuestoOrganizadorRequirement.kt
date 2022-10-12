@@ -1,6 +1,4 @@
 package com.example.appatemporal.data.requirements
-
-import com.example.appatemporal.data.localdatabase.entities.Objetivo
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.domain.Repository
 

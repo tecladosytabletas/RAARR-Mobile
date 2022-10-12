@@ -5,7 +5,9 @@ import androidx.room.*
 import com.example.appatemporal.data.localdatabase.entities.Actividad
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 
-
+/**
+ * Interface for ActividadDao
+ */
 @Dao
 interface ActividadDao {
 
@@ -27,7 +29,7 @@ interface ActividadDao {
 
     /**
      * Function for adding a new activity
-     * @param actividad: ActividadModel object
+     * @param actividad: Actividad object
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(actividad: Actividad)
@@ -35,7 +37,7 @@ interface ActividadDao {
     /**
      * Function for getting an activity by id
      * @param id: Int activity id.
-     * @return Actividad: ActividadModel object
+     * @return Actividad: Actividad object
      */
     @Query("SELECT * FROM actividad_table WHERE id_actividad = :id")
     suspend fun getById(id: Int): Actividad
@@ -60,7 +62,7 @@ interface ActividadDao {
      * Function for getting an activity by status
      * @param id_pro: Int project id.
      * @param stringStatus: String, status name
-     * @return Actividad: ActividadModel object
+     * @return Actividad: Actividad object
      */
     @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id_pro AND estatus = :stringStatus")
     suspend fun FilterActivityByStatus (id_pro: Int, stringStatus: String): List<Actividad>
@@ -77,7 +79,7 @@ interface ActividadDao {
      * Function for getting an activity by area
      * @param id_pro: Int project id.
      * @param stringArea: String, area name
-     * @return Actividad: List of ActividadModel
+     * @return Actividad: List of Actividad objects
      */
     @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id_pro AND area = :stringArea")
     suspend fun FilterActivityByArea (id_pro: Int, stringArea: String): List<Actividad>
@@ -86,19 +88,19 @@ interface ActividadDao {
      * Function for getting an activity by priority
      * @param id_pro: Int project id.
      * @param stringPriority: String, priority name
-     * @return Actividad: List of ActividadModel
+     * @return Actividad: List of Actividad objects
      */
     @Query("SELECT * FROM actividad_table WHERE id_proyecto = :id_pro AND prioridad = :stringPriority")
     suspend fun FilterActivityByPriority (id_pro: Int, stringPriority: String): List<Actividad>
 
     /**
      * Function for deleting an activity
-     * @param actividad: ActividadModel
+     * @param actividad: Actividad object
      */
     @Delete
     suspend fun delete(actividad: Actividad)
 
-    /**
+    /***
      * Function for updating an activity
      * @param nombre: String, name of activity
      * @param estatus: String, status.
