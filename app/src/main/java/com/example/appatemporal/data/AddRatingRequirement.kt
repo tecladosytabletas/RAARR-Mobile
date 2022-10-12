@@ -9,7 +9,7 @@ class AddRatingRequirement {
 
     /**
      * Invoke function that asks for the repository to
-     * get comments from Firestore
+     * add rating in Firestore
      *
      * @param idUser: String -> the User's id
      * @param idEvent: String -> the Event's id
