@@ -5,8 +5,17 @@ import android.os.Bundle
 import android.view.View
 import com.example.appatemporal.databinding.LayoutFaqEspectadorBinding
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class FaqEspectador : AppCompatActivity() {
     private lateinit var binding: LayoutFaqEspectadorBinding
+
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = LayoutFaqEspectadorBinding.inflate(layoutInflater)

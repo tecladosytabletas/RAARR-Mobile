@@ -6,8 +6,17 @@ import android.view.View
 import com.example.appatemporal.databinding.ActivityFaqAyudanteBinding
 import com.example.appatemporal.databinding.ActivityFaqOrganizadorBinding
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class FaqAyudante : AppCompatActivity() {
     private lateinit var binding: ActivityFaqAyudanteBinding
+
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFaqAyudanteBinding.inflate(layoutInflater)
