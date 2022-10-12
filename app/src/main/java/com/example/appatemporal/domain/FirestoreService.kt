@@ -542,7 +542,7 @@ class FirestoreService {
            .await()
    }
     /**
-     * Get a document in Rating collection of Firestore
+     * Get a document in Rating collection of Firestore to verify existence
      * @param idUser: String
      * @param idEvent: String
      * @return existence: Boolean
