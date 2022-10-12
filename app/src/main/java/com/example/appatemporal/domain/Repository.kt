@@ -110,6 +110,12 @@ class Repository(context: Context) {
         return firestoreAPI.getTicketsbyPM(eid)
     }
 
+    /**
+     * Asks Firestore Service to add a report of a failure
+     *
+     * @param title: String -> the report's tittle
+     * @param description -> the failure's description
+     */
     suspend fun addFailure(title: String, description: String) {
         firestoreAPI.addFailure(title, description)
     }

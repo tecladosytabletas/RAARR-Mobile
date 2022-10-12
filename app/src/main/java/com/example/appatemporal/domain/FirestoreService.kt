@@ -368,15 +368,14 @@ class FirestoreService {
 
     /**
      * Adds a document in ReporteFallas collection of Firestore
-     * @param title: String
-     * @param description: String
+     * @param title: String -> tittle of report
+     * @param description: String -> description of the failure
      */
     suspend fun addFailure(title: String, description: String) {
         val failure = ReportFailureModel(title, description)
         db.collection("ReporteFallas")
             .add(failure)
             .addOnSuccessListener {
-                Log.d("Firestore Log Failure", "Success")
             }.await()
     }
 
