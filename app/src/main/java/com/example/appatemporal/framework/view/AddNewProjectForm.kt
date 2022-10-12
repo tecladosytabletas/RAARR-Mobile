@@ -21,8 +21,13 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
+/*
+* Class used to insert a new project on local database
+ */
 class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
+    // Initialize the view model
     private val viewModel: AddNewProjectViewModel by viewModels()
+    // Initialize the binding with the xml file
     private lateinit var binding : CreateNewProjectBinding
     lateinit var myCalendar: Calendar
     lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
@@ -53,9 +58,10 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         }
 
-
-
-        // Set click listener
+        // Funtion that submit users new project inputs in to the local database
+        // and checks if the inputs are valid
+        // @param name, Name of the project
+        // @param date, date of the project
         binding.button.setOnClickListener {
             // Get values from view
             val name = binding.nameCreateNewProject.text.toString()
@@ -111,6 +117,7 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    //Function that displays calendar
     private fun setListener() {
         myCalendar = Calendar.getInstance()
 
@@ -131,6 +138,7 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
         datePickerDialog.show()
     }
 
+    //Function that updates the format calendar
     private fun updateDate() {
         //01/03/2022
         val myformat = "dd/MM/yyyy"
@@ -141,5 +149,4 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
         //timeInptLay.visibility = View.VISIBLE
 
     }
-
 }
