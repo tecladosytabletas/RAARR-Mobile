@@ -32,18 +32,45 @@ class Repository(context: Context) {
         return firestoreAPI.getUserRole(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the number of events a user has created
+     *
+     * @param uid: String -> user uid
+     * @return Int
+     */
     suspend fun eventCount(uid: String) : Int {
         return firestoreAPI.eventCount(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the number of sold tickets and
+     * tickets marked as assisted from events of the user
+     *
+     * @param uid: String -> user uid
+     * @return Pair<Int, Int>
+     */
     suspend fun ventasCount(uid: String) : Pair<Int, Int> {
         return firestoreAPI.ventasCount(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the average rating from all the events
+     * the user has created
+     *
+     * @param uid: String -> user uid
+     * @return Float
+     */
     suspend fun getRating(uid: String) : Float {
         return firestoreAPI.getRating(uid)
     }
 
+    /**
+     * Asks Firestore Service to get the total revenue the user has obtained
+     * from all of his events
+     *
+     * @param uid: String -> user uid
+     * @return Int
+     */
     suspend fun getRevenue(uid: String) : Int {
         return firestoreAPI.getRevenue(uid)
     }
@@ -68,14 +95,33 @@ class Repository(context: Context) {
         return  firestoreAPI.getMetodoPagoId(metodoPago)
     }
 
+    /**
+     * Asks Firestore Service to get the name of the event
+     *
+     * @param eid: String -> event uid
+     * @return String
+     */
     suspend fun getEventName(eid: String) : String{
         return firestoreAPI.getEventName(eid)
     }
 
+    /**
+     * Asks Firestore Service to get the profits of the event
+     *
+     * @param eid: String -> event uid
+     * @return Int
+     */
     suspend fun generalProfitsEvent(eid: String) : Int{
         return firestoreAPI.generalProfitsEvent(eid)
     }
 
+    /**
+     * Asks Firestore Service to get the payment methods and number
+     * of sales by payment method of the event
+     *
+     * @param eid: String -> event uid
+     * @return MutableMap<String, Int?>
+     */
     suspend fun getTicketsbyPM(eid: String) : MutableMap<String, Int?>{
         return firestoreAPI.getTicketsbyPM(eid)
     }
@@ -95,10 +141,25 @@ class Repository(context: Context) {
         return firestoreAPI.verifyRatingExistence(idUser, idEvent)
     }
 
+    /**
+     * Asks Firestore Service to get the number of tickets marked as assisted
+     * from each existing types of tickets as well as the number of
+     * sold tickets of each type
+     *
+     * @param eid: String -> event uid
+     * @return MutableMap<String, Pair<Int?, Int?>>
+     */
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
         return firestoreAPI.getTicketTypeSA(eid)
     }
 
+    /**
+     * Asks Firestore Service to get the number of times an event has received a rating
+     * from the range of 0-5 stars as well as the general rating of the event
+     *
+     * @param eid: String -> event uid
+     * @return MutableList<Float>
+     */
     suspend fun getRatingByEvent(eid: String): MutableList<Float> {
         return firestoreAPI.getRatingByEvent(eid)
     }
@@ -115,6 +176,13 @@ class Repository(context: Context) {
         return firestoreAPI.getComments(idEvento)
     }
 
+    /**
+     * Asks Firestore Service to get the number of ticket sales and the number of
+     * actual assists to the event
+     *
+     * @param eid: String -> event uid
+     * @return MutableList<Float>
+     */
     suspend fun getEventTicketsSA(eid: String) : Pair<Int,Int> {
         return firestoreAPI.getEventTicketsSA(eid)
     }
@@ -135,6 +203,13 @@ class Repository(context: Context) {
         return firestoreAPI.verifyTicketExistence(result)
     }
 
+    /**
+     * Asks Firestore Service to get the profits by payment method of
+     * the event
+     *
+     * @param eid: String -> event uid
+     * @return MutableMap<String, Int?>
+     */
     suspend fun getRevenuebyPM(eid: String) : MutableMap<String, Int?> {
         return firestoreAPI.getRevenuebyPM(eid)
     }

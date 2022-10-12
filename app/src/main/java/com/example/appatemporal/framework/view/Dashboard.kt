@@ -19,11 +19,20 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
+
 class Dashboard : AppCompatActivity(){
     private lateinit var binding : DashboardBinding
     private val dashboardViewModel : DashboardViewModel by viewModels()
     private lateinit var repository: Repository
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         // En el onCreate se deben poblar las graficas
         super.onCreate(savedInstanceState)
@@ -113,6 +122,11 @@ class Dashboard : AppCompatActivity(){
         populateRating(tempUserId)
     }
 
+    /**
+     * Populates the EventCount metric
+     *
+     * @param uid: String
+     */
     private fun populateEventCount(uid:String) {
         val ourRevenue = binding.eventRevenue
         val ourEventCount = binding.eventCountTotal
@@ -132,6 +146,13 @@ class Dashboard : AppCompatActivity(){
         })
     }
 
+    /**
+     * Populates the PieChart metric and sets the format for
+     * the MPChart element
+     *
+     * @param ventasTotal: Int
+     * @param asistenciasTotal: Int
+     */
     private fun populatePieChart(ventasTotal: Int, asistenciasTotal : Int) {
         //ingreso de los datos a la pie chart
         val ourPieChart = binding.dashPieChart
@@ -158,6 +179,11 @@ class Dashboard : AppCompatActivity(){
         ourPieChart.invalidate()
     }
 
+    /**
+     * Populates the Rating metric
+     *
+     * @param uid: String
+     */
     private fun populateRating(uid:String){
         val ourRatingBar = binding.ratingStars
         val ourRatingValue = binding.ratingAvg
