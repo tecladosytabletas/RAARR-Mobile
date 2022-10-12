@@ -17,9 +17,18 @@ import com.example.appatemporal.framework.viewModel.AddNewEventViewModel
 import kotlinx.android.synthetic.main.activity_create_function.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-
+/**
+ * This file is linked with activity_create_function.xml
+ * This file is in charge of controlling the logic behind the funtion add a function to an event
+ *
+ * @see activity_create_function.xml
+ *
+ * @author Resendiz & Camalich
+ *
+ * */
 class CreateFunction : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateFunctionBinding
@@ -65,10 +74,15 @@ class CreateFunction : AppCompatActivity() {
             val hora_stringF="$hoursF:$minF"
 
             val year = datePickerF.year
-            var month = datePickerF.month
+            var montI = datePickerF.month
             val day = datePickerF.dayOfMonth
-            month = month + 1
-            val fecha="$day/$month/$year"
+            montI = montI + 1
+
+            val monthF = if (montI < 10) "0" + montI else montI
+            val dayF = if (day < 10) "0" + day else day
+
+
+            val fecha="$dayF/$monthF/$year"
 
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             val currentI = LocalDate.now()
@@ -76,17 +90,22 @@ class CreateFunction : AppCompatActivity() {
             val firstDate: Date = sdf.parse(fecha)
             val secondDate: Date = sdf.parse(formattedDateI)
             val eid = idEvent.toString()
+            val strI = fecha+" "+hora_stringI
+            val strF = fecha+" "+hora_stringF
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            val dateTimeI = LocalDateTime.parse(strI, formatter)
+            val dateTimeF = LocalDateTime.parse(strF, formatter)
             val cmp = firstDate.compareTo(secondDate)
+            val tmp = dateTimeI.compareTo(dateTimeF)
 
-            if(cmp > 0){
+            if((cmp > 0)&&(tmp < 0)){
             viewModel.AddFunction(eid,repository,fecha,hora_stringI,hora_stringF)
+                val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
+                this.startActivity(submitBtn)
         }
             else{
                 Toast.makeText(applicationContext, "La fecha elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
             }
-
-            val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
-            this.startActivity(submitBtn)
 
     }
 }
