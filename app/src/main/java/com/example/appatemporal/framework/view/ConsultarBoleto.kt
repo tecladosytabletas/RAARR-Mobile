@@ -160,18 +160,15 @@ class ConsultarBoleto : AppCompatActivity() {
         consultarBoletoViewModel.verifyRate(userUid, idEvento.toString(), repository)
         consultarBoletoViewModel.rateState.observe(this, Observer {
             if (it) {
-                Log.d("LogExistence rating", it.toString())
                 binding.ratingbar.visibility = android.view.View.INVISIBLE
                 binding.sendBtn.visibility = android.view.View.GONE
             } else {
                 consultarBoletoViewModel.getStateTicket(hashQr.toString(),userUid,repository)
                 consultarBoletoViewModel.ticketState.observe(this, Observer {
-                    Log.d("TicketState", it.toString())
                     if (it == false){
                         binding.ratingbar.visibility = android.view.View.VISIBLE
                         binding.sendBtn.visibility = android.view.View.VISIBLE
                         binding.sendBtn.setOnClickListener {
-                            Log.d("rating Log", binding.ratingbar.rating.toString())
                             consultarBoletoViewModel.addRating(userUid, idEvento.toString(), binding.ratingbar.rating, repository)
                             Toast.makeText(this, "El evento ha sido calificado", Toast.LENGTH_SHORT).show()
                             Handler(Looper.myLooper()!!).postDelayed(Runnable{
