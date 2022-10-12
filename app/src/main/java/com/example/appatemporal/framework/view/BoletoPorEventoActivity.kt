@@ -13,9 +13,18 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.boletosPorEventoAdapter
 import com.example.appatemporal.framework.viewModel.GetUserTicketViewModel
 
+/**
+ * This file is linked with activity_boleto_por_evento.xml
+ * This file is in charge of displaying the different tickets in Recycler Views
+ *
+ * @see activity_boleto_por_evento.xml
+ *
+ * @author Andrés
+ *
+ * */
+
 class BoletoPorEventoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBoletoPorEventoBinding
-    //var binding: ActivityBoletoPorEventoBinding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val getTicketViewModel : GetUserTicketViewModel by viewModels()
@@ -24,9 +33,7 @@ class BoletoPorEventoActivity : AppCompatActivity() {
         binding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
-          //  .getString("userUid", "").toString()
-        val userUid = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
+        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE).getString("userUid", "").toString()
         initRecyclerView(getTicketViewModel, userUid, repository)
 
         // ----------------------------Navbar------------------------------------
