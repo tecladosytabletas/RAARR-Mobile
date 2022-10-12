@@ -78,6 +78,13 @@ class Repository(context: Context) {
         return firestoreAPI.getRevenue(uid)
     }
 
+    /**
+     * Asks Firestore Service to update the ticket value
+     *
+     * @param resulted: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the field database was updated, false if
+     * it was not
+     */
     suspend fun updateTicketValue(resulted: String) : Boolean {
         return firestoreAPI.updateTicketValue(resulted)
     }
@@ -161,6 +168,12 @@ class Repository(context: Context) {
         return firestoreAPI.getEventsUserOrg(uid)
     }
 
+    /**
+     * Asks Firestore Service to verify if the scanned ticket exists
+     *
+     * @param result: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the ticket exists, false if it does not
+     */
     suspend fun verifyTicketExistence(result: String) : Boolean {
         return firestoreAPI.verifyTicketExistence(result)
     }

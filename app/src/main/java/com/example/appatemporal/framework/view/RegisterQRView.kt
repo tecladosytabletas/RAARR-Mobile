@@ -13,11 +13,19 @@ import com.example.appatemporal.framework.viewModel.MainViewModel
 import com.example.appatemporal.framework.viewModel.ScanQRViewModel
 import com.google.zxing.integration.android.IntentIntegrator
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class RegisterQRView : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterQrviewBinding
 
     private val scanQRViewModel : ScanQRViewModel by viewModels()
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterQrviewBinding.inflate(layoutInflater)
@@ -86,6 +94,9 @@ class RegisterQRView : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initiates the scanner
+     */
     private fun initScanner(){
         val integrator = IntentIntegrator(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
@@ -94,10 +105,16 @@ class RegisterQRView : AppCompatActivity() {
         integrator.initiateScan()
     }
 
+    /**
+     * Opens the camera for QR scanning and updates the database in case
+     * the ticket hasn´t been used.
+     * @param requestCode: Int -> Code for the activity
+     * @param resultCode: Int -> Result code from activity
+     * @param data: Intent -> Intent to start the activity
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         val repository = Repository(this)
-
 
         if (result != null) {
             if (result.contents == null) {
