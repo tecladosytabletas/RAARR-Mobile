@@ -19,12 +19,21 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
+
 class DetailedMetrics : AppCompatActivity(){
 
     private lateinit var binding : DetailedMetricsBinding
     private val detailedMetricsViewModel : DetailedMetricsViewModel by viewModels()
     private lateinit var repository: Repository
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_metrics)
@@ -90,6 +99,11 @@ class DetailedMetrics : AppCompatActivity(){
         })
     }
 
+    /**
+     * Displays the event name in the view
+     *
+     * @param eid: String -> event uid
+     */
     private fun setEventName(eid:String) {
         val ourDashTitle = binding.dashTitle
         repository = Repository(this)
@@ -99,6 +113,11 @@ class DetailedMetrics : AppCompatActivity(){
         })
     }
 
+    /**
+     * Displays the event profits in the view
+     *
+     * @param eid: String -> event uid
+     */
     private fun setTotalProfit(eid:String) {
         val ourIngresosTotales = binding.profitsEvent
         repository = Repository(this)
@@ -109,6 +128,12 @@ class DetailedMetrics : AppCompatActivity(){
         })
     }
 
+    /**
+     * Populates the Ticket Sales by Type metric and sets the format
+     * for the MPChart element
+     *
+     * @param dataList: MutableList<Pair<String,Int?>> -> Ticket Type, Sales
+     */
     private fun setBCPMbyEvent(dataList : MutableList<Pair<String,Int?>>){
         val ourPMBarChart = binding.PMLinechart
         //declare values of the chart
@@ -164,6 +189,12 @@ class DetailedMetrics : AppCompatActivity(){
         ourPMBarChart.invalidate()
     }
 
+    /**
+     * Populates the Ticket Type Sales Assist metric and sets the format
+     * for the MPChart element
+     *
+     * @param dataList: MutableList<Triple<String,Int?,Int?>> -> Type Name, Sales, Assist
+     */
     private fun setTTSABarChart(dataList : MutableList<Triple<String,Int?,Int?>>){
         val ourTTSABarChart = binding.TTASLinechart
         //Declaramos los datos de la grafica
@@ -222,6 +253,12 @@ class DetailedMetrics : AppCompatActivity(){
         //Log.d("TTSA labels - d",xAxisLabels.toString())
     }
 
+    /**
+     * Obtains the total sales data set for the Ticket Type Sales Assist metric
+     *
+     * @param dataList: MutableList<Triple<String,Int?,Int?>> -> Type Name, Sales, Assist
+     * @return entriesVT: ArrayList<BarEntry>
+     */
     private fun getTTSAset1(dataList : MutableList<Triple<String,Int?,Int?>>): ArrayList<BarEntry>{
         val entriesVT: ArrayList<BarEntry> = ArrayList()
         var i = 0
@@ -233,6 +270,12 @@ class DetailedMetrics : AppCompatActivity(){
         return entriesVT
     }
 
+    /**
+     * Obtains the total assists data set for the Ticket Type Sales Assist metric
+     *
+     * @param dataList: MutableList<Triple<String,Int?,Int?>> -> Type Name, Sales, Assist
+     * @return entriesVA: ArrayList<BarEntry>
+     */
     private fun getTTSAset2(dataList : MutableList<Triple<String,Int?,Int?>>): ArrayList<BarEntry>{
         val entriesVA: ArrayList<BarEntry> = ArrayList()
         var j = 0
@@ -244,6 +287,12 @@ class DetailedMetrics : AppCompatActivity(){
         return entriesVA
     }
 
+    /**
+     * Obtains the ticket type names for the Ticket Type Sales Assist metric
+     *
+     * @param dataList: MutableList<Triple<String,Int?,Int?>> -> Type Name, Sales, Assist
+     * @return xAxisLabels: ArrayList<BarEntry>
+     */
     private fun getTTSAlabels(dataList : MutableList<Triple<String,Int?,Int?>>): ArrayList<String>{
         val xAxisLabels: ArrayList<String> = ArrayList()
         var k = 0
@@ -254,6 +303,12 @@ class DetailedMetrics : AppCompatActivity(){
         return xAxisLabels
     }
 
+    /**
+     * Populates the Reevenue by Payment Method and sets the format for the
+     * MPChart element
+     *
+     * @param dataList: MutableList<Pair<String,Int?>> -> Payment Method, Sales
+     */
     private fun setRevenueByPM(dataList : MutableList<Pair<String,Int?>>){
         val ourRPMHorizontalBarChart = binding.RPMHorizontalBarChart
         //declare values of the chart
