@@ -146,7 +146,12 @@ class Repository(context: Context) {
     suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
         return firestoreAPI.verifyCommentExistence(idUser, idEvent)
     }
-
+    /**
+     * Asks Firestore Service to get comments from an event from Firestore service
+     *
+     * @param idEvento: String -> the report's tittle
+     * @return QuerySnapshot -> query result from Firestore
+     */
     suspend fun getComments(idEvento: String) : QuerySnapshot {
         return firestoreAPI.getComments(idEvento)
     }

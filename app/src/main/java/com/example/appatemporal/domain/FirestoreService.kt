@@ -669,7 +669,11 @@ class FirestoreService {
             .add(comment)
             .await()
     }
-
+    /**
+     * Gets the comments from Comentario collection of Firestore
+     * @param idEvent: String -> Event's id
+     * @return comments: QuerySnapshot -> query result from Firebase
+     */
     suspend fun getComments(idEvent: String) : QuerySnapshot {
         val comments =
             db.collection("Comentario")
