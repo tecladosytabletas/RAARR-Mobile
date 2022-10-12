@@ -11,17 +11,6 @@ class ProyectoOrganizadorRequirement {
         var projectToDelete = repository.getProyectoById(project.id_proyecto)
         repository.deleteProyecto(projectToDelete)
     }
-    suspend fun getProyectoById(id: Int, repository: Repository): Proyecto {
-        return repository.getProyectoById(id)
-    }
-
-    suspend fun updateProject(project: Proyecto, repository: Repository){
-        var projectToUpdate = repository.getProyectoById(project.id_proyecto)
-        projectToUpdate.nombre_proyecto = project.nombre_proyecto
-        projectToUpdate.fecha_inicio = project.fecha_inicio
-
-        repository.updateProyecto(projectToUpdate)
-    }
 
     suspend fun updateMod(name: String, date: String, time: String, id: Int, repository: Repository){
         repository.updateModifyProyect(name,date,time,id)
@@ -41,13 +30,6 @@ class ProyectoOrganizadorRequirement {
 
     fun countAllActivities(repository: Repository, id_a: Int): Int{
         return repository.countAllActivities(id_a)
-    }
-
-    suspend fun insertEstatus(estatus: Estatus, repository:Repository){
-        repository.insertEstatus(estatus)
-    }
-    suspend fun updateEstatusCompletado(estatusNew: Boolean, id: Int, repository: Repository){
-        repository.updateEstatusCompletado(estatusNew,id)
     }
     suspend fun filterProjectsByStatus(stringStatus:Boolean ,repository: Repository): List<Proyecto> {
         return repository.filterProjectsByStatus(stringStatus)

@@ -4,6 +4,18 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * ROOM model for project
+ * @param id_proyecto: Int, id of project
+ * @param id_usuario: Int, id of user
+ * @param  nombre_proyecto: String, name of project
+ * @param fecha_inicio: String, date of project
+ * @param ganancia: Double, margin
+ * @param presupuesto: Double, budget of project
+ * @param meta: Double, goal of project
+ * @param estatus_completado: Boolean for indicating if project is completed
+ * @param created_at: String, Date of creation.
+ */
 @Entity(tableName = "proyecto_table")
 data class Proyecto(
     @PrimaryKey(autoGenerate = true)

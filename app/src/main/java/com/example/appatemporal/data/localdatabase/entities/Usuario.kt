@@ -5,15 +5,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Model for inserting user to local database
- *
- * @param id: String -> uid of the user
- * @param nombre: String -> name of the user
- * @param apellidos: String -> last name of the user
- * @param email: String -> email of the user
- * @param fechaNacimiento: String -> birth date of the user
- * @param genero: String -> gender of the user
- * @param rol: String -> role of the user
+ * ROOM model for user
+ * @param id: Int, id of user
+ * @param nombre: String, name of user
+ * @param apellidos: String, last name of user
+ * @param email: String, email of user
+ * @param fechaNac: String, birthdate of user
+ * @param genero: String genre of user.
+ * @param rol: String, role of user
  */
 @Entity(tableName = "usuario_table")
 data class Usuario(

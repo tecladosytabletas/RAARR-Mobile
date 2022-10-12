@@ -34,7 +34,6 @@
     <string name="areaType5">Seguridad</string>
 
     <string name="estatusType">Estatus</string>
-
     <string name="estatusType1">En Proceso</string>
     <string name="estatusType2">No Completado</string>
     <string name="estatusType3">Completado </string>
@@ -44,8 +43,11 @@
     <string name="prioridadType2">Media</string>
     <string name="prioridadType3">Alta </string>
 
-    <string name="filterType1">Estatus</string>
-    <string name="filterType2">Area</string>
-    <string name="filterType3">Prioridad</string>
+    <string name="filterType1">Todos</string>
+    <string name="filterType2">Estatus</string>
+    <string name="filterType3">Area</string>
+    <string name="filterType4">Prioridad</string>
+
+    <string name="allType"></string>
 
 </resources>
