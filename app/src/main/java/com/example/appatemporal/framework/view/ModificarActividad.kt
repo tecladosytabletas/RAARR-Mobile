@@ -60,7 +60,7 @@ class ModificarActividad : AppCompatActivity(){
             }
             else {
                 val actividad: Actividad = Actividad( idactividad, 0,name, area, estatus, prioridad, idproyecto)
-                viewModel.updateActividad(idproyecto,name,estatus,area,prioridad, idactividad, repository)
+                viewModel.updateActividad(name,estatus,area,prioridad, idactividad, repository)
                 // Go back to main activity
                 val intent = Intent(this, DeleteActivity::class.java)
                 intent.putExtra("id_proyecto", idproyecto)
