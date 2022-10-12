@@ -1,6 +1,13 @@
 package com.example.appatemporal.domain.models
 
 import java.util.*
+/**
+ * This class is a model that will contain the data necessary
+ * in order to create a event objet successfully for it manage in the activities
+ *
+ * @author Andrés
+ *
+ * */
 
 data class EventModel (
     var id: String,
