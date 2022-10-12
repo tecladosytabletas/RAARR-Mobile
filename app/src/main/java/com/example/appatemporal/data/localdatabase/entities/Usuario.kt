@@ -13,9 +13,6 @@ import androidx.room.PrimaryKey
  * @param fechaNac: String, birthdate of user
  * @param genero: String genre of user.
  * @param rol: String, role of user
- * @param area: String, area of activity.
- * @param priority: String, priority of activity
- * @param id_proyecto: String, id of project
  */
 @Entity(tableName = "usuario_table")
 data class Usuario(

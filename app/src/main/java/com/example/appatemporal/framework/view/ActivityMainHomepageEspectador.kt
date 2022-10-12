@@ -15,6 +15,16 @@ import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageEspe
 import com.example.appatemporal.framework.viewModel.GetEventsInMonthViewModel
 import java.util.*
 
+/**
+ * This file is linked with activity_main_homepage_organizador.xml
+ * This file is in charge of displaying the events in different cards of Recycler Views
+ *
+ * @see activity_main_homepage_organizador.xml
+ *
+ * @author Andrés & Aldo
+ *
+ * */
+
 class ActivityMainHomepageEspectador : AppCompatActivity() {
     private lateinit var binding: ActivityMainHomepageEspectadorBinding
     val getEventsInMonthViewModel : GetEventsInMonthViewModel by viewModels()
@@ -26,7 +36,7 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
 
         val repository = Repository(this)
 
-        val userIdTemp = "pod6xLDUeRNZItm7u93DC5CYbgJ2"
+        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
         val dia = getDay()
         val month = getMonth()
         val year = getYear()
@@ -35,7 +45,6 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         initRecyclerViewVertical(getEventsInMonthViewModel, repository)
 
         // ----------------------------Navbar------------------------------------
-        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
 
         // Visibility
         if (userRole != "Organizador") {

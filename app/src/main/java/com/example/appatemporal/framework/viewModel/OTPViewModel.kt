@@ -13,6 +13,9 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.domain.models.UserModel
 import kotlinx.coroutines.launch
 
+/**
+ * Class that inherits from ViewModel
+ */
 class OTPViewModel : ViewModel() {
     val userExists = MutableLiveData<Boolean>()
     val userData = MutableLiveData<Usuario>()
@@ -21,6 +24,12 @@ class OTPViewModel : ViewModel() {
     private val getUserRoleRequirement = GetUserRoleRequirement()
     private val addUserLocalDBRequirement = AddUserLocalDBRequirement()
 
+    /**
+     * Verifies if the user exists in Firestore database
+     *
+     * @param uid: String -> User Uid
+     * @param repository: Repository -> Repository of the application
+     */
     fun verifyUser(uid: String, repository: Repository) {
         viewModelScope.launch {
             val validateUserExistenceRequirement = ValidateUserExistenceRequirement()
@@ -29,12 +38,24 @@ class OTPViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Adds user information to local database
+     *
+     * @param user: Usuario -> Model of Usuario with user information
+     * @param repository: Repository -> Repository of the application
+     */
     fun addUserLocalDB(user: Usuario, repository: Repository) {
         viewModelScope.launch {
             addUserLocalDBRequirement(user, repository)
         }
     }
 
+    /**
+     * Gets user information
+     *
+     * @param uid: String -> User uid
+     * @param repository: Repository -> Repository of the application
+     */
     fun getUser(uid: String, repository: Repository) {
         viewModelScope.launch {
             val userInfo = getUserDataRequirement(uid, repository).data
