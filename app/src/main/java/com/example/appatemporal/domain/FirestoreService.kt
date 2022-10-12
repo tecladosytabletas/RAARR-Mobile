@@ -750,7 +750,11 @@ class FirestoreService {
                 var eventDate = function.data?.get("fecha_funcion").toString()
                 val arrayDate: List<String> = eventDate.split("/")
                 Log.d("ArrayDateLog", arrayDate.toString())
-                if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
+                if (arrayDate.size <= 1){
+                    Log.d("ArrayDateLog", arrayDate.toString())
+                    continue
+                }
+                if(arrayDate[1].toInt()== month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
                     var evento = EventsInMonth(
                         event.id,
                         event.data?.get("nombre").toString(),
@@ -771,6 +775,7 @@ class FirestoreService {
                     )
                     result.add(evento)
                 }
+
             }
         }
         Log.d("LogResult", result.toString())

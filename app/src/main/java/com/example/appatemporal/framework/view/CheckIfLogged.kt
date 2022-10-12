@@ -3,6 +3,7 @@ package com.example.appatemporal.framework.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.databinding.ActivityComprobacionBinding
 
@@ -31,16 +32,23 @@ class CheckIfLogged : AppCompatActivity() {
         // ----------------------------Navbar------------------------------------
         val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
 
+        Log.d("Rol", userRole)
+
         // Visibility
-        if (userRole != "Organizador") {
+        if (userRole == "Espectador" || userRole == "") {
             binding.navbar.budgetIcon.visibility = android.view.View.GONE
             binding.navbar.metricsIcon.visibility = android.view.View.GONE
             binding.navbar.budgetText.visibility = android.view.View.GONE
             binding.navbar.metricsText.visibility = android.view.View.GONE
-        }
-        if (userRole == "Ayudante") {
+        } else if (userRole == "Ayudante") {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
             binding.navbar.eventsIcon.visibility = android.view.View.GONE
             binding.navbar.eventsText.visibility = android.view.View.GONE
+            binding.navbar.homeIcon.visibility = android.view.View.GONE
+            binding.navbar.homeText.visibility = android.view.View.GONE
         }
 
         // Intents
@@ -48,18 +56,21 @@ class CheckIfLogged : AppCompatActivity() {
             if(userRole == "Organizador"){
                 val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            }else {
                 val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
                 startActivity(intent)
             }
         }
 
         binding.navbar.eventsIcon.setOnClickListener {
-            if(userRole == "Organizador"){
+            if(userRole == "Organizador") {
                 val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            } else if (userRole == "Espectador") {
                 val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -73,8 +84,11 @@ class CheckIfLogged : AppCompatActivity() {
             if (userRole == "Espectador" || userRole == "Organizador") {
                 val intent = Intent(this, BoletoPorEventoActivity::class.java)
                 startActivity(intent)
-            } else {
+            } else if (userRole == "Ayudante") {
                 val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -83,6 +97,5 @@ class CheckIfLogged : AppCompatActivity() {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
-
     }
 }
