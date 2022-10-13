@@ -14,7 +14,7 @@ class PresupuestoOrganizadorViewModel: ViewModel()  {
         // variable that is a live data project
         val project = MutableLiveData<Proyecto>()
 
-        /*
+        /**
         * Function to update presupuesto of a project and establish the project again
         * @param presupuestoNew - The String that is the new presupuesto of the project
         * @param id - The Int that is the id of the project that will be updated
@@ -28,7 +28,7 @@ class PresupuestoOrganizadorViewModel: ViewModel()  {
             }
         }
 
-        /*
+        /**
         * Function to get the project that a project has according to the local database according
         * to it´s id and establish the project again
         * @param id - The id of the project the user selected
@@ -42,7 +42,7 @@ class PresupuestoOrganizadorViewModel: ViewModel()  {
             }
         }
 
-        /*
+        /**
         * Function to update meta of a project and establish the project again
         * @param metaNew - The Double that is the new meta of the project
         * @param id - The Int that is the id of the project that will be updated
