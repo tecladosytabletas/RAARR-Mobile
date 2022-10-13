@@ -37,6 +37,8 @@ class ActivityMainHomepageOrganizador : AppCompatActivity() {
         setContentView(binding.root)
 
         val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE).getString("userUid", "").toString()
+        Log.d("USERID_VERIFICATION",userUid.isEmpty().toString())
+        Log.d("USERID_VERIFICATION",userUid)
 
         initRecyclerViewHorizontal(getEventsUserOrg, userUid, repository)
         initRecyclerViewVertical(getEventsUserOrg, repository)

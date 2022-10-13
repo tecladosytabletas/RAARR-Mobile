@@ -33,7 +33,7 @@ class GetCommentsViewModel :ViewModel() {
             for (document in queryResult) {
                 var auxDate = document.data.get("fecha_creacion") as com.google.firebase.Timestamp
                 var commentAux = CommentModel(document.data.get("id_usuario_fk").toString(), document.data.get("id_evento_fk").toString(),
-                                                document.data.get("comentario").toString(), auxDate.toDate())
+                                                document.data.get("comentario").toString(), auxDate.toDate().toString())
                 auxList.add(commentAux)
             }
             commentList.postValue(auxList)
