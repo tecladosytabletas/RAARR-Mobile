@@ -22,23 +22,29 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/img_sidebar"
+            android:src="@drawable/logout"
+            app:tint="@color/white"
             app:layout_constraintStart_toStartOf="@id/buttons_header"
             app:layout_constraintTop_toTopOf="@id/buttons_header"
             app:layout_constraintEnd_toEndOf="@+id/buttons_header"
             app:layout_constraintBottom_toBottomOf="@id/buttons_header"
-            android:id="@+id/sidebar_icon"
-            app:layout_constraintHorizontal_bias="0.05"
+            android:id="@+id/logoutIcon"
+            app:layout_constraintHorizontal_bias="0.95"
             />
+
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/img_atemporal"
-            app:layout_constraintStart_toEndOf="@id/sidebar_icon"
-            android:layout_marginStart="-40dp"
-            android:id = "@+id/atemporal_logo"
-            android:padding="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/support"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@id/buttons_header"
+            app:layout_constraintTop_toTopOf="@id/buttons_header"
+            app:layout_constraintEnd_toEndOf="@+id/buttons_header"
+            app:layout_constraintBottom_toBottomOf="@id/buttons_header"
+            android:id="@+id/supportIcon"
+            app:layout_constraintHorizontal_bias="0.05"
             />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

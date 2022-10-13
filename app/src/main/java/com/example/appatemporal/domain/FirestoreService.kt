@@ -304,6 +304,12 @@ class FirestoreService {
         return ventaTotal
     }
 
+    /**
+     * Verifies if the scanned ticket exists in the database
+     *
+     * @param resulted: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the ticket exists, false if it does not
+     */
     suspend fun verifyTicketExistence(resulted: String) : Boolean {
         var existence: Boolean = false
         var query = db.collection("Boleto")
@@ -316,6 +322,13 @@ class FirestoreService {
         return existence
     }
 
+    /**
+     * Updates the database if a valid ticket was scanned
+     *
+     * @param resulted: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the field databse was updated, false if
+     * it was not
+     */
     suspend fun updateTicketValue(resulted: String): Boolean {
         var result: String = resulted
 
@@ -340,7 +353,12 @@ class FirestoreService {
             .await()
         return exito
     }
-
+    /**
+     * Firestore query to get TicketTypes for Given event from Firestore Database.
+     * @param idEvent -> EventID to get TicketTypes of.
+     *
+     * @return List -> List containing Triples, each containing TicketType Data. Name, Price, and ID.
+     */
     suspend fun getTicketDropDown(idEvent: String) : List<Triple<String, Int, String>> {
         var dropDown : MutableList<Triple<String, Int, String>> = mutableListOf()
         val ticketInfo = db.collection("Evento_Tipo_Boleto")
@@ -358,7 +376,14 @@ class FirestoreService {
         }
         return dropDown
     }
-
+    /**
+     * Firestore query to get all tickets registered to a given Function in the given event of a each type. from Firestore Database,
+     * @param idEvent -> EventID to get ticketTypes of.
+     * @param idFuncion -> Function to take count from.
+     *
+     * @return List -> List containing Triples, each containing ticket count of each ticketType.
+     * EX: ID, TicketCountOfType, Maximum amount of Tickets specific Type can Have.
+     */
     suspend fun currentTicketsFun(idEvent: String, idFuncion: String) : List<Triple<String, Int, Int>> {
         val maxCountEvent: MutableList<Triple<String, Int, Int>> = mutableListOf()
         val tipoEventoBoleto = db.collection("Evento_Tipo_Boleto")
@@ -375,15 +400,26 @@ class FirestoreService {
         }
         return maxCountEvent
     }
-
+    /**
+     * Firestore query to store a new Ticket sale in the Firestore Database.
+     * @param idFuncion -> FunctionID to Register Sale to.
+     * @param id_Metodo_Pago -> Payment Type Id.
+     *@param id_Tipo_Boleto -> Ticket Type to Register.
+     *
+     */
     suspend fun RegisterSale(idFuncion: String, id_Metodo_Pago: String,id_Tipo_Boleto : String){
         var currentDate = Date()
         db.collection("Boleto")
             .document()
-            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
+            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate.toString(),currentDate.toString(), "", ""))
             .await()
     }
-
+    /**
+     * Firestore query to get all tickets registered to a given Function in the given event of a each type. from Firestore Database,
+     * @param metodoPago -> Payment Type string/Name.
+     *
+     * @return query: QuerySnapshot -> QuerySnapshot containing the Document matching the name provided.
+     */
     suspend fun getMetodoPagoId(metodoPago: String) : QuerySnapshot {
         val query = db.collection("Metodo_Pago")
             .whereEqualTo("metodo", metodoPago)
@@ -578,7 +614,7 @@ class FirestoreService {
      */
 
    suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
-       val rating = RatingModel(idUser, idEvent, rate, Date())
+       val rating = RatingModel(idUser, idEvent, rate, Date().toString())
        db.collection("Rating")
            .add(rating)
            .await()
@@ -711,7 +747,7 @@ class FirestoreService {
 
 
     suspend fun addComment(idUser: String,idEvent: String,comment: String){
-        var comment = CommentModel(idUser,idEvent,comment,Date())
+        var comment = CommentModel(idUser,idEvent,comment,Date().toString())
         db.collection("Comentario")
             .add(comment)
             .await()
