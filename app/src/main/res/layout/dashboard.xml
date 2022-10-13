@@ -14,7 +14,9 @@
         android:gravity="center"
         android:layout_gravity = "center">
 
-        <include layout = "@layout/header"/>
+        <include
+            layout = "@layout/header"
+            android:id="@+id/header"/>
 
     </RelativeLayout>
 
