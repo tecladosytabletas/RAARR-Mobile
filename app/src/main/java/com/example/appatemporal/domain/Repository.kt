@@ -245,13 +245,29 @@ class Repository(context: Context) {
         return firestoreAPI.getRatingByEvent(eid)
     }
 
+    /**
+     * Asks Firestore Service to add a comment in Firestore
+     *
+     * @param idUser: String -> the User's id
+     * @param idEvent: String -> the Event's id
+     * @param comment: String -> user´s comment
+     * @return Boolean -> the result from adding comment
+     */
     suspend fun addComment(idUser: String, idEvent: String, comment: String) {
         return firestoreAPI.addComment(idUser,idEvent,comment)
     }
 
+    /**
+     * Asks Firestore Service to get a comment from Firebase and verify existance
+     *
+     * @param idUser: String -> the User's id
+     * @param idEvent: String -> the Event's id
+     * @return Boolean -> the result from verifying the existance
+     */
     suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
         return firestoreAPI.verifyCommentExistence(idUser, idEvent)
     }
+
     /**
      * Asks Firestore Service to get comments from an event from Firestore service
      *

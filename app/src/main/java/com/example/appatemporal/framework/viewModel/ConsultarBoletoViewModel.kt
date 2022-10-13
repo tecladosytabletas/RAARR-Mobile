@@ -56,12 +56,28 @@ class ConsultarBoletoViewModel:ViewModel() {
             rateState.postValue(rState)
         }
     }
+
+    /**
+     * Adds a comment to the event
+     *
+     * @param idUser: String -> User's id
+     * @param idEvent: String -> Event's id
+     * @param comment: String -> User´s comment for the event
+     * @param repository: Repository -> Repository of the application
+     */
     fun addComment(idUser: String,idEvent: String,comment: String, repository: Repository){
         viewModelScope.launch{
             addCommentRequirement(idUser,idEvent,comment,repository)
         }
     }
 
+    /**
+     * Get existance verified of a comment
+     *
+     * @param idUser: String -> the User's id
+     * @param idEvent: String -> Event's id
+     * @param repository: Repository -> Repository of the application
+     */
     fun verifyComment(idUser: String, idEvent: String, repository: Repository) {
         viewModelScope.launch {
             val commentExists = verifyCommentExistenceRequirement(idUser, idEvent, repository)
