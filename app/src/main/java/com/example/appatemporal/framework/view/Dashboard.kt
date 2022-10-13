@@ -194,8 +194,8 @@ class Dashboard : AppCompatActivity(){
         val ourPieChart = binding.dashPieChart
         val ourPieEntry = ArrayList<PieEntry>()
         var noAssist = ventasTotal - asistenciasTotal
-        ourPieEntry.add(PieEntry(noAssist.toFloat(), "Asistentes esperados"))
-        ourPieEntry.add(PieEntry(asistenciasTotal.toFloat(), "Asistentes reales"))
+        ourPieEntry.add(PieEntry(noAssist.toFloat(), "No asistieron"))
+        ourPieEntry.add(PieEntry(asistenciasTotal.toFloat(), "Asistieron"))
         val ourSet = PieDataSet(ourPieEntry, "")
         val data = PieData(ourSet)
         //formato de la pie chart
