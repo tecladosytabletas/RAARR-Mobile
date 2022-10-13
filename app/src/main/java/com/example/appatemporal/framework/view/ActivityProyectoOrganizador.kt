@@ -11,7 +11,9 @@ import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class ActivityProyectoOrganizador: AppCompatActivity() {
+    // Initialize the view model
     private val viewModel: ProyectoOrganizadorViewModel by viewModels()
+    // Initialize the binding with the xml file
     private lateinit var binding: ActivityProyectoOrganizadorBinding
     private var auth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,11 +22,14 @@ class ActivityProyectoOrganizador: AppCompatActivity() {
         setContentView(binding.root)
 
         var myExtras :Bundle? = intent.extras
+        //Counts and displays the amount of activitys with status Incompleted or in progress
         val stringToDo = "Actividades por completar: ".plus(myExtras?.getInt("pendingActivities"))
+        //Counts and displays the amount of activitys with status completed
         val stringCompleted = "Actividades completadas: ".plus(myExtras?.getInt("doneActivities"))
 
         binding.activitiesCompleted.text = stringToDo
         binding.activitiesToDo.text = stringCompleted
+        //Sets the project information on screen
         binding.line2.text = myExtras?.getString("fecha_inicio")
         binding.projectName.text = myExtras?.getString("nombre_proyecto")
         var idProyecto:Int =  myExtras?.getInt("id_proyecto")?:-1

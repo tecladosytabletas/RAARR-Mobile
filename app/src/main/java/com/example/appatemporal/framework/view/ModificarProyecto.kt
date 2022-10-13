@@ -31,6 +31,7 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
     private var auth = FirebaseAuth.getInstance()
     lateinit var myCalendar: Calendar
     lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
+    //Define global variables that will be used in other functions
     var finalDate = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,13 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
         binding.nameModifyProject.setText(myExtras?.getString("nombre_proyecto"))
         binding.dateEdt.setText(myExtras?.getString("fecha_inicio"))
         val idproject: Int = myExtras?.getInt("id_proyecto")?:-1
-        // Set click listener
+
+        /** Function that checks and modify the user inputs on activity
+         * local database
+         * @param name, name of the activity
+         * @param date, date of the activity
+         */
+
         binding.modifybutton.setOnClickListener {
             // Get values from view
             val name = binding.nameModifyProject.text.toString()
@@ -160,18 +167,18 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
-
     }
 
+    //Function that is bind to the datepicker
     override fun onClick(v: View) {
         when (v.id) {
             R.id.dateEdt -> {
                 setListener()
             }
         }
-
     }
 
+    //Function that displays the datepicker
     private fun setListener() {
         myCalendar = Calendar.getInstance()
 
@@ -181,7 +188,6 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
                 myCalendar.set(Calendar.MONTH, month)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 updateDate()
-
             }
 
         val datePickerDialog = DatePickerDialog(
@@ -192,15 +198,12 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
         datePickerDialog.show()
     }
 
+    //Function that changes the format of the datepicker
     private fun updateDate() {
         //01/03/2022
         val myformat = "dd/MM/yyyy"
         val sdf = SimpleDateFormat(myformat)
         finalDate = myCalendar.time.time
         binding.dateEdt.setText(sdf.format(myCalendar.time))
-
-        //timeInptLay.visibility = View.VISIBLE
-
     }
-
 }

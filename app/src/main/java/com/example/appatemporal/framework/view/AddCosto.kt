@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appatemporal.databinding.ActivityProyectoOrganizadorBinding
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * This file is linked with add_costos.xml
+ * This file is in charge of controlling the logic behind the funtion add a costo
+ *
+ * */
 class AddCosto : AppCompatActivity() {
     private lateinit var binding: ActivityProyectoOrganizadorBinding
     private var auth = FirebaseAuth.getInstance()

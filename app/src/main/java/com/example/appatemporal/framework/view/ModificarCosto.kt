@@ -15,7 +15,11 @@ import com.example.appatemporal.data.localdatabase.entities.Costo
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-
+/**
+ * This file is linked with modify_new_costo.xml
+ * This file is in charge of controlling the logic behind the funtion modify a costo
+ *
+ * */
 class ModificarCosto : AppCompatActivity() {
     private val viewModel: DeleteCostoViewModel by viewModels()
     private lateinit var binding: ModifyNewCostoBinding
@@ -24,7 +28,10 @@ class ModificarCosto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ModifyNewCostoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Define the context and keep it on a variable
         val repository = Repository(this)
+
+        //Extract parameters that came on the intent that is used to access this interface
         var myExtras: Bundle? = intent.extras
         binding.newNameCosto.setText(myExtras?.getString("nombre_actividad"))
         binding.newMontoCosto.setText(myExtras?.getInt("monto").toString())
@@ -34,6 +41,10 @@ class ModificarCosto : AppCompatActivity() {
         binding.newcostoBtn.setOnClickListener {
             val name = binding.newNameCosto.text.toString()
             val amount = binding.newMontoCosto.text.toString()
+            /**
+             * In this function it involves the recognition of the null and blank spaces in order
+             * to prevent the insertion or modification of negative values
+             */
             if (name.isEmpty() && amount.isEmpty()) {
                 Toast.makeText(this, "No se especificó ningún dato", Toast.LENGTH_SHORT).show()
             }
