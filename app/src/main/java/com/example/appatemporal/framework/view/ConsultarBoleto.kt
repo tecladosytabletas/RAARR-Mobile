@@ -156,11 +156,6 @@ class ConsultarBoleto : AppCompatActivity() {
         val estado = intent.getStringExtra("estado")
         val hashQr = intent.getStringExtra("hashQr")
 
-        Log.d("hashQR LOG", hashQr.toString())
-
-        Log.d("id evento seleccionado", idEvento.toString())
-
-        Log.d("hashqrValue Log", hashQr.toString())
 
         /**
          * Opens intent for Share Menu of Installed Apps in the Device. Sends a Default MSG with link with EventID.

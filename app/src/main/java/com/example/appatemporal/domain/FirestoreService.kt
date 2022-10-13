@@ -390,7 +390,7 @@ class FirestoreService {
         var currentDate = Date()
         db.collection("Boleto")
             .document()
-            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
+            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate.toString(),currentDate.toString(), "", ""))
             .await()
     }
     /**
@@ -577,7 +577,7 @@ class FirestoreService {
      */
 
    suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
-       val rating = RatingModel(idUser, idEvent, rate, Date())
+       val rating = RatingModel(idUser, idEvent, rate, Date().toString())
        db.collection("Rating")
            .add(rating)
            .await()
@@ -705,7 +705,7 @@ class FirestoreService {
 
 
     suspend fun addComment(idUser: String,idEvent: String,comment: String){
-        var comment = CommentModel(idUser,idEvent,comment,Date())
+        var comment = CommentModel(idUser,idEvent,comment,Date().toString())
         db.collection("Comentario")
             .add(comment)
             .await()
