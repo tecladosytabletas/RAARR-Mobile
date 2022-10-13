@@ -162,6 +162,9 @@ class ConsultarBoleto : AppCompatActivity() {
 
         Log.d("hashqrValue Log", hashQr.toString())
 
+        /**
+         * Opens intent for Share Menu of Installed Apps in the Device. Sends a Default MSG with link with EventID.
+         */
         binding.ivShareEvent.setOnClickListener {
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
