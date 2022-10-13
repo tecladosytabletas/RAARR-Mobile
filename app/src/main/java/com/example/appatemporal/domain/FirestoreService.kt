@@ -602,6 +602,12 @@ class FirestoreService {
         return existence
     }
 
+    /**
+     * Get a comment in Comment collection of Firestore to verify existence
+     * @param idUser: String -> user´s Id
+     * @param idEvent: String -> Event´s Id
+     * @return existence: Boolean -> Comment existance
+     */
     suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
         var existence: Boolean = false
         val query = db.collection("Comentario")
@@ -612,7 +618,6 @@ class FirestoreService {
         if (!query.isEmpty) {
             existence = true
         }
-        //Log.d("Existence of comment", existence.toString())
         return existence
     }
 
@@ -703,7 +708,12 @@ class FirestoreService {
         return listRatings
     }
 
-
+    /**
+     * Adds a user comment to the Comment collection in Firestore
+     * @param idUser: String -> User´s Id
+     * @param idEvent: String ->Event´s Id
+     * @param comment: String -> User´s Comment
+     */
     suspend fun addComment(idUser: String,idEvent: String,comment: String){
         var comment = CommentModel(idUser,idEvent,comment,Date().toString())
         db.collection("Comentario")
