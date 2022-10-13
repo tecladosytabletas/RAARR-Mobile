@@ -19,7 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
+// Class that displays the Presupuesto and Meta of Proyecto
 class PresupuestoAndMeta: AppCompatActivity()  {
 
     private val viewModel: PresupuestoOrganizadorViewModel by viewModels()
@@ -30,6 +30,7 @@ class PresupuestoAndMeta: AppCompatActivity()  {
         setContentView(binding.root)
         val repository = Repository(this)
         var myExtras :Bundle? = intent.extras
+        //Gets the values of ganancia and presupuesto to get displayed on screen
         var idProyecto: Int=  myExtras?.getInt("id_proyecto")?:-1
         var ganancia:Double = (myExtras?.getDouble("gananciaK")?:-1) as Double
         var presupuesto:Double = (myExtras?.getDouble("presupuestoK")?:-1) as Double
@@ -116,6 +117,9 @@ class PresupuestoAndMeta: AppCompatActivity()  {
             fragment.show(supportFragmentManager, "newTaskTag")
 
         }
+        // On button click, a bundle is initialized and the
+        // text from the EditText is passed in the custom
+        // fragment using this bundle
         binding.ivEditMeta.setOnClickListener{
             val fragment = ModifyMeta(viewModel)
             val bundle = Bundle()
