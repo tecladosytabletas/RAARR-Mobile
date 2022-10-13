@@ -4,6 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * ROOM model for status
+ * @param id_estatus: Int, id of status
+ * @param  nombre_estatus: String, name of status
+ * @param created_at: String, date of creation
+ * @param modified_at: String, date of update
+ */
 @Entity(tableName = "estatus_table")
 data class Estatus(
     @PrimaryKey(autoGenerate = true)

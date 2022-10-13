@@ -14,10 +14,18 @@ import com.example.appatemporal.domain.models.CommentModel
 import com.example.appatemporal.framework.view.adapters.GetCommentsAdapter
 import com.example.appatemporal.framework.viewModel.GetCommentsViewModel
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class GetCommentsActivity: AppCompatActivity() {
     private lateinit var binding: ActivityGetcommentsBinding
     private val getCommentsViewModel: GetCommentsViewModel by viewModels()
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val repository = Repository(this)

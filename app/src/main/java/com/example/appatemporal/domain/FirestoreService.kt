@@ -28,6 +28,12 @@ import kotlin.collections.ArrayList
 class FirestoreService {
     private val db = Firebase.firestore
 
+    /**
+     * Adds user to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param user: UserModel -> Model to insert documents to Firestore
+     */
     suspend fun addUser(uid: String, user: UserModel) {
         db.collection("Usuario")
             .document(uid)
@@ -38,12 +44,17 @@ class FirestoreService {
             .await()
     }
 
+    /**
+     * Adds user's role and its relations to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param role: String -> Role selected by the user
+     */
     suspend fun addUserRole(uid: String, role: String) {
         val dbRole = db.collection("Rol")
             .whereEqualTo("nombre", role)
             .get()
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Got Role Correctly: ${it.documents[0].id}")
             }.await()
 
         val userRole = hashMapOf(
@@ -54,13 +65,18 @@ class FirestoreService {
         db.collection("Usuario_Rol")
             .add(userRole)
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Added User wih Role Correctly")
             }
             .addOnFailureListener {
                 Log.d("FirestoreLogs","Added user failed, exception: $it")
             }
     }
 
+    /**
+     * Verifies the user's existence
+     *
+     * @param uid: String -> User uid
+     * @return Boolean -> Existence of the user
+     */
     suspend fun verifyUser(uid: String) : Boolean {
         var userExists = false
         db.collection("Usuario")
@@ -75,6 +91,12 @@ class FirestoreService {
         return userExists
     }
 
+    /**
+     * Gets the user information
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUser(uid: String) : DocumentSnapshot {
         var userData: DocumentSnapshot =
             db.collection("Usuario")
@@ -84,6 +106,12 @@ class FirestoreService {
         return userData
     }
 
+    /**
+     * Gets the user's role
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         var dbRole: QuerySnapshot =
             db.collection("Usuario_Rol")
@@ -98,9 +126,14 @@ class FirestoreService {
         return userRole
     }
 
-    // Que evento le corresponde al boleto
-    // uid: userId, eid: eventId, fid: funcionId
-    // getUserTicket
+    /**
+     * Gets the tickets of a user from relations of Boleto, Funcion and Evento collections of Firestore
+     * @param uid: string
+     *
+     * @return MutableList of tickets object from GetTicketModel
+     *
+     *  @author Andrés
+     */
 
     suspend fun getUserTickets(uid : String) : MutableList<GetTicketModel> {
         var result : MutableList<GetTicketModel> = arrayListOf()
@@ -361,15 +394,14 @@ class FirestoreService {
 
     /**
      * Adds a document in ReporteFallas collection of Firestore
-     * @param title: String
-     * @param description: String
+     * @param title: String -> tittle of report
+     * @param description: String -> description of the failure
      */
     suspend fun addFailure(title: String, description: String) {
         val failure = ReportFailureModel(title, description)
         db.collection("ReporteFallas")
             .add(failure)
             .addOnSuccessListener {
-                Log.d("Firestore Log Failure", "Success")
             }.await()
     }
 
@@ -552,7 +584,7 @@ class FirestoreService {
            .await()
    }
     /**
-     * Get a document in Rating collection of Firestore
+     * Get a document in Rating collection of Firestore to verify existence
      * @param idUser: String
      * @param idEvent: String
      * @return existence: Boolean
@@ -684,7 +716,11 @@ class FirestoreService {
             .add(comment)
             .await()
     }
-
+    /**
+     * Gets the comments from Comentario collection of Firestore
+     * @param idEvent: String -> Event's id
+     * @return comments: QuerySnapshot -> query result from Firebase
+     */
     suspend fun getComments(idEvent: String) : QuerySnapshot {
         val comments =
             db.collection("Comentario")
@@ -733,13 +769,20 @@ class FirestoreService {
     }
 
     /**
+
      * Get the information of all the functions of any event(s) that are presented within the
      * current date and the last day of the present month in the present year.
      * @param day: Int
      * @param month: Int
      * @param year: Int
-     * @return result: MutableList<EventsInMonth>
-     **/
+     *
+     * @see GetTipoBoleto
+     *
+     * @return MutableList of events object from EventModel
+     *
+     *  @author Andrés
+     */
+
     suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
         var result : MutableList<EventsInMonth> = arrayListOf()
         var events = db.collection("Evento")
@@ -777,6 +820,7 @@ class FirestoreService {
                     )
                     result.add(evento)
                 }
+
             }
         }
         //Log.d("LogResult", result.toString())
@@ -787,6 +831,7 @@ class FirestoreService {
      * Get the information of all the events that are active (activo==1) and approved (aprobado==1).
      * @return result: MutableList<EventModel>
      **/
+
     suspend fun getEvents() : MutableList<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
         var event: QuerySnapshot = db.collection("Evento")
@@ -817,10 +862,15 @@ class FirestoreService {
     }
 
     /**
-     * Get the information of all the events where the user it's registered as the organizer.
+
+     * Gets the events from an organizer from Usuario_evento collection of Firestore
      * @param uid: String
-     * @return result: MutableList<EventsInMonth>
-     **/
+     *
+     * @return MutableList of events object from EventModel
+     *
+     *  @author Andrés
+     */
+     
     suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
         var result: MutableList<EventModel> = mutableListOf()
 
@@ -922,13 +972,27 @@ class FirestoreService {
         return result
     }
 
-    //crearEventoQuery
-
+    /**
+     * Adds a document in Evento collection of Firestore
+     * @param event: CreateEventModel
+     * @param artista: String
+     * @param funcion: FunctionModel
+     * @param userUid: String
+     * @param boletos: EventoTipoBoletoModel
+     * @param cid: String
+     *
+     *  @see addEventoCategoria
+     *  @see addArtista
+     *  @see addFunction
+     *  @see addUsuarioEvento
+     *  @see addEventoTipoBoleto
+     *
+     *  @author Resendiz & Camalich
+     */
     suspend fun addEvent2(event: CreateEventModel, artista: String, funcion: FunctionModel, userUid: String, boletos: EventoTipoBoletoModel, cid: String) {
         db.collection("Evento")
             .add(event)
             .addOnSuccessListener {
-                Log.d("Firestore Log = ", "Se agregó correctamente el evento " + it.id)
                 GlobalScope.launch {
                     addArtista(it.id, artista)
                     addFunction(it.id, funcion.fecha_fun, funcion.hora_inicio, funcion.hora_fin)
@@ -938,6 +1002,15 @@ class FirestoreService {
                 }
             }
     }
+    /**
+     * Adds a document in Evento_Categoria collection of Firestore
+     * @param eid: String
+     * @param cn: String
+     *
+     *  @see getCategory
+     *
+     *  @author Resendiz & Camalich
+     */
     suspend fun addEventoCategoria(eid: String, cn: String) {
         val cid=getCategory(cn)
         var data = hashMapOf(
@@ -946,15 +1019,15 @@ class FirestoreService {
         )
         db.collection("Evento_Categoria")
             .add(data)
-            .addOnSuccessListener {
-                Log.d(
-                    "Firestore Log = ",
-                    "Se agregó correctamente el evento por categoria:  " + idCategoria
-                )
-            }
             .await()
     }
-
+    /**
+     * Adds a document in Evento_Artista collection of Firestore
+     * @param eid: String
+     * @param nombre_artista: String
+     *
+     *  @author Resendiz & Camalich
+     */
     suspend fun addArtista(eid: String, nombre_artista: String) {
         var data = hashMapOf(
             "id_evento_fk" to eid,
@@ -963,13 +1036,17 @@ class FirestoreService {
 
         db.collection("Evento_Artista")
             .add(data)
-            .addOnSuccessListener {
-                Log.d("Firestore Log = ", "Se agregó correctamente el artista:  " + nombre_artista)
-            }
             .await()
     }
 
-
+    /**
+     * Get a list of all categories in Categoria collection of Firestore
+     * @param idUser: String
+     * @param idEvent: String
+     * @return dropdown: List<String>
+     *
+     * @author Resendiz & Camalich
+     */
 
     suspend fun getEventCategory(): List<String> {
         var dropdown :MutableList<String> = mutableListOf()
@@ -978,9 +1055,15 @@ class FirestoreService {
             var nombre = categoria.getField<String>("nombre").toString()
             dropdown.add(nombre)
         }
-        Log.d("categoria",dropdown[0])
         return dropdown
     }
+
+    /**
+     * Get a document in Categoria collection of Firestore
+     * @param nombre_categoria: String
+     * @return  QuerySnapshot
+     * @author Resendiz & Camalich
+     */
 
     suspend fun getCategory(nombre_categoria: String): QuerySnapshot {
         return db.collection("Categoria")
@@ -988,6 +1071,11 @@ class FirestoreService {
             .get()
             .await()
     }
+    /**
+     * Get a mutable list with the data of all documents in Categoria collection of Firestore
+     * @return Hashmap_category: MutableMap<String, String>
+     *  @author Resendiz & Camalich
+     */
 
     suspend fun getallCategories(): MutableMap<String, String> {
         var Hashmap_category: MutableMap<String, String> = HashMap<String, String> ()
@@ -1000,6 +1088,13 @@ class FirestoreService {
         }
         return Hashmap_category
     }
+    /**
+     * Get a list with the all the categories related with an specific event of all documents in Categoria collection of Firestore
+     * @param eid:String
+     * @return list_categoriaevento: List<String>
+     *
+     *  @author Resendiz & Camalich
+     */
 
     suspend fun getEventCategoryFilteredList(eid: String): List<String> {
         var list_categoriaevento :MutableList<String> = mutableListOf()
@@ -1013,7 +1108,16 @@ class FirestoreService {
         }
         return list_categoriaevento
     }
-
+    /**
+     * Get a list with the all the categories left that are NOT related with an specific event of all documents in Categoria collection of Firestore
+     * @param eid:String
+     * @return dropdown: List<String>
+     *
+     * @see getallCategories
+     * @see getEventCategoryFilteredList
+     *
+     *  @author Resendiz & Camalich
+     */
     suspend fun getEventCategoryFilter(eid: String): List<String> {
         var QS_categoria = getallCategories()
         var list_categoriaevento = getEventCategoryFilteredList(eid)
@@ -1028,6 +1132,12 @@ class FirestoreService {
         return dropdown
     }
 
+    /**
+     * Get a mutable list with the data of all documents in Tipo_Boleto collection of Firestore
+     * @return Hashmap_tb: MutableMap<String, String>
+     *
+     *  @author Resendiz & Camalich
+     */
     suspend fun getallTipoBoleto(): MutableMap<String, String> {
         var Hashmap_tb: MutableMap<String, String> = HashMap<String, String>()
         var tb = db.collection("Tipo_Boleto")
@@ -1038,6 +1148,13 @@ class FirestoreService {
         }
         return Hashmap_tb
     }
+
+    /**
+     * Get a list with the all the type of ticket related with an specific event of all documents in Evento_Tipo_Boleto collection of Firestore
+     * @param eid:String
+     * @return list_tb_evento: List<String>
+     * @author Resendiz & Camalich
+     */
     suspend fun getEventTBFilteredList(eid: String): List<String> {
         var list_tb_evento :MutableList<String> = mutableListOf()
         val tb = db.collection("Evento_Tipo_Boleto")
@@ -1050,7 +1167,16 @@ class FirestoreService {
         }
         return list_tb_evento
     }
-
+    /**
+     * Get a list with the all the type of ticket left that are NOT related with an specific event of all documents in Evento_Tipo_Boleto collection of Firestore
+     * @param eid:String
+     * @return dropdown: List<String>
+     *
+     * @see getallTipoBoleto
+     * @see getEventTBFilteredList
+     *
+     * @author Resendiz & Camalich
+     */
     suspend fun getEventoTipoBoletoFiltered(eid: String): List<String> {
         var QS_tipoevento = getallTipoBoleto()
         var list_tipoevento = getEventTBFilteredList(eid)
@@ -1062,7 +1188,12 @@ class FirestoreService {
         }
         return dropdown
     }
-
+    /**
+     * Adds a document in Usuario_Evento collection of Firestore
+     * @param eid: String
+     * @param uid: String
+     * @author Resendiz & Camalich
+     */
     suspend fun addUsuarioEvento(eid: String, uid: String) {
         var data = hashMapOf(
             "id_usuario_fk" to uid,
@@ -1070,21 +1201,31 @@ class FirestoreService {
         )
         db.collection("Usuario_Evento")
             .add(data)
-            .addOnSuccessListener {
-                Log.d(
-                    "Firestore Log = ",
-                    "Se agregó correctamente usuario por evento:  " + uid
-                )
-            }
             .await()
     }
+    /**
+     * gets a document in Tipo_Boleto with a specific collection of Firestore
+     * @param eid: String
+     * @param uid: String
+     *  @author Resendiz & Camalich
+     */
     suspend fun GetTipoBoleto(nombre_tb: String): QuerySnapshot {
         return db.collection("Tipo_Boleto")
             .whereEqualTo("nombre", nombre_tb)
             .get()
             .await()
     }
-
+    /**
+     * Adds a document in Evento_Tipo_Boleto collection of Firestore
+     * @param eid: String
+     * @param tipoboleto: String
+     * @param precio:Int
+     * @param max_boletos:Int
+     *
+     * @see GetTipoBoleto
+     *
+     *  @author Resendiz & Camalich
+     */
     suspend fun addEventoTipoBoleto(
         eid: String,
         tipoboleto: String,
@@ -1100,16 +1241,16 @@ class FirestoreService {
         )
         db.collection("Evento_Tipo_Boleto")
             .add(data)
-            .addOnSuccessListener {
-                Log.d(
-                    "Firestore Log = ",
-                    "Se agregó correctamente el tipo de boleto:   " + eid
-                )
-            }
             .await()
     }
-
-
+    /**
+     * Adds a document in Funcion collection of Firestore
+     * @param eid: String
+     * @param fechaFuncion: String
+     * @param HoraInicio:String
+     * @param HoraFin:String
+     *  @author Resendiz & Camalich
+     */
     suspend fun addFunction(
         eid: String,
         fechaFuncion: String,
@@ -1124,16 +1265,20 @@ class FirestoreService {
         )
         db.collection("Funcion")
             .add(data)
-            .addOnSuccessListener {
-                Log.d(
-                    "Firestore Log = ",
-                    "Se agregó correctamente la funcion:   " + fechaFuncion
-                )
-            }
             .await()
     }
 
-    //Obtener eventos organizador
+
+    /**
+     * Gets the events from an organizer from Usuario_evento collection of Firestore
+     * @param uid: String
+     *
+     * @see GetTipoBoleto
+     *
+     * @return MutableList of events object from EventModel
+     *
+     *  @author Andrés
+     */
 
     suspend fun getOrganizerEvents(uid : String) : MutableList<EventModel01> {
         var result : MutableList<EventModel01> = arrayListOf()
@@ -1143,7 +1288,6 @@ class FirestoreService {
                 .whereEqualTo("id_usuario_fk",uid)
                 .get()
                 .await()
-        Log.d("LOG UsuarioEvento",usuarioEventos.isEmpty().toString())
         // De todos esos registros, se busca cada evento en la tabla de eventos
         for (usuarioEvento in usuarioEventos){
             var eventos : QuerySnapshot =
@@ -1171,11 +1315,23 @@ class FirestoreService {
                 result.add(newEvent)
             }
 
-            Log.d("LOG Evento",result.toString())
+
         }
-        Log.d("LOG Empty Event",result.isEmpty().toString())
+
         return result
     }
+
+    /**
+     * Gets the function from an organizer from Usuario_evento collection of Firestore
+     * @param eid: String
+     *
+     * @see GetTipoBoleto
+     *
+     * @return MutableList of functions object from FuncionModel
+     *
+     *  @author Andrés
+     */
+
 
     suspend fun getFunctionOrganizador(eid: String) : MutableList<FuncionModel>{
         var result : MutableList<FuncionModel> = arrayListOf()

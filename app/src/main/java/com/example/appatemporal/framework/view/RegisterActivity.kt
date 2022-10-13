@@ -3,9 +3,6 @@ package com.example.appatemporal.framework.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +12,20 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.domain.models.UserModel
 import com.example.appatemporal.framework.viewModel.RegisterUserViewModel
 
-
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var repository: Repository
     private lateinit var gender: String
     private lateinit var role: String
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -87,8 +91,6 @@ class RegisterActivity : AppCompatActivity() {
                 userSharedPrefEdit.putString("rol", role)
                 userSharedPrefEdit.apply()
 
-                Log.d("Role", role)
-
                 val user = UserModel(binding.editnameReg2.text.toString(), binding.editlnameReg2.text.toString(),
                     binding.editemailReg2.text.toString(), binding.editDateReg2.text.toString(), gender)
                 registerUserViewModel.addUser(userUid, user, role, repository)
@@ -107,7 +109,6 @@ class RegisterActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Faltan llenar campos", Toast.LENGTH_SHORT).show()
             }
-//Comentario para pushear
         }
     }
 }
