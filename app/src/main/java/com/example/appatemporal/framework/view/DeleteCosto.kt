@@ -21,8 +21,11 @@ class DeleteCosto : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = AddCostosBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val repository = Repository(this)
+        //Extract parameters that came on the intent that is used to access this interface
         var myExtras :Bundle? = intent.extras
+        //Define the context and keep it on a variable
+        val repository = Repository(this)
+
 
         binding.navbar.homeIcon.setOnClickListener {
             finish()
@@ -101,6 +104,9 @@ class DeleteCosto : AppCompatActivity(){
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
+
+
+
         binding.newCostoButton.setOnClickListener {
             val intent = Intent(this, AddNewCostoForm::class.java)
             with(intent){
@@ -110,6 +116,13 @@ class DeleteCosto : AppCompatActivity(){
             startActivity(intent)
         }
     }
+
+    /**
+    * Function used to extract the activities that are in the database
+    *
+    *@param repository - The context used in this interface
+    *@param idProyecto - The id of the project the user selected before getting into this interface
+    */
 
     private suspend fun initRecyclerView(repository: Repository, idProyecto: Int) {
         val costoList = viewModel.getCosto(repository, idProyecto)

@@ -13,6 +13,10 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.AddNewCostoViewModel
 import kotlinx.coroutines.launch
 
+/**
+ * This is the form in which the logic of adding a new costos item is involved.
+ *  This file is linked with costo_task.xml
+ */
 class AddNewCostoForm : AppCompatActivity(){
     private val viewModel: AddNewCostoViewModel by viewModels()
     private lateinit var binding : CostoTaskBinding
@@ -29,6 +33,10 @@ class AddNewCostoForm : AppCompatActivity(){
             // Get values from view
             val name = binding.nameCosto.text.toString()
             val amount = binding.montoCosto.text.toString()
+            /**
+             * In this function it involves the recognition of the null and blank spaces in order
+             * to prevent the insertion or modification of negative values
+             */
             if (name.isEmpty() && amount.isEmpty()) {
                 Toast.makeText(this, "No se especificó ningún dato", Toast.LENGTH_SHORT).show()
             }

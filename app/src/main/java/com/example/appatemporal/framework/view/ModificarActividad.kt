@@ -15,7 +15,10 @@ import com.example.appatemporal.framework.viewModel.DeleteActivityViewModel
 import com.example.appatemporal.data.localdatabase.entities.Actividad
 import com.example.appatemporal.databinding.ModifyNewActivityBinding
 import kotlinx.coroutines.launch
-
+/**
+ * This file is linked with add_activity.xml
+ * This file is in charge of controlling the logic behind the funtion modify an activity
+ * */
 class ModificarActividad : AppCompatActivity(){
     private val viewModel: DeleteActivityViewModel by viewModels()
     private lateinit var binding : ModifyNewActivityBinding
@@ -23,8 +26,9 @@ class ModificarActividad : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ModifyNewActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        //Define the context and keep it on a variable
         val repository = Repository(this)
+        //Extract parameters that came on the intent that is used to access this interface
         var myExtras :Bundle? = intent.extras
         binding.nameModifedActivity.setText(myExtras?.getString("nombre_actividad"))
         val idactividad: Int = myExtras?.getInt("id_actividad")?:-1

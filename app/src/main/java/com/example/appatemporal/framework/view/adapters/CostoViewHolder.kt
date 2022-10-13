@@ -20,10 +20,16 @@ import kotlinx.coroutines.launch
 
 
 class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    // value used to assign the data binding of the xml file
     val binding = ItemCostoBinding.bind(view)
-
+    // Function used to assign a xml element with an attribute of the entity Costo
     fun render(costoModel: Costo){
         binding.txtShowTitle.text = costoModel.nombre_costo
+
+        /**
+        * Function that will be initialized once the element ivEditIcon is clicked by the user
+        * The function inside it is an intent to the ModificarActividad view
+         */
         binding.ivEditIcon.setOnClickListener{
             val intent1 = Intent(itemView.context, ModificarCosto::class.java)
             with(intent1){
@@ -45,7 +51,11 @@ class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             itemView.context.startActivity(intent)
         }
 
-
+        /**
+        *Function that will be initialized once the element deleteActivityButton
+        * is clicked by the user. The function inside it is used to delete an activity
+        * And to send the confirmation to delete that activity
+         */
         binding.deleteCostoButton.setOnClickListener{
             val intent = Intent(itemView.context, DeleteCosto::class.java)
             val viewModel = DeleteCostoViewModel()
@@ -54,12 +64,10 @@ class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val builder = AlertDialog.Builder(itemView.context)
             builder.setTitle("¿Estás seguro?")
             builder.setMessage("¿Estás seguro de que quieres eliminar este proveedor? Este proceso no puede revertirse")
-            //builder.setIcon(android.R.drawable.ic_dialog_alert)
+            // If the user clicks on Eliminar the activity will be erased
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
-                //Mandar a llamar la funcion delete()
                 CoroutineScope(Dispatchers.IO ).launch {
                     viewModel.removeCosto(costoModel, repository)
-                    //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
                 }
                 itemView.context.startActivity(intent)
 
@@ -73,6 +81,7 @@ class CostoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val alertDialog: AlertDialog = builder.create()
             // Set other dialog properties
             alertDialog.setCancelable(false)
+            // show the AlertDialog
             alertDialog.show()
         }
     }
