@@ -21,19 +21,25 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
+
 class Dashboard : AppCompatActivity(){
     private lateinit var binding : DashboardBinding
     private val dashboardViewModel : DashboardViewModel by viewModels()
     private var auth = FirebaseAuth.getInstance()
     private lateinit var repository: Repository
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         // En el onCreate se deben poblar las graficas
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
-
-        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE)
-            .getString("userUid", "").toString()
 
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -134,26 +140,29 @@ class Dashboard : AppCompatActivity(){
 
         val uid = getSharedPreferences("user", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
-        //Usuario temporal de pruebas, eliminar posteriormente
-        val tempUserId : String = "qVzK32OHDYOUtK1YsQbh"
         repository = Repository(this)
 
         //Inicia llamado a funciones
         //Grafica1 - Ganancias totales y cantidad de eventos totales
-        populateEventCount(tempUserId)
+        populateEventCount(uid)
         //Grafica2 - Asistentes esperados totales vs. Asistentes reales totales
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0
-        dashboardViewModel.ventasEvent(tempUserId, repository)
+        dashboardViewModel.ventasEvent(uid, repository)
         dashboardViewModel.ventas.observe(this, Observer{
             ventasTotal = it.first
             asistenciasTotal = it.second
             populatePieChart(ventasTotal, asistenciasTotal)
         })
         //Grafica3 - Rating promedio de todos los eventos
-        populateRating(tempUserId)
+        populateRating(uid)
     }
 
+    /**
+     * Populates the EventCount metric
+     *
+     * @param uid: String
+     */
     private fun populateEventCount(uid:String) {
         val ourRevenue = binding.eventRevenue
         val ourEventCount = binding.eventCountTotal
@@ -173,6 +182,13 @@ class Dashboard : AppCompatActivity(){
         })
     }
 
+    /**
+     * Populates the PieChart metric and sets the format for
+     * the MPChart element
+     *
+     * @param ventasTotal: Int
+     * @param asistenciasTotal: Int
+     */
     private fun populatePieChart(ventasTotal: Int, asistenciasTotal : Int) {
         //ingreso de los datos a la pie chart
         val ourPieChart = binding.dashPieChart
@@ -199,6 +215,11 @@ class Dashboard : AppCompatActivity(){
         ourPieChart.invalidate()
     }
 
+    /**
+     * Populates the Rating metric
+     *
+     * @param uid: String
+     */
     private fun populateRating(uid:String){
         val ourRatingBar = binding.ratingStars
         val ourRatingValue = binding.ratingAvg

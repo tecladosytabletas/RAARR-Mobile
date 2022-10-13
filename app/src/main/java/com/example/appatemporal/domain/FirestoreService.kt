@@ -171,6 +171,11 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get the number of events the user has done.
+     * @param uid: String
+     * @return events.count(): Int
+     **/
     suspend fun eventCount(uid: String) : Int {
         var events : QuerySnapshot =
             db.collection("Usuario_Evento")
@@ -180,6 +185,12 @@ class FirestoreService {
         return events.count()
     }
 
+    /**
+     * Get the number of expected assists (tickets sold) and the number of real assists of all the
+     * events the user has done.
+     * @param uid: String
+     * @return result: Pair<Int, Int>
+     **/
     suspend fun ventasCount(uid : String) : Pair<Int, Int> {
         var ventasCount : Int = 0
         var asistenciasCount : Int = 0
@@ -216,6 +227,11 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get the average rating of the user using the ratings of all the events the user has done.
+     * @param uid: String
+     * @return (acumulado/count): Float
+     **/
     suspend fun getRating(uid: String) : Float {
         var acumulado = 0f
         var count = 0f
@@ -241,6 +257,11 @@ class FirestoreService {
         return (acumulado/count).toFloat()
     }
 
+    /**
+     * Get the profits of the user from all the events so far.
+     * @param uid: String
+     * @return result: Float
+     **/
     suspend fun getRevenue(uid: String) : Int {
         var ventaTotal = 0
         var boletos: QuerySnapshot
@@ -420,6 +441,11 @@ class FirestoreService {
             }.await()
     }
 
+    /**
+     * Get the name of an event by it's id.
+     * @param eid: String
+     * @return event.data?.get("nombre").toString(): String
+     **/
     suspend fun getEventName(eid:String) : String {
         var event : DocumentSnapshot =
             db.collection("Evento")
@@ -429,6 +455,11 @@ class FirestoreService {
         return event.data?.get("nombre").toString()
     }
 
+    /**
+     * Get the profits of an event by it's id.
+     * @param eid: String
+     * @return ganancias: Int
+     **/
     suspend fun generalProfitsEvent(eid:String) : Int {
 
         var ganancias = 0
@@ -439,24 +470,24 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("generalProfitsEvent-Funciones", funciones.count().toString())
+        //Log.d("generalProfitsEvent-Funciones", funciones.count().toString())
         for (element in funciones) {
             boletos = db.collection("Boleto")
                 .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
-            Log.d("generalProfitsEvent-Boletos", boletos.count().toString())
+            //Log.d("generalProfitsEvent-Boletos", boletos.count().toString())
             tiposBoleto =
                 db.collection("Evento_Tipo_Boleto")
                     .whereEqualTo("id_evento_fk", element.data?.get("id_evento_fk"))
                     .get()
                     .await()
-            Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
+            //Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
             for (tipoBoleto in tiposBoleto) {
                 for (document in boletos) {
                     if (document.data?.get("id_tipo_boleto_fk") == tipoBoleto.data?.get("id_tipo_boleto_fk") &&
                         tipoBoleto.data?.get("id_evento_fk") == element.data?.get("id_evento_fk")) {
-                        Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
+                        //Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
                         ganancias += tipoBoleto.data?.get("precio").toString().toInt()
                     }
                     //Log.d("generalProfitsEvent", document.id.toString())
@@ -466,6 +497,12 @@ class FirestoreService {
         return ganancias
     }
 
+    /**
+     * Get the name of all the payment methods and the quantity of tickets sold by each one in the
+     * event by it's id.
+     * @param eid: String
+     * @return result: MutableMap<String, Int?>
+     **/
     suspend fun getTicketsbyPM(eid:String): MutableMap<String, Int?> {
 
         var diccPM = mutableMapOf<String, Int?>()
@@ -475,7 +512,7 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        //Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
         if (funciones.isEmpty){diccPM.put("No hay datos funciones", 0); return diccPM}
 
         for(element in funciones){
@@ -488,8 +525,8 @@ class FirestoreService {
             for(boleto in boletos){
                 if(boleto.data?.get("id_metodo_pago_fk").toString() !in diccPM){
                     diccPM.put(boleto.data?.get("id_metodo_pago_fk").toString(), 0)
-                    Log.d("getTicketsbyPM ID METODO", boleto.data?.get("id_metodo_pago_fk").toString())
-                    Log.d("getTicketsbyPM DICC", diccPM.toString())
+                    //Log.d("getTicketsbyPM ID METODO", boleto.data?.get("id_metodo_pago_fk").toString())
+                    //Log.d("getTicketsbyPM DICC", diccPM.toString())
                 }
                 diccPM.computeIfPresent(boleto.data?.get("id_metodo_pago_fk").toString()) { _, v -> v + 1}
             }
@@ -508,7 +545,7 @@ class FirestoreService {
                 }
             }
         }
-        Log.d("Dentro de getTicketsbyPM",result.toString())
+        //Log.d("Dentro de getTicketsbyPM",result.toString())
         if (result.isEmpty()){return errorHandler}
         return result
     }
@@ -616,8 +653,13 @@ class FirestoreService {
         return existence
     }
 
+    /**
+     * Get the number of expected assists (tickets sold) and the number of real assists for each
+     * type of ticket in an event by it's id.
+     * @param eid: String
+     * @return diccTotales: MutableMap<String, Pair<Int?, Int?>>
+     **/
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
-        Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
         var boletos: QuerySnapshot
         var diccAsistencias = mutableMapOf<String, Int?>()
         var diccVentas = mutableMapOf<String, Int?>()
@@ -627,26 +669,22 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getTicketTypeSA-Funciones", funciones.count().toString())
-
+        /*Log.d("getTicketTypeSA-Funciones", funciones.count().toString())
         for (element in funciones){
             Log.d("CONTENIDO FUNCIONES", element.data?.get("id_funcion_fk").toString())
-        }
-
+        }*/
         for (element in funciones) {
             boletos = db.collection("Boleto")
                 .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
-            Log.d("getTicketTypeSA-Boletos", boletos.count().toString())
-
+            //Log.d("getTicketTypeSA-Boletos", boletos.count().toString())
             for(boleto in boletos){
                 if(boleto.data?.get("id_tipo_boleto_fk").toString() !in diccAsistencias){
                     var countVal = 0
                     diccAsistencias.put(boleto.data?.get("id_tipo_boleto_fk").toString(), countVal)
                     diccVentas.put(boleto.data?.get("id_tipo_boleto_fk").toString(), countVal)
                 }
-
                 if(boleto.data?.get("activo").toString() == "false"){
                     diccAsistencias.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
                     diccVentas.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
@@ -654,12 +692,10 @@ class FirestoreService {
                     diccVentas.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
                 }
             }
-
             var tiposBoleto: QuerySnapshot = db.collection("Tipo_Boleto")
                 .get()
                 .await()
-            Log.d("getTicketTypeSA-tiposBoleto", tiposBoleto.count().toString())
-
+            //Log.d("getTicketTypeSA-tiposBoleto", tiposBoleto.count().toString())
             for ((k, v) in diccVentas) {
                 for (tipoBoleto in tiposBoleto) {
                     if(tipoBoleto.id == k) {
@@ -668,12 +704,18 @@ class FirestoreService {
                     }
                 }
             }
-
         }
-        Log.d("getTicketTypeSA-diccTotales", diccTotales.toString())
+        //Log.d("getTicketTypeSA-diccTotales", diccTotales.toString())
         return diccTotales
     }
 
+    /**
+     * Get the sum of all the ratings (from 0-6), the number of ratings, the number of times a
+     * certain rating inside the range 0-5 stars appears in the rating and the general rating of an
+     * event by it's id.
+     * @param eid: String
+     * @return listRatings: MutableList<Float>
+     **/
     suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
         //[0]acumulado,[1]counTotal,[2]count0,[3]count1,[4]count2,
         // [5]count3,[6]count4, [7]count5, [8]ratingProm
@@ -724,6 +766,12 @@ class FirestoreService {
         return comments
     }
 
+    /**
+     * Get the number of expected assists (tickets sold) and the number of real assists of an
+     * event by it's id.
+     * @param eid: String
+     * @return result: Pair<Int, Int>
+     **/
     suspend fun getEventTicketsSA(eid : String) : Pair<Int, Int> {
         var ventasCount : Int = 0
         var asistenciasCount : Int = 0
@@ -757,7 +805,9 @@ class FirestoreService {
     }
 
     /**
-     * Gets the events of the month from Evento and Funcion collections of Firestore
+
+     * Get the information of all the functions of any event(s) that are presented within the
+     * current date and the last day of the present month in the present year.
      * @param day: Int
      * @param month: Int
      * @param year: Int
@@ -768,7 +818,6 @@ class FirestoreService {
      *
      *  @author Andrés
      */
-
 
     suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
         var result : MutableList<EventsInMonth> = arrayListOf()
@@ -785,12 +834,8 @@ class FirestoreService {
             for(function in functions){
                 var eventDate = function.data?.get("fecha_funcion").toString()
                 val arrayDate: List<String> = eventDate.split("/")
-                Log.d("ArrayDateLog", arrayDate.toString())
-                if (arrayDate.size <= 1){
-                    Log.d("ArrayDateLog", arrayDate.toString())
-                    continue
-                }
-                if(arrayDate[1].toInt()== month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
+                //Log.d("ArrayDateLog", arrayDate.toString())
+                if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
                     var evento = EventsInMonth(
                         event.id,
                         event.data?.get("nombre").toString(),
@@ -814,18 +859,14 @@ class FirestoreService {
 
             }
         }
-        Log.d("LogResult", result.toString())
+        //Log.d("LogResult", result.toString())
         return result
     }
 
     /**
-     * Gets all the events of the app from Firestore
-     *
-     * @return MutableList of events object from EventModel
-     *
-     *  @author Andrés
-     */
-
+     * Get the information of all the events that are active (activo==1) and approved (aprobado==1).
+     * @return result: MutableList<EventModel>
+     **/
 
     suspend fun getEvents() : MutableList<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
@@ -857,6 +898,7 @@ class FirestoreService {
     }
 
     /**
+
      * Gets the events from an organizer from Usuario_evento collection of Firestore
      * @param uid: String
      *
@@ -864,8 +906,7 @@ class FirestoreService {
      *
      *  @author Andrés
      */
-
-
+     
     suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
         var result: MutableList<EventModel> = mutableListOf()
 
@@ -873,8 +914,8 @@ class FirestoreService {
             .whereEqualTo("id_usuario_fk",uid)
             .get()
             .await()
-        Log.d("getEventsUserOrg-uid",uid)
-        Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
+        //Log.d("getEventsUserOrg-uid",uid)
+        //Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
 
         for(element in event_user){
             var event = db.collection("Evento")
@@ -882,7 +923,7 @@ class FirestoreService {
                 .whereEqualTo(FieldPath.documentId(),element.data?.get("id_evento_fk").toString())
                 .get()
                 .await()
-            Log.d("getEventsUserOrg-Event", event.toString())
+            //Log.d("getEventsUserOrg-Event", event.toString())
             var evento = EventModel(
                 event.documents[0].id,
                 event.documents[0].data?.get("nombre").toString(),
@@ -900,11 +941,15 @@ class FirestoreService {
             )
             result.add(evento)
         }
-        Log.d("getEventsUserOrg", result.toString())
+        //Log.d("getEventsUserOrg", result.toString())
         return result
     }
 
-
+    /**
+     * Get the revenue by payment method in an event by it's id.
+     * @param eid: String
+     * @return result: MutableMap<String, Int?>
+     **/
     suspend fun getRevenuebyPM(eid:String): MutableMap<String, Int?> {
         var diccPM = mutableMapOf<String, Int?>()
         var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
@@ -913,7 +958,7 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
+        //Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
         if (funciones.isEmpty){diccPM.put("No hay datos en Funcionces", 0); return diccPM}
 
         var tiposboleto: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
@@ -958,7 +1003,7 @@ class FirestoreService {
             }
         }
 
-        Log.d("Dentro de getRevenuebyPM",result.toString())
+        //Log.d("Dentro de getRevenuebyPM",result.toString())
         if (result.isEmpty()){return errorHandler}
         return result
     }
