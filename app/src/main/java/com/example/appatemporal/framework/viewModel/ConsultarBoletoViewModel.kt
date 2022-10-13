@@ -77,7 +77,6 @@ class ConsultarBoletoViewModel:ViewModel() {
      * @param idUser: String -> the User's id
      * @param idEvent: String -> Event's id
      * @param repository: Repository -> Repository of the application
-     * @return commentState -> comment´s existance
      */
     fun verifyComment(idUser: String, idEvent: String, repository: Repository) {
         viewModelScope.launch {
