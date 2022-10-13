@@ -40,10 +40,11 @@ class ModificarProyecto : AppCompatActivity(),View.OnClickListener {
         binding.dateEdt.setText(myExtras?.getString("fecha_inicio"))
         val idproject: Int = myExtras?.getInt("id_proyecto")?:-1
 
-        // Function that checks and modify the user inputs on activity
-        // local database
-        // @param name, name of the activity
-        // @param date, date of the activity
+        /** Function that checks and modify the user inputs on activity
+         * local database
+         * @param name, name of the activity
+         * @param date, date of the activity
+         */
 
         binding.modifybutton.setOnClickListener {
             // Get values from view
