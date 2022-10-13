@@ -10,7 +10,7 @@ class AddNewProjectViewModel: ViewModel() {
     // variable to access the add project requirement docs
     private val requirement = AddNewProjectRequirement()
 
-    /*
+    /**
     * Function to create an project item in the local database
     * @param proyecto - The entity called Proyecto
     * @param repository - The context to access the resources assigned to the local database
