@@ -129,7 +129,7 @@ class GetCommentsActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
-        val idEvento = "12hEWP8xQQgQGjCyuWon"
+        val idEvento = intent.getStringExtra("idEvent").toString()
 
         getCommentsViewModel.getComments(idEvento, repository)
 
