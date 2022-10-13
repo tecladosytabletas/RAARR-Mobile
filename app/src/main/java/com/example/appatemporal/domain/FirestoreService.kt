@@ -247,14 +247,14 @@ class FirestoreService {
                     .whereEqualTo("id_evento_fk",document.data?.get("id_evento_fk"))
                     .get()
                     .await()
-            if (feedbacks.isEmpty){return 0f}
-            for (document in feedbacks){
-                acumulado += document.data?.get("rating").toString().toFloat()
+            //if (feedbacks.isEmpty){return 0f}
+            for (feedback in feedbacks){
+                acumulado += feedback.data?.get("rating").toString().toFloat()
                 count += 1
             }
         }
         if (count <= 0){return 0f}
-        return (acumulado/count).toFloat()
+        return (acumulado/count)
     }
 
     /**
@@ -285,13 +285,13 @@ class FirestoreService {
                         .whereEqualTo("id_funcion_fk", document.id)
                         .get()
                         .await()
-                if (boletos.isEmpty){return 0}
+                //if (boletos.isEmpty){return 0}
                 tiposBoleto =
                     db.collection("Evento_Tipo_Boleto")
                         .whereEqualTo("id_evento_fk", document.data?.get("id_evento_fk"))
                         .get()
                         .await()
-                if (tiposBoleto.isEmpty){return 0}
+                //if (tiposBoleto.isEmpty){return 0}
                 for (tipoBoleto in tiposBoleto) {
                     for (document in boletos) {
                         if (document.data?.get("id_tipo_boleto_fk") == tipoBoleto.data?.get("id_tipo_boleto_fk")) {
@@ -301,6 +301,7 @@ class FirestoreService {
                 }
             }
         }
+        Log.d("LOG getRevenue result", ventaTotal.toString())
         return ventaTotal
     }
 
