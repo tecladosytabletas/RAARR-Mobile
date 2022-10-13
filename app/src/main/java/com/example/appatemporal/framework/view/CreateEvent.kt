@@ -20,6 +20,7 @@ import com.example.appatemporal.domain.models.EventoTipoBoletoModel
 import com.example.appatemporal.domain.models.FunctionModel
 import com.example.appatemporal.framework.viewModel.AddNewEventViewModel
 import com.example.appatemporal.framework.viewModel.GetEventCategoryViewModel
+import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -32,6 +33,7 @@ import java.text.SimpleDateFormat
 class CreateEvent :AppCompatActivity() {
     private val viewModel: AddNewEventViewModel by viewModels()
     private val viewModelCategory: GetEventCategoryViewModel by viewModels()
+    private var auth = FirebaseAuth.getInstance()
 
     private lateinit var binding: ActivityCrearEventoBinding
     @RequiresApi(Build.VERSION_CODES.O)
@@ -41,6 +43,100 @@ class CreateEvent :AppCompatActivity() {
 
         binding = ActivityCrearEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+        // ----------------------------Header------------------------------------
+
+        // Visibility
+
+        if(auth.currentUser == null){
+            binding.header.buttonsHeader.visibility = android.view.View.GONE
+        }
+
+        // Intents
+        binding.header.logoutIcon.setOnClickListener{
+            Log.d("Sesion", "Salió")
+            auth.signOut()
+            val userSharedPref = getSharedPreferences("user", Context.MODE_PRIVATE)
+            var sharedPrefEdit = userSharedPref.edit()
+            sharedPrefEdit.remove("userUid")
+            sharedPrefEdit.clear().apply()
+            val intent = Intent(this, CheckIfLogged::class.java)
+            startActivity(intent)
+        }
+
+        binding.header.supportIcon.setOnClickListener{
+            val intent = Intent(this, SupportActivity::class.java)
+            startActivity(intent)
+        }
+        // ----------------------------Navbar------------------------------------
+
+
+        Log.d("Rol", userRole)
+
+        // Visibility
+        if ((userRole == "Espectador" && auth.currentUser != null) || userRole == "") {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
+        } else if (userRole == "Ayudante" && auth.currentUser != null) {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
+            binding.navbar.eventsIcon.visibility = android.view.View.GONE
+            binding.navbar.eventsText.visibility = android.view.View.GONE
+            binding.navbar.homeIcon.visibility = android.view.View.GONE
+            binding.navbar.homeText.visibility = android.view.View.GONE
+        }
+
+        // Intents
+        binding.navbar.homeIcon.setOnClickListener {
+            if(userRole == "Organizador" && auth.currentUser != null){
+                val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
+                startActivity(intent)
+            }else {
+                val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.navbar.eventsIcon.setOnClickListener {
+            if(userRole == "Organizador" && auth.currentUser != null) {
+                val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
+                startActivity(intent)
+            } else if (userRole == "Espectador" && auth.currentUser != null) {
+                val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.navbar.budgetIcon.setOnClickListener {
+            val intent = Intent(this, ProyectoOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        binding.navbar.ticketsIcon.setOnClickListener {
+            if ((userRole == "Espectador" || userRole == "Organizador") && auth.currentUser != null) {
+                val intent = Intent(this, BoletoPorEventoActivity::class.java)
+                startActivity(intent)
+            } else if (userRole == "Ayudante" && auth.currentUser != null) {
+                val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.navbar.metricsIcon.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+        }
         val nombre = binding.NombreEvento
         val descripcion = binding.DescripcionEvento
         val ciudad = binding.CiudadEvento
@@ -84,7 +180,7 @@ class CreateEvent :AppCompatActivity() {
         })
 
         submit.setOnClickListener {
-            if((nombre.text.toString().isNotEmpty())&&(descripcion.text.toString().isNotEmpty())&&(ciudad.text.toString().isNotEmpty())&&(estado.text.toString().isNotEmpty())&&(ubicacion.text.toString().isNotEmpty())&&(direccion.text.toString().isNotEmpty())&&(longitud.text.toString().isNotEmpty())&&(latitud.text.toString().isNotEmpty())&&(foto.text.toString().isNotEmpty())&&(video.text.toString().isNotEmpty())&&(cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())){
+            if((nombre.text.toString().isNotEmpty())&&(descripcion.text.toString().isNotEmpty())&&(ciudad.text.toString().isNotEmpty())&&(estado.text.toString().isNotEmpty())&&(ubicacion.text.toString().isNotEmpty())&&(direccion.text.toString().isNotEmpty())&&(longitud.text.toString().isNotEmpty())&&(latitud.text.toString().isNotEmpty())&&(foto.text.toString().isNotEmpty())&&(video.text.toString().isNotEmpty())&&(cantidad.text.toString().isNotEmpty())&&(precio.text.toString().isNotEmpty())&&(artista.text.toString().isNotEmpty())){
                 Log.d("El nombre del evento es ", "Kiubo" + nombre.text.toString())
                 val activo = 1
                 val divisa = "Pesos"
@@ -101,7 +197,6 @@ class CreateEvent :AppCompatActivity() {
                 val minuteI = horaInicio.minute
                 val hourF = horaFin.hour
                 val minuteF = horaFin.minute
-
                 val hoursI = if (hourI < 10) "0" + hourI else hourI
                 val minI = if (minuteI < 10) "0" + minuteI else minuteI
                 val hora_stringI="$hoursI:$minI"
@@ -131,15 +226,21 @@ class CreateEvent :AppCompatActivity() {
                 val firstDate: Date = sdf.parse(fecha)
                 val secondDate: Date = sdf.parse(formattedDateI)
 
+                val strI = fecha+" "+hora_stringI
+                val strF = fecha+" "+hora_stringF
+                val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+                val dateTimeI = LocalDateTime.parse(strI, formatter)
+                val dateTimeF = LocalDateTime.parse(strF, formatter)
                 val cmp = firstDate.compareTo(secondDate)
+                val tmp = dateTimeI.compareTo(dateTimeF)
 
-                if(cmp > 0){
+                if((cmp > 0)&&(tmp < 0)){
                     viewModel.AddEvent(evento, repository, artista.text.toString(),funcion, userUid, boletos, categoria.getSelectedItem().toString())
                     val submitBtn =  Intent(this, ActivityMisEventosOrganizador::class.java)
                     this.startActivity(submitBtn)
                 }
                 else{
-                    Toast.makeText(applicationContext, "La fecha elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "La fecha u hora elegida es inválida. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
                 }
 
             }

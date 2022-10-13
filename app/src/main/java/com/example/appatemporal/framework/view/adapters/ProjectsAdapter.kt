@@ -2,10 +2,8 @@ package com.example.appatemporal.framework.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appatemporal.R
-import com.example.appatemporal.data.localdatabase.entities.Objetivo
 import com.example.appatemporal.data.localdatabase.entities.Proyecto
 import com.example.appatemporal.framework.viewModel.ProyectoOrganizadorViewModel
 

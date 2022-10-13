@@ -28,12 +28,28 @@ class ConsultarBoletoViewModel:ViewModel() {
         }
     }
 
+    /**
+     *add rate from an event
+     *
+     * @param idUser: String -> the User's id
+     * @param idEvent: String -> Event's id
+     * @param rate: Float -> the Event's rate
+     * @param repository: Repository -> Repository of the application
+     */
     fun addRating(idUser: String, idEvent : String, rate : Float, repository: Repository) {
         viewModelScope.launch {
             addRatingRequirement(idUser, idEvent, rate, repository)
         }
     }
 
+    /**
+     * Get existance verified of a rate
+     *
+     * @param idUser: String -> the User's id
+     * @param idEvent: String -> Event's id
+     * @param repository: Repository -> Repository of the application
+     * @return rateState -> rate's existence
+     */
     fun verifyRate(idUser: String,idEvent: String,repository: Repository){
         viewModelScope.launch {
             val rState = verifyRatingExistanceRequirement(idUser,idEvent,repository)

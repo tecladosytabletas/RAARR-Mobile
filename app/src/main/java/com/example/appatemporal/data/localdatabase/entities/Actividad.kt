@@ -5,6 +5,15 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
+/**
+ * ROOM model for activity
+ * @param id_actividad: Int, id of activity
+ * @param id_estatus: Int, id of status.
+ * @param  nombre_actividad: String, name of activity
+ * @param area: String, area of activity.
+ * @param priority: String, priority of activity
+ * @param id_proyecto: String, id of project
+ */
 @Entity(tableName = "actividad_table")
 data class Actividad(
     @PrimaryKey(autoGenerate = true)
@@ -15,9 +24,5 @@ data class Actividad(
     @ColumnInfo(name = "estatus") var estatus: String,
     @ColumnInfo(name = "prioridad") var prioridad: String,
     @ColumnInfo(name = "id_proyecto") val id_proyecto: Int,
-    //@ColumnInfo(name = "created_at") val created_at: String,
-    //@ColumnInfo(name = "modified_at") val modified_at: String,
-
-    // Prueba for unit testing
 )
 

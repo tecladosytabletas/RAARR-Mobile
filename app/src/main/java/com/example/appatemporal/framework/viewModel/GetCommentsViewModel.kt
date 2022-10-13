@@ -11,11 +11,21 @@ import kotlinx.coroutines.launch
 import java.sql.Timestamp
 import java.util.*
 
+/**
+ * Class that inherits from ViewModel
+ */
 class GetCommentsViewModel :ViewModel() {
     private val getCommentsRequirement = GetCommentsRequirement()
 
     val commentList = MutableLiveData<MutableList<CommentModel>>()
 
+    /**
+     * Get comments from Firestore database
+     *
+     * @param idEvent: String -> Event's id
+     * @param repository: Repository -> Repository of the application
+     * @return commentList -> List of comments from repository
+     */
     fun getComments(idEvent: String, repository: Repository) {
         viewModelScope.launch {
             val queryResult = getCommentsRequirement(idEvent, repository)
@@ -25,7 +35,6 @@ class GetCommentsViewModel :ViewModel() {
                 var commentAux = CommentModel(document.data.get("id_usuario_fk").toString(), document.data.get("id_evento_fk").toString(),
                                                 document.data.get("comentario").toString(), auxDate.toDate())
                 auxList.add(commentAux)
-                Log.d("AuxList", auxList.toString())
             }
             commentList.postValue(auxList)
         }
