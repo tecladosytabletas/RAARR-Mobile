@@ -283,6 +283,12 @@ class FirestoreService {
         return ventaTotal
     }
 
+    /**
+     * Verifies if the scanned ticket exists in the database
+     *
+     * @param resulted: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the ticket exists, false if it does not
+     */
     suspend fun verifyTicketExistence(resulted: String) : Boolean {
         var existence: Boolean = false
         var query = db.collection("Boleto")
@@ -295,6 +301,13 @@ class FirestoreService {
         return existence
     }
 
+    /**
+     * Updates the database if a valid ticket was scanned
+     *
+     * @param resulted: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the field databse was updated, false if
+     * it was not
+     */
     suspend fun updateTicketValue(resulted: String): Boolean {
         var result: String = resulted
 

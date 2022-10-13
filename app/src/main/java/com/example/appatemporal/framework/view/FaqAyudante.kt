@@ -10,9 +10,18 @@ import com.example.appatemporal.databinding.ActivityFaqAyudanteBinding
 import com.example.appatemporal.databinding.ActivityFaqOrganizadorBinding
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
 class FaqAyudante : AppCompatActivity() {
     private lateinit var binding: ActivityFaqAyudanteBinding
     private var auth = FirebaseAuth.getInstance()
+
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFaqAyudanteBinding.inflate(layoutInflater)
