@@ -13,6 +13,7 @@ import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageEspectadorAdapterHorizontal
 import com.example.appatemporal.framework.view.adapters.ActivityMainHomepageEspectadorAdapterVertical
 import com.example.appatemporal.framework.viewModel.GetEventsInMonthViewModel
+import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
 /**
@@ -28,11 +29,23 @@ import java.util.*
 class ActivityMainHomepageEspectador : AppCompatActivity() {
     private lateinit var binding: ActivityMainHomepageEspectadorBinding
     val getEventsInMonthViewModel : GetEventsInMonthViewModel by viewModels()
+    private var auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainHomepageEspectadorBinding.inflate(layoutInflater)
+        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
         setContentView(binding.root)
+        if(userRole == "Organizador"){
+            val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
+            startActivity(intent)
+        }
+
+        else if(userRole == "Ayudante"){
+            val intent = Intent(this, RegisterQRView::class.java)
+            startActivity(intent)
+        }
+
 
         val repository = Repository(this)
 
@@ -43,18 +56,43 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         initRecyclerViewHorizontal(getEventsInMonthViewModel, dia, month, year ,repository)
         initRecyclerViewVertical(getEventsInMonthViewModel, repository)
 
+
+        // ----------------------------Header------------------------------------
+
+        // Visibility
+
+        if(auth.currentUser == null){
+            binding.header.buttonsHeader.visibility = android.view.View.GONE
+        }
+
+        // Intents
+        binding.header.logoutIcon.setOnClickListener{
+            Log.d("Sesion", "Salió")
+            auth.signOut()
+            val userSharedPref = getSharedPreferences("user", Context.MODE_PRIVATE)
+            var sharedPrefEdit = userSharedPref.edit()
+            sharedPrefEdit.remove("userUid")
+            sharedPrefEdit.clear().apply()
+            val intent = Intent(this, CheckIfLogged::class.java)
+            startActivity(intent)
+        }
+
+        binding.header.supportIcon.setOnClickListener{
+            val intent = Intent(this, SupportActivity::class.java)
+            startActivity(intent)
+        }
         // ----------------------------Navbar------------------------------------
-        val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+
 
         Log.d("Rol", userRole)
 
         // Visibility
-        if (userRole == "Espectador" || userRole == "") {
+        if ((userRole == "Espectador" && auth.currentUser != null) || userRole == "") {
             binding.navbar.budgetIcon.visibility = android.view.View.GONE
             binding.navbar.metricsIcon.visibility = android.view.View.GONE
             binding.navbar.budgetText.visibility = android.view.View.GONE
             binding.navbar.metricsText.visibility = android.view.View.GONE
-        } else if (userRole == "Ayudante") {
+        } else if (userRole == "Ayudante" && auth.currentUser != null) {
             binding.navbar.budgetIcon.visibility = android.view.View.GONE
             binding.navbar.metricsIcon.visibility = android.view.View.GONE
             binding.navbar.budgetText.visibility = android.view.View.GONE
@@ -67,7 +105,7 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
 
         // Intents
         binding.navbar.homeIcon.setOnClickListener {
-            if(userRole == "Organizador"){
+            if(userRole == "Organizador" && auth.currentUser != null){
                 val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
                 startActivity(intent)
             }else {
@@ -77,10 +115,10 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         }
 
         binding.navbar.eventsIcon.setOnClickListener {
-            if(userRole == "Organizador") {
+            if(userRole == "Organizador" && auth.currentUser != null) {
                 val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
                 startActivity(intent)
-            } else if (userRole == "Espectador") {
+            } else if (userRole == "Espectador" && auth.currentUser != null) {
                 val intent = Intent(this,CategoriasEventos::class.java)
                 startActivity(intent)
             } else {
@@ -95,10 +133,10 @@ class ActivityMainHomepageEspectador : AppCompatActivity() {
         }
 
         binding.navbar.ticketsIcon.setOnClickListener {
-            if (userRole == "Espectador" || userRole == "Organizador") {
+            if ((userRole == "Espectador" || userRole == "Organizador") && auth.currentUser != null) {
                 val intent = Intent(this, BoletoPorEventoActivity::class.java)
                 startActivity(intent)
-            } else if (userRole == "Ayudante") {
+            } else if (userRole == "Ayudante" && auth.currentUser != null) {
                 val intent = Intent(this, RegisterQRView::class.java)
                 startActivity(intent)
             } else {
