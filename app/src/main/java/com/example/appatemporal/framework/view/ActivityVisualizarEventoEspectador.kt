@@ -128,7 +128,7 @@ class ActivityVisualizarEventoEspectador : AppCompatActivity() {
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
         binding.buttonComprar.setOnClickListener{
-            val url = "http://www.atemporal.art"
+            val url = "https://rarr.vercel.app"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
