@@ -26,7 +26,7 @@ class ActivityMisEventosOrganizador : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
         //val userIdTemp = "qVzK32OHDYOUtK1YsQbh"
         initRecyclerView(getOrganizerEventViewModel, userUid, repository)

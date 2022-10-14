@@ -24,8 +24,7 @@ class ActivityMisEventosOrganizadorViewHolder(view: View) : RecyclerView.ViewHol
             var Ubicacion : String = eventClass.ubicacion
             var Direccion : String = eventClass.direccion
             var Foto : String = eventClass.foto_portada
-            var Ciudad : String = eventClass.ciudad
-            var Estado : String = eventClass.estado
+            var Ciudad_Estado : String = eventClass.ciudad + ", " + eventClass.estado
             var IdEvento : String = eventClass.id
 
 
@@ -35,10 +34,10 @@ class ActivityMisEventosOrganizadorViewHolder(view: View) : RecyclerView.ViewHol
             funcionPorEvento.putExtra("descripcion", Descripcion)
             funcionPorEvento.putExtra("ubicacion", Ubicacion)
             funcionPorEvento.putExtra("direccion", Direccion)
-            funcionPorEvento.putExtra("ciudad", Ciudad)
-            funcionPorEvento.putExtra("estado", Estado)
+            funcionPorEvento.putExtra("ciudad_estado", Ciudad_Estado)
             funcionPorEvento.putExtra("foto_portada", Foto)
-            funcionPorEvento.putExtra("idEvento", IdEvento)
+            funcionPorEvento.putExtra("idEvent", IdEvento)
+
 
             itemView.context.startActivity(funcionPorEvento)
         }
