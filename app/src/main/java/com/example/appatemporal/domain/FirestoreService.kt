@@ -846,9 +846,11 @@ class FirestoreService {
                 var eventDate = function.data?.get("fecha_funcion").toString()
                 val arrayDate: List<String> = eventDate.split("/")
                 //Log.d("ArrayDateLog", arrayDate.toString())
+
                 if (arrayDate.size <= 1) {
                     continue;
                 }
+                
                 if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
                     var evento = EventsInMonth(
                         event.id,
