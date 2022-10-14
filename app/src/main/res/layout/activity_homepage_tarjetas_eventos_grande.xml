@@ -4,6 +4,7 @@
     android:layout_height="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="16dp"
+    android:id="@+id/card"
     android:layout_marginTop="20dp"
     android:layout_marginLeft="16dp">
 
