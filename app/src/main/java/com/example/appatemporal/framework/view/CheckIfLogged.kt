@@ -37,7 +37,7 @@ class CheckIfLogged : AppCompatActivity() {
         // ----------------------------Header------------------------------------
 
         // Visibility
-
+/*
         if(auth.currentUser == null){
             binding.header.buttonsHeader.visibility = android.view.View.GONE
         }
@@ -57,7 +57,7 @@ class CheckIfLogged : AppCompatActivity() {
         binding.header.supportIcon.setOnClickListener{
             val intent = Intent(this, SupportActivity::class.java)
             startActivity(intent)
-        }
+        }*/
         // ----------------------------Navbar------------------------------------
 
 

@@ -53,7 +53,8 @@
                 android:layout_gravity="left"
                 android:id="@+id/SpinnerTB"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></Spinner>
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"></Spinner>
 
         </LinearLayout>
         <EditText
@@ -68,7 +69,7 @@
             android:maxLength="10"
             android:hint="¿Cuántos boletos se van a vender?"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/HintBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent" />
@@ -85,7 +86,7 @@
             android:inputType="number"
             android:maxLength="6"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/HintBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent" />

@@ -59,7 +59,6 @@ class DetailedMetrics : AppCompatActivity(){
 
         // Intents
         binding.header.logoutIcon.setOnClickListener{
-            Log.d("Sesion", "Salió")
             auth.signOut()
             val userSharedPref = getSharedPreferences("user", Context.MODE_PRIVATE)
             var sharedPrefEdit = userSharedPref.edit()
@@ -75,8 +74,6 @@ class DetailedMetrics : AppCompatActivity(){
         }
         // ----------------------------Navbar------------------------------------
 
-
-        Log.d("Rol", userRole)
 
         // Visibility
         if ((userRole == "Espectador" && auth.currentUser != null) || userRole == "") {
