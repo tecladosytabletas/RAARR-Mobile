@@ -60,4 +60,5 @@
     <color name="dark_grey">#1D1C23</color>
     <color name="light_grey">#302E3B</color>
     <color name="atemporal_purple">#3F0FFF</color>
+    <color name="HintBox">#52FFFFFF</color>
 </resources>
