@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appatemporal.R
-import com.example.appatemporal.databinding.ActivityAddCategoriaBinding
 import com.example.appatemporal.databinding.ActivityVisualizarEventoOrganizadorBinding
 import com.example.appatemporal.domain.Repository
 import com.example.appatemporal.framework.viewModel.GetFunctionOrganizerViewModel
@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 
 class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
@@ -25,6 +26,7 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
     private lateinit var binding : ActivityVisualizarEventoOrganizadorBinding
     private val graphicsEventDetailViewModel : GraphicsEventDetailViewModel by viewModels()
     private val getFunctionOrganizerViewModel : GetFunctionOrganizerViewModel by viewModels()
+    private var auth = FirebaseAuth.getInstance()
     val repository = Repository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,38 +36,73 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         binding = ActivityVisualizarEventoOrganizadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ----------------------------Navbar------------------------------------
         val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+        // ----------------------------Header------------------------------------
 
         // Visibility
-        if (userRole != "Organizador") {
+
+        if(auth.currentUser == null){
+            binding.header.buttonsHeader.visibility = android.view.View.GONE
+        }
+
+        // Intents
+        binding.header.logoutIcon.setOnClickListener{
+            Log.d("Sesion", "Salió")
+            auth.signOut()
+            val userSharedPref = getSharedPreferences("user", Context.MODE_PRIVATE)
+            var sharedPrefEdit = userSharedPref.edit()
+            sharedPrefEdit.remove("userUid")
+            sharedPrefEdit.clear().apply()
+            val intent = Intent(this, CheckIfLogged::class.java)
+            startActivity(intent)
+        }
+
+        binding.header.supportIcon.setOnClickListener{
+            val intent = Intent(this, SupportActivity::class.java)
+            startActivity(intent)
+        }
+        // ----------------------------Navbar------------------------------------
+
+
+        Log.d("Rol", userRole)
+
+        // Visibility
+        if ((userRole == "Espectador" && auth.currentUser != null) || userRole == "") {
             binding.navbar.budgetIcon.visibility = android.view.View.GONE
             binding.navbar.metricsIcon.visibility = android.view.View.GONE
             binding.navbar.budgetText.visibility = android.view.View.GONE
             binding.navbar.metricsText.visibility = android.view.View.GONE
-        }
-        if (userRole == "Ayudante") {
+        } else if (userRole == "Ayudante" && auth.currentUser != null) {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
             binding.navbar.eventsIcon.visibility = android.view.View.GONE
             binding.navbar.eventsText.visibility = android.view.View.GONE
+            binding.navbar.homeIcon.visibility = android.view.View.GONE
+            binding.navbar.homeText.visibility = android.view.View.GONE
         }
 
         // Intents
         binding.navbar.homeIcon.setOnClickListener {
-            if(userRole == "Organizador"){
+            if(userRole == "Organizador" && auth.currentUser != null){
                 val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            }else {
                 val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
                 startActivity(intent)
             }
         }
 
         binding.navbar.eventsIcon.setOnClickListener {
-            if(userRole == "Organizador"){
+            if(userRole == "Organizador" && auth.currentUser != null) {
                 val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            } else if (userRole == "Espectador" && auth.currentUser != null) {
                 val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -76,11 +113,14 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         }
 
         binding.navbar.ticketsIcon.setOnClickListener {
-            if (userRole == "Espectador" || userRole == "Organizador") {
+            if ((userRole == "Espectador" || userRole == "Organizador") && auth.currentUser != null) {
                 val intent = Intent(this, BoletoPorEventoActivity::class.java)
                 startActivity(intent)
-            } else {
+            } else if (userRole == "Ayudante" && auth.currentUser != null) {
                 val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -91,23 +131,21 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
         }
 
 
-        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE)
+        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
 
-        val idUser = "qVzK32OHDYOUtK1YsQbh"
-        val idEvento = intent.getStringExtra("idEvento")
+        val idEvento = intent.getStringExtra("idEvent")
         val nombre = intent.getStringExtra("nombre")
         val descripcion = intent.getStringExtra("descripcion")
         val lugar = intent.getStringExtra("ubicacion")
         val direccion = intent.getStringExtra("direccion")
-        val ciudad = intent.getStringExtra("ciudad")
-        val estado = intent.getStringExtra("estado")
+        val ciudad_estado = intent.getStringExtra("ciudad_estado")
         val foto_portada = intent.getStringExtra("foto_portada")
 
         binding.NombreEvento.text = nombre
         binding.Ubicacion.text = lugar
         binding.DireccionVEE.text = direccion
-        binding.CiudadEstadoVEE.text = ciudad + ", " + estado
+        binding.CiudadEstadoVEE.text = ciudad_estado
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
         binding.btnMoreGraphics.setOnClickListener {
@@ -115,9 +153,10 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
             val intent = Intent(this, DetailedMetrics::class.java)
 
-            intent.putExtra("idEvent", idEvent)
+            intent.putExtra("idEvento", idEvent)
 
-            startActivity(intent)
+            this.startActivity(intent)
+
         }
 
         binding.addFunBtn.setOnClickListener{
@@ -167,19 +206,17 @@ class ActivityVisualizarEventoOrganizador : AppCompatActivity() {
 
         initRecyclerView(getFunctionOrganizerViewModel, idEvento.toString(), repository)
 
-        //Creación de usuario temporal
-        val tempEventId : String = "Nbb94T1aTzqT4RiXfmWm"
         val repository = Repository(this)
         //Llamado a funciones
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0
-        graphicsEventDetailViewModel.getTicketsSA(tempEventId, repository)
+        graphicsEventDetailViewModel.getTicketsSA(idEvento.toString(), repository)
         graphicsEventDetailViewModel.eventTicketsSAEvent.observe(this, Observer {
             ventasTotal = it.first
             asistenciasTotal = it.second
             populateTSAPieChart(ventasTotal, asistenciasTotal)
         })
-        populateRating(tempEventId)
+        populateRating(idEvento.toString())
     }
 
 

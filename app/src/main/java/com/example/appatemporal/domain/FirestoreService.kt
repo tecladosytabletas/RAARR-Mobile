@@ -28,6 +28,12 @@ import kotlin.collections.ArrayList
 class FirestoreService {
     private val db = Firebase.firestore
 
+    /**
+     * Adds user to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param user: UserModel -> Model to insert documents to Firestore
+     */
     suspend fun addUser(uid: String, user: UserModel) {
         db.collection("Usuario")
             .document(uid)
@@ -38,12 +44,17 @@ class FirestoreService {
             .await()
     }
 
+    /**
+     * Adds user's role and its relations to Firestore
+     *
+     * @param uid: String -> User Uid
+     * @param role: String -> Role selected by the user
+     */
     suspend fun addUserRole(uid: String, role: String) {
         val dbRole = db.collection("Rol")
             .whereEqualTo("nombre", role)
             .get()
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Got Role Correctly: ${it.documents[0].id}")
             }.await()
 
         val userRole = hashMapOf(
@@ -54,13 +65,18 @@ class FirestoreService {
         db.collection("Usuario_Rol")
             .add(userRole)
             .addOnSuccessListener {
-                Log.d("FirestoreLogs","Added User wih Role Correctly")
             }
             .addOnFailureListener {
                 Log.d("FirestoreLogs","Added user failed, exception: $it")
             }
     }
 
+    /**
+     * Verifies the user's existence
+     *
+     * @param uid: String -> User uid
+     * @return Boolean -> Existence of the user
+     */
     suspend fun verifyUser(uid: String) : Boolean {
         var userExists = false
         db.collection("Usuario")
@@ -75,6 +91,12 @@ class FirestoreService {
         return userExists
     }
 
+    /**
+     * Gets the user information
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUser(uid: String) : DocumentSnapshot {
         var userData: DocumentSnapshot =
             db.collection("Usuario")
@@ -84,6 +106,12 @@ class FirestoreService {
         return userData
     }
 
+    /**
+     * Gets the user's role
+     *
+     * @param uid: String -> User uid
+     * @return DocumentSnapshot -> query result from Firestore
+     */
     suspend fun getUserRole(uid: String) : DocumentSnapshot {
         var dbRole: QuerySnapshot =
             db.collection("Usuario_Rol")
@@ -143,6 +171,11 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get the number of events the user has done.
+     * @param uid: String
+     * @return events.count(): Int
+     **/
     suspend fun eventCount(uid: String) : Int {
         var events : QuerySnapshot =
             db.collection("Usuario_Evento")
@@ -152,6 +185,12 @@ class FirestoreService {
         return events.count()
     }
 
+    /**
+     * Get the number of expected assists (tickets sold) and the number of real assists of all the
+     * events the user has done.
+     * @param uid: String
+     * @return result: Pair<Int, Int>
+     **/
     suspend fun ventasCount(uid : String) : Pair<Int, Int> {
         var ventasCount : Int = 0
         var asistenciasCount : Int = 0
@@ -188,6 +227,11 @@ class FirestoreService {
         return result
     }
 
+    /**
+     * Get the average rating of the user using the ratings of all the events the user has done.
+     * @param uid: String
+     * @return (acumulado/count): Float
+     **/
     suspend fun getRating(uid: String) : Float {
         var acumulado = 0f
         var count = 0f
@@ -213,6 +257,11 @@ class FirestoreService {
         return (acumulado/count).toFloat()
     }
 
+    /**
+     * Get the profits of the user from all the events so far.
+     * @param uid: String
+     * @return result: Float
+     **/
     suspend fun getRevenue(uid: String) : Int {
         var ventaTotal = 0
         var boletos: QuerySnapshot
@@ -255,6 +304,12 @@ class FirestoreService {
         return ventaTotal
     }
 
+    /**
+     * Verifies if the scanned ticket exists in the database
+     *
+     * @param resulted: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the ticket exists, false if it does not
+     */
     suspend fun verifyTicketExistence(resulted: String) : Boolean {
         var existence: Boolean = false
         var query = db.collection("Boleto")
@@ -267,6 +322,13 @@ class FirestoreService {
         return existence
     }
 
+    /**
+     * Updates the database if a valid ticket was scanned
+     *
+     * @param resulted: String -> Qr hash content
+     * @return Boolean -> Boolean value, true if the field databse was updated, false if
+     * it was not
+     */
     suspend fun updateTicketValue(resulted: String): Boolean {
         var result: String = resulted
 
@@ -291,7 +353,12 @@ class FirestoreService {
             .await()
         return exito
     }
-
+    /**
+     * Firestore query to get TicketTypes for Given event from Firestore Database.
+     * @param idEvent -> EventID to get TicketTypes of.
+     *
+     * @return List -> List containing Triples, each containing TicketType Data. Name, Price, and ID.
+     */
     suspend fun getTicketDropDown(idEvent: String) : List<Triple<String, Int, String>> {
         var dropDown : MutableList<Triple<String, Int, String>> = mutableListOf()
         val ticketInfo = db.collection("Evento_Tipo_Boleto")
@@ -309,7 +376,14 @@ class FirestoreService {
         }
         return dropDown
     }
-
+    /**
+     * Firestore query to get all tickets registered to a given Function in the given event of a each type. from Firestore Database,
+     * @param idEvent -> EventID to get ticketTypes of.
+     * @param idFuncion -> Function to take count from.
+     *
+     * @return List -> List containing Triples, each containing ticket count of each ticketType.
+     * EX: ID, TicketCountOfType, Maximum amount of Tickets specific Type can Have.
+     */
     suspend fun currentTicketsFun(idEvent: String, idFuncion: String) : List<Triple<String, Int, Int>> {
         val maxCountEvent: MutableList<Triple<String, Int, Int>> = mutableListOf()
         val tipoEventoBoleto = db.collection("Evento_Tipo_Boleto")
@@ -326,15 +400,26 @@ class FirestoreService {
         }
         return maxCountEvent
     }
-
+    /**
+     * Firestore query to store a new Ticket sale in the Firestore Database.
+     * @param idFuncion -> FunctionID to Register Sale to.
+     * @param id_Metodo_Pago -> Payment Type Id.
+     *@param id_Tipo_Boleto -> Ticket Type to Register.
+     *
+     */
     suspend fun RegisterSale(idFuncion: String, id_Metodo_Pago: String,id_Tipo_Boleto : String){
         var currentDate = Date()
         db.collection("Boleto")
             .document()
-            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate,currentDate))
+            .set(TicketModel(true,"RegistroEnTaquilla",idFuncion, id_Metodo_Pago,id_Tipo_Boleto,currentDate.toString(),currentDate.toString(), "", ""))
             .await()
     }
-
+    /**
+     * Firestore query to get all tickets registered to a given Function in the given event of a each type. from Firestore Database,
+     * @param metodoPago -> Payment Type string/Name.
+     *
+     * @return query: QuerySnapshot -> QuerySnapshot containing the Document matching the name provided.
+     */
     suspend fun getMetodoPagoId(metodoPago: String) : QuerySnapshot {
         val query = db.collection("Metodo_Pago")
             .whereEqualTo("metodo", metodoPago)
@@ -345,18 +430,22 @@ class FirestoreService {
 
     /**
      * Adds a document in ReporteFallas collection of Firestore
-     * @param title: String
-     * @param description: String
+     * @param title: String -> tittle of report
+     * @param description: String -> description of the failure
      */
     suspend fun addFailure(title: String, description: String) {
         val failure = ReportFailureModel(title, description)
         db.collection("ReporteFallas")
             .add(failure)
             .addOnSuccessListener {
-                Log.d("Firestore Log Failure", "Success")
             }.await()
     }
 
+    /**
+     * Get the name of an event by it's id.
+     * @param eid: String
+     * @return event.data?.get("nombre").toString(): String
+     **/
     suspend fun getEventName(eid:String) : String {
         var event : DocumentSnapshot =
             db.collection("Evento")
@@ -366,6 +455,11 @@ class FirestoreService {
         return event.data?.get("nombre").toString()
     }
 
+    /**
+     * Get the profits of an event by it's id.
+     * @param eid: String
+     * @return ganancias: Int
+     **/
     suspend fun generalProfitsEvent(eid:String) : Int {
 
         var ganancias = 0
@@ -376,24 +470,24 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("generalProfitsEvent-Funciones", funciones.count().toString())
+        //Log.d("generalProfitsEvent-Funciones", funciones.count().toString())
         for (element in funciones) {
             boletos = db.collection("Boleto")
                 .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
-            Log.d("generalProfitsEvent-Boletos", boletos.count().toString())
+            //Log.d("generalProfitsEvent-Boletos", boletos.count().toString())
             tiposBoleto =
                 db.collection("Evento_Tipo_Boleto")
                     .whereEqualTo("id_evento_fk", element.data?.get("id_evento_fk"))
                     .get()
                     .await()
-            Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
+            //Log.d("generalProfitsEvent-tiposBoleto", tiposBoleto.count().toString())
             for (tipoBoleto in tiposBoleto) {
                 for (document in boletos) {
                     if (document.data?.get("id_tipo_boleto_fk") == tipoBoleto.data?.get("id_tipo_boleto_fk") &&
                         tipoBoleto.data?.get("id_evento_fk") == element.data?.get("id_evento_fk")) {
-                        Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
+                        //Log.d("generalProfitsEvent-IF", tipoBoleto.data?.get("precio").toString())
                         ganancias += tipoBoleto.data?.get("precio").toString().toInt()
                     }
                     //Log.d("generalProfitsEvent", document.id.toString())
@@ -403,6 +497,12 @@ class FirestoreService {
         return ganancias
     }
 
+    /**
+     * Get the name of all the payment methods and the quantity of tickets sold by each one in the
+     * event by it's id.
+     * @param eid: String
+     * @return result: MutableMap<String, Int?>
+     **/
     suspend fun getTicketsbyPM(eid:String): MutableMap<String, Int?> {
 
         var diccPM = mutableMapOf<String, Int?>()
@@ -412,7 +512,7 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
+        //Log.d("getTicketsbyPM-Funciones", funciones.count().toString())
         if (funciones.isEmpty){diccPM.put("No hay datos funciones", 0); return diccPM}
 
         for(element in funciones){
@@ -425,8 +525,8 @@ class FirestoreService {
             for(boleto in boletos){
                 if(boleto.data?.get("id_metodo_pago_fk").toString() !in diccPM){
                     diccPM.put(boleto.data?.get("id_metodo_pago_fk").toString(), 0)
-                    Log.d("getTicketsbyPM ID METODO", boleto.data?.get("id_metodo_pago_fk").toString())
-                    Log.d("getTicketsbyPM DICC", diccPM.toString())
+                    //Log.d("getTicketsbyPM ID METODO", boleto.data?.get("id_metodo_pago_fk").toString())
+                    //Log.d("getTicketsbyPM DICC", diccPM.toString())
                 }
                 diccPM.computeIfPresent(boleto.data?.get("id_metodo_pago_fk").toString()) { _, v -> v + 1}
             }
@@ -445,7 +545,7 @@ class FirestoreService {
                 }
             }
         }
-        Log.d("Dentro de getTicketsbyPM",result.toString())
+        //Log.d("Dentro de getTicketsbyPM",result.toString())
         if (result.isEmpty()){return errorHandler}
         return result
     }
@@ -514,13 +614,13 @@ class FirestoreService {
      */
 
    suspend fun addRating(idUser: String, idEvent : String, rate : Float) {
-       val rating = RatingModel(idUser, idEvent, rate, Date())
+       val rating = RatingModel(idUser, idEvent, rate, Date().toString())
        db.collection("Rating")
            .add(rating)
            .await()
    }
     /**
-     * Get a document in Rating collection of Firestore
+     * Get a document in Rating collection of Firestore to verify existence
      * @param idUser: String
      * @param idEvent: String
      * @return existence: Boolean
@@ -539,6 +639,12 @@ class FirestoreService {
         return existence
     }
 
+    /**
+     * Get a comment in Comment collection of Firestore to verify existence
+     * @param idUser: String -> user´s Id
+     * @param idEvent: String -> Event´s Id
+     * @return existence: Boolean -> Comment existance
+     */
     suspend fun verifyCommentExistence(idUser: String, idEvent: String) : Boolean {
         var existence: Boolean = false
         val query = db.collection("Comentario")
@@ -549,12 +655,16 @@ class FirestoreService {
         if (!query.isEmpty) {
             existence = true
         }
-        //Log.d("Existence of comment", existence.toString())
         return existence
     }
 
+    /**
+     * Get the number of expected assists (tickets sold) and the number of real assists for each
+     * type of ticket in an event by it's id.
+     * @param eid: String
+     * @return diccTotales: MutableMap<String, Pair<Int?, Int?>>
+     **/
     suspend fun getTicketTypeSA(eid: String): MutableMap<String, Pair<Int?, Int?>> {
-        Log.d("getTicketTypeSA", "ENTRANDO A FUNCION")
         var boletos: QuerySnapshot
         var diccAsistencias = mutableMapOf<String, Int?>()
         var diccVentas = mutableMapOf<String, Int?>()
@@ -564,26 +674,22 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getTicketTypeSA-Funciones", funciones.count().toString())
-
+        /*Log.d("getTicketTypeSA-Funciones", funciones.count().toString())
         for (element in funciones){
             Log.d("CONTENIDO FUNCIONES", element.data?.get("id_funcion_fk").toString())
-        }
-
+        }*/
         for (element in funciones) {
             boletos = db.collection("Boleto")
                 .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
-            Log.d("getTicketTypeSA-Boletos", boletos.count().toString())
-
+            //Log.d("getTicketTypeSA-Boletos", boletos.count().toString())
             for(boleto in boletos){
                 if(boleto.data?.get("id_tipo_boleto_fk").toString() !in diccAsistencias){
                     var countVal = 0
                     diccAsistencias.put(boleto.data?.get("id_tipo_boleto_fk").toString(), countVal)
                     diccVentas.put(boleto.data?.get("id_tipo_boleto_fk").toString(), countVal)
                 }
-
                 if(boleto.data?.get("activo").toString() == "false"){
                     diccAsistencias.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
                     diccVentas.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
@@ -591,12 +697,10 @@ class FirestoreService {
                     diccVentas.computeIfPresent(boleto.data?.get("id_tipo_boleto_fk").toString()) { _, v -> v + 1}
                 }
             }
-
             var tiposBoleto: QuerySnapshot = db.collection("Tipo_Boleto")
                 .get()
                 .await()
-            Log.d("getTicketTypeSA-tiposBoleto", tiposBoleto.count().toString())
-
+            //Log.d("getTicketTypeSA-tiposBoleto", tiposBoleto.count().toString())
             for ((k, v) in diccVentas) {
                 for (tipoBoleto in tiposBoleto) {
                     if(tipoBoleto.id == k) {
@@ -605,12 +709,18 @@ class FirestoreService {
                     }
                 }
             }
-
         }
-        Log.d("getTicketTypeSA-diccTotales", diccTotales.toString())
+        //Log.d("getTicketTypeSA-diccTotales", diccTotales.toString())
         return diccTotales
     }
 
+    /**
+     * Get the sum of all the ratings (from 0-6), the number of ratings, the number of times a
+     * certain rating inside the range 0-5 stars appears in the rating and the general rating of an
+     * event by it's id.
+     * @param eid: String
+     * @return listRatings: MutableList<Float>
+     **/
     suspend fun getRatingByEvent(eid: String) : MutableList<Float> {
         //[0]acumulado,[1]counTotal,[2]count0,[3]count1,[4]count2,
         // [5]count3,[6]count4, [7]count5, [8]ratingProm
@@ -640,14 +750,23 @@ class FirestoreService {
         return listRatings
     }
 
-
+    /**
+     * Adds a user comment to the Comment collection in Firestore
+     * @param idUser: String -> User´s Id
+     * @param idEvent: String ->Event´s Id
+     * @param comment: String -> User´s Comment
+     */
     suspend fun addComment(idUser: String,idEvent: String,comment: String){
-        var comment = CommentModel(idUser,idEvent,comment,Date())
+        var comment = CommentModel(idUser,idEvent,comment,Date().toString())
         db.collection("Comentario")
             .add(comment)
             .await()
     }
-
+    /**
+     * Gets the comments from Comentario collection of Firestore
+     * @param idEvent: String -> Event's id
+     * @return comments: QuerySnapshot -> query result from Firebase
+     */
     suspend fun getComments(idEvent: String) : QuerySnapshot {
         val comments =
             db.collection("Comentario")
@@ -657,6 +776,12 @@ class FirestoreService {
         return comments
     }
 
+    /**
+     * Get the number of expected assists (tickets sold) and the number of real assists of an
+     * event by it's id.
+     * @param eid: String
+     * @return result: Pair<Int, Int>
+     **/
     suspend fun getEventTicketsSA(eid : String) : Pair<Int, Int> {
         var ventasCount : Int = 0
         var asistenciasCount : Int = 0
@@ -690,7 +815,9 @@ class FirestoreService {
     }
 
     /**
-     * Gets the events of the month from Evento and Funcion collections of Firestore
+
+     * Get the information of all the functions of any event(s) that are presented within the
+     * current date and the last day of the present month in the present year.
      * @param day: Int
      * @param month: Int
      * @param year: Int
@@ -701,7 +828,6 @@ class FirestoreService {
      *
      *  @author Andrés
      */
-
 
     suspend fun getEventsActualMonth(day:Int,month:Int,year:Int) : MutableList<EventsInMonth> {
         var result : MutableList<EventsInMonth> = arrayListOf()
@@ -718,7 +844,7 @@ class FirestoreService {
             for(function in functions){
                 var eventDate = function.data?.get("fecha_funcion").toString()
                 val arrayDate: List<String> = eventDate.split("/")
-                Log.d("ArrayDateLog", arrayDate.toString())
+                //Log.d("ArrayDateLog", arrayDate.toString())
                 if(arrayDate[1].toInt()==month && arrayDate[0].toInt() >= day && arrayDate[2].toInt() == year){
                     var evento = EventsInMonth(
                         event.id,
@@ -740,20 +866,17 @@ class FirestoreService {
                     )
                     result.add(evento)
                 }
+
             }
         }
-        Log.d("LogResult", result.toString())
+        //Log.d("LogResult", result.toString())
         return result
     }
 
     /**
-     * Gets all the events of the app from Firestore
-     *
-     * @return MutableList of events object from EventModel
-     *
-     *  @author Andrés
-     */
-
+     * Get the information of all the events that are active (activo==1) and approved (aprobado==1).
+     * @return result: MutableList<EventModel>
+     **/
 
     suspend fun getEvents() : MutableList<EventModel>{
         var events: MutableList<EventModel> = mutableListOf()
@@ -785,6 +908,7 @@ class FirestoreService {
     }
 
     /**
+
      * Gets the events from an organizer from Usuario_evento collection of Firestore
      * @param uid: String
      *
@@ -792,8 +916,7 @@ class FirestoreService {
      *
      *  @author Andrés
      */
-
-
+     
     suspend fun getEventsUserOrg(uid:String): MutableList<EventModel>{
         var result: MutableList<EventModel> = mutableListOf()
 
@@ -801,8 +924,8 @@ class FirestoreService {
             .whereEqualTo("id_usuario_fk",uid)
             .get()
             .await()
-        Log.d("getEventsUserOrg-uid",uid)
-        Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
+        //Log.d("getEventsUserOrg-uid",uid)
+        //Log.d("getEventsUserOrg-eventUser",event_user.isEmpty().toString())
 
         for(element in event_user){
             var event = db.collection("Evento")
@@ -810,7 +933,7 @@ class FirestoreService {
                 .whereEqualTo(FieldPath.documentId(),element.data?.get("id_evento_fk").toString())
                 .get()
                 .await()
-            Log.d("getEventsUserOrg-Event", event.toString())
+            //Log.d("getEventsUserOrg-Event", event.toString())
             var evento = EventModel(
                 event.documents[0].id,
                 event.documents[0].data?.get("nombre").toString(),
@@ -828,11 +951,15 @@ class FirestoreService {
             )
             result.add(evento)
         }
-        Log.d("getEventsUserOrg", result.toString())
+        //Log.d("getEventsUserOrg", result.toString())
         return result
     }
 
-
+    /**
+     * Get the revenue by payment method in an event by it's id.
+     * @param eid: String
+     * @return result: MutableMap<String, Int?>
+     **/
     suspend fun getRevenuebyPM(eid:String): MutableMap<String, Int?> {
         var diccPM = mutableMapOf<String, Int?>()
         var errorHandler : MutableMap<String, Int?> = mutableMapOf(Pair("Sin ventas por el momento",0))
@@ -841,7 +968,7 @@ class FirestoreService {
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
+        //Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
         if (funciones.isEmpty){diccPM.put("No hay datos en Funcionces", 0); return diccPM}
 
         var tiposboleto: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
@@ -886,7 +1013,7 @@ class FirestoreService {
             }
         }
 
-        Log.d("Dentro de getRevenuebyPM",result.toString())
+        //Log.d("Dentro de getRevenuebyPM",result.toString())
         if (result.isEmpty()){return errorHandler}
         return result
     }

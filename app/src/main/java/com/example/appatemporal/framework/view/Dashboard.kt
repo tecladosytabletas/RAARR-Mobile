@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -15,58 +16,101 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.google.firebase.auth.FirebaseAuth
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Class that inherits from AppCompatActivity
+ */
+
 class Dashboard : AppCompatActivity(){
     private lateinit var binding : DashboardBinding
     private val dashboardViewModel : DashboardViewModel by viewModels()
+    private var auth = FirebaseAuth.getInstance()
     private lateinit var repository: Repository
 
+    /**
+     * Overrides function onCreate and starts the activity
+     *
+     * @param savedInstanceState: Bundle? -> Saved instance of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         // En el onCreate se deben poblar las graficas
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
 
-        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE)
-            .getString("userUid", "").toString()
-
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ----------------------------Navbar------------------------------------
         val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
+        // ----------------------------Header------------------------------------
 
         // Visibility
-        if (userRole != "Organizador") {
+
+        if(auth.currentUser == null){
+            binding.header.buttonsHeader.visibility = android.view.View.GONE
+        }
+
+        // Intents
+        binding.header.logoutIcon.setOnClickListener{
+            Log.d("Sesion", "Salió")
+            auth.signOut()
+            val userSharedPref = getSharedPreferences("user", Context.MODE_PRIVATE)
+            var sharedPrefEdit = userSharedPref.edit()
+            sharedPrefEdit.remove("userUid")
+            sharedPrefEdit.clear().apply()
+            val intent = Intent(this, CheckIfLogged::class.java)
+            startActivity(intent)
+        }
+
+        binding.header.supportIcon.setOnClickListener{
+            val intent = Intent(this, SupportActivity::class.java)
+            startActivity(intent)
+        }
+        // ----------------------------Navbar------------------------------------
+
+
+        Log.d("Rol", userRole)
+
+        // Visibility
+        if ((userRole == "Espectador" && auth.currentUser != null) || userRole == "") {
             binding.navbar.budgetIcon.visibility = android.view.View.GONE
             binding.navbar.metricsIcon.visibility = android.view.View.GONE
             binding.navbar.budgetText.visibility = android.view.View.GONE
             binding.navbar.metricsText.visibility = android.view.View.GONE
-        }
-        if (userRole == "Ayudante") {
+        } else if (userRole == "Ayudante" && auth.currentUser != null) {
+            binding.navbar.budgetIcon.visibility = android.view.View.GONE
+            binding.navbar.metricsIcon.visibility = android.view.View.GONE
+            binding.navbar.budgetText.visibility = android.view.View.GONE
+            binding.navbar.metricsText.visibility = android.view.View.GONE
             binding.navbar.eventsIcon.visibility = android.view.View.GONE
             binding.navbar.eventsText.visibility = android.view.View.GONE
+            binding.navbar.homeIcon.visibility = android.view.View.GONE
+            binding.navbar.homeText.visibility = android.view.View.GONE
         }
 
         // Intents
         binding.navbar.homeIcon.setOnClickListener {
-            if(userRole == "Organizador"){
+            if(userRole == "Organizador" && auth.currentUser != null){
                 val intent = Intent(this, ActivityMainHomepageOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            }else {
                 val intent = Intent(this, ActivityMainHomepageEspectador::class.java)
                 startActivity(intent)
             }
         }
 
         binding.navbar.eventsIcon.setOnClickListener {
-            if(userRole == "Organizador"){
+            if(userRole == "Organizador" && auth.currentUser != null) {
                 val intent = Intent(this,ActivityMisEventosOrganizador::class.java)
                 startActivity(intent)
-            }else{
+            } else if (userRole == "Espectador" && auth.currentUser != null) {
                 val intent = Intent(this,CategoriasEventos::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -77,11 +121,14 @@ class Dashboard : AppCompatActivity(){
         }
 
         binding.navbar.ticketsIcon.setOnClickListener {
-            if (userRole == "Espectador" || userRole == "Organizador") {
+            if ((userRole == "Espectador" || userRole == "Organizador") && auth.currentUser != null) {
                 val intent = Intent(this, BoletoPorEventoActivity::class.java)
                 startActivity(intent)
-            } else {
+            } else if (userRole == "Ayudante" && auth.currentUser != null) {
                 val intent = Intent(this, RegisterQRView::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CheckIfLogged::class.java)
                 startActivity(intent)
             }
         }
@@ -93,26 +140,29 @@ class Dashboard : AppCompatActivity(){
 
         val uid = getSharedPreferences("user", Context.MODE_PRIVATE)
             .getString("userUid", "").toString()
-        //Usuario temporal de pruebas, eliminar posteriormente
-        val tempUserId : String = "qVzK32OHDYOUtK1YsQbh"
         repository = Repository(this)
 
         //Inicia llamado a funciones
         //Grafica1 - Ganancias totales y cantidad de eventos totales
-        populateEventCount(tempUserId)
+        populateEventCount(uid)
         //Grafica2 - Asistentes esperados totales vs. Asistentes reales totales
         var ventasTotal : Int = 0
         var asistenciasTotal : Int = 0
-        dashboardViewModel.ventasEvent(tempUserId, repository)
+        dashboardViewModel.ventasEvent(uid, repository)
         dashboardViewModel.ventas.observe(this, Observer{
             ventasTotal = it.first
             asistenciasTotal = it.second
             populatePieChart(ventasTotal, asistenciasTotal)
         })
         //Grafica3 - Rating promedio de todos los eventos
-        populateRating(tempUserId)
+        populateRating(uid)
     }
 
+    /**
+     * Populates the EventCount metric
+     *
+     * @param uid: String
+     */
     private fun populateEventCount(uid:String) {
         val ourRevenue = binding.eventRevenue
         val ourEventCount = binding.eventCountTotal
@@ -132,6 +182,13 @@ class Dashboard : AppCompatActivity(){
         })
     }
 
+    /**
+     * Populates the PieChart metric and sets the format for
+     * the MPChart element
+     *
+     * @param ventasTotal: Int
+     * @param asistenciasTotal: Int
+     */
     private fun populatePieChart(ventasTotal: Int, asistenciasTotal : Int) {
         //ingreso de los datos a la pie chart
         val ourPieChart = binding.dashPieChart
@@ -158,6 +215,11 @@ class Dashboard : AppCompatActivity(){
         ourPieChart.invalidate()
     }
 
+    /**
+     * Populates the Rating metric
+     *
+     * @param uid: String
+     */
     private fun populateRating(uid:String){
         val ourRatingBar = binding.ratingStars
         val ourRatingValue = binding.ratingAvg

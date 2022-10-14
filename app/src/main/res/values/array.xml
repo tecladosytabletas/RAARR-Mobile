@@ -26,5 +26,10 @@
         <item>@string/filterType1</item>
         <item>@string/filterType2</item>
         <item>@string/filterType3</item>
+        <item>@string/filterType4</item>
+    </string-array>
+
+    <string-array name="allList">
+        <item>@string/allType</item>
     </string-array>
 </resources>

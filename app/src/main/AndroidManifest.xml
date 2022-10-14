@@ -59,9 +59,6 @@
             android:name=".framework.view.DeleteActivity"
             android:exported="true" />
         <activity
-            android:name=".framework.view.homepageespectador.HomePageEspectador"
-            android:exported="true" />
-        <activity
             android:name=".framework.view.VisualizarEventoActivity"
             android:exported="true" />
         <activity
@@ -74,10 +71,6 @@
         <activity
             android:name=".framework.view.BoletoPorEventoActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.CategoriasEventos"
@@ -87,9 +80,6 @@
             android:name=".framework.view.ProyectoOrganizador"
             android:exported="true">
         </activity>
-        <activity
-            android:name=".framework.view.Favoritosespectador_activity"
-            android:exported="true" />
         <activity
             android:name=".framework.view.PhoneActivity"
             android:exported="true"/>
@@ -172,10 +162,6 @@
         <activity
             android:name=".framework.view.ActivityAddCategoria"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.ActivityAddTB"
@@ -188,6 +174,10 @@
         <activity
             android:name=".framework.view.ActivityMainHomepageEspectador"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".framework.view.ActivityMisEventosOrganizador"

@@ -18,13 +18,18 @@ import kotlinx.coroutines.launch
 
 
 class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    // value used to assign the data binding of the xml file
     val binding = ItemTodoBinding.bind(view)
 
+    // Function used to assign a xml element with an attribute of the entity Actividad
     fun render(activityModel: Actividad, viewModel: DeleteActivityViewModel) {
         binding.txtShowTitle.text = activityModel.nombre_actividad
         binding.txtShowArea.text = activityModel.area
         binding.txtShowEstatus.text = activityModel.estatus
         binding.txtShowPrioridad.text = activityModel.prioridad
+
+        // Function that will be initialized once the element ivEditIcon is clicked by the user
+        // The function inside it is an intent to the ModificarActividad view
         binding.ivEditIcon.setOnClickListener{
             val intent1 = Intent(itemView.context, ModificarActividad::class.java)
             with(intent1){
@@ -38,21 +43,18 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             itemView.context.startActivity(intent1)
         }
 
+        // Function that will be initialized once the element deleteActivityButton
+        // is clicked by the user. The function inside it is used to delete an activity
+        // And to send the confirmation to delete that activity
 
         binding.deleteActivityButton.setOnClickListener{
-
             val repository = Repository(itemView.context)
             val builder = AlertDialog.Builder(itemView.context)
             builder.setTitle("¿Estás seguro?")
-            builder.setMessage("¿Estás seguro de que quieres eliminar esta actividad Este proceso no puede revertirse")
-            //builder.setIcon(android.R.drawable.ic_dialog_alert)
+            builder.setMessage("¿Estás seguro de que quieres eliminar esta actividad?. Este proceso no puede revertirse")
+            // If the user clicks on Eliminar the activity will be erased
             builder.setPositiveButton("Eliminar"){dialogInterface, which ->
-                //Mandar a llamar la funcion delete()
                     viewModel.removeActividad(activityModel.id_proyecto,activityModel, repository)
-                    //Toast.makeText(itemView.context, "Proyecto eliminado", Toast.LENGTH_SHORT).show()
-
-
-                //Toast.makeText(itemView.context,"Se eliminó el proyecto correctamente",Toast.LENGTH_LONG).show()
             }
             builder.setNeutralButton("Cancelar"){dialogInterface , which ->
 
@@ -61,6 +63,7 @@ class ActividadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val alertDialog: AlertDialog = builder.create()
             // Set other dialog properties
             alertDialog.setCancelable(false)
+            // show the AlertDialog
             alertDialog.show()
         }
     }

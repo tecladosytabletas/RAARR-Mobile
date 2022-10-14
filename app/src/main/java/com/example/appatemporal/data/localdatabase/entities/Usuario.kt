@@ -4,6 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * ROOM model for user
+ * @param id: Int, id of user
+ * @param nombre: String, name of user
+ * @param apellidos: String, last name of user
+ * @param email: String, email of user
+ * @param fechaNac: String, birthdate of user
+ * @param genero: String genre of user.
+ * @param rol: String, role of user
+ */
 @Entity(tableName = "usuario_table")
 data class Usuario(
     @PrimaryKey()
