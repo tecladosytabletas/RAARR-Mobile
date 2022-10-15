@@ -34,7 +34,7 @@ class BoletoPorEventoActivity : AppCompatActivity() {
         binding = ActivityBoletoPorEventoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userUid = getSharedPreferences("userUid", Context.MODE_PRIVATE).getString("userUid", "").toString()
+        val userUid = getSharedPreferences("user", Context.MODE_PRIVATE).getString("userUid", "").toString()
         initRecyclerView(getTicketViewModel, userUid, repository)
 
         val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
