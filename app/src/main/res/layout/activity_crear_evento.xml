@@ -151,7 +151,7 @@
                             android:layout_marginTop="28dp"
                             android:backgroundTint="@color/white"
                             android:ems="15"
-                            android:hint="¿Cuántos boletos no VIP se van a vender?"
+                            android:hint="¿Cuántos boletos generales se van a vender?"
                             android:inputType="number"
                             android:maxLength="10"
                             android:textColor="@color/white"
