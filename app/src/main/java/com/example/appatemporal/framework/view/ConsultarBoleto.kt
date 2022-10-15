@@ -163,7 +163,8 @@ class ConsultarBoleto : AppCompatActivity() {
         binding.ivShareEvent.setOnClickListener {
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Checa este nuevo evento!! https://www.youtube.com/" + idEvento)
+            val nombreEvento = nombre.toString().replace("\\s".toRegex(), "")
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Checa este nuevo evento!! https://rarr.vercel.app/evento/${nombreEvento.lowercase()}")
             sendIntent.type = "text/plain"
             startActivity(Intent.createChooser(sendIntent, "send to "))
         }
