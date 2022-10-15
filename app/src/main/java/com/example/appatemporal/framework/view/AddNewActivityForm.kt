@@ -24,6 +24,8 @@ class AddNewActivityForm : AppCompatActivity(){
     private lateinit var binding : ActivityTaskBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityTaskBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val userRole = getSharedPreferences("user", Context.MODE_PRIVATE).getString("rol", "").toString()
         // ----------------------------Header------------------------------------
 
