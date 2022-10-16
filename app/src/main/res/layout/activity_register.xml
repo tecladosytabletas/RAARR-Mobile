@@ -245,7 +245,7 @@
                 android:textColor="#E4EBF1"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView6"
+                app:layout_constraintTop_toBottomOf="@id/editGender_reg_2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/editRole_reg_2"/>
 
