@@ -153,20 +153,36 @@
                 app:layout_constraintBottom_toTopOf="@id/textView6"
                 app:layout_constraintEnd_toStartOf="@id/editDate_reg_2"/>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editDate_reg_2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:textColor="#E4EBF1"
-                android:inputType="date"
-                android:hint="Fecha de Nacimiento"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="#302E3B"
+                android:textColor="@color/white"
+                style="@style/Widget.Design.TextInputLayout"
                 android:textColorHint="#B3AFAF"
-                android:textSize="15sp"
+                app:hintTextColor="@color/colorAccent"
+                app:boxStrokeColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textView5"
-                app:layout_constraintTop_toTopOf="@+id/textView5"
-                app:layout_constraintBottom_toBottomOf="@id/textView5"/>
+                app:layout_constraintTop_toTopOf="@id/textView5"
+                app:layout_constraintBottom_toBottomOf="@id/textView5"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dateCreateNewProject"
+                    android:clickable="true"
+                    android:textColorHint="#B3AFAF"
+                    android:textColor="@color/white"
+                    android:id="@+id/dateEdt"
+                    android:cursorVisible="false"
+                    android:drawableEnd="@drawable/ic_date_range_black_24dp"
+                    android:drawableTint="@color/white"
+                    android:focusable="false"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
 

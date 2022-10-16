@@ -166,24 +166,6 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         }
-
-        binding.navbar.homeIcon.setOnClickListener {
-            finish()
-        }
-
-        binding.navbar.budgetIcon.setOnClickListener {
-            val intent = Intent(this, ProyectoOrganizador::class.java)
-            startActivity(intent)
-        }
-
-        binding.navbar.ticketsIcon.setOnClickListener {
-            finish()
-        }
-
-        binding.navbar.metricsIcon.setOnClickListener {
-            finish()
-        }
-
     }
     override fun onClick(v: View) {
         when (v.id) {
@@ -222,8 +204,6 @@ class AddNewProjectForm : AppCompatActivity(), View.OnClickListener {
         val sdf = SimpleDateFormat(myformat)
         finalDate = myCalendar.time.time
         binding.dateEdt.setText(sdf.format(myCalendar.time))
-
         //timeInptLay.visibility = View.VISIBLE
-
     }
 }
