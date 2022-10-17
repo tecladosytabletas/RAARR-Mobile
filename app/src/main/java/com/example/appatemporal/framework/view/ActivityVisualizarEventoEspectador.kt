@@ -128,7 +128,8 @@ class ActivityVisualizarEventoEspectador : AppCompatActivity() {
         Picasso.get().load(foto_portada).into(binding.ImagenVEE)
 
         binding.buttonComprar.setOnClickListener{
-            val url = "https://rarr.vercel.app"
+            val nombreEvento = nombre.toString().replace("\\s".toRegex(), "")
+            val url = "https://rarr.vercel.app/evento/${nombreEvento.lowercase()}"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
