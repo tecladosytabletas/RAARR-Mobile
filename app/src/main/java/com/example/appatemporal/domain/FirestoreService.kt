@@ -975,20 +975,20 @@ class FirestoreService {
             .get()
             .await()
         //Log.d("getRevenuebyPM-Funciones", funciones.count().toString())
-        if (funciones.isEmpty){diccPM.put("No hay datos en Funcionces", 0); return diccPM}
+        //if (funciones.isEmpty){diccPM.put("No hay datos en Funcionces", 0); return diccPM}
 
         var tiposboleto: QuerySnapshot = db.collection("Evento_Tipo_Boleto")
             .whereEqualTo("id_evento_fk", eid)
             .get()
             .await()
-        if (tiposboleto.isEmpty){diccPM.put("No hay datos en Tipos de Boletos", 0); return diccPM}
+        //if (tiposboleto.isEmpty){diccPM.put("No hay datos en Tipos de Boletos", 0); return diccPM}
 
         for(element in funciones){
             var boletos : QuerySnapshot = db.collection("Boleto")
                 .whereEqualTo("id_funcion_fk", element.id)
                 .get()
                 .await()
-            if (boletos.isEmpty){diccPM.put("No hay datos en Boletos", 0); return diccPM}
+            //if (boletos.isEmpty){diccPM.put("No hay datos en Boletos", 0); return diccPM}
 
             for (boleto in boletos){
                 for (tipoBoleto in tiposboleto){
@@ -1008,7 +1008,7 @@ class FirestoreService {
             db.collection("Metodo_Pago")
                 .get()
                 .await()
-        if (metodos.isEmpty){diccPM.put("No hay datos en Metodos", 0); return diccPM}
+        //if (metodos.isEmpty){diccPM.put("No hay datos en Metodos", 0); return diccPM}
 
         var result = mutableMapOf<String, Int?>()
         for (element in diccPM){
@@ -1020,7 +1020,7 @@ class FirestoreService {
         }
 
         //Log.d("Dentro de getRevenuebyPM",result.toString())
-        if (result.isEmpty()){return errorHandler}
+        //if (result.isEmpty()){return errorHandler}
         return result
     }
 
