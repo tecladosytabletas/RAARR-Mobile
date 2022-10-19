@@ -11,7 +11,7 @@
         android:id="@+id/header"
         layout="@layout/header"
         android:layout_height="80dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         app:layout_constraintVertical_bias="0"/>
 
 
