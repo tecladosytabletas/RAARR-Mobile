@@ -33,7 +33,7 @@
             android:id="@+id/Tarjeta_VEE"
             android:layout_width="match_parent"
             android:layout_height="600px"
-            android:background="@drawable/djbackground"
+            android:background="@color/atemporal_purple"
             android:orientation="horizontal">
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:id="@+id/Imagen_VEE"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/djbackground">
+                    android:background="@color/atemporal_purple">
                 </ImageView>
 
                 <ImageView
